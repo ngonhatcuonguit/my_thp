@@ -4,7 +4,7 @@
     <data>
         <variable
             name="multiMedia"
-            type="com.cuongngo.cinemax.response.MultiMedia" />
+            type="com.cuongngo.core_project.response.MultiMedia" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_container"

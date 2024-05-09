@@ -7,7 +7,7 @@
 
         <variable
             name="mediaDetail"
-            type="com.cuongngo.cinemax.response.MediaDetailResponse" />
+            type="com.cuongngo.core_project.response.MediaDetailResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -237,7 +237,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_poster_image" />
 
-                <com.cuongngo.cinemax.base.custom_view.ShowMoreTextView
+                <com.cuongngo.core_project.base.custom_view.ShowMoreTextView
                     android:id="@+id/tv_overview"
                     bindOverView="@{mediaDetail}"
                     android:layout_width="0dp"

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="personal"
-            type="com.cuongngo.cinemax.response.Personal" />
+            type="com.cuongngo.core_project.response.Personal" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

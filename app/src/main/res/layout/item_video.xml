@@ -4,7 +4,7 @@
     <data>
         <variable
             name="video"
-            type="com.cuongngo.cinemax.response.movie_response.Video" />
+            type="com.cuongngo.core_project.response.movie_response.Video" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
