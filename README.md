@@ -1,1 +1,1 @@
-"# cinemax" 
+"# Android core project MVVM" 
