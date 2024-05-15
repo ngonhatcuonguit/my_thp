@@ -54,7 +54,9 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
                 },
                 onSuccess = {
                     hideProgressDialog()
-                    binding.edtTemperature.setText(it.data?.value.toString().orEmpty())
+                    it.data?.value?.let {
+                        binding.edtTemperature.setText(it.toString())
+                    }
                     recordProcessEntity = it.data
                     WTF("testLocalDB ${it.data}")
                 },
@@ -66,18 +68,27 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
         }
     }
 
-    fun upsertRecordProcess(){
-        recordProcessEntity?.let {
-            WTF("testOnback1 $recordProcessEntity")
-            viewModel.upsertRecordProcess(
-                RecordProcessEntity(
-                    id = it.id,
-                    name = it.name,
-                    value = binding.edtTemperature.text.toString().toDouble(),
-                    note = it.note
+    private fun upsertRecordProcess(){
+        if (recordProcessEntity != null){
+            recordProcessEntity?.let {
+                WTF("testOnback1 $recordProcessEntity")
+                var value : Double? = null
+                if(binding.edtTemperature.text.toString().isNotEmpty()){
+                    value = binding.edtTemperature.text.toString().toDouble()
+                }else{
+                    value = null
+                }
+                viewModel.upsertRecordProcess(
+                    RecordProcessEntity(
+                        id = it.id,
+                        name = it.name,
+                        value = value,
+                        note = it.note
+                    )
                 )
-            )
+            }
         }
+
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
