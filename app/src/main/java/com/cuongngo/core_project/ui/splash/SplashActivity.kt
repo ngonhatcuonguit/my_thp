@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import com.cuongngo.core_project.AppPreferences
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivitySplashBinding

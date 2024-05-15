@@ -50,6 +50,11 @@
         <activity android:name="com.cuongngo.core_project.ui.youtube.YoutubePlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|uiMode"
             android:screenOrientation="sensorLandscape"/>
+
+        <activity android:name=".ui.test_room_db.RecordProcessActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"/>
+
     </application>
 
 </manifest>

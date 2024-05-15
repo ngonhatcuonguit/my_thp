@@ -1,26 +1,34 @@
-package com.cuongngo.core_project.roomdb
-
+package com.cuongngo.core_project.data.database
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.cuongngo.core_project.roomdb.Dao.GenreDao
-import com.cuongngo.core_project.roomdb.entity.GenreEntity
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
+import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
 
 @Database(
-    entities = [GenreEntity::class],
+    entities = [GenreEntity::class, RecordProcessEntity::class],
     version = 1,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun genreDao(): GenreDao
+    abstract fun recordProcessDao(): RecordProcessDao
 
     companion object {
 
         @Volatile
         private var INSTANCE: AppDatabase? = null
+        private val LOCK = Any()
 
+        operator fun invoke(context: Context) = INSTANCE ?: synchronized(LOCK) {
+            INSTANCE?:buildDatabase(context).also {
+                INSTANCE = it
+            }
+        }
         fun getDatabase(context: Context): AppDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
@@ -38,7 +46,7 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "cinemax_database"
+                "CoreProjectDatabase.db"
             ).build()
         }
     }

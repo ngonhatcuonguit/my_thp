@@ -2,7 +2,7 @@ package com.cuongngo.core_project.ui.onboard
 
 import android.content.Intent
 import androidx.viewpager2.widget.ViewPager2
-import com.cuongngo.core_project.AppPreferences.setShowOnBoard
+import com.cuongngo.core_project.data.local.AppPreferences.setShowOnBoard
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivityOnboardBinding

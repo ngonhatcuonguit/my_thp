@@ -1,7 +1,8 @@
-package com.cuongngo.core_project
+package com.cuongngo.core_project.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.cuongngo.core_project.App
 
 object AppPreferences {
 

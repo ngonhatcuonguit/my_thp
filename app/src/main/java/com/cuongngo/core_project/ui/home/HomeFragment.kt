@@ -16,7 +16,7 @@ import com.cuongngo.core_project.databinding.HomeFragmentBinding
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.response.Movie
 import com.cuongngo.core_project.response.movie_response.GenresMovie
-import com.cuongngo.core_project.roomdb.entity.GenreEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.categories.GenreAdapter
 import com.cuongngo.core_project.ui.media.detail.MediaDetailActivity

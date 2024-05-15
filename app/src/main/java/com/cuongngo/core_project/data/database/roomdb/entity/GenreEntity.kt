@@ -1,4 +1,4 @@
-package com.cuongngo.core_project.roomdb.entity
+package com.cuongngo.core_project.data.database.roomdb.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,6 +1,7 @@
-package com.cuongngo.core_project.services.network
+package com.cuongngo.core_project.data.database.data_source
 
 import android.util.Log
+import com.cuongngo.core_project.services.network.BaseResult
 
 abstract class BaseLocalDataSource {
     protected suspend fun <T> getResult(call: suspend () -> T): BaseResult<T> {

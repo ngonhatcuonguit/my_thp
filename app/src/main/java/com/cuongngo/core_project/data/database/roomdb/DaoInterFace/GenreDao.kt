@@ -1,7 +1,7 @@
-package com.cuongngo.core_project.roomdb.Dao
+package com.cuongngo.core_project.data.database.roomdb.DaoInterFace
 
 import androidx.room.*
-import com.cuongngo.core_project.roomdb.entity.GenreEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
 
 @Dao
 interface GenreDao {

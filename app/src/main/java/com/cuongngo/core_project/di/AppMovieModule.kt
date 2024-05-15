@@ -2,13 +2,16 @@ package com.cuongngo.core_project.di
 
 import androidx.lifecycle.ViewModelProvider
 import com.cuongngo.core_project.base.viewmodel.bindViewModel
+import com.cuongngo.core_project.data.database.data_source.RecordProcessLocalDataSource
 import com.cuongngo.core_project.services.MediaApi
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.core_project.services.remote.MediaRemoteDataSource
 import com.cuongngo.core_project.services.repository.MediaRepository
+import com.cuongngo.core_project.services.repository.RecordProcessRepository
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.media.MediaViewModel
 import com.cuongngo.core_project.ui.search.SearchViewModel
+import com.cuongngo.core_project.ui.test_room_db.RecordProcessViewModel
 import com.cuongngo.core_project.ui.youtube.VideoViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.direct
@@ -24,7 +27,11 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     bind() from singleton { MediaApi()}
 
     bind() from singleton { MediaRemoteDataSource(instance()) }
+    bind() from singleton { RecordProcessLocalDataSource(instance()) }
+
     bind() from singleton { MediaRepository(instance()) }
+    bind() from singleton { RecordProcessRepository(instance()) }
+
     bind<ViewModelProvider.Factory>() with singleton { ViewModelFactory(kodein.direct) }
     bindViewModel<MediaViewModel>() with provider {
         MediaViewModel(instance())
@@ -37,5 +44,8 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     }
     bindViewModel<VideoViewModel>() with provider {
         VideoViewModel(instance())
+    }
+    bindViewModel<RecordProcessViewModel>() with provider {
+        RecordProcessViewModel(instance())
     }
 }
