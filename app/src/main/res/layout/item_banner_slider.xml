@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="movie"
-            type="com.cuongngo.core_project.response.Movie" />
+            name="hotNew"
+            type="com.cuongngo.core_project.response.news.News" />
 
     </data>
 
@@ -22,7 +22,7 @@
             app:carbon_cornerRadius="16dp"
             app:layout_constraintDimensionRatio="295:154"
             app:layout_constraintWidth_percent="0.786"
-            loadImagePath="@{movie.backdrop_path}"
+            loadImageHotNew="@{hotNew.imageUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -32,15 +32,14 @@
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="4dp"
             android:textSize="16sp"
-            android:textColor="@color/white"
+            android:textColor="#FF9277"
             android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
-            android:layout_marginEnd="60dp"
-            android:text="@{movie.title}"
+            android:text="@{hotNew.title}"
             app:layout_constraintStart_toStartOf="@id/img_banner"
             app:layout_constraintBottom_toTopOf="@id/tv_date_release"
             app:layout_constraintEnd_toEndOf="@id/img_banner"
@@ -50,13 +49,13 @@
             android:id="@+id/tv_date_release"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="6dp"
             android:textSize="12sp"
-            android:textColor="#EBEBEF"
+            android:textColor="#FF9277"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginEnd="60dp"
-            android:text="@{movie.release_date}"
+            android:text="@{hotNew.releaseDate}"
             app:layout_constraintStart_toStartOf="@id/tv_title"
             app:layout_constraintBottom_toBottomOf="@id/img_banner"
             app:layout_constraintEnd_toEndOf="@id/img_banner"

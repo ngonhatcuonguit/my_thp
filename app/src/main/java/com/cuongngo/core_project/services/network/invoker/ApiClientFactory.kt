@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.services.network.invoker
 
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.utils.Constants
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
@@ -14,8 +15,9 @@ class ApiClientFactory {
         inline fun <reified T> createService(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): T{
             val okkHttpClient = OkHttpClient.Builder()
                 .addInterceptor(BaseInterceptor().apply {
-                    addParam("language" to Constants.ENGLISH)
-                    addParam("api_key" to Constants.API_KEY)
+//                    addParam("language" to Constants.ENGLISH)
+//                    addParam("api_key" to Constants.API_KEY)
+                    setToken("Bearer ${AppPreferences.getUserAccessToken()}")
                 })
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)

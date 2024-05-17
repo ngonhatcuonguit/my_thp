@@ -10,7 +10,6 @@ import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivityMainBinding
 import com.cuongngo.core_project.ui.home.HomeFragment
 import com.cuongngo.core_project.ui.profile.ProfileFragment
-import com.cuongngo.core_project.ui.search.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
@@ -45,39 +44,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 R.id.navigation_home -> {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.show(homeFragment)
-                    val searchFragment = fragmentManager.findFragmentByTag(SearchFragment.TAG)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    if (searchFragment != null) {
-                        transaction.remove(searchFragment)
+                    if (profileFragment != null) {
+                        transaction.remove(profileFragment)
                     }
                     if (profileFragment != null) transaction.remove(profileFragment)
                     transaction.commit()
                     currentFragment = HomeFragment.TAG
                 }
                 R.id.navigation_search -> {
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.hide(homeFragment)
-                    val searchFragment = fragmentManager.findFragmentByTag(SearchFragment.TAG)
-                    if (searchFragment == null){
-                        transaction.add(
-                            R.id.container,
-                            SearchFragment(),
-                            SearchFragment.TAG
-                        )
-                        transaction.commit()
-                        currentFragment = SearchFragment.TAG
-                    }else {
 
-                    }
                 }
                 R.id.navigation_profile -> {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.hide(homeFragment)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    val searchFragment = fragmentManager.findFragmentByTag(SearchFragment.TAG)
-                    if (searchFragment != null) {
-                        transaction.remove(searchFragment)
-                    }
                     if (profileFragment == null){
                         transaction.add(
                             R.id.container,

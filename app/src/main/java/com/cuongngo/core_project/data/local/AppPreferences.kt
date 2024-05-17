@@ -10,10 +10,22 @@ object AppPreferences {
     private var editor: SharedPreferences.Editor
     private const val REFERENCES_NAME = "AppPreferences"
     private const val KEY_SHOWN_ON_BOARD = "key_shown_on_board"
+    const val KEY_USER_ACCESS_TOKEN = "USER_ACCESS_TOKEN"
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
         editor = preferences.edit()
+    }
+
+    fun getUserAccessToken(): String {
+        return preferences.getString(KEY_USER_ACCESS_TOKEN, "") ?: ""
+    }
+
+    fun setUserAccessToken(token: String) {
+        editor.also {
+            it.putString(KEY_USER_ACCESS_TOKEN, token)
+            it.commit()
+        }
     }
 
     /**

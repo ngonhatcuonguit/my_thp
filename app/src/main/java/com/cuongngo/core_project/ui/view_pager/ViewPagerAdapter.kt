@@ -7,17 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.databinding.ItemBannerSliderBinding
-import com.cuongngo.core_project.response.Movie
+import com.cuongngo.core_project.response.news.News
 
 class ViewPagerAdapter (
-    private val data: List<Movie> = emptyList(),
+    private val data: List<News> = emptyList(),
     private val viewPager2: ViewPager2,
     private val onDetachFromWindow: (() -> Unit)? = null,
     private val onAttachToWindow: (() -> Unit)? = null,
-    private val onItemClick: ((Movie) -> Unit)? = null
+    private val onItemClick: ((News) -> Unit)? = null
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>() {
 
-    private var infiniteData: MutableList<Movie> = ArrayList()
+    private var infiniteData: MutableList<News> = ArrayList()
 
     init {
         infiniteData.apply {
@@ -40,16 +40,16 @@ class ViewPagerAdapter (
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
         val binding = holder.itemBannerSliderBinding
-        val movie = infiniteData[position]
-        binding.movie = movie
+        val hotNew = infiniteData[position]
+        binding.hotNew = hotNew
         binding.root.setOnClickListener {
-            onItemClick?.invoke(movie)
+            onItemClick?.invoke(hotNew)
         }
 
     }
 
-    fun submitList(listMovie: ArrayList<Movie>){
-        this.infiniteData.addAll(listMovie)
+    fun submitList(listHotNew: ArrayList<News>){
+        this.infiniteData.addAll(listHotNew)
         notifyDataSetChanged()
     }
 

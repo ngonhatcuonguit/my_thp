@@ -1,10 +1,7 @@
 package com.cuongngo.core_project.ui.test_room_db
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
-import androidx.lifecycle.lifecycleScope
-import com.cuongngo.core_project.App
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
@@ -13,7 +10,6 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import kotlinx.coroutines.launch
 
 class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, RecordProcessViewModel>() {
 
@@ -37,13 +33,13 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
             viewModel.getRecordProcess("nhiet do")
         }
         binding.bthSave.setOnClickListener {
-            upsertRecordProcess()
+            saveLocalData()
             finish()
         }
     }
 
     override fun onBackPressed() {
-        upsertRecordProcess()
+        saveLocalData()
         super.onBackPressed()
     }
     override fun setUpObserver() {
@@ -68,25 +64,41 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
         }
     }
 
-    private fun upsertRecordProcess(){
+    private fun saveLocalData(){
         if (recordProcessEntity != null){
             recordProcessEntity?.let {
                 WTF("testOnback1 $recordProcessEntity")
                 var value : Double? = null
                 if(binding.edtTemperature.text.toString().isNotEmpty()){
-                    value = binding.edtTemperature.text.toString().toDouble()
+                    value = (binding.edtTemperature.text.toString()).toDouble()
                 }else{
                     value = null
                 }
-                viewModel.upsertRecordProcess(
-                    RecordProcessEntity(
-                        id = it.id,
-                        name = it.name,
-                        value = value,
-                        note = it.note
+                if (value != null){
+                    viewModel.upsertRecordProcess(
+                        RecordProcessEntity(
+                            id = it.id,
+                            name = it.name,
+                            value = value,
+                            note = it.note
+                        )
                     )
-                )
+                }
+
             }
+        }else{
+            var value : Double? = null
+            if(binding.edtTemperature.text.toString().isNotEmpty()){
+                value = (binding.edtTemperature.text.toString()).toDouble()
+            }else{
+                value = null
+            }
+            viewModel.upsertRecordProcess(
+                RecordProcessEntity(
+                    name = "nhiet do",
+                    value = value,
+                )
+            )
         }
 
     }
