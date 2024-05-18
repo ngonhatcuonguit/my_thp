@@ -10,6 +10,8 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, RecordProcessViewModel>() {
 
@@ -51,7 +53,7 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.value?.let {
-                        binding.edtTemperature.setText(it.toString())
+                        binding.edtTemperature.setText(DecimalFormat("#0.000").format(it))
                     }
                     recordProcessEntity = it.data
                     WTF("testLocalDB ${it.data}")
@@ -70,7 +72,7 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
                 WTF("testOnback1 $recordProcessEntity")
                 var value : Double? = null
                 if(binding.edtTemperature.text.toString().isNotEmpty()){
-                    value = (binding.edtTemperature.text.toString()).toDouble()
+                    value = parseDouble(binding.edtTemperature.text.toString())
                 }else{
                     value = null
                 }
@@ -89,7 +91,7 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
         }else{
             var value : Double? = null
             if(binding.edtTemperature.text.toString().isNotEmpty()){
-                value = (binding.edtTemperature.text.toString()).toDouble()
+                value = parseDouble(binding.edtTemperature.text.toString())
             }else{
                 value = null
             }
@@ -122,6 +124,14 @@ class RecordProcessActivity : AppBaseActivityMVVM<ActivityRecordProcessBinding, 
             }
         }
         return ret
+    }
+    fun parseDouble(string: String): Double? {
+        return try {
+            val normalizedString = string.replace(',', '.').replace(" ", "")
+            normalizedString.toDoubleOrNull()
+        } catch (e: NumberFormatException) {
+            null
+        }
     }
 
 }
