@@ -4,14 +4,15 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Home"
+        />
     <item android:id="@+id/navigation_search"
-        android:icon="@drawable/ic_search_gray"
-        android:title="Search"/>
+        android:icon="@drawable/ic_file_dock"
+        android:title="Danh Sách"/>
     <item
         android:id="@+id/navigation_download"
-        android:icon="@drawable/ic_nav_download"
-        android:title="Download" />
+        android:icon="@drawable/ic_add_form"
+        android:title="Tạo Form" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"

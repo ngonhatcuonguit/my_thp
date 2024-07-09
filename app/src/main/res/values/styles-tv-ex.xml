@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextViewEx" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/black_1c</item>
+    </style>
+
+    <style name="TextViewEx.Normal" parent="TextViewEx">
+        <item name="fontType">normal</item>
+    </style>
+
+    <style name="TextViewEx.Normal.S16" parent="TextViewEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="TextViewEx.Small" parent="TextViewEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="TextViewEx.Small.Gray93" parent="TextViewEx.Small">
+        <item name="android:textColor">@color/gray_93</item>
+    </style>
+
+    <style name="TextViewEx.Medium" parent="TextViewEx">
+        <item name="fontType">medium</item>
+    </style>
+
+    <style name="TextViewEx.SemiBold" parent="TextViewEx">
+        <item name="fontType">semi_bold</item>
+    </style>
+
+    <style name="TextViewEx.Title" parent="TextViewEx">
+        <item name="fontType">bold</item>
+    </style>
+
+    <style name="TextViewEx.Normal.White" parent="TextViewEx.Normal">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextViewEx.Title.White" parent="TextViewEx.Title">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextViewEx.SingleLine" parent="TextViewEx">
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:ems">3</item>
+    </style>
+
+<!--    New DS-->
+    <style name="TextViewEx.Heading_1" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_36</item>
+    </style>
+
+    <style name="TextViewEx.Heading_2" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_28</item>
+    </style>
+
+    <style name="TextViewEx.Heading_3" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_24</item>
+    </style>
+
+    <style name="TextViewEx.Heading_4" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+    </style>
+
+    <style name="TextViewEx.Heading_5" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="TextViewEx.BodyLarge" parent="TextViewEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="TextViewEx.BodyMedium" parent="TextViewEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="TextViewEx.BodySmall" parent="TextViewEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+    <style name="TextViewEx.BodyVerySmall" parent="TextViewEx">
+        <item name="fontFamily">@font/bep_medium</item>
+        <item name="fontType">normal</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+    </style>
+
+    <style name="TextViewEx.Button" parent="TextViewEx">
+        <item name="fontType">semi_bold</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleExtraLarge" parent="TextViewEx">
+        <item name="fontType">medium</item>
+        <item name="android:textSize">@dimen/text_size_20</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleLarge" parent="TextViewEx">
+        <item name="fontType">medium</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleMedium" parent="TextViewEx">
+        <item name="fontType">medium</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleMediumBold" parent="TextViewEx">
+        <item name="fontType">bold</item>
+        <item name="android:textSize">@dimen/text_size_14</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleSmall" parent="TextViewEx">
+        <item name="fontType">medium</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+    </style>
+
+    <style name="TextViewEx.SubtitleTiny" parent="TextViewEx">
+        <item name="fontType">medium</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+    </style>
+
+
+</resources>

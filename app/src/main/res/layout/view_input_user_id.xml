@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mã số nhân viên"
+            android:textColor="@color/gray_00"
+            android:textSize="16sp"
+            android:layout_marginStart="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.okxe.core_okxe.common.view.view_ex.EditTextEx
+            android:id="@+id/edt_user_id"
+            style="@style/EditTextEx.SingleLine"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_input_radius_12"
+            android:digits="0123456789"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:lines="1"
+            android:singleLine="true"
+            android:maxLength="14"
+            android:paddingHorizontal="16dp"
+            android:hint="Nhập mã số nhân viên"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_00"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_validate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="2dp"
+            android:textColor="@color/text_color_validate_red"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:fontType="normal"
+            tools:text="hahahahahaha"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_user_id" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
