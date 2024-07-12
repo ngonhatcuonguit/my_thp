@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
 import com.cuongngo.core_project.di.appMovieModule
 import com.cuongngo.core_project.data.database.AppDatabase
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
 import com.cuongngo.core_project.di.localModule
@@ -55,6 +56,10 @@ class App : Application(), KodeinAware, LifecycleObserver {
         }
         fun getRecordDatabase() : RecordProcessDao {
             return AppDatabase.getDatabase(getInstance()).recordProcessDao()
+        }
+
+        fun getFormDatabase() : FormDao {
+            return AppDatabase.getDatabase(getInstance()).thpFormDao()
         }
 
     }

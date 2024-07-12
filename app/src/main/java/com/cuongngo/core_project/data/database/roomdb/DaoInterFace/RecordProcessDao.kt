@@ -1,4 +1,5 @@
 package com.cuongngo.core_project.data.database.roomdb.DaoInterFace
+
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -13,13 +14,13 @@ interface RecordProcessDao {
     fun addRecordProcess(record: RecordProcessEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(record: RecordProcessEntity) : Long
+    fun upsert(record: RecordProcessEntity): Long
 
     @Query("SELECT * FROM record_process")
     fun getAllRecordProcess(): List<RecordProcessEntity>
 
     @Query("SELECT * FROM record_process WHERE name = :name")
-    fun getRecordProcessByName(name : String) : RecordProcessEntity
+    fun getRecordProcessByName(name: String): RecordProcessEntity
 
 //    @Query("SELECT * FROM record_process WHERE name = :name AND id = :id")
 //    fun getRecordProcessByName(name : String, id : Long) : RecordProcessEntity

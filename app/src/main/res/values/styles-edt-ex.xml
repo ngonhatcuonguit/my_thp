@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="EditTextEx" parent="Widget.AppCompat.EditText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
-        <item name="android:textColor">@color/black_1c</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="EditTextEx.Normal" parent="EditTextEx">
@@ -33,77 +34,77 @@
     <!--    New DS-->
     <style name="EditTextEx.Heading_1" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_36</item>
+        <item name="android:textSize">36sp</item>
     </style>
 
     <style name="EditTextEx.Heading_2" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_28</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
     <style name="EditTextEx.Heading_3" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_24</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="EditTextEx.Heading_4" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="EditTextEx.Heading_5" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="EditTextEx.BodyLarge" parent="EditTextEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="EditTextEx.BodyMedium" parent="EditTextEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="EditTextEx.BodySmall" parent="EditTextEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="EditTextEx.Button" parent="EditTextEx">
         <item name="fontType">semi_bold</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleExtraLarge" parent="EditTextEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">@dimen/text_size_20</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleLarge" parent="EditTextEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleMedium" parent="EditTextEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleMediumBold" parent="EditTextEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleSmall" parent="EditTextEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="EditTextEx.SubtitleTiny" parent="EditTextEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 

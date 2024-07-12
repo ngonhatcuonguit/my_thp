@@ -3,20 +3,25 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
 
 @Database(
-    entities = [GenreEntity::class, RecordProcessEntity::class],
-    version = 1,
+    entities = [GenreEntity::class, RecordProcessEntity::class, FormEntity::class],
+    version = 2,
     exportSchema = true
 )
+
+
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun genreDao(): GenreDao
     abstract fun recordProcessDao(): RecordProcessDao
+    abstract fun thpFormDao(): FormDao
 
     companion object {
 
@@ -47,7 +52,7 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "CoreProjectDatabase.db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
         }
     }
 }

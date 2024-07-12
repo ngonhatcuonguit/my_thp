@@ -5,6 +5,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.databinding.FragmentProfileBinding
+import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.test_room_db.RecordProcessActivity
 
 class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewModel>() {
@@ -15,8 +16,11 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
 
     override fun setUp() {
         binding.btnLogOut.setOnClickListener {
+//            startActivity(
+//                Intent(context, RecordProcessActivity::class.java)
+//            )
             startActivity(
-                Intent(context, RecordProcessActivity::class.java)
+                Intent(context, ListFormActivity::class.java)
             )
         }
     }
