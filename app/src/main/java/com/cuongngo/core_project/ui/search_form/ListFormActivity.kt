@@ -87,11 +87,11 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
     fun addForm() {
         viewModel.upsertForm(
             FormEntity(
-                id = 1,
-                title = "title",
+                id = 123,
+                title = "Giấy phép vào khu vực nhạy cảm-12345-THP",
                 status = 1,
-                created = null,
-                updated = null
+                code = "cuong test",
+                type = "type1"
             )
         )
     }

@@ -13,9 +13,15 @@ import java.io.Serializable
 
 @Entity(tableName = "forms")
 data class FormEntity (
-    @PrimaryKey(autoGenerate = true) val id: Long? = null,
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "id")
+    val id: Long? = null,
+    @ColumnInfo(name = "code")
+    val code: String? = null,
     @ColumnInfo(name = "title")
     val title: String? = null,
+    @ColumnInfo(name = "type")
+    val type: String? = null,
     @ColumnInfo(name = "status")
     val status: Int? = null,
     @ColumnInfo(name = "created")

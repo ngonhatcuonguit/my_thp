@@ -30,9 +30,6 @@ class FormAdapter(
         val binding = holder.itemForm
         var form = listForm[position]
         binding.form = form
-        binding.tvFormId.text = form.id.toString()
-        binding.tvFormStatus.text = form.status.toString()
-        binding.tvFormTitle.text = form.title.toString()
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(form) ?: return@setOnClickListener
         }

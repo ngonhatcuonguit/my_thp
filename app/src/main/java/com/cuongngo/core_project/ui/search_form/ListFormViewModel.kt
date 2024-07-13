@@ -70,6 +70,14 @@ class ListFormViewModel(private val formRepository: FormRepository) : BaseViewMo
             }
         }
     }
+
+    fun insertForm(formEntity: FormEntity) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _formId.postValue(formRepository.insertForm(formEntity))
+            }
+        }
+    }
 //    fun deleteForm(formEntity: FormEntity) {
 //        viewModelScope.launch {
 //            _formInt.postValue(formRepository.deleteForm(formEntity))

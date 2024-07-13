@@ -51,7 +51,7 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
      * ViewModel binding
      */
     bindViewModel<HomeViewModel>() with provider {
-        HomeViewModel(instance())
+        HomeViewModel(instance(), instance())
     }
     bindViewModel<UserViewModel>() with provider {
         UserViewModel(instance())

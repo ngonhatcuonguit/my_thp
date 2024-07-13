@@ -172,14 +172,13 @@
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_listMovie"
+                    android:id="@+id/rcv_list_popular_form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:clipToPadding="false"
-                    android:paddingVertical="6dp"
+                    android:layout_marginHorizontal="16dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:spanCount="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_popular_title"
@@ -191,10 +190,10 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/rcv_listMovie"
+                    app:layout_constraintBottom_toBottomOf="@id/rcv_list_popular_form"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/rcv_listMovie">
+                    app:layout_constraintTop_toTopOf="@id/rcv_list_popular_form">
                     <ProgressBar
                         android:id="@+id/progress_bar_list_movie"
                         android:layout_width="wrap_content"
