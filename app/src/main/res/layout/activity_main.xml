@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingVertical="6dp"
-            android:background="#1F1D2B"
+            android:background="@drawable/shape_bottom_navigation"
             app:itemIconTint="@color/bottom_nav_color_tint"
             app:itemTextColor="@color/bottom_nav_text_color"
             app:labelVisibilityMode="labeled"

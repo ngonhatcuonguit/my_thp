@@ -12,6 +12,7 @@
     <color name="blue_accent">#12CDD9</color>
     <color name="primary_color">#01AA4F</color>
     <color name="gray_D9">#D9D9D9</color>
+    <color name="gray_DF">#DFDFDF</color>
     <color name="text_color_validate_red">#FF0000</color>
     <color name="gray_00">#626262</color>
     <color name="gray_FF">#F1F4FF</color>

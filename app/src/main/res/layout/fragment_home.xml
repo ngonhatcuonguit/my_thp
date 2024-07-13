@@ -7,12 +7,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="#1F1D2B">
+        android:background="@color/white">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_avatar"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/default_avatar"
@@ -29,8 +29,8 @@
             android:layout_marginStart="16dp"
             android:gravity="top"
             android:text="Hello, Smith"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/img_avatar"
             app:layout_constraintTop_toTopOf="@id/img_avatar" />
@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="bottom"
-            android:text="Let’s stream your favorite movie"
-            android:textColor="#92929D"
-            android:textSize="15sp"
+            android:text="Welcome to E-Approval"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/img_avatar"
             app:layout_constraintStart_toEndOf="@id/img_avatar" />
 
@@ -60,22 +60,23 @@
         <carbon.widget.ConstraintLayout
             android:id="@+id/cl_search"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="60dp"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="32dp"
-            android:background="#252836"
-            app:carbon_cornerRadius="24dp"
+            android:background="@color/gray_FF"
+            app:carbon_cornerRadius="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_description_welcome">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
                 android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/dark"
                 app:srcCompat="@drawable/ic_search_gray" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -85,10 +86,10 @@
                 android:layout_marginHorizontal="8dp"
                 android:background="@null"
                 android:ellipsize="end"
-                android:text="Searc a title.."
+                android:text="Search a Form title..."
                 android:maxLines="1"
-                android:textColor="#92929D"
-                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
                 android:gravity="center_vertical"
                 app:layout_constraintStart_toEndOf="@id/iv_search"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -107,12 +108,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/dark"
                 app:srcCompat="@drawable/ic_filter" />
         </carbon.widget.ConstraintLayout>
 
@@ -144,9 +146,9 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Most popular"
+                    android:text="Most popular form"
                     android:textSize="16sp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textStyle="bold"
                     android:layout_marginStart="@dimen/_24dp"
                     android:layout_marginTop="@dimen/_24dp"
@@ -161,8 +163,8 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:text="See All"
-                    android:textSize="14sp"
-                    android:textColor="#12CDD9"
+                    android:textSize="15sp"
+                    android:textColor="@color/blue_accent"
                     android:layout_marginEnd="@dimen/_24dp"
                     app:layout_constraintTop_toTopOf="@id/tv_popular_title"
                     app:layout_constraintBottom_toBottomOf="@id/tv_popular_title"

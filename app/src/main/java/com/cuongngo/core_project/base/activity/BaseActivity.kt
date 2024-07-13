@@ -2,6 +2,7 @@ package com.cuongngo.core_project.base.activity
 
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -9,7 +10,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -54,17 +57,22 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         window.also {
             it.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             it.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            it.statusBarColor = getColor(R.color.dark)
+            it.statusBarColor = ContextCompat.getColor(applicationContext,R.color.dark)
         }
     }
 
     open fun enableLightStatusBar(){
-        val window = window
-        val decorView: View = window.decorView
-        WindowInsetsControllerCompat(window, decorView).also { wic ->
-            wic.isAppearanceLightStatusBars = true // true or false as desired.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val window = window
+            val decorView: View = window.decorView
+            WindowInsetsControllerCompat(window, decorView).also { wic ->
+                wic.isAppearanceLightStatusBars = true // true or false as desired.
+            }
+            window.statusBarColor = customStatusBarColor
+        }else {
+            setDefaultStatusBarColor()
         }
-        window.statusBarColor = customStatusBarColor
+
 
         /** DEPRECATED -> not use it, just for learning something old
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
