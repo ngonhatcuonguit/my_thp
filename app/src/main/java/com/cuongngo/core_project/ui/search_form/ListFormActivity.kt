@@ -1,13 +1,11 @@
 package com.cuongngo.core_project.ui.search_form
 
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.FormSchemaEntity
 import com.cuongngo.core_project.databinding.ActivityListFormBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -86,23 +84,18 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
     }
 
     fun addForm() {
-        viewModel.insertFormSchema(
-            FormSchemaEntity(
-                id = 123,
-                formCode = "form_code_123",
-                code = "schema_code_123",
-                schemaName = "schema_name_123"
-            )
-        )
         viewModel.upsertForm(
             FormEntity(
-                id = 123,
+                id = 345,
                 title = "Giấy phép vào khu vực nhạy cảm-12345-THP",
                 status = 1,
-                code = "form_code_123",
-                type = "type1"
+                formCode = "form_code_123",
+                schemaCode = "form_code_123",
+                type = "type1",
+                schemaName = "schemaName",
             )
         )
+
     }
 
 

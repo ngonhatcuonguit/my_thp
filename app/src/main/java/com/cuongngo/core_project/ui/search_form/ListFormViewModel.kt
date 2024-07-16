@@ -5,15 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.FormSchemaEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
-import com.cuongngo.core_project.services.repository.FormSchemaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ListFormViewModel(private val formRepository: FormRepository, private val formSchemaRepository: FormSchemaRepository) : BaseViewModel() {
+class ListFormViewModel(private val formRepository: FormRepository) : BaseViewModel() {
 
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
@@ -28,14 +27,14 @@ class ListFormViewModel(private val formRepository: FormRepository, private val 
     val formInt: LiveData<BaseResult<Int>> = _formInt
 
 
-    private val _allFormSchema = MutableLiveData<BaseResult<List<FormSchemaEntity>>>()
-    val allFormSchema: LiveData<BaseResult<List<FormSchemaEntity>>> = _allFormSchema
+    private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
+    val allRequest: LiveData<BaseResult<List<RequestEntity>>> = _allRequest
 
-    private val _formSchema = MutableLiveData<BaseResult<FormSchemaEntity>>()
-    val formSchema: LiveData<BaseResult<FormSchemaEntity>> = _formSchema
+    private val _request = MutableLiveData<BaseResult<Long>>()
+    val request: LiveData<BaseResult<Long>> = _request
 
-    private val _formSchemaId = MutableLiveData<BaseResult<Long>>()
-    val formSchemaId: LiveData<BaseResult<Long>> = _formSchemaId
+    private val _requestId = MutableLiveData<BaseResult<Long>>()
+    val requestId: LiveData<BaseResult<Long>> = _requestId
 
 //    init {
 //        getAllForm()
@@ -101,20 +100,10 @@ class ListFormViewModel(private val formRepository: FormRepository, private val 
 //        }
 //    }
 
-    fun getFormSchemaByCode(code: String) {
-        _formSchema.value = BaseResult.loading(null)
+    fun insertRequest(requestEntity: RequestEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _formSchema.postValue(formSchemaRepository.getFormSchemaByCode(code))
-            }
-        }
-
-    }
-
-    fun insertFormSchema(formSchemaEntity: FormSchemaEntity) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _formSchemaId.postValue(formSchemaRepository.insertFormSchema(formSchemaEntity))
+                _request.postValue(formRepository.insertRequest(requestEntity))
             }
         }
     }

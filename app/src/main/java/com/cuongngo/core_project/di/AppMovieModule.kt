@@ -3,17 +3,16 @@ package com.cuongngo.core_project.di
 import androidx.lifecycle.ViewModelProvider
 import com.cuongngo.core_project.base.viewmodel.bindViewModel
 import com.cuongngo.core_project.data.database.data_source.FormLocalDataSource
-import com.cuongngo.core_project.data.database.data_source.FormSchemaLocalDataSource
+import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSource
 import com.cuongngo.core_project.data.database.data_source.RecordProcessLocalDataSource
 import com.cuongngo.core_project.services.THPApi
-import com.cuongngo.core_project.services.network.BaseRemoteDataSource
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.core_project.services.remote.UserRemoteDataSource
 import com.cuongngo.core_project.services.repository.FormRepository
-import com.cuongngo.core_project.services.repository.FormSchemaRepository
+import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.RecordProcessRepository
 import com.cuongngo.core_project.services.repository.UserRepository
-import com.cuongngo.core_project.ui.form_schema.FormSchemaViewModel
+import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.login.UserViewModel
 import com.cuongngo.core_project.ui.search_form.ListFormViewModel
@@ -36,7 +35,7 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     bind() from singleton { UserRemoteDataSource(instance()) }
     bind() from singleton { RecordProcessLocalDataSource(instance()) }
     bind() from singleton { FormLocalDataSource(instance()) }
-    bind() from singleton { FormSchemaLocalDataSource(instance()) }
+    bind() from singleton { RequestLocalDataSource(instance()) }
 
     /**
      * Network binding
@@ -50,7 +49,7 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     bind() from singleton { RecordProcessRepository(instance()) }
     bind() from singleton { UserRepository(instance()) }
     bind() from singleton { FormRepository(instance()) }
-    bind() from singleton { FormSchemaRepository(instance()) }
+    bind() from singleton { RequestRepository(instance()) }
 
     /**
      * ViewModel binding
@@ -65,10 +64,10 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
         RecordProcessViewModel(instance())
     }
     bindViewModel<ListFormViewModel>() with provider {
-        ListFormViewModel(instance(), instance())
+        ListFormViewModel(instance())
     }
-    bindViewModel<FormSchemaViewModel>() with provider {
-        FormSchemaViewModel(instance())
+    bindViewModel<RequestViewModel>() with provider {
+        RequestViewModel(instance())
     }
 
 }

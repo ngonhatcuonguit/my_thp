@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.data.database.data_source
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSource() {
 
@@ -18,6 +19,9 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     }
     suspend fun insertForm(record: FormEntity) = getResult {
         database.thpFormDao().insertForm(record)
+    }
+    suspend fun insertRequest(formSchema: RequestEntity) = getResult {
+        database.thpFormDao().insertRequest(formSchema)
     }
     suspend fun updateForm(record: FormEntity) = getResult {
         database.thpFormDao().updateForm(record)

@@ -34,7 +34,7 @@
             android:textColor="@color/gray_99"
             android:textSize="14sp"
             android:textStyle="normal"
-            android:text="@{form.code}"
+            android:text="@{form.formCode}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/tv_form_type"
             app:layout_constraintTop_toTopOf="parent"

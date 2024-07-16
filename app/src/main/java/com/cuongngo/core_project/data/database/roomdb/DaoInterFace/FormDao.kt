@@ -7,17 +7,21 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 @Dao
 interface FormDao {
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertRequest(formSchema: RequestEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertForm(formEntity: FormEntity): Long
 
     @Update
     fun updateForm(record: FormEntity): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertForm(formEntity: FormEntity): Long
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertForm(formEntity: FormEntity): Long
 
     @Query("SELECT * FROM forms")
     fun getAllForm(): List<FormEntity>

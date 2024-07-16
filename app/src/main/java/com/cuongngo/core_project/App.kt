@@ -9,7 +9,7 @@ import androidx.lifecycle.LifecycleObserver
 import com.cuongngo.core_project.di.appMovieModule
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
-import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormSchemaDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
 import com.cuongngo.core_project.di.localModule
@@ -62,8 +62,8 @@ class App : Application(), KodeinAware, LifecycleObserver {
         fun getFormDatabase() : FormDao {
             return AppDatabase.getDatabase(getInstance()).thpFormDao()
         }
-        fun getFormSchemaDatabase() : FormSchemaDao {
-            return AppDatabase.getDatabase(getInstance()).formSchemaDao()
+        fun getFormSchemaDatabase() : RequestDao {
+            return AppDatabase.getDatabase(getInstance()).requestDao()
         }
 
     }

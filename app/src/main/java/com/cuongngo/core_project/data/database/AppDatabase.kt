@@ -4,16 +4,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
-import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormSchemaDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.FormSchemaEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 @Database(
-    entities = [GenreEntity::class, RecordProcessEntity::class, FormEntity::class, FormSchemaEntity::class],
+    entities = [GenreEntity::class, RecordProcessEntity::class, FormEntity::class, RequestEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun genreDao(): GenreDao
     abstract fun recordProcessDao(): RecordProcessDao
     abstract fun thpFormDao(): FormDao
-    abstract fun formSchemaDao(): FormSchemaDao
+    abstract fun requestDao(): RequestDao
 
     companion object {
 
