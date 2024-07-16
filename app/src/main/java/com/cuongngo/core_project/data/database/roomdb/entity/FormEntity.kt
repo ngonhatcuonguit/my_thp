@@ -2,35 +2,44 @@ package com.cuongngo.core_project.data.database.roomdb.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
-import androidx.room.TypeConverters
 import com.cuongngo.core_project.response.thp_form.Field
 import com.cuongngo.core_project.response.thp_form.SubmitButton
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
-@Entity(tableName = "forms")
-data class FormEntity (
+@Entity(
+    tableName = "forms",
+    foreignKeys = [ForeignKey(
+        entity = FormSchemaEntity::class,
+        parentColumns = arrayOf("form_code"),
+        childColumns = arrayOf("code"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class FormEntity(
     @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     val id: Long? = null,
     @ColumnInfo(name = "code")
-    val code: String? = null,
+    var code: String,
     @ColumnInfo(name = "title")
-    val title: String? = null,
+    var title: String? = null,
     @ColumnInfo(name = "type")
-    val type: String? = null,
+    var type: String? = null,
     @ColumnInfo(name = "status")
-    val status: Int? = null,
+    var status: Int? = null,
     @ColumnInfo(name = "created")
-    val created: String? = null,
+    var created: String? = null,
     @ColumnInfo(name = "updated")
-    val updated: String? = null,
+    var updated: String? = null,
 //    @TypeConverters(FieldListTypeConverter::class) val fields: List<Field>,
 //    @TypeConverters(SubmitButtonTypeConverter::class) val submitButton: SubmitButton
-): Serializable
+) : Serializable
 
 
 data class upsertForm(
@@ -38,7 +47,7 @@ data class upsertForm(
     val status: Int,
     val created: String,
     val updated: String,
-): Serializable
+) : Serializable
 
 class FieldListTypeConverter {
     @TypeConverter
