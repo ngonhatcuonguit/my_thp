@@ -1,25 +1,22 @@
-package com.cuongngo.core_project.ui.search_form
+package com.cuongngo.core_project.ui.add_request
 
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
-import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
+import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.databinding.ActivityListFormBinding
+import com.cuongngo.core_project.databinding.FragmentAddRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.search_form.ListFormActivity
+import com.cuongngo.core_project.ui.search_form.ListFormViewModel
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import io.reactivex.disposables.Disposable
 
-class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormViewModel>() {
+class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, ListFormViewModel>() {
 
     override val viewModel: ListFormViewModel by kodeinViewModel()
-
-    companion object {
-        val TAG = ListFormActivity::class.java.simpleName
-    }
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var compositeDisposable: Disposable? = null
@@ -29,18 +26,19 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
     private var isMore: Boolean = true
 
     private lateinit var formAdapter: FormAdapter
+    override fun inflateLayout(): Int = R.layout.fragment_add_request
 
-    override fun inflateLayout(): Int = R.layout.activity_list_form
-    override fun onResume() {
-        super.onResume()
+    companion object {
+        val TAG = AddRequestFragment::class.java.simpleName
     }
 
     override fun setUp() {
         viewModel.getAllForm()
-        binding.btnAddForm.setOnClickListener {
-            addForm()
-        }
-        setupRecycleViewListForm()
+        setupRcvListForm()
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun setUpObserver() {
@@ -53,7 +51,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
                     hideProgressDialog()
                     it.data?.let { listForm ->
                         formAdapter.submitListForm(listForm)
-                        WTF(TAG, "dataForm: ${listForm}")
+                        WTF(ListFormActivity.TAG, "dataForm: ${listForm}")
                     }
                 },
                 onError = {
@@ -63,40 +61,19 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
         }
     }
 
-    private fun setupRecycleViewListForm() {
-        val gridLayoutManager = GridLayoutManager(this, 1)
+    private fun setupRcvListForm() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {
                 //show detail
             }
         )
-//        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {
-//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-//                viewModel.loadMoreSearch(totalPages)
-//            }
-//        }
         binding.rvListForm.apply {
             adapter = formAdapter
             layoutManager = gridLayoutManager
 //            addOnScrollListener(scrollListener)
         }
     }
-
-    fun addForm() {
-        viewModel.upsertForm(
-            FormEntity(
-                id = 789,
-                title = "Giấy ra vào cổng-12345-THP",
-                status = 1,
-                formCode = "form_code_789",
-                schemaCode = "form_code_789",
-                type = "type1",
-                schemaName = "schemaName",
-            )
-        )
-
-    }
-
 
 }

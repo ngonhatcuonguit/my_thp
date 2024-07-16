@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivityMainBinding
+import com.cuongngo.core_project.ui.add_request.AddRequestFragment
 import com.cuongngo.core_project.ui.home.HomeFragment
 import com.cuongngo.core_project.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -45,20 +46,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.show(homeFragment)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    if (profileFragment != null) {
-                        transaction.remove(profileFragment)
-                    }
+                    val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
                     if (profileFragment != null) transaction.remove(profileFragment)
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
                     transaction.commit()
                     currentFragment = HomeFragment.TAG
                 }
-                R.id.navigation_search -> {
+                R.id.navigation_add_form -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.hide(homeFragment)
+                    val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    if (profileFragment != null) transaction.remove(profileFragment)
+                    if (addRequestFragment == null){
+                        transaction.add(
+                            R.id.container,
+                            AddRequestFragment(),
+                            AddRequestFragment.TAG
+                        )
+                        transaction.commit()
+                        currentFragment = AddRequestFragment.TAG
+                    }else {
+
+                    }
 
                 }
                 R.id.navigation_profile -> {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.hide(homeFragment)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
                     if (profileFragment == null){
                         transaction.add(
                             R.id.container,

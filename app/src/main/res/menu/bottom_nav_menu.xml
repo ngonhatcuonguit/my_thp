@@ -7,11 +7,11 @@
         android:title="Home"
         />
     <item
-        android:id="@+id/navigation_download"
+        android:id="@+id/navigation_add_form"
         android:icon="@drawable/ic_add_form"
         android:title="Tạo yêu cầu" />
 
-    <item android:id="@+id/navigation_search"
+    <item android:id="@+id/navigation_list_form"
         android:icon="@drawable/ic_file_dock"
         android:title="Danh Sách"/>
 
