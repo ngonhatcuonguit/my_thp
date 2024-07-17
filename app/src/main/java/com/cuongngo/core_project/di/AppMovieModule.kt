@@ -15,7 +15,7 @@ import com.cuongngo.core_project.services.repository.UserRepository
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.login.UserViewModel
-import com.cuongngo.core_project.ui.search_form.ListFormViewModel
+import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.test_room_db.RecordProcessViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.direct
@@ -63,8 +63,8 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     bindViewModel<RecordProcessViewModel>() with provider {
         RecordProcessViewModel(instance())
     }
-    bindViewModel<ListFormViewModel>() with provider {
-        ListFormViewModel(instance())
+    bindViewModel<FormViewModel>() with provider {
+        FormViewModel(instance())
     }
     bindViewModel<RequestViewModel>() with provider {
         RequestViewModel(instance())

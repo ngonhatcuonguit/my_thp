@@ -28,6 +28,9 @@ class FormRepository(
     suspend fun getFormByTitle(title: String): BaseResult<FormEntity> {
         return formLocalDataSource.getFormByTitle(title = title)
     }
+    suspend fun getFormByCode(code: String): BaseResult<FormEntity> {
+        return formLocalDataSource.getFormByCode(code = code)
+    }
 
     suspend fun insertForm(formEntity: FormEntity): BaseResult<Long> {
         return formLocalDataSource.insertForm(formEntity)

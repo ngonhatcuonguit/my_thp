@@ -6,12 +6,14 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
-import com.cuongngo.core_project.response.thp_form.Field
-import com.cuongngo.core_project.response.thp_form.SubmitButton
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import java.io.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlin.random.Random
 
 @Entity(
     tableName = "forms",
@@ -19,60 +21,43 @@ import java.io.Serializable
 )
 @TypeConverters(Converters::class)
 data class FormEntity(
-    @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "id")
-    val id: Long? = null,
-    @ColumnInfo(name = "form_code")
-    var formCode: String,
-    @ColumnInfo(name = "title")
-    var title: String? = null,
-    @ColumnInfo(name = "type")
-    var type: String? = null,
-    @ColumnInfo(name = "status")
-    var status: Int? = null,
-    @ColumnInfo(name = "schema_name")
-    var schemaName: String?,
-    @ColumnInfo(name = "schema_code")
-    var schemaCode: String?,
-    @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_schema")
-    var formSchema: List<Filed>? = null,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") val id: Long? = null,
+    @ColumnInfo(name = "form_code") var formCode: String,
+    @ColumnInfo(name = "title") var title: String? = null,
+    @ColumnInfo(name = "type") var type: String? = null,
+    @ColumnInfo(name = "status") var status: Int? = null,
+    @ColumnInfo(name = "schema_name") var schemaName: String?,
+    @ColumnInfo(name = "schema_code") var schemaCode: String?,
+    @TypeConverters(Converters::class) @ColumnInfo(name = "form_schema") var formSchema: List<Field>? = null,
 //    @ColumnInfo(name = "process_step")
 //    var processStep: List<ProcessStep>? = null,
-    @ColumnInfo(name = "created_at")
-    var created: String? = null,
-    @ColumnInfo(name = "updated_at")
-    var updated: String? = null,
-    @ColumnInfo(name = "deleted_at")
-    var deleted: String? = null
+    @ColumnInfo(name = "created_at") var created: String? = null,
+    @ColumnInfo(name = "updated_at") var updated: String? = null,
+    @ColumnInfo(name = "deleted_at") var deleted: String? = null
 //    @TypeConverters(FieldListTypeConverter::class) val fields: List<Field>,
 //    @TypeConverters(SubmitButtonTypeConverter::class) val submitButton: SubmitButton
-) : Serializable{
-    companion object {
-        const val STATUS_ACTIVE = 1
-        const val STATUS_INACTIVE = 0
-    }
-}
+) : Serializable
 
 class Converters {
     @TypeConverter
-    fun fromFiledList(value: List<Filed>?): String? {
+    fun fromFiledList(value: List<Field>?): String? {
         val gson = Gson()
-        val type = object : TypeToken<List<Filed>>() {}.type
+        val type = object : TypeToken<List<Field>>() {}.type
         return gson.toJson(value, type)
     }
 
     @TypeConverter
-    fun toFiledList(value: String?): List<Filed>? {
+    fun toFiledList(value: String?): List<Field>? {
         val gson = Gson()
-        val type = object : TypeToken<List<Filed>>() {}.type
+        val type = object : TypeToken<List<Field>>() {}.type
         return gson.fromJson(value, type)
     }
 }
 
-data class Filed(
-    val id: Long,
-    val label: String,
+data class Field(
+    val id: Long?,
+    val label: String?,
+    val value: String?,
     @SerializedName("placeholder") val placeholder: String?,
     val type: String?,
     val required: Boolean?,
@@ -120,30 +105,47 @@ data class UserTHP(
     )
 }
 
-class FieldListTypeConverter {
-    @TypeConverter
-    fun fromFieldList(fields: List<Field>?): String? {
-        return Gson().toJson(fields)
-    }
+//random test data
 
-    @TypeConverter
-    fun toFieldList(data: String?): List<Field>? {
-        if (data == null) {
-            return emptyList()
-        }
-        val listType = object : TypeToken<List<Field>>() {}.type
-        return Gson().fromJson(data, listType)
+fun randomString(length: Int): String {
+    val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    return (1..length).map { chars.random() }.joinToString("")
+}
+
+fun randomBoolean(): Boolean {
+    return Random.nextBoolean()
+}
+
+fun randomDate(): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return formatter.format(Date())
+}
+
+fun randomOptions(size: Int): List<Option> {
+    return List(size) {
+        Option(
+            value = randomString(5), label = randomString(5), id = Random.nextLong(1, 1000)
+        )
     }
 }
 
-class SubmitButtonTypeConverter {
-    @TypeConverter
-    fun fromSubmitButton(submitButton: SubmitButton?): String? {
-        return Gson().toJson(submitButton)
-    }
-
-    @TypeConverter
-    fun toSubmitButton(data: String?): SubmitButton? {
-        return Gson().fromJson(data, SubmitButton::class.java)
-    }
+fun generateRandomField(): Field {
+    return Field(
+        id = Random.nextLong(1, 1000),
+        label = randomString(10),
+        value = randomString(10),
+        placeholder = randomString(15),
+        type = listOf("text", "select", "checkbox", "radio", "date").random(),
+        required = randomBoolean(),
+        options = if (randomBoolean()) randomOptions(Random.nextInt(1, 5)) else null,
+        checked = randomBoolean(),
+        created = randomDate(),
+        updated = randomDate(),
+        deleted = if (randomBoolean()) randomDate() else null
+    )
 }
+
+fun generateRandomFieldList(size: Int): List<Field> {
+    return List(size) { generateRandomField() }
+}
+

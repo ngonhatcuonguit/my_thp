@@ -71,7 +71,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.okxe.core_okxe.common.view.view_ex.EditTextEx
+            <com.cuongngo.core_project.common.view.view_ex.EditTextEx
                 android:id="@+id/edt_phone_number"
                 style="@style/EditTextEx.SingleLine"
                 android:layout_width="0dp"

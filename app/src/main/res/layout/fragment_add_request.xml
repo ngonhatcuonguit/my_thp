@@ -32,7 +32,7 @@
                 android:tint="@color/dark"
                 app:srcCompat="@drawable/ic_search_gray" />
 
-            <com.okxe.core_okxe.common.view.view_ex.EditTextEx
+            <com.cuongngo.core_project.common.view.view_ex.EditTextEx
                 android:id="@+id/tv_hint_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

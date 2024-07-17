@@ -6,16 +6,19 @@ import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomField
+import com.cuongngo.core_project.data.database.roomdb.entity.randomString
 import com.cuongngo.core_project.databinding.ActivityListFormBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import io.reactivex.disposables.Disposable
+import kotlin.random.Random
 
-class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormViewModel>() {
+class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewModel>() {
 
-    override val viewModel: ListFormViewModel by kodeinViewModel()
+    override val viewModel: FormViewModel by kodeinViewModel()
 
     companion object {
         val TAG = ListFormActivity::class.java.simpleName
@@ -83,16 +86,20 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, ListFormVi
         }
     }
 
+    // Create a list of Field objects
+    val fields = List(10) { generateRandomField() }
+
     fun addForm() {
         viewModel.upsertForm(
             FormEntity(
-                id = 789,
-                title = "Giấy ra vào cổng-12345-THP",
+                id = Random.nextLong(1, 1000),
+                title = randomString(20),
                 status = 1,
-                formCode = "form_code_789",
-                schemaCode = "form_code_789",
-                type = "type1",
-                schemaName = "schemaName",
+                formCode = randomString(10),
+                schemaCode = randomString(10),
+                type = listOf("text", "select", "checkbox", "radio", "date").random(),
+                schemaName = randomString(10),
+                formSchema = fields
             )
         )
 

@@ -10,13 +10,13 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
-import com.cuongngo.core_project.ui.search_form.ListFormViewModel
+import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import io.reactivex.disposables.Disposable
 
-class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, ListFormViewModel>() {
+class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewModel>() {
 
-    override val viewModel: ListFormViewModel by kodeinViewModel()
+    override val viewModel: FormViewModel by kodeinViewModel()
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var compositeDisposable: Disposable? = null
@@ -66,7 +66,12 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, ListFormV
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {
-                //show detail
+                startActivity(
+                    RequestDetailActivity().newIntent(
+                        requireContext(),
+                        it.formCode
+                    )
+                )
             }
         )
         binding.rvListForm.apply {

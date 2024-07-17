@@ -26,7 +26,7 @@ data class RequestEntity(
     @ColumnInfo(name = "form_code") var formCode: String,
     @ColumnInfo(name = "code") var code: String? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_value") var formValue: List<Filed>? = null,
+    @ColumnInfo(name = "form_value") var formValue: List<Field>? = null,
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted: String? = null

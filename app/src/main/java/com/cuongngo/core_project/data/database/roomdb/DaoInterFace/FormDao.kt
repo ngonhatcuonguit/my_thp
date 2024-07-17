@@ -31,6 +31,8 @@ interface FormDao {
 
     @Query("SELECT * FROM forms WHERE title = :title")
     fun getFormByTitle(title: String): FormEntity
+    @Query("SELECT * FROM forms WHERE form_code = :code")
+    fun getFormByCode(code: String): FormEntity
     @Query("SELECT * FROM forms WHERE title = :title")
     fun searchFormByKeyWord(title: String): FormEntity
 

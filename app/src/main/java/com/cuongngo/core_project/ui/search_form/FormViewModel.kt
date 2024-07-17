@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ListFormViewModel(private val formRepository: FormRepository) : BaseViewModel() {
+class FormViewModel(private val formRepository: FormRepository) : BaseViewModel() {
 
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
@@ -62,6 +62,15 @@ class ListFormViewModel(private val formRepository: FormRepository) : BaseViewMo
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _form.postValue(formRepository.getFormByTitle(title))
+            }
+        }
+    }
+
+    fun getFormByCode(code: String) {
+        _form.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _form.postValue(formRepository.getFormByCode(code))
             }
         }
     }

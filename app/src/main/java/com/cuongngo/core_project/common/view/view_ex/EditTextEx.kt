@@ -1,4 +1,4 @@
-package com.okxe.core_okxe.common.view.view_ex
+package com.cuongngo.core_project.common.view.view_ex
 
 import android.content.Context
 import android.content.res.TypedArray

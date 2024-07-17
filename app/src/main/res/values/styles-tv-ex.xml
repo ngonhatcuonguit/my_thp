@@ -85,22 +85,22 @@
 
     <style name="TextViewEx.BodyMedium" parent="TextViewEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextViewEx.BodySmall" parent="TextViewEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <style name="TextViewEx.BodyVerySmall" parent="TextViewEx">
         <item name="fontFamily">@font/bep_medium</item>
         <item name="fontType">normal</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
     <style name="TextViewEx.Button" parent="TextViewEx">
         <item name="fontType">semi_bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextViewEx.SubtitleExtraLarge" parent="TextViewEx">
@@ -115,22 +115,22 @@
 
     <style name="TextViewEx.SubtitleMedium" parent="TextViewEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextViewEx.SubtitleMediumBold" parent="TextViewEx">
         <item name="fontType">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextViewEx.SubtitleSmall" parent="TextViewEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="TextViewEx.SubtitleTiny" parent="TextViewEx">
         <item name="fontType">medium</item>
-        <item name="android:textSize">10sp</item>
+        <item name="android:textSize">11sp</item>
     </style>
 
 

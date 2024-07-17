@@ -14,6 +14,9 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun getFormByTitle(title: String) = getResult {
         database.thpFormDao().getFormByTitle(title)
     }
+    suspend fun getFormByCode(code: String) = getResult {
+        database.thpFormDao().getFormByCode(code)
+    }
     suspend fun upsertForm(record: FormEntity) = getResult {
         database.thpFormDao().upsertForm(record)
     }
