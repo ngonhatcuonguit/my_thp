@@ -99,11 +99,7 @@ data class UserTHP(
     var msnv: Long?,
     var position: String?,
     var avatar: String?,
-) : Serializable {
-    constructor() : this(
-        0, 0, "", "", "", 0, "", ""
-    )
-}
+) : Serializable
 
 //random test data
 

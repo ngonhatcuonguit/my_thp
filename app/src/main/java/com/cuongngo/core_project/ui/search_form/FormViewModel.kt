@@ -30,8 +30,8 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
     val allRequest: LiveData<BaseResult<List<RequestEntity>>> = _allRequest
 
-    private val _request = MutableLiveData<BaseResult<Long>>()
-    val request: LiveData<BaseResult<Long>> = _request
+    private val _request = MutableLiveData<BaseResult<RequestEntity>>()
+    val request: LiveData<BaseResult<RequestEntity>> = _request
 
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
@@ -112,7 +112,35 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     fun insertRequest(requestEntity: RequestEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _request.postValue(formRepository.insertRequest(requestEntity))
+                _requestId.postValue(formRepository.insertRequest(requestEntity))
+            }
+        }
+    }
+    fun upsertRequest(requestEntity: RequestEntity) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _requestId.postValue(formRepository.upsertRequest(requestEntity))
+            }
+        }
+    }
+    fun getRequestByID(requestID: Long) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _request.postValue(formRepository.getRequestByID(requestID))
+            }
+        }
+    }
+    fun getRequestByCode(requestCode: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _request.postValue(formRepository.getRequestByCode(requestCode))
+            }
+        }
+    }
+    fun getAllRequest() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _allRequest.postValue(formRepository.getAllRequest())
             }
         }
     }

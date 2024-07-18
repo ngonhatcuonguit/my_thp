@@ -21,6 +21,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private var currentFragment = HomeFragment::class.java.simpleName
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableLightStatusBar()

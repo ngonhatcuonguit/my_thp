@@ -23,9 +23,6 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun insertForm(record: FormEntity) = getResult {
         database.thpFormDao().insertForm(record)
     }
-    suspend fun insertRequest(formSchema: RequestEntity) = getResult {
-        database.thpFormDao().insertRequest(formSchema)
-    }
     suspend fun updateForm(record: FormEntity) = getResult {
         database.thpFormDao().updateForm(record)
     }
@@ -33,5 +30,22 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
         database.thpFormDao().deleteForm(record)
     }
 
+    //request
+
+    suspend fun insertRequest(request: RequestEntity) = getResult {
+        database.thpFormDao().insertRequest(request)
+    }
+    suspend fun upsertRequest(request: RequestEntity) = getResult {
+        database.thpFormDao().upsertRequest(request)
+    }
+    suspend fun getRequestByID(requestID: Long) = getResult {
+        database.thpFormDao().getRequestByID(requestID)
+    }
+    suspend fun getRequestByCode(requestCode: String) = getResult {
+        database.thpFormDao().getRequestByCode(requestCode)
+    }
+    suspend fun getAllRequest() = getResult {
+        database.thpFormDao().getAllRequest()
+    }
 
 }

@@ -12,9 +12,6 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 @Dao
 interface FormDao {
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    fun insertRequest(formSchema: RequestEntity): Long
-
-    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertForm(formEntity: FormEntity): Long
 
     @Update
@@ -38,5 +35,19 @@ interface FormDao {
 
     @Delete
     fun deleteForm(record: FormEntity): Int
+
+
+    //interface for RequestEntity
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    fun insertRequest(request: RequestEntity): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsertRequest(request: RequestEntity): Long
+    @Query("SELECT * FROM request_value WHERE request_code = :requestCode")
+    fun getRequestByCode(requestCode: String): RequestEntity
+    @Query("SELECT * FROM request_value WHERE request_id = :requestID")
+    fun getRequestByID(requestID: Long): RequestEntity
+    @Query("SELECT * FROM request_value")
+    fun getAllRequest(): List<RequestEntity>
 
 }

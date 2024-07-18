@@ -35,14 +35,31 @@ class FormRepository(
     suspend fun insertForm(formEntity: FormEntity): BaseResult<Long> {
         return formLocalDataSource.insertForm(formEntity)
     }
-    suspend fun insertRequest(formValueEntity: RequestEntity): BaseResult<Long> {
-        return formLocalDataSource.insertRequest(formValueEntity)
-    }
     suspend fun upsertForm(formEntity: FormEntity): BaseResult<Long> {
         return formLocalDataSource.upsertForm(formEntity)
     }
     suspend fun deleteForm(formEntity: FormEntity): BaseResult<Int> {
         return formLocalDataSource.deleteForm(formEntity)
+    }
+
+    //request
+
+    suspend fun insertRequest(request: RequestEntity): BaseResult<Long> {
+        return formLocalDataSource.insertRequest(request)
+    }
+
+    suspend fun upsertRequest(request: RequestEntity): BaseResult<Long> {
+        return formLocalDataSource.upsertRequest(request)
+    }
+
+    suspend fun getRequestByID(requestID: Long): BaseResult<RequestEntity> {
+        return formLocalDataSource.getRequestByID(requestID = requestID)
+    }
+    suspend fun getRequestByCode(requestCode: String): BaseResult<RequestEntity> {
+        return formLocalDataSource.getRequestByCode(requestCode)
+    }
+    suspend fun getAllRequest(): BaseResult<List<RequestEntity>> {
+        return formLocalDataSource.getAllRequest()
     }
 
 }

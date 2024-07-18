@@ -10,7 +10,8 @@ import com.cuongngo.core_project.databinding.ItemFieldBinding
 
 class FieldAdapter(
     listField: ArrayList<Field>,
-    private val onItemClickListener: ((Field) -> Unit)? = null
+    private val onItemClickListener: ((Field) -> Unit)? = null,
+    private val onChangeValueListener: ((Field) -> Unit)? = null
 ): RecyclerView.Adapter<FieldAdapter.FieldViewHolder>() {
 
     private val listField = listField
@@ -25,6 +26,9 @@ class FieldAdapter(
         binding.field = field
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(field) ?: return@setOnClickListener
+        }
+        binding.tvValue.setOnClickListener{
+            onChangeValueListener?.invoke(field) ?: return@setOnClickListener
         }
     }
 

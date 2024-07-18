@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <carbon.widget.ConstraintLayout
+        android:id="@+id/cl_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:carbon_strokeWidth="1dp"
+        app:carbon_stroke="@color/black"
+        android:layout_marginHorizontal="12dp"
+        android:background="@color/primary_color">
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_label"
+            style="@style/TextViewEx.BodyLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingHorizontal="@dimen/_10dp"
+            android:paddingVertical="16dp"
+            android:text="Thông tin"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.4"/>
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_value"
+            style="@style/TextViewEx.BodyLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:paddingHorizontal="@dimen/_10dp"
+            android:paddingVertical="16dp"
+            android:text="Nội dung"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_label"
+            app:layout_constraintTop_toTopOf="@id/tv_label"
+            app:layout_constraintWidth_percent="0.6"
+            tools:text="Nguyen Van ABCXYZ" />
+
+
+    </carbon.widget.ConstraintLayout>
+</layout>
