@@ -62,7 +62,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     private fun setupRcvListForm() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {

@@ -87,13 +87,13 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     // Create a list of Field objects
-    val fields = List(10) { generateRandomField() }
+    val fields = List(20) { generateRandomField() }
 
     fun addForm() {
         viewModel.upsertForm(
             FormEntity(
                 id = Random.nextLong(1, 1000),
-                title = randomString(20),
+                name = randomString(20),
                 status = 1,
                 formCode = randomString(10),
                 schemaCode = randomString(10),

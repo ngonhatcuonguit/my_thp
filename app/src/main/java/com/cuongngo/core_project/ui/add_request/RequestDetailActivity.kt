@@ -85,6 +85,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
                                 requestID = Random.nextLong(1, 1000),
                                 requestName = randomString(20),
                                 formCode = formCode,
+                                requestCode = formCode,
                                 formValue = form.formSchema,
                                 requestStatus = Random.nextInt(1, 6)
                             )

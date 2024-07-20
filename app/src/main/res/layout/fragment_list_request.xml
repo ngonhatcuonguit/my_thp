@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            style="@style/TextViewEx.Heading_5"
+            android:textAlignment="center"
+            android:text="Danh sách của bạn"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tab_layout"
+            android:layout_marginTop="20dp"
+            android:singleLine="true"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:tabIndicatorColor="@color/primary_color"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/primary_color"
+            app:tabTextAppearance="@style/MineCustomTabText"
+            android:textAlignment="center"
+            app:tabIndicator="@color/gray_36"
+            app:tabTextColor="@color/gray_36" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewpager_request"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_request" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -23,7 +23,7 @@ import kotlin.random.Random
 data class FormEntity(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") val id: Long? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
-    @ColumnInfo(name = "title") var title: String? = null,
+    @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "type") var type: String? = null,
     @ColumnInfo(name = "status") var status: Int? = null,
     @ColumnInfo(name = "schema_name") var schemaName: String?,

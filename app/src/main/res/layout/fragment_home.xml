@@ -175,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginHorizontal="10dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     android:orientation="vertical"
                     app:spanCount="1"

@@ -36,6 +36,8 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
+    var category = ""
+
 //    init {
 //        getAllForm()
 //    }

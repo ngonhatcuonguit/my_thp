@@ -10,6 +10,7 @@ import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivityMainBinding
 import com.cuongngo.core_project.ui.add_request.AddRequestFragment
 import com.cuongngo.core_project.ui.home.HomeFragment
+import com.cuongngo.core_project.ui.list_request.ListRequestFragment
 import com.cuongngo.core_project.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -48,17 +49,46 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     transaction.show(homeFragment)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
                     val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val listRequestFragment = fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
                     if (profileFragment != null) transaction.remove(profileFragment)
                     if (addRequestFragment != null) transaction.remove(addRequestFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
                     transaction.commit()
                     currentFragment = HomeFragment.TAG
+                }
+                R.id.navigation_list_form -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.hide(homeFragment)
+                    val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val listRequestFragment = fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
+
+                    if (profileFragment != null) transaction.remove(profileFragment)
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+
+                    if (listRequestFragment == null){
+                        transaction.add(
+                            R.id.container,
+                            ListRequestFragment(),
+                            ListRequestFragment.TAG
+                        )
+                        transaction.commit()
+                        currentFragment = ListRequestFragment.TAG
+                    }else {
+
+                    }
+
                 }
                 R.id.navigation_add_form -> {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.hide(homeFragment)
                     val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val listRequestFragment = fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
+
                     if (profileFragment != null) transaction.remove(profileFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+
                     if (addRequestFragment == null){
                         transaction.add(
                             R.id.container,
@@ -77,7 +107,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     transaction.hide(homeFragment)
                     val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
                     val addRequestFragment = fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val listRequestFragment = fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
+
                     if (addRequestFragment != null) transaction.remove(addRequestFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
                     if (profileFragment == null){
                         transaction.add(
                             R.id.container,

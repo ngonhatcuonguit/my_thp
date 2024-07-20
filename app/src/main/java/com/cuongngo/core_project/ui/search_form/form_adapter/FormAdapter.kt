@@ -30,6 +30,7 @@ class FormAdapter(
         val binding = holder.itemForm
         var form = listForm[position]
         binding.form = form
+        binding.tvFormCode.text = "Mã form: ${form.formCode}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(form) ?: return@setOnClickListener
         }

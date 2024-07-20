@@ -32,7 +32,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
     override fun setUp() {
         setupRcvListPopularForm()
-        with(binding) {
+        binding.apply {
             tvHintSearch.setOnClickListener {
                 //
             }
@@ -101,7 +101,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun setupRcvListPopularForm() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {
