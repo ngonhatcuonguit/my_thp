@@ -32,12 +32,20 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
         const val REQUEST_CODE_KEY = "REQUEST_CODE_KEY"
     }
 
-    fun newIntent(
+    fun newIntentAdd(
         context: Context,
         formCode: String
     ): Intent {
         return Intent(context, RequestDetailActivity::class.java).apply {
             putExtra(FORM_CODE_KEY, formCode)
+        }
+    }
+    fun newIntentDetail(
+        context: Context,
+        requestCode: String
+    ): Intent {
+        return Intent(context, RequestDetailActivity::class.java).apply {
+            putExtra(REQUEST_CODE_KEY, requestCode)
         }
     }
 
@@ -83,9 +91,9 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
                         viewModel.upsertRequest(
                             RequestEntity(
                                 requestID = Random.nextLong(1, 1000),
-                                requestName = randomString(20),
+                                requestName = randomString(40),
                                 formCode = formCode,
-                                requestCode = formCode,
+                                requestCode = randomString(10),
                                 formValue = form.formSchema,
                                 requestStatus = Random.nextInt(1, 6)
                             )
@@ -119,7 +127,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
                         binding.apply {
                             tvFormTitle.text = request.requestName.toString()
                         }
-                        fieldAdapter.submitListField(formEntity?.formSchema)
+                        fieldAdapter.submitListField(request.formValue)
                         WTF(TAG, "requestForm: ${request.requestCode}")
                     }
                 },
@@ -136,7 +144,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
         fieldAdapter = FieldAdapter(
             arrayListOf(),
             onItemClickListener = {
-                //show detail
+                //
             }
         )
         binding.rvListField.apply {

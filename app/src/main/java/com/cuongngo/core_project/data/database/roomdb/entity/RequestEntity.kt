@@ -26,7 +26,7 @@ data class RequestEntity(
     @ColumnInfo(name = "created_by") var createdBy: String? = null,//chưa define user
     @ColumnInfo(name = "informer") var informer: String? = null,//chưa define user
     @ColumnInfo(name = "form_code") var formCode: String,
-    @ColumnInfo(name = "request_code") var requestCode: String? = null,
+    @ColumnInfo(name = "request_code") var requestCode: String,
     @ColumnInfo(name = "request_status") var requestStatus: Int? = null,
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "form_value") var formValue: List<Field>? = null,

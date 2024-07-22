@@ -35,15 +35,15 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
                 binding.vpOnBoard.currentItem = current + 1
                 when (current) {
                     2 -> {
-                        binding.tvOnboardSlogan.text = "Offers ad-free viewing of high quality"
+                        binding.tvOnboardSlogan.text = "Create and Submit Requests"
                         binding.tvContent.text =
-                            "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient."
+                            "Quickly create new approval requests using our simple form. Fill in the necessary details, attach relevant documents, and submit for review."
                     }
                     3 -> {
                         binding.tvOnboardSlogan.text =
-                            "Our service brings together your favorite series"
+                            "Security and Compliance"
                         binding.tvContent.text =
-                            "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient."
+                            "We prioritize your data security and ensure compliance with industry standards. Your information is encrypted and securely stored"
                     }
                 }
             } else {
@@ -59,20 +59,20 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
                 when (position) {
                     0 -> {
                         binding.tvOnboardSlogan.text =
-                            "The biggest international and local film streaming"
+                            "Welcome to E-Approval!"
                         binding.tvContent.text =
-                            "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient."
+                            "Welcome to E-Approval, your go-to app for streamlining approval workflows. Get started quickly and manage your approvals efficiently"
                     }
                     1 -> {
-                        binding.tvOnboardSlogan.text = "Offers ad-free viewing of high quality"
+                        binding.tvOnboardSlogan.text = "Create and Submit Requests"
                         binding.tvContent.text =
-                            "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient."
+                            "Quickly create new approval requests using our simple form. Fill in the necessary details, attach relevant documents, and submit for review."
                     }
                     2 -> {
                         binding.tvOnboardSlogan.text =
-                            "Our service brings together your favorite series"
+                            "Security and Compliance"
                         binding.tvContent.text =
-                            "Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem semper parturient."
+                            "We prioritize your data security and ensure compliance with industry standards. Your information is encrypted and securely stored"
                     }
                 }
             }

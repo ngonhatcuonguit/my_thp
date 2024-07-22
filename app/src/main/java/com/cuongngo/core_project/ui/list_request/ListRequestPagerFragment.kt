@@ -47,7 +47,7 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
                 },
                 onSuccess = {
                     hideProgressDialog()
-                    it.data.let {listRequest ->
+                    it.data.let { listRequest ->
                         binding.apply {
 
                         }
@@ -67,7 +67,12 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
         requestAdapter = RequestAdapter(
             arrayListOf(),
             onItemClickListener = {
-                //show detail
+                startActivity(
+                    RequestDetailActivity().newIntentDetail(
+                        requireContext(),
+                        it.requestCode
+                    )
+                )
             }
         )
         binding.rvRequest.apply {

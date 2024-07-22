@@ -67,7 +67,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             arrayListOf(),
             onItemClickListener = {
                 startActivity(
-                    RequestDetailActivity().newIntent(
+                    RequestDetailActivity().newIntentAdd(
                         requireContext(),
                         it.formCode
                     )
