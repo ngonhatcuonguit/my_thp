@@ -1,4 +1,4 @@
-package com.cuongngo.core_project.ui.add_request
+package com.cuongngo.core_project.ui.request_detail
 
 import android.content.Context
 import android.content.Intent

@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import java.io.Serializable
+import com.cuongngo.core_project.response.BaseModel
 
 @Entity(
     tableName = "request_value",
@@ -23,9 +23,13 @@ data class RequestEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "request_id") val requestID: Long,
     @ColumnInfo(name = "request_name") var requestName: String? = null,
     @ColumnInfo(name = "request_description:") var requestDescription: String? = null,
-    @ColumnInfo(name = "created_by") var createdBy: String? = null,//chưa define user
-    @ColumnInfo(name = "informer") var informer: String? = null,//chưa define user
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "created_by") var createdBy: com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity? = null,
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "informer") var informer: com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
+    @ColumnInfo(name = "process_step_value")
+    var processStepValue: List<ProcessStep>? = null,
     @ColumnInfo(name = "request_code") var requestCode: String,
     @ColumnInfo(name = "request_status") var requestStatus: Int? = null,
     @TypeConverters(Converters::class)
@@ -33,4 +37,4 @@ data class RequestEntity(
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted: String? = null
-) : Serializable
+) : BaseModel()

@@ -6,10 +6,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import com.cuongngo.core_project.response.BaseModel
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
-import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -26,17 +26,22 @@ data class FormEntity(
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "type") var type: String? = null,
     @ColumnInfo(name = "status") var status: Int? = null,
+    @ColumnInfo(name = "header") var header: String? = null,
     @ColumnInfo(name = "schema_name") var schemaName: String?,
     @ColumnInfo(name = "schema_code") var schemaCode: String?,
-    @TypeConverters(Converters::class) @ColumnInfo(name = "form_schema") var formSchema: List<Field>? = null,
-//    @ColumnInfo(name = "process_step")
-//    var processStep: List<ProcessStep>? = null,
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "form_schema") var formSchema: List<Field>? = null,
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "process_step")
+    var processStep: List<ProcessStep>? = null,
+    @ColumnInfo(name = "sheet_number") var sheetNumber: Int? = null,
+    @ColumnInfo(name = "sheet_name") var sheetName: String? = null,
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted: String? = null
 //    @TypeConverters(FieldListTypeConverter::class) val fields: List<Field>,
 //    @TypeConverters(SubmitButtonTypeConverter::class) val submitButton: SubmitButton
-) : Serializable
+) : BaseModel()
 
 class Converters {
     @TypeConverter
@@ -52,6 +57,32 @@ class Converters {
         val type = object : TypeToken<List<Field>>() {}.type
         return gson.fromJson(value, type)
     }
+    @TypeConverter
+    fun fromProcessList(value: List<ProcessStep>?): String? {
+        val gson = Gson()
+        val type = object : TypeToken<List<ProcessStep>>() {}.type
+        return gson.toJson(value, type)
+    }
+
+    @TypeConverter
+    fun toProcessList(value: String?): List<ProcessStep>? {
+        val gson = Gson()
+        val type = object : TypeToken<List<ProcessStep>>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromUserEntity(user: UserTHPEntity?): String? {
+        val gson = Gson()
+        return gson.toJson(user)
+    }
+
+    @TypeConverter
+    fun toUserEntity(userString: String?): UserTHPEntity? {
+        val gson = Gson()
+        return gson.fromJson(userString, UserTHPEntity::class.java)
+    }
+
 }
 
 data class Field(
@@ -83,23 +114,14 @@ data class ProcessStep(
     val id: Long,
     val name: String,
     val status: Int,
+    var owner: UserTHPEntity,
     val created: String,
     val updated: String,
     val deleted: String,
-)
+): BaseModel()
 
 
 ////
-data class UserTHP(
-    val id: Int?,
-    val status: Int?,
-    var name: String?,
-    var email: String?,
-    var phone: String?,
-    var msnv: Long?,
-    var position: String?,
-    var avatar: String?,
-) : Serializable
 
 //random test data
 

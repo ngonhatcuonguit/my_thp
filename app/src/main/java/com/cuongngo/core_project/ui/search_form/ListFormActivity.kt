@@ -97,7 +97,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
                 status = 1,
                 formCode = randomString(10),
                 schemaCode = randomString(10),
-                type = listOf("text", "select", "checkbox", "radio", "date").random(),
+                type = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
                 schemaName = randomString(10),
                 formSchema = fields
             )

@@ -10,7 +10,7 @@ import com.cuongngo.core_project.databinding.FragmentRequestPagerBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.add_request.RequestDetailActivity
+import com.cuongngo.core_project.ui.request_detail.RequestDetailActivity
 import com.cuongngo.core_project.ui.list_request.adapter.CatrgoryPagerAdapter.Companion.MY_REQUEST
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
 import com.cuongngo.core_project.ui.search_form.FormViewModel

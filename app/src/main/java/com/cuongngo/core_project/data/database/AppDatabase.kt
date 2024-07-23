@@ -1,30 +1,31 @@
 package com.cuongngo.core_project.data.database
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
-import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.UserDao
+import com.cuongngo.core_project.data.database.roomdb.entity.Converters
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.GenreEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.RecordProcessEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 @Database(
-    entities = [GenreEntity::class, RecordProcessEntity::class, FormEntity::class, RequestEntity::class],
+    entities = [GenreEntity::class, FormEntity::class, RequestEntity::class, UserTHPEntity::class],
     version = 1,
     exportSchema = true
 )
 
-
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun genreDao(): GenreDao
-    abstract fun recordProcessDao(): RecordProcessDao
     abstract fun thpFormDao(): FormDao
     abstract fun requestDao(): RequestDao
+    abstract fun userDao(): UserDao
 
     companion object {
 

@@ -4,19 +4,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.cuongngo.core_project.base.viewmodel.bindViewModel
 import com.cuongngo.core_project.data.database.data_source.FormLocalDataSource
 import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSource
-import com.cuongngo.core_project.data.database.data_source.RecordProcessLocalDataSource
 import com.cuongngo.core_project.services.THPApi
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.core_project.services.remote.UserRemoteDataSource
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
-import com.cuongngo.core_project.services.repository.RecordProcessRepository
 import com.cuongngo.core_project.services.repository.UserRepository
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.login.UserViewModel
 import com.cuongngo.core_project.ui.search_form.FormViewModel
-import com.cuongngo.core_project.ui.test_room_db.RecordProcessViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.direct
 import org.kodein.di.generic.bind
@@ -33,7 +30,6 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
      * RemoteDataSource binding
      */
     bind() from singleton { UserRemoteDataSource(instance()) }
-    bind() from singleton { RecordProcessLocalDataSource(instance()) }
     bind() from singleton { FormLocalDataSource(instance()) }
     bind() from singleton { RequestLocalDataSource(instance()) }
 
@@ -46,7 +42,6 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     /**
      * Repository binding
      */
-    bind() from singleton { RecordProcessRepository(instance()) }
     bind() from singleton { UserRepository(instance()) }
     bind() from singleton { FormRepository(instance()) }
     bind() from singleton { RequestRepository(instance()) }
@@ -59,9 +54,6 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
     }
     bindViewModel<UserViewModel>() with provider {
         UserViewModel(instance())
-    }
-    bindViewModel<RecordProcessViewModel>() with provider {
-        RecordProcessViewModel(instance())
     }
     bindViewModel<FormViewModel>() with provider {
         FormViewModel(instance())

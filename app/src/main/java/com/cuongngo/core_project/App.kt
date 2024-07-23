@@ -11,7 +11,7 @@ import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
-import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RecordProcessDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.UserDao
 import com.cuongngo.core_project.di.localModule
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -55,15 +55,15 @@ class App : Application(), KodeinAware, LifecycleObserver {
         fun getGenreDatabase() : GenreDao {
             return AppDatabase.getDatabase(getInstance()).genreDao()
         }
-        fun getRecordDatabase() : RecordProcessDao {
-            return AppDatabase.getDatabase(getInstance()).recordProcessDao()
-        }
 
         fun getFormDatabase() : FormDao {
             return AppDatabase.getDatabase(getInstance()).thpFormDao()
         }
         fun getFormSchemaDatabase() : RequestDao {
             return AppDatabase.getDatabase(getInstance()).requestDao()
+        }
+        fun getUserDB() : UserDao {
+            return AppDatabase.getDatabase(getInstance()).userDao()
         }
 
     }

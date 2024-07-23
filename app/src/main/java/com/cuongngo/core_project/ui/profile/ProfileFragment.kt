@@ -6,7 +6,6 @@ import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.databinding.FragmentProfileBinding
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
-import com.cuongngo.core_project.ui.test_room_db.RecordProcessActivity
 
 class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewModel>() {
 
