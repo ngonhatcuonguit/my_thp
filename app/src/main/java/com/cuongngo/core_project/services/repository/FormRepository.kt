@@ -55,7 +55,7 @@ class FormRepository(
     suspend fun getRequestByID(requestID: Long): BaseResult<RequestEntity> {
         return formLocalDataSource.getRequestByID(requestID = requestID)
     }
-    suspend fun getRequestByCode(requestCode: String): BaseResult<RequestEntity> {
+    suspend fun getRequestByCode(requestCode: String): BaseResult<List<RequestEntity>> {
         return formLocalDataSource.getRequestByCode(requestCode)
     }
     suspend fun getAllRequest(): BaseResult<List<RequestEntity>> {

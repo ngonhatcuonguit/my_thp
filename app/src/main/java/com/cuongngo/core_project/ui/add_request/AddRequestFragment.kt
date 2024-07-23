@@ -10,6 +10,7 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.request_detail.RequestDetailActivity
+import com.cuongngo.core_project.ui.request_detail.RequestDetailMasterActivity
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
@@ -68,9 +69,10 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             arrayListOf(),
             onItemClickListener = {
                 startActivity(
-                    RequestDetailActivity().newIntentAdd(
+                    RequestDetailMasterActivity().newIntent(
                         requireContext(),
-                        it.formCode
+                        it.formCode,
+                        ""
                     )
                 )
             }

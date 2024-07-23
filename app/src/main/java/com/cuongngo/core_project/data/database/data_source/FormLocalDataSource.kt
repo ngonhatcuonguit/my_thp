@@ -42,7 +42,7 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
         database.thpFormDao().getRequestByID(requestID)
     }
     suspend fun getRequestByCode(requestCode: String) = getResult {
-        database.thpFormDao().getRequestByCode(requestCode)
+        database.thpFormDao().getListRequestByCode(requestCode)
     }
     suspend fun getAllRequest() = getResult {
         database.thpFormDao().getAllRequest()

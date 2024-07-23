@@ -30,6 +30,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
         val TAG = RequestDetailActivity::class.java.simpleName
         const val FORM_CODE_KEY = "FORM_CODE_KEY"
         const val REQUEST_CODE_KEY = "REQUEST_CODE_KEY"
+        const val REQUEST_ID = "REQUEST_ID"
     }
 
     fun newIntentAdd(
@@ -40,17 +41,19 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
             putExtra(FORM_CODE_KEY, formCode)
         }
     }
+
     fun newIntentDetail(
         context: Context,
-        requestCode: String
+        requestID: Long
     ): Intent {
         return Intent(context, RequestDetailActivity::class.java).apply {
-            putExtra(REQUEST_CODE_KEY, requestCode)
+            putExtra(REQUEST_ID, requestID)
         }
     }
 
     private val formCode by lazy { intent.getStringExtra(FORM_CODE_KEY) ?: "" }
     private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: "" }
+    private val requestID by lazy { intent.getLongExtra(REQUEST_ID, -1) }
     private var formEntity: FormEntity? = null
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
@@ -68,11 +71,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
     }
 
     override fun setUp() {
-        if (formCode.isEmpty()){
-            viewModel.getRequestByCode(requestCode)
-        }else{
-            viewModel.getFormByCode(formCode)
-        }
+        viewModel.getRequestByID(requestID)
         setupRecycleViewListField()
         binding.apply {
             ivBack.setOnClickListener {
@@ -82,45 +81,11 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
     }
 
     override fun setUpObserver() {
-        observeLiveDataChanged(viewModel.form) {
-            it.onResultReceived(
-                onLoading = {},
-                onSuccess = {
-                    it.data?.let { form ->
-                        formEntity = form
-                        viewModel.upsertRequest(
-                            RequestEntity(
-                                requestID = Random.nextLong(1, 1000),
-                                requestName = randomString(40),
-                                formCode = formCode,
-                                requestCode = randomString(10),
-                                formValue = form.formSchema,
-                                requestStatus = Random.nextInt(1, 6)
-                            )
-                        )
-//                        fieldAdapter.submitListField(formEntity?.formSchema)
-                    }
-                },
-                onError = {
-                    hideProgressDialog()
-                }
-            )
-        }
-        observeLiveDataChanged(viewModel.requestId) {
-            it.onResultReceived(
-                onLoading = {},
-                onSuccess = {
-                    viewModel.getRequestByID(requestID = it.data ?: return@onResultReceived)
-                },
-                onError = {
-                    hideProgressDialog()
-                }
-            )
-        }
-
         observeLiveDataChanged(viewModel.request) {
             it.onResultReceived(
-                onLoading = {},
+                onLoading = {
+                    showProgressDialog()
+                },
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.let { request ->

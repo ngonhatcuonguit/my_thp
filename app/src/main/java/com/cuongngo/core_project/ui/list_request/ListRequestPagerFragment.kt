@@ -13,6 +13,7 @@ import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.request_detail.RequestDetailActivity
 import com.cuongngo.core_project.ui.list_request.adapter.CatrgoryPagerAdapter.Companion.MY_REQUEST
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
+import com.cuongngo.core_project.ui.request_detail.RequestDetailMasterActivity
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 
 class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, FormViewModel>() {
@@ -68,9 +69,10 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
             arrayListOf(),
             onItemClickListener = {
                 startActivity(
-                    RequestDetailActivity().newIntentDetail(
+                    RequestDetailMasterActivity().newIntent(
                         requireContext(),
-                        it.requestCode
+                        formCode = "",
+                        requestCode = it.requestCode
                     )
                 )
             }

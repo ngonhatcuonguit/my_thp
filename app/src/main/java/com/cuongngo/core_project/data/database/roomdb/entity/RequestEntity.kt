@@ -16,7 +16,7 @@ import com.cuongngo.core_project.response.BaseModel
         childColumns = arrayOf("form_code"),
 //        onDelete = ForeignKey.CASCADE
     )],
-    indices = [Index(value = ["request_code"], unique = true)],
+    indices = [Index(value = ["request_id"], unique = true)],
 )
 @TypeConverters(Converters::class)
 data class RequestEntity(

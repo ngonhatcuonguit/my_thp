@@ -30,6 +30,9 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
     val allRequest: LiveData<BaseResult<List<RequestEntity>>> = _allRequest
 
+    private val _listRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
+    val listRequest: LiveData<BaseResult<List<RequestEntity>>> = _listRequest
+
     private val _request = MutableLiveData<BaseResult<RequestEntity>>()
     val request: LiveData<BaseResult<RequestEntity>> = _request
 
@@ -135,7 +138,7 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     fun getRequestByCode(requestCode: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _request.postValue(formRepository.getRequestByCode(requestCode))
+                _listRequest.postValue(formRepository.getRequestByCode(requestCode))
             }
         }
     }
