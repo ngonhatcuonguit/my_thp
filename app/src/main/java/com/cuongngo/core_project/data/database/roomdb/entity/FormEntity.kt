@@ -21,16 +21,19 @@ import kotlin.random.Random
 )
 @TypeConverters(Converters::class)
 data class FormEntity(
-    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") val id: Long? = null,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "form_id") val formID: Long? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "type") var type: String? = null,
     @ColumnInfo(name = "status") var status: Int? = null,
-    @ColumnInfo(name = "header") var header: String? = null,
+    @ColumnInfo(name = "title") var title: String? = null,
     @ColumnInfo(name = "schema_name") var schemaName: String?,
     @ColumnInfo(name = "schema_code") var schemaCode: String?,
+    @ColumnInfo(name = "schema_type") var schemaType: String? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_schema") var formSchema: List<Field>? = null,
+    @ColumnInfo(name = "form_header_schema") var formHeaderSchema: List<Field>? = null,
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "form_body_schema") var formBodySchema: List<Field>? = null,
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "process_step")
     var processStep: List<ProcessStep>? = null,
@@ -112,12 +115,13 @@ data class Option(
 
 data class ProcessStep(
     val id: Long,
-    val name: String,
-    val status: Int,
-    var owner: UserTHPEntity,
-    val created: String,
-    val updated: String,
-    val deleted: String,
+    val name: String?,
+    val status: Int? = null,
+    var owner: UserTHPEntity? = null,
+    var duration: String? = null,
+    val created: String? = null,
+    val updated: String? = null,
+    val deleted: String? = null,
 ): BaseModel()
 
 
@@ -159,7 +163,15 @@ fun generateRandomField(): Field {
         checked = randomBoolean(),
         created = randomDate(),
         updated = randomDate(),
-        deleted = if (randomBoolean()) randomDate() else null
+        deleted = if (randomBoolean()) randomDate() else null,
+    )
+}
+
+fun generateRandomProcessStep(): ProcessStep {
+    return ProcessStep(
+        id = Random.nextLong(1, 1000),
+        name = listOf("TP", "MA", "Leader", "An Ninh", "Head off").random(),
+        duration = listOf("120 phút", "1 ngày", "3 ngày", "4 tiếng", "Flexible").random(),
     )
 }
 

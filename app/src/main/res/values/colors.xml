@@ -16,9 +16,10 @@
     <color name="gray_DF">#DFDFDF</color>
     <color name="gray_36">#252836</color>
     <color name="text_color_validate_red">#FF0000</color>
-    <color name="gray_00">#626262</color>
+    <color name="gray_62">#626262</color>
     <color name="gray_FF">#F1F4FF</color>
     <color name="gray_F5">#E7EAF5</color>
     <color name="list_bottom_line">#EDF1F5</color>
     <color name="gray_A6">#8492A6</color>
+    <color name="gray_f7">#F7F7F7</color>
 </resources>

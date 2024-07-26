@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -109,6 +111,27 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
     fun isShowKeyBoard() : Boolean {
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         return inputMethodManager.isAcceptingText
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        val view: View? = currentFocus
+        val ret = super.dispatchTouchEvent(event)
+        if (view is EditText) {
+            currentFocus?.let {
+                val w: View = it
+                val scrcoords = IntArray(2)
+                w.getLocationOnScreen(scrcoords)
+                val x: Float = event.rawX + w.left - scrcoords[0]
+                val y: Float = event.rawY + w.top - scrcoords[1]
+                if (event.action == MotionEvent.ACTION_UP
+                    && (x < w.left || x >= w.right || y < w.top || y > w.bottom)
+                ) {
+                    hideKeyboard()
+
+                }
+            }
+        }
+        return ret
     }
 
 }

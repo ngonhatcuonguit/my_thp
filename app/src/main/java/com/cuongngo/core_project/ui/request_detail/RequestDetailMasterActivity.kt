@@ -14,6 +14,7 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
+import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import kotlin.random.Random
 
@@ -45,6 +46,7 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
     private var addRequestCode: String? = null
 
     private lateinit var requestAdapter: RequestAdapter
+    private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
 
     override fun setUp() {
         if (formCode.isEmpty()){
@@ -52,12 +54,22 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
         }else{
             viewModel.getFormByCode(formCode)
         }
-        setupRecycleViewListRequest()
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
             }
+            edtInformer.tvTitle.text = "Informer"
+            edtRequestName.tvTitle.text = "Tên yêu cầu/ Request Name"
+            edtRequestDescription.tvTitle.text = "Mô tả yêu cầu/ Request  description"
+
+            edtRequestName.edtValue.hint = "Nhập tên yêu cầu"
+            edtRequestDescription.edtValue.hint = "Nhập mô tả yêu cầu"
+            edtInformer.edtValue.hint = "Nhập email của informer"
         }
+
+        //setup rcv
+        setupRecycleViewListRequest()
+        setupRecycleViewListProcessStep()
     }
 
     override fun setUpObserver() {
@@ -76,7 +88,9 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
                                 requestName = randomString(40),
                                 formCode = formCode,
                                 requestCode = addRequestCode ?:"",
-                                formValue = form.formSchema,
+                                formHeader = form.formHeaderSchema,
+                                formBody = form.formBodySchema,
+                                processStep = form.processStep,
                                 requestStatus = Random.nextInt(1, 6)
                             )
                         )
@@ -112,6 +126,8 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
 
                         }
                         requestAdapter.submitListRequest(listRequest)
+                        requestProcessStepAdapter.submitListProcessStep(listRequest?.firstOrNull()?.processStep)
+
                         WTF(RequestDetailActivity.TAG, "listRequest: ${listRequest}")
                     }
                 },
@@ -139,6 +155,19 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
         binding.rvRequest.apply {
             layoutManager = gridLayoutManager
             adapter = requestAdapter
+        }
+    }
+    private fun setupRecycleViewListProcessStep() {
+        val gridLayoutManager = GridLayoutManager(this, 1)
+        requestProcessStepAdapter = RequestProcessStepAdapter(
+            arrayListOf(),
+            onItemClickListener = {
+                // update data
+            }
+        )
+        binding.rvProcessStep.apply {
+            layoutManager = gridLayoutManager
+            adapter = requestProcessStepAdapter
         }
     }
 

@@ -7,6 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomField
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
 import com.cuongngo.core_project.databinding.ActivityListFormBinding
 import com.cuongngo.core_project.ext.WTF
@@ -87,19 +88,23 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     // Create a list of Field objects
+    val headers = List(9) { generateRandomField() }
     val fields = List(20) { generateRandomField() }
+    val processSteps = List(2) { generateRandomProcessStep() }
 
     fun addForm() {
         viewModel.upsertForm(
             FormEntity(
-                id = Random.nextLong(1, 1000),
+                formID = Random.nextLong(1, 1000),
                 name = randomString(20),
-                status = 1,
+                status = listOf(1,2,3,4,5).random(),
                 formCode = randomString(10),
                 schemaCode = randomString(10),
                 type = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
                 schemaName = randomString(10),
-                formSchema = fields
+                formBodySchema = fields,
+                formHeaderSchema = headers,
+                processStep = processSteps
             )
         )
 

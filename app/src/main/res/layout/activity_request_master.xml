@@ -1,95 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/home_activity"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:fillViewport="true"
-        android:fitsSystemWindows="true"
-        android:overScrollMode="never">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_back"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_back_gray" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_activity_title"
+            style="@style/TextViewEx.Heading_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="Thông tin yêu cầu của bạn"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/iv_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_back" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_activity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_back_gray" />
-
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-                android:id="@+id/tv_title"
-                style="@style/TextViewEx.Heading_5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="Tạo yêu cầu mới"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="@id/iv_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_back" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_request"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/_12dp"
-                android:layout_marginTop="@dimen/_24dp"
-                android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_title" />
-
-            <carbon.widget.FloatingActionButton
-                android:id="@+id/fl_add_new"
-                android:layout_width="69dp"
-                android:layout_height="69dp"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/add_new"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:overScrollMode="never"
+            android:layout_marginTop="@dimen/_12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_activity_title"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_empty_filter"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+                android:layout_height="wrap_content"
+                android:background="@color/white">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/img_filter_empty"
-                    android:layout_width="wrap_content"
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_request_title"
+                    style="@style/TextViewEx.Heading_5"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_filter_empty"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginTop="@dimen/_12dp"
+                    android:layout_marginBottom="16dp"
+                    android:maxLines="1"
+                    android:text="Tạo yêu cầu mới"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.3" />
+                    />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-                    android:id="@+id/tv_empty"
+                <include
+                    android:id="@+id/edt_request_name"
+                    layout="@layout/item_edit_text_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_request_title" />
+
+                <include
+                    android:id="@+id/edt_request_description"
+                    layout="@layout/item_big_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_request_name" />
+
+                <include
+                    android:id="@+id/edt_informer"
+                    layout="@layout/item_edit_text_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/edt_request_description" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_process_step"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
-                    android:gravity="center"
-                    android:paddingHorizontal="44dp"
-                    android:text="Danh sách trống"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/img_filter_empty" />
+                    app:layout_constraintTop_toBottomOf="@id/edt_informer"
+                    app:srcCompat="@drawable/ic_globe_black" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_process_title"
+                    style="@style/TextViewEx.Heading_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="Approval process step"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_process_step"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_process_step"
+                    app:layout_constraintTop_toTopOf="@id/iv_process_step" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_process_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@color/white"
+                    tools:listitem="@layout/item_input_process_step"
+                    tools:itemCount="3"
+                    android:isScrollContainer="false"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toTopOf="@id/rv_header"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_process_title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="@dimen/_24dp"
+                    android:background="@color/white"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_form_header"
+                    tools:itemCount="6"
+                    android:isScrollContainer="false"
+                    app:layout_constraintBottom_toTopOf="@id/rv_request"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_process_step" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="@dimen/_24dp"
+                    android:background="@color/white"
+                    tools:listitem="@layout/item_request"
+                    app:spanCount="2"
+                    android:isScrollContainer="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_header" />
+
+                <carbon.widget.FloatingActionButton
+                    android:id="@+id/fl_add_new"
+                    android:layout_width="69dp"
+                    android:layout_height="69dp"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/add_new"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_empty_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/img_filter_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_filter_empty"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.3" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_empty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="23dp"
+                        android:gravity="center"
+                        android:paddingHorizontal="44dp"
+                        android:text="Danh sách trống"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/img_filter_empty" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

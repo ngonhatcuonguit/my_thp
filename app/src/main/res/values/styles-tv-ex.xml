@@ -22,7 +22,7 @@
     </style>
 
     <style name="TextViewEx.Small.Gray93" parent="TextViewEx.Small">
-        <item name="android:textColor">@color/gray_00</item>
+        <item name="android:textColor">@color/gray_62</item>
     </style>
 
     <style name="TextViewEx.Medium" parent="TextViewEx">

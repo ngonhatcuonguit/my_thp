@@ -52,6 +52,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_list_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_detail_info_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_form_title"
+            app:layout_constraintVertical_bias="0.0"/>
+
+
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_detail_info_title"
             android:layout_width="wrap_content"
@@ -61,7 +72,7 @@
             android:layout_marginStart="20dp"
             android:text="Thông tin chi tiết"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_form_title"
+            app:layout_constraintTop_toBottomOf="@id/rv_list_header"
             android:layout_marginTop="16dp"
             />
 

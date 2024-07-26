@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -12,47 +13,49 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mật khẩu"
-            android:textColor="@color/gray_62"
-            android:textSize="16sp"
             android:layout_marginStart="2dp"
+            android:text="Mã số nhân viên"
+            android:textColor="@color/gray_62"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.cuongngo.core_project.common.view.view_ex.EditTextEx
-            android:id="@+id/edt_password"
-            style="@style/EditTextEx.SingleLine"
-            app:fontType="normal"
+            android:id="@+id/edt_value"
+            style="@style/EditTextEx.SubtitleMedium"
             android:layout_width="0dp"
-            android:layout_height="64dp"
+            android:layout_height="126dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/shape_input_radius_12"
-            android:gravity="center_vertical"
-            android:inputType="textPassword"
-            android:lines="1"
-            android:singleLine="true"
-            android:maxLength="30"
-            android:paddingHorizontal="16dp"
-            android:hint="Nhập mật khẩu"
+            android:background="@drawable/shape_gray_f7_radius8_stroke"
+            android:ems="10"
+            android:gravity="top|start"
+            android:hint="Nhập mã số nhân viên"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:lineSpacingExtra="8sp"
+            android:overScrollMode="always"
+            android:padding="12dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
             android:textColor="@color/black"
             android:textColorHint="@color/gray_62"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginStart="2dp"
+            android:layout_marginTop="4dp"
             android:textColor="@color/text_color_validate_red"
             android:textSize="14sp"
             android:visibility="gone"
-            tools:visibility="visible"
             app:fontType="normal"
-            tools:text="hahahahahaha"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edt_password" />
+            app:layout_constraintTop_toBottomOf="@id/edt_value" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

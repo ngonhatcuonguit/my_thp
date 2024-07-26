@@ -23,7 +23,7 @@ interface FormDao {
     @Query("SELECT * FROM forms")
     fun getAllForm(): List<FormEntity>
 
-    @Query("SELECT * FROM forms WHERE id = :id")
+    @Query("SELECT * FROM forms WHERE form_id = :id")
     fun getFormById(id: Long): FormEntity
 
     @Query("SELECT * FROM forms WHERE name = :title")

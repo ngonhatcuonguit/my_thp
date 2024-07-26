@@ -92,7 +92,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
                         binding.apply {
                             tvFormTitle.text = request.requestName.toString()
                         }
-                        fieldAdapter.submitListField(request.formValue)
+                        fieldAdapter.submitListField(request.formBody)
                         WTF(TAG, "requestForm: ${request.requestCode}")
                     }
                 },
