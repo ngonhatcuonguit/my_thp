@@ -35,15 +35,13 @@
             app:layout_constraintTop_toTopOf="@id/iv_back" />
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/home_activity"
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white"
+            android:layout_marginTop="8dp"
             android:fillViewport="true"
             android:fitsSystemWindows="true"
             android:overScrollMode="never"
-            android:paddingBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_activity_title"

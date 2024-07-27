@@ -2,9 +2,11 @@ package com.cuongngo.core_project.ui.add_request
 
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.dialog_fragment.DefaultDialogConfirmFragment
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.databinding.FragmentAddRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -68,13 +70,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {
-                startActivity(
-                    RequestDetailMasterActivity().newIntent(
-                        requireContext(),
-                        it.formCode,
-                        ""
-                    )
-                )
+                setupShowDialogConfirm(it)
             }
         )
         binding.rvListForm.apply {
@@ -82,6 +78,25 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             layoutManager = gridLayoutManager
 //            addOnScrollListener(scrollListener)
         }
+    }
+
+    private fun setupShowDialogConfirm(form: FormEntity){
+        val dialogConfirmFragment = DefaultDialogConfirmFragment().apply {
+            onLeftButtonClick {
+                //handle when close
+            }
+            onRightButtonClick {
+                //handle when confirm add request
+                startActivity(
+                    RequestDetailMasterActivity().newIntent(
+                        requireContext(),
+                        form.formCode,
+                        ""
+                    )
+                )
+            }
+        }
+        fragmentManager?.let { dialogConfirmFragment.show(it, DefaultDialogConfirmFragment.TAG) }
     }
 
 }

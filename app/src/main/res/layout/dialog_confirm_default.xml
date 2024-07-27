@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.cuongngo.core_project.base.model.DialogModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:paddingBottom="@dimen/_24dp">
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title_dialog"
+            style="@style/TextViewEx.Heading_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@{data.title}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="Dialog title 123" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_content"
+            style="@style/TextViewEx.BodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="2dp"
+            android:text="@{data.content}"
+            android:textColor="@color/gray_7d"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_dialog"
+            tool:text="Sau khi giao dịch được xác nhận, bạn sẽ không thể thay đổi được các thông tin đã cung cấp. Vui lòng cho chúng tôi biết các thông tin dưới đây:" />
+
+        <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+            android:id="@+id/btn_left"
+            style="@style/TextViewEx.BodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/shape_gray7d_radius5"
+            android:text="@{data.leftButtonTitle}"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/btn_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            tool:text="Close" />
+
+        <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+            android:id="@+id/btn_right"
+            style="@style/TextViewEx.BodyMedium"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/shape_primary_color_radius5"
+            android:enabled="false"
+            android:text="@{data.rightButtonTitle}"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_left"
+            app:layout_constraintTop_toTopOf="@id/btn_left"
+            tool:text="Confirm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

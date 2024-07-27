@@ -155,7 +155,7 @@ fun generateRandomField(): Field {
     return Field(
         id = Random.nextLong(1, 1000),
         label = randomString(10),
-        value = randomString(10),
+        value = randomString(26),
         placeholder = randomString(15),
         type = listOf("text", "select", "checkbox", "radio", "date").random(),
         required = randomBoolean(),
