@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -56,8 +57,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="26dp"
-                    android:layout_marginTop="@dimen/_12dp"
-                    android:layout_marginBottom="16dp"
                     android:maxLines="1"
                     android:text="Tạo yêu cầu mới"
                     android:textAlignment="center"
@@ -132,48 +131,80 @@
                     tools:itemCount="3"
                     android:isScrollContainer="false"
                     android:nestedScrollingEnabled="false"
-                    app:layout_constraintBottom_toTopOf="@id/rv_header"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_process_title" />
+
+                <View
+                    android:id="@+id/view_space_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/gray_A6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_process_step" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_header_title"
+                    style="@style/TextViewEx.Heading_5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Thông tin chi tiết Form"
+                    android:textColor="@color/black"
+                    app:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_space_0" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/item_form_header"
                     tools:itemCount="6"
                     android:isScrollContainer="false"
-                    app:layout_constraintBottom_toTopOf="@id/rv_request"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_process_step" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_title" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_request"
+                <View
+                    android:id="@+id/view_space_1"
                     android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray_A6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_header" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_list_sheet_title"
+                    style="@style/TextViewEx.Heading_5"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Danh sách sheet / Tần suất"
+                    app:textAllCaps="true"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view_space_1" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_request_sheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:background="@color/white"
                     tools:listitem="@layout/item_request"
                     app:spanCount="2"
                     android:isScrollContainer="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_header" />
-
-                <carbon.widget.FloatingActionButton
-                    android:id="@+id/fl_add_new"
-                    android:layout_width="69dp"
-                    android:layout_height="69dp"
-                    android:layout_marginHorizontal="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/add_new"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_list_sheet_title" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_empty_filter"
@@ -206,6 +237,17 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <carbon.widget.FloatingActionButton
+            android:id="@+id/fl_add_new"
+            android:layout_width="69dp"
+            android:layout_height="69dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/add_new"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

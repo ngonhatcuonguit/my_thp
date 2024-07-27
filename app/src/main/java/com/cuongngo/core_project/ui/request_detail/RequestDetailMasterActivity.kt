@@ -2,6 +2,9 @@ package com.cuongngo.core_project.ui.request_detail
 
 import android.content.Context
 import android.content.Intent
+import android.view.MotionEvent
+import android.view.View
+import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
@@ -14,6 +17,7 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
+import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import kotlin.random.Random
@@ -47,6 +51,7 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
 
     private lateinit var requestAdapter: RequestAdapter
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
+    private lateinit var formHeaderAdapter: FormHeaderAdapter
 
     override fun setUp() {
         if (formCode.isEmpty()){
@@ -70,6 +75,7 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
         //setup rcv
         setupRecycleViewListRequest()
         setupRecycleViewListProcessStep()
+        setupRecycleViewFormHeader()
     }
 
     override fun setUpObserver() {
@@ -127,7 +133,7 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
                         }
                         requestAdapter.submitListRequest(listRequest)
                         requestProcessStepAdapter.submitListProcessStep(listRequest?.firstOrNull()?.processStep)
-
+                        formHeaderAdapter.submitListFormHeader(listRequest?.firstOrNull()?.formHeader)
                         WTF(RequestDetailActivity.TAG, "listRequest: ${listRequest}")
                     }
                 },
@@ -152,7 +158,7 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
                 )
             }
         )
-        binding.rvRequest.apply {
+        binding.rvRequestSheet.apply {
             layoutManager = gridLayoutManager
             adapter = requestAdapter
         }
@@ -170,6 +176,18 @@ class RequestDetailMasterActivity : AppBaseActivityMVVM<ActivityRequestMasterBin
             adapter = requestProcessStepAdapter
         }
     }
-
+    private fun setupRecycleViewFormHeader() {
+        val gridLayoutManager = GridLayoutManager(this, 1)
+        formHeaderAdapter = FormHeaderAdapter(
+            arrayListOf(),
+            onItemClickListener = {
+                // action
+            }
+        )
+        binding.rvHeader.apply {
+            layoutManager = gridLayoutManager
+            adapter = formHeaderAdapter
+        }
+    }
 
 }

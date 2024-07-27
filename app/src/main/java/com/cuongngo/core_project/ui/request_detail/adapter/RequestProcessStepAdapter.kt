@@ -36,15 +36,15 @@ class RequestProcessStepAdapter(
         val binding = holder.itemStep
         var processStep = listProcessStep[position]
         binding.processStep = processStep
-        binding.root.setOnClickListener{
+        binding.root.setOnClickListener {
             onItemClickListener?.invoke(processStep) ?: return@setOnClickListener
         }
     }
 
     override fun getItemCount() = listProcessStep.size
 
-    fun submitListProcessStep(listProcessStep: List<ProcessStep>?){
-        if (!listProcessStep.isNullOrEmpty()){
+    fun submitListProcessStep(listProcessStep: List<ProcessStep>?) {
+        if (!listProcessStep.isNullOrEmpty()) {
             this.listProcessStep.clear()
             this.listProcessStep.addAll(listProcessStep)
             notifyDataSetChanged()

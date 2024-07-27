@@ -88,7 +88,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     // Create a list of Field objects
-    val headers = List(9) { generateRandomField() }
+    val headers = List(6) { generateRandomField() }
     val fields = List(20) { generateRandomField() }
     val processSteps = List(2) { generateRandomProcessStep() }
 
