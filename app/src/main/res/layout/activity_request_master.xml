@@ -24,6 +24,7 @@
             style="@style/TextViewEx.Heading_5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
             android:maxLines="1"
             android:text="Thông tin yêu cầu của bạn"
             android:textAlignment="center"
@@ -37,14 +38,16 @@
             android:id="@+id/home_activity"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
             android:fillViewport="true"
             android:fitsSystemWindows="true"
             android:overScrollMode="never"
-            android:layout_marginTop="@dimen/_12dp"
+            android:paddingBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_activity_title"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -63,8 +66,7 @@
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <include
                     android:id="@+id/edt_request_name"
@@ -111,7 +113,7 @@
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
                     android:text="Approval process step"
                     android:textColor="@color/black"
@@ -127,12 +129,12 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="6dp"
                     android:background="@color/white"
-                    tools:listitem="@layout/item_input_process_step"
-                    tools:itemCount="3"
                     android:isScrollContainer="false"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_process_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_process_title"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_input_process_step" />
 
                 <View
                     android:id="@+id/view_space_0"
@@ -153,9 +155,9 @@
                     android:layout_marginTop="10dp"
                     android:text="Thông tin chi tiết Form"
                     android:textColor="@color/black"
-                    app:textAllCaps="true"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_space_0" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_space_0"
+                    app:textAllCaps="true" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_header"
@@ -164,12 +166,12 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
-                    android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/item_form_header"
-                    tools:itemCount="6"
                     android:isScrollContainer="false"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_header_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_header_title"
+                    tools:itemCount="6"
+                    tools:listitem="@layout/item_form_header" />
 
                 <View
                     android:id="@+id/view_space_1"
@@ -189,10 +191,10 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="10dp"
                     android:text="Danh sách sheet / Tần suất"
-                    app:textAllCaps="true"
                     android:textColor="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_space_1" />
+                    app:layout_constraintTop_toBottomOf="@+id/view_space_1"
+                    app:textAllCaps="true" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_request_sheet"
@@ -200,11 +202,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@color/white"
-                    tools:listitem="@layout/item_request"
-                    app:spanCount="2"
                     android:isScrollContainer="false"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_list_sheet_title" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_list_sheet_title"
+                    app:spanCount="2"
+                    tools:listitem="@layout/item_request" />
+
+                <include
+                    android:id="@+id/layout_note_sign"
+                    layout="@layout/layout_sign_bottom_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_request_sheet" />
+
+                <include
+                    android:id="@+id/layout_submit_button"
+                    layout="@layout/layout_submit_double_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="69dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_note_sign" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_empty_filter"
@@ -242,8 +265,8 @@
             android:id="@+id/fl_add_new"
             android:layout_width="69dp"
             android:layout_height="69dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginBottom="52dp"
             android:background="@drawable/add_new"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
