@@ -6,6 +6,7 @@ data class DialogModel(
     var title: String?,
     var subTitle: String?,
     var content: String?,
+    var isSingle: Boolean? = false,
     var leftButtonTitle: String?,
     var rightButtonTitle: String?
-): BaseModel()
+) : BaseModel()

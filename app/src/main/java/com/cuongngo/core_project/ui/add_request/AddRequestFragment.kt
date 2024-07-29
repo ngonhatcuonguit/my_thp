@@ -2,8 +2,9 @@ package com.cuongngo.core_project.ui.add_request
 
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
-import com.cuongngo.core_project.base.dialog_fragment.DefaultDialogConfirmFragment
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
@@ -11,10 +12,9 @@ import com.cuongngo.core_project.databinding.FragmentAddRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.request_detail.RequestDetailActivity
 import com.cuongngo.core_project.ui.request_detail.RequestDetailMasterActivity
-import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.FormViewModel
+import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import io.reactivex.disposables.Disposable
 
@@ -80,13 +80,18 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
         }
     }
 
-    private fun setupShowDialogConfirm(form: FormEntity){
-        val dialogConfirmFragment = DefaultDialogConfirmFragment().apply {
-            onLeftButtonClick {
-                //handle when close
-            }
+    private fun setupShowDialogConfirm(form: FormEntity) {
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = "Tạo yêu cầu mới",
+                subTitle = form.title,
+                content = "Bạn muốn tạo một yêu cầu mới với mầu form: \n${form.formCode} - ${form.name}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Tạo yêu cầu",
+                isSingle = false
+            )
+        ).apply {
             onRightButtonClick {
-                //handle when confirm add request
                 startActivity(
                     RequestDetailMasterActivity().newIntent(
                         requireContext(),
@@ -94,9 +99,13 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                         ""
                     )
                 )
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
             }
         }
-        fragmentManager?.let { dialogConfirmFragment.show(it, DefaultDialogConfirmFragment.TAG) }
+        confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
     }
 
 }

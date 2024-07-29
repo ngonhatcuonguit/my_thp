@@ -1,69 +1,81 @@
 package com.cuongngo.core_project.base.dialog_fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
+import androidx.core.view.isVisible
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.dialog.AppBaseDialog
 import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.databinding.DialogConfirmDefaultBinding
+import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.utils.Func
+import com.cuongngo.core_project.utils.convertDpToPixel
+import com.cuongngo.core_project.utils.view.setMargins
 
-class DefaultDialogConfirmFragment : DialogFragment() {
-
-    private lateinit var binding: DialogConfirmDefaultBinding
+class ConfirmDialog(
+    private val dialogData: DialogModel
+) : AppBaseDialog<DialogConfirmDefaultBinding>() {
 
     private var onLeftButtonClick: Func? = null
     private var onRightButtonClick: Func? = null
 
-    private val dialogData: DialogModel? by lazy {
-        arguments?.getSerializable(KEY_DIALOG_DATA) as DialogModel?
+    companion object {
+        val TAG = ConfirmDialog::class.simpleName
+        const val KEY_DIALOG_DATA = "KEY_DIALOG_DATA"
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppDialogTheme)
+    override fun onStart() {
+        super.onStart()
+        setupDialog()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_confirm_default, container, false)
-        return binding.root
+    private fun setupDialog() {
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        binding.root.setMargins(
+            convertDpToPixel(40f, requireContext()).toInt(),
+            0,
+            convertDpToPixel(40f, requireContext()).toInt(),
+            0
+        )
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setup()
-    }
-
-    private fun setup() {
+    override fun setUp() {
         binding.data = dialogData
-        binding.apply {
+        WTF("dialogData: $dialogData")
+        with(binding) {
             btnLeft.setOnClickListener {
                 onLeftButtonClick?.invoke()
-                dismiss()
             }
-            btnRight.setOnClickListener {
-                onRightButtonClick?.invoke()
-                dismiss()
+            if (dialogData.isSingle == false) {
+                binding.btnRight.isVisible = true
+                btnRight.setOnClickListener {
+                    onRightButtonClick?.invoke()
+                }
+            } else {
+                binding.btnRight.isVisible = false
             }
         }
     }
-    fun onLeftButtonClick(func: Func?): DefaultDialogConfirmFragment {
+
+    override fun setUpObserver() {
+        //
+    }
+
+    override fun inflateLayout() = R.layout.dialog_confirm_default
+
+    fun onLeftButtonClick(func: Func?): ConfirmDialog {
         this.onLeftButtonClick = func
         return this
     }
-    fun onRightButtonClick(func: Func?): DefaultDialogConfirmFragment {
-        this.onLeftButtonClick = func
+
+    fun onRightButtonClick(func: Func?): ConfirmDialog {
+        this.onRightButtonClick = func
         return this
     }
+
 
 //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 //        return object : BottomSheetDialog(requireContext(), theme){
@@ -98,34 +110,6 @@ class DefaultDialogConfirmFragment : DialogFragment() {
 //            }
 //        }
 //    }
-
-    companion object {
-        val TAG = DefaultDialogConfirmFragment::class.simpleName
-        const val KEY_DIALOG_DATA = "KEY_DIALOG_DATA"
-
-        operator fun invoke(
-            dialogData: DialogModel?
-        ): DefaultDialogConfirmFragment = DefaultDialogConfirmFragment().apply {
-            return DefaultDialogConfirmFragment().apply {
-                arguments = bundleOf().apply {
-                    putSerializable(KEY_DIALOG_DATA, dialogData)
-                }
-            }
-        }
-
-        fun newInstance(dialogData: DialogModel?): DefaultDialogConfirmFragment {
-            val bundle = Bundle()
-            bundle.apply {
-                putSerializable(KEY_DIALOG_DATA, dialogData)
-            }
-            DefaultDialogConfirmFragment().apply {
-                arguments = bundle
-            }.also {
-                return it
-            }
-        }
-
-    }
 
 
 }
