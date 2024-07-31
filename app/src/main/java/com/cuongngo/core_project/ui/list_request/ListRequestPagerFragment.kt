@@ -1,7 +1,9 @@
 package com.cuongngo.core_project.ui.list_request
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
@@ -10,11 +12,11 @@ import com.cuongngo.core_project.databinding.FragmentRequestPagerBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.request_detail.RequestDetailActivity
 import com.cuongngo.core_project.ui.list_request.adapter.CatrgoryPagerAdapter.Companion.MY_REQUEST
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
-import com.cuongngo.core_project.ui.request_detail.RequestDetailMasterActivity
+import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.FormViewModel
+import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.EDIT
 
 class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, FormViewModel>() {
 
@@ -25,6 +27,11 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
     private var category: String = MY_REQUEST
     private var isCalledApi = false
     private lateinit var requestAdapter: RequestAdapter
+
+    companion object {
+        val TAG = ListRequestPagerFragment::class.simpleName
+        const val requestCodeForResult = 12345
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,11 +56,8 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
                 onSuccess = {
                     hideProgressDialog()
                     it.data.let { listRequest ->
-                        binding.apply {
-
-                        }
                         requestAdapter.submitListRequest(listRequest)
-                        WTF(RequestDetailActivity.TAG, "listRequest: ${listRequest}")
+                        WTF("listRequest: ${listRequest}")
                     }
                 },
                 onError = {
@@ -63,16 +67,26 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
         }
     }
 
+    //test
+    private val requestDetailResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.getAllRequest()
+            }
+        }
+
     private fun setupRecycleViewListRequest() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         requestAdapter = RequestAdapter(
             arrayListOf(),
+            //test
             onItemClickListener = {
-                startActivity(
-                    RequestDetailMasterActivity().newIntent(
+                requestDetailResult.launch(
+                    RequestMasterDetailActivity().newIntent(
                         requireContext(),
-                        formCode = "",
-                        requestCode = it.requestCode
+                        category = EDIT,
+                        request = it,
+                        form = null
                     )
                 )
             }

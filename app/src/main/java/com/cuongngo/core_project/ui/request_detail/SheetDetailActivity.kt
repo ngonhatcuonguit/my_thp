@@ -8,62 +8,50 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.randomString
-import com.cuongngo.core_project.databinding.ActivityRequestDetailBinding
+import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import io.reactivex.disposables.Disposable
-import kotlin.random.Random
 
-class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, FormViewModel>() {
+class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, FormViewModel>() {
 
     override val viewModel: FormViewModel by kodeinViewModel()
 
-    override fun inflateLayout(): Int = R.layout.activity_request_detail
+    override fun inflateLayout(): Int = R.layout.activity_sheet_detail
 
     companion object {
-        val TAG = RequestDetailActivity::class.java.simpleName
-        const val FORM_CODE_KEY = "FORM_CODE_KEY"
+        val TAG = SheetDetailActivity::class.java.simpleName
         const val REQUEST_CODE_KEY = "REQUEST_CODE_KEY"
-        const val REQUEST_ID = "REQUEST_ID"
+        const val SHEET_DATA_KEY = "SHEET_DATA_KEY"
     }
 
-    fun newIntentAdd(
+    fun newIntent(
         context: Context,
-        formCode: String
+        requestCode: String,
+        sheet: Sheet
     ): Intent {
-        return Intent(context, RequestDetailActivity::class.java).apply {
-            putExtra(FORM_CODE_KEY, formCode)
+        return Intent(context, SheetDetailActivity::class.java).apply {
+            putExtra(REQUEST_CODE_KEY, requestCode)
+            putExtra(SHEET_DATA_KEY, sheet)
         }
     }
 
-    fun newIntentDetail(
-        context: Context,
-        requestID: Long
-    ): Intent {
-        return Intent(context, RequestDetailActivity::class.java).apply {
-            putExtra(REQUEST_ID, requestID)
-        }
-    }
+    private lateinit var fieldAdapter: FieldAdapter
 
-    private val formCode by lazy { intent.getStringExtra(FORM_CODE_KEY) ?: "" }
     private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: "" }
-    private val requestID by lazy { intent.getLongExtra(REQUEST_ID, -1) }
-    private var formEntity: FormEntity? = null
+    private val sheet by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Sheet}
+    private var request: RequestEntity? = null
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var compositeDisposable: Disposable? = null
-
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
-
-    private lateinit var fieldAdapter: FieldAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,13 +59,15 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
     }
 
     override fun setUp() {
-        viewModel.getRequestByID(requestID)
-        setupRecycleViewListField()
+        viewModel.getRequestByCode(requestCode)
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
             }
+            tvFormTitle.text = sheet.formName.toString()
         }
+        setupRecycleViewListField()
+        fieldAdapter.submitListField(sheet.listField)
     }
 
     override fun setUpObserver() {
@@ -89,10 +79,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.let { request ->
-                        binding.apply {
-                            tvFormTitle.text = request.requestName.toString()
-                        }
-                        fieldAdapter.submitListField(request.formBody)
+                        this.request = request
                         WTF(TAG, "requestForm: ${request.requestCode}")
                     }
                 },
@@ -114,6 +101,7 @@ class RequestDetailActivity : AppBaseActivityMVVM<ActivityRequestDetailBinding, 
         )
         binding.rvListField.apply {
             layoutManager = gridLayoutManager
+            isScrollContainer = false
             adapter = fieldAdapter
         }
     }

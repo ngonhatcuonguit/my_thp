@@ -6,13 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
+import com.cuongngo.core_project.services.repository.RequestRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class FormViewModel(private val formRepository: FormRepository) : BaseViewModel() {
+class FormViewModel(private val formRepository: FormRepository, private val requestRepository: RequestRepository) : BaseViewModel() {
 
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
@@ -35,6 +40,9 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
 
     private val _request = MutableLiveData<BaseResult<RequestEntity>>()
     val request: LiveData<BaseResult<RequestEntity>> = _request
+
+    private val _requestUpdate = MutableLiveData<BaseResult<Unit>>()
+    val requestUpdate: LiveData<BaseResult<Unit>> = _requestUpdate
 
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
@@ -138,7 +146,7 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     fun getRequestByCode(requestCode: String) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listRequest.postValue(formRepository.getRequestByCode(requestCode))
+                _request.postValue(formRepository.getRequestByCode(requestCode))
             }
         }
     }
@@ -146,6 +154,19 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _allRequest.postValue(formRepository.getAllRequest())
+            }
+        }
+    }
+
+    private fun getCurrentTimestamp(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+    fun updateListSheet(requestID: Long, listSheet: List<Sheet>?){
+        _requestUpdate.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _requestUpdate.postValue(requestRepository.updateListSheet(requestID = requestID, listSheet = listSheet, currentTime = getCurrentTimestamp()))
             }
         }
     }

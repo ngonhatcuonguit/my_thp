@@ -34,9 +34,8 @@ class FieldAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FieldViewHolder {
         return FieldViewHolder(
-            DataBindingUtil.inflate(
+            ItemFieldBinding.inflate(
                 LayoutInflater.from(parent.context),
-                R.layout.item_field,
                 parent,
                 false
             )

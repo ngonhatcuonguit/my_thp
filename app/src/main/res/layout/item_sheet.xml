@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="sheet"
+            type="com.cuongngo.core_project.data.database.roomdb.entity.Sheet" />
+    </data>
+    <com.thelumiereguy.neumorphicview.views.NeumorphicCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-16dp"
+        android:background="#F8F8F8"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:cardRadius="8"
+        app:enableShadow="true"
+        app:enableStroke="true"
+        app:enable_preview="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:neu_backgroundColor="#F8F8F8"
+        app:shadowColor="#EDEDED"
+        app:shadowDx="0dp"
+        app:shadowDy="3dp"
+        app:shadowRadius="8dp"
+        app:stroke_color="#F1F4F6"
+        app:stroke_width="1dp">
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/card_request"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_bg_item_file"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="14dp"
+                app:layout_constraintDimensionRatio="W,80:177"
+                app:carbon_cornerRadius="5dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="33dp"
+                    android:layout_height="16dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginTop="@dimen/_10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/logo_thp_n1" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_request_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:maxLines="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/gray_36"
+                    android:textSize="12sp"
+                    android:text="@{sheet.formName}"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_logo"
+                    tools:text="Mã yêu cầu: 123456" />
+
+                <View
+                    android:id="@+id/view_space"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray_A6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_request_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginVertical="@dimen/_10dp"
+                    android:text="@{sheet.name}"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    style="@style/TextViewEx.BodyLarge"
+                    app:layout_constraintBottom_toTopOf="@id/tv_status"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_space"
+                    tools:text="Giấy ra cổng - IT - Ngô Nhật Cường - 43950 - Ngày 24/06/2024" />
+
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/shape_label_item_status"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="5dp"
+                    android:text="status 123"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="7sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </carbon.widget.ConstraintLayout>
+
+    </com.thelumiereguy.neumorphicview.views.NeumorphicCardView>
+
+</layout>

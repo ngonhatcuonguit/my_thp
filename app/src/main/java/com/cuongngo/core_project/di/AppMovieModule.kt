@@ -56,7 +56,7 @@ val appMovieModule = Kodein.Module(APP_MODULE, false) {
         UserViewModel(instance())
     }
     bindViewModel<FormViewModel>() with provider {
-        FormViewModel(instance())
+        FormViewModel(instance(), instance())
     }
     bindViewModel<RequestViewModel>() with provider {
         RequestViewModel(instance())

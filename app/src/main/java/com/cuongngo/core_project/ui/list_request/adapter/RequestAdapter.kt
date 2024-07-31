@@ -43,6 +43,10 @@ class RequestAdapter(
         }
     }
 
+    fun refreshList(){
+        notifyDataSetChanged()
+    }
+
     class RequestViewHolder(
         val itemRequest: ItemRequestBinding
     ) : RecyclerView.ViewHolder(itemRequest.root)

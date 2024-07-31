@@ -4,12 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.cuongngo.core_project.response.BaseModel
-import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,62 +28,32 @@ data class FormEntity(
     @ColumnInfo(name = "schema_code") var schemaCode: String?,
     @ColumnInfo(name = "schema_type") var schemaType: String? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_header_schema") var formHeaderSchema: List<Field>? = null,
+    @ColumnInfo(name = "list_header") var listHeader: List<Field>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_body_schema") var formBodySchema: List<Field>? = null,
+    @ColumnInfo(name = "list_sheet") var listSheet: List<Sheet>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "process_step")
-    var processStep: List<ProcessStep>? = null,
+    @ColumnInfo(name = "process_step") var processStep: List<ProcessStep>? = null,
     @ColumnInfo(name = "sheet_number") var sheetNumber: Int? = null,
     @ColumnInfo(name = "sheet_name") var sheetName: String? = null,
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted: String? = null
-//    @TypeConverters(FieldListTypeConverter::class) val fields: List<Field>,
 //    @TypeConverters(SubmitButtonTypeConverter::class) val submitButton: SubmitButton
 ) : BaseModel()
 
-class Converters {
-    @TypeConverter
-    fun fromFiledList(value: List<Field>?): String? {
-        val gson = Gson()
-        val type = object : TypeToken<List<Field>>() {}.type
-        return gson.toJson(value, type)
-    }
-
-    @TypeConverter
-    fun toFiledList(value: String?): List<Field>? {
-        val gson = Gson()
-        val type = object : TypeToken<List<Field>>() {}.type
-        return gson.fromJson(value, type)
-    }
-    @TypeConverter
-    fun fromProcessList(value: List<ProcessStep>?): String? {
-        val gson = Gson()
-        val type = object : TypeToken<List<ProcessStep>>() {}.type
-        return gson.toJson(value, type)
-    }
-
-    @TypeConverter
-    fun toProcessList(value: String?): List<ProcessStep>? {
-        val gson = Gson()
-        val type = object : TypeToken<List<ProcessStep>>() {}.type
-        return gson.fromJson(value, type)
-    }
-
-    @TypeConverter
-    fun fromUserEntity(user: UserTHPEntity?): String? {
-        val gson = Gson()
-        return gson.toJson(user)
-    }
-
-    @TypeConverter
-    fun toUserEntity(userString: String?): UserTHPEntity? {
-        val gson = Gson()
-        return gson.fromJson(userString, UserTHPEntity::class.java)
-    }
-
-}
+data class Sheet(
+    val id: Long?,
+    var name: String?,
+    var formCode: String?,
+    var requestCode: String?,
+    var formName: String?,
+    var listField: List<Field>?,
+    var isDone: Boolean?,
+    var type: String?,
+    var created: String?,
+    var updated: String?,
+    var deleted: String?,
+): BaseModel()
 
 data class Field(
     val id: Long?,
@@ -100,7 +67,7 @@ data class Field(
     val created: String?,
     val updated: String?,
     val deleted: String?,
-) {
+):  BaseModel() {
     companion object {
         const val STATUS_ACTIVE = 1
         const val STATUS_INACTIVE = 0
@@ -111,7 +78,7 @@ data class Option(
     val id: Long?,
     val value: String?,
     val label: String?,
-)
+): BaseModel()
 
 data class ProcessStep(
     val id: Long,
@@ -122,10 +89,7 @@ data class ProcessStep(
     val created: String? = null,
     val updated: String? = null,
     val deleted: String? = null,
-): BaseModel()
-
-
-////
+) : BaseModel()
 
 //random test data
 
@@ -161,6 +125,21 @@ fun generateRandomField(): Field {
         required = randomBoolean(),
         options = if (randomBoolean()) randomOptions(Random.nextInt(1, 5)) else null,
         checked = randomBoolean(),
+        created = randomDate(),
+        updated = randomDate(),
+        deleted = if (randomBoolean()) randomDate() else null,
+    )
+}
+fun generateRandomSheet(): Sheet {
+    return Sheet(
+        id = Random.nextLong(1, 1000),
+        type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
+        listField = generateRandomFieldList(18),
+        isDone = false,
+        name = randomString(26),
+        formCode = randomString(10),
+        formName = randomString(10),
+        requestCode = randomString(10),
         created = randomDate(),
         updated = randomDate(),
         deleted = if (randomBoolean()) randomDate() else null,

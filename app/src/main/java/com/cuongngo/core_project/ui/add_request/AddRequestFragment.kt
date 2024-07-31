@@ -12,10 +12,11 @@ import com.cuongngo.core_project.databinding.FragmentAddRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.request_detail.RequestDetailMasterActivity
+import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
+import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
 import io.reactivex.disposables.Disposable
 
 class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewModel>() {
@@ -85,7 +86,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             DialogModel(
                 title = "Tạo yêu cầu mới",
                 subTitle = form.title,
-                content = "Bạn muốn tạo một yêu cầu mới với mầu form: \n${form.formCode} - ${form.name}",
+                content = "Bạn muốn tạo một yêu cầu mới với mẫu form: \n${form.formCode} - ${form.name}",
                 leftButtonTitle = "Huỷ bỏ",
                 rightButtonTitle = "Tạo yêu cầu",
                 isSingle = false
@@ -93,10 +94,11 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
         ).apply {
             onRightButtonClick {
                 startActivity(
-                    RequestDetailMasterActivity().newIntent(
+                    RequestMasterDetailActivity().newIntent(
                         requireContext(),
-                        form.formCode,
-                        ""
+                        category = ADD,
+                        request = null,
+                        form = form
                     )
                 )
                 dismiss()

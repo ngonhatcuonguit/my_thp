@@ -10,17 +10,18 @@ import com.cuongngo.core_project.response.BaseModel
 
 @Entity(
     tableName = "request_value",
-    foreignKeys = [ForeignKey(
-        entity = FormEntity::class,
-        parentColumns = arrayOf("form_code"),
-        childColumns = arrayOf("form_code"),
-//        onDelete = ForeignKey.CASCADE
-    )],
-    indices = [Index(value = ["request_id"], unique = true)],
+//    foreignKeys = [ForeignKey(
+//        entity = FormEntity::class,
+//        parentColumns = arrayOf("form_code"),
+//        childColumns = arrayOf("request_id"),
+////        onDelete = ForeignKey.CASCADE
+//    )],
+    indices = [Index(value = ["request_code","request_id"], unique = true)],
 )
 @TypeConverters(Converters::class)
 data class RequestEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "request_id") val requestID: Long,
+    @ColumnInfo(name = "request_code") var requestCode: String,
     @ColumnInfo(name = "request_name") var requestName: String? = null,
     @ColumnInfo(name = "request_description:") var requestDescription: String? = null,
     @TypeConverters(Converters::class)
@@ -31,13 +32,16 @@ data class RequestEntity(
     @ColumnInfo(name = "request_status") var requestStatus: Int? = null,
     @ColumnInfo(name = "process_step")
     var processStep: List<ProcessStep>? = null,
-    @ColumnInfo(name = "request_code") var requestCode: String,
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "form_header") var formHeader: List<Field>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_body") var formBody: List<Field>? = null,
-
+    @ColumnInfo(name = "list_sheet") var listSheet: List<Sheet>? = null,
+    @TypeConverters(Converters::class)
+    @ColumnInfo(name = "form_bottom_sign") var formBottomSign: List<Field>? = null,
+    @ColumnInfo(name = "form_bottom_note") var formBottomNote: String? = null,
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted: String? = null
-) : BaseModel()
+) : BaseModel(){
+
+}

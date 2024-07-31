@@ -23,12 +23,12 @@ class Constants {
         }
     }
 
-    class MediaType{
+    class CategoryRequestDetail{
         companion object{
-            const val ALL = "all"
-            const val MOVIE = "movie"
-            const val TV = "tv"
-            const val PERSON = "person"
+            const val ADD = "add"
+            const val VIEW = "view"
+            const val EDIT = "edit"
+            const val OTHER = "other"
         }
     }
 

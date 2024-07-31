@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.RequestRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class RequestViewModel(private val requestRepository: RequestRepository): BaseViewModel() {
 
@@ -22,6 +26,9 @@ class RequestViewModel(private val requestRepository: RequestRepository): BaseVi
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
+    private val _requestUpdate = MutableLiveData<BaseResult<Unit>>()
+    val requestUpdate: LiveData<BaseResult<Unit>> = _requestUpdate
+
     fun getRequestByName(name: String) {
         _request.value = BaseResult.loading(null)
         viewModelScope.launch {
@@ -30,6 +37,18 @@ class RequestViewModel(private val requestRepository: RequestRepository): BaseVi
             }
         }
 
+    }
+    private fun getCurrentTimestamp(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+    fun updateListSheet(requestID: Long, listSheet: List<Sheet>){
+        _requestUpdate.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _requestUpdate.postValue(requestRepository.updateListSheet(requestID = requestID, listSheet = listSheet, currentTime = getCurrentTimestamp()))
+            }
+        }
     }
 
 }

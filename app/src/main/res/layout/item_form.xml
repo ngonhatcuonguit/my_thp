@@ -13,10 +13,10 @@
     <com.thelumiereguy.neumorphicview.views.NeumorphicCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="-22dp"
+        android:layout_marginEnd="-16dp"
         android:background="#F8F8F8"
         android:paddingHorizontal="12dp"
-        android:paddingTop="12dp"
+        android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:cardRadius="8"
         app:enableShadow="true"
@@ -35,20 +35,14 @@
 
         <carbon.widget.ConstraintLayout
             android:id="@+id/card_form"
-            android:layout_width="260dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_bg_item_file"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintDimensionRatio="W,80:177"
             app:carbon_cornerRadius="5dp">
-
-            <carbon.widget.ImageView
-                android:id="@+id/iv_transparent"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/transparent"
-                android:scaleType="fitXY"
-                app:layout_constraintDimensionRatio="W,110:177"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_logo"

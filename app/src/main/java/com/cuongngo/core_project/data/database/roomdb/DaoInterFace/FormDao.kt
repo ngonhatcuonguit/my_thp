@@ -44,7 +44,7 @@ interface FormDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertRequest(request: RequestEntity): Long
     @Query("SELECT * FROM request_value WHERE request_code = :requestCode")
-    fun getListRequestByCode(requestCode: String): List<RequestEntity>
+    fun getListRequestByCode(requestCode: String): RequestEntity
     @Query("SELECT * FROM request_value WHERE request_id = :requestID")
     fun getRequestByID(requestID: Long): RequestEntity
     @Query("SELECT * FROM request_value")
