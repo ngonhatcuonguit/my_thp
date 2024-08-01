@@ -71,6 +71,7 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
     private val requestDetailResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
+                WTF("test_result")
                 viewModel.getAllRequest()
             }
         }
@@ -82,7 +83,7 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
             //test
             onItemClickListener = {
                 requestDetailResult.launch(
-                    RequestMasterDetailActivity().newIntent(
+                    RequestMasterDetailActivity.newIntent(
                         requireContext(),
                         category = EDIT,
                         request = it,

@@ -94,7 +94,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
         ).apply {
             onRightButtonClick {
                 startActivity(
-                    RequestMasterDetailActivity().newIntent(
+                    RequestMasterDetailActivity.newIntent(
                         requireContext(),
                         category = ADD,
                         request = null,

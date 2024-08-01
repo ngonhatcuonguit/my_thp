@@ -37,17 +37,18 @@ class RequestMasterDetailActivity :
         const val FORM_DATA_KEY = "FORM_DATA_KEY"
         const val REQUEST_DATA_KEY = "REQUEST_DATA_KEY"
         const val CATEGORY_KEY = "CATEGORY_KEY"
-    }
-    fun newIntent(
-        context: Context,
-        category:  String?,
-        form: FormEntity?,
-        request: RequestEntity?
-    ): Intent {
-        return Intent(context, RequestMasterDetailActivity::class.java).apply {
-            putExtra(FORM_DATA_KEY, form)
-            putExtra(REQUEST_DATA_KEY, request)
-            putExtra(CATEGORY_KEY, category)
+
+        fun newIntent(
+            context: Context,
+            category:  String?,
+            form: FormEntity?,
+            request: RequestEntity?
+        ): Intent {
+            return Intent(context, RequestMasterDetailActivity::class.java).apply {
+                putExtra(FORM_DATA_KEY, form)
+                putExtra(REQUEST_DATA_KEY, request)
+                putExtra(CATEGORY_KEY, category)
+            }
         }
     }
 
@@ -61,8 +62,8 @@ class RequestMasterDetailActivity :
     private lateinit var formHeaderAdapter: FormHeaderAdapter
 
     override fun onBackPressed() {
-        super.onBackPressed()
         setResult(Activity.RESULT_OK)
+        super.onBackPressed()
     }
     override fun setUp() {
         //setup rcv
