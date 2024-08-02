@@ -3,14 +3,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
-
     <data>
-
         <variable
             name="data"
             type="com.cuongngo.core_project.base.model.DialogModel" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +43,16 @@
             app:layout_constraintTop_toBottomOf="@id/tv_title_dialog"
             tool:text="Sau khi giao dịch được xác nhận, bạn sẽ không thể thay đổi được các thông tin đã cung cấp. Vui lòng cho chúng tôi biết các thông tin dưới đây:" />
 
+        <include
+            android:id="@+id/edt_sheet_name"
+            layout="@layout/item_edit_text_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
         <com.cuongngo.core_project.common.view.view_ex.ButtonEx
             android:id="@+id/btn_left"
             style="@style/TextViewEx.BodyMedium"
@@ -58,7 +65,7 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/btn_right"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            app:layout_constraintTop_toBottomOf="@id/edt_sheet_name"
             tool:text="Close" />
 
         <com.cuongngo.core_project.common.view.view_ex.ButtonEx

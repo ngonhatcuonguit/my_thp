@@ -48,6 +48,7 @@ class FormViewModel(private val formRepository: FormRepository, private val requ
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
     var category = ""
+    var edtSheetName = ""
 
 //    init {
 //        getAllForm()

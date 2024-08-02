@@ -5,21 +5,28 @@ import androidx.core.view.isVisible
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.dialog.AppBaseDialog
 import com.cuongngo.core_project.base.model.DialogModel
+import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.DialogConfirmDefaultBinding
 import com.cuongngo.core_project.ext.WTF
+import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.utils.Func
 import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.view.setMargins
+import org.kodein.di.android.x.kodein
 
-class ConfirmDialog(
+class ConfirmAddRequestDialog(
     private val dialogData: DialogModel
 ) : AppBaseDialog<DialogConfirmDefaultBinding>() {
+
+    override val kodein by kodein()
+    private val viewModel: FormViewModel by kodeinViewModel()
 
     private var onLeftButtonClick: Func? = null
     private var onRightButtonClick: Func? = null
 
     companion object {
-        val TAG = ConfirmDialog::class.simpleName
+        val TAG = ConfirmAddRequestDialog::class.simpleName
         const val KEY_DIALOG_DATA = "KEY_DIALOG_DATA"
     }
 
@@ -67,7 +74,16 @@ class ConfirmDialog(
             if (dialogData.isSingle == false) {
                 binding.btnRight.isVisible = true
                 btnRight.setOnClickListener {
-                    onRightButtonClick?.invoke()
+//                    viewModel.edtSheetName = edtSheetName.edtValue.text.toString()
+//                    WTF("testSheetName ${viewModel.edtSheetName} ${edtSheetName.edtValue.text.toString()}")
+                    if (edtSheetName.edtValue.text.toString().isNullOrEmpty()) {
+                        edtSheetName.tvValidate.isVisible = true
+                        edtSheetName.tvValidate.text = "Vui lòng nhập tên sheet hoặc tên tần suất"
+                    } else {
+                        AppPreferences.setDialogEdtValue(edtSheetName.edtValue.text.toString()).let {
+                            onRightButtonClick?.invoke()
+                        }
+                    }
                 }
             } else {
                 binding.btnRight.isVisible = false
@@ -81,50 +97,13 @@ class ConfirmDialog(
 
     override fun inflateLayout() = R.layout.dialog_confirm_default
 
-    fun onLeftButtonClick(func: Func?): ConfirmDialog {
+    fun onLeftButtonClick(func: Func?): ConfirmAddRequestDialog {
         this.onLeftButtonClick = func
         return this
     }
 
-    fun onRightButtonClick(func: Func?): ConfirmDialog {
+    fun onRightButtonClick(func: Func?): ConfirmAddRequestDialog {
         this.onRightButtonClick = func
         return this
     }
-
-
-//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-//        return object : BottomSheetDialog(requireContext(), theme){
-//            override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-//                val view: View? = currentFocus
-//                val ret = super.dispatchTouchEvent(ev)
-//                if (view is EditText) {
-//                    currentFocus?.let {
-//                        val w: View = it
-//                        val scrcoords = IntArray(2)
-//                        w.getLocationOnScreen(scrcoords)
-//                        val x: Float = ev.rawX + w.left - scrcoords[0]
-//                        val y: Float = ev.rawY + w.top - scrcoords[1]
-//                        if (ev.action == MotionEvent.ACTION_UP
-//                            && (x < w.left || x >= w.right || y < w.top || y > w.bottom)
-//                        ) {
-//                            view.let {
-//                                val inputMethodManager = requireContext().getSystemService(
-//                                    Context.INPUT_METHOD_SERVICE
-//                                ) as InputMethodManager
-//                                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
-//                            }
-//                            when(currentFocus?.id){
-//                                R.id.edt_content_feedback -> {
-//                                    validateContent()
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                return ret
-//            }
-//        }
-//    }
-
-
 }
