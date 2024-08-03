@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestBinding
+import com.cuongngo.core_project.ext.WTF
 
 class RequestAdapter(
     listRequest: ArrayList<RequestEntity>,
@@ -43,8 +44,15 @@ class RequestAdapter(
         }
     }
 
-    fun refreshList(){
-        notifyDataSetChanged()
+    fun refreshItem(requestEntity: RequestEntity?){
+        if (requestEntity != null){
+            val oldData = listRequest.find {
+                requestEntity.requestID == it.requestID
+            }
+            val index = listRequest.indexOf(oldData)
+            listRequest[index] = requestEntity
+            notifyItemChanged(index)
+        }
     }
 
     class RequestViewHolder(

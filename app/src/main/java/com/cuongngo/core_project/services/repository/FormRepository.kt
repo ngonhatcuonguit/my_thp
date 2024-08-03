@@ -17,7 +17,7 @@ class FormRepository(
         return formLocalDataSource.getAllForm()
     }
 
-    suspend fun updateForm(formEntity: FormEntity): BaseResult<Int> {
+    suspend fun updateForm(formEntity: FormEntity): BaseResult<Unit> {
         return formLocalDataSource.updateForm(formEntity)
     }
 

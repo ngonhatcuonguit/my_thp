@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.FragmentRequestPagerBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -15,6 +16,7 @@ import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.CatrgoryPagerAdapter.Companion.MY_REQUEST
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
+import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity.Companion.RESULT_DATA
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.EDIT
 
@@ -30,7 +32,6 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
 
     companion object {
         val TAG = ListRequestPagerFragment::class.simpleName
-        const val requestCodeForResult = 12345
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -71,8 +72,11 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
     private val requestDetailResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                WTF("test_result")
-                viewModel.getAllRequest()
+                val returnedRequest = it.data?.getSerializableExtra(RESULT_DATA) as RequestEntity?
+                    ?: return@registerForActivityResult
+                WTF("result_request $returnedRequest")
+                requestAdapter.refreshItem(returnedRequest)
+//                viewModel.getAllRequest()
             }
         }
 
@@ -80,7 +84,6 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         requestAdapter = RequestAdapter(
             arrayListOf(),
-            //test
             onItemClickListener = {
                 requestDetailResult.launch(
                     RequestMasterDetailActivity.newIntent(

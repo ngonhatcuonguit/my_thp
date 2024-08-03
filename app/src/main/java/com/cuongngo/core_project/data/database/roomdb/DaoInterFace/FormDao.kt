@@ -15,7 +15,7 @@ interface FormDao {
     fun insertForm(formEntity: FormEntity): Long
 
     @Update
-    fun updateForm(record: FormEntity): Int
+    fun updateForm(record: FormEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertForm(formEntity: FormEntity): Long

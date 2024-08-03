@@ -33,4 +33,9 @@ interface RequestDao {
     @Delete
     fun deleteRequest(record: RequestEntity)
 
+    @Query("SELECT * FROM request_value WHERE request_code = :requestCode")
+    fun getListRequestByCode(requestCode: String): RequestEntity
+    @Query("SELECT * FROM request_value WHERE request_id = :requestID")
+    fun getRequestByID(requestID: Long): RequestEntity
+
 }

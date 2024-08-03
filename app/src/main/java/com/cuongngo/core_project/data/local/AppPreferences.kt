@@ -11,7 +11,6 @@ object AppPreferences {
     private const val REFERENCES_NAME = "AppPreferences"
     private const val KEY_SHOWN_ON_BOARD = "key_shown_on_board"
     const val KEY_USER_ACCESS_TOKEN = "USER_ACCESS_TOKEN"
-    const val KEY_DIALOG_EDT_VALUE = "KEY_DIALOG_EDT_VALUE"
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
@@ -25,17 +24,6 @@ object AppPreferences {
     fun setUserAccessToken(token: String) {
         editor.also {
             it.putString(KEY_USER_ACCESS_TOKEN, token)
-            it.commit()
-        }
-    }
-
-    fun getDialogEdtValue(): String {
-        return preferences.getString(KEY_DIALOG_EDT_VALUE, "") ?: ""
-    }
-
-    fun setDialogEdtValue(edt: String) {
-        editor.also {
-            it.putString(KEY_DIALOG_EDT_VALUE, edt)
             it.commit()
         }
     }

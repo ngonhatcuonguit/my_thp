@@ -9,6 +9,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.DialogConfirmDefaultBinding
 import com.cuongngo.core_project.ext.WTF
+import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.utils.Func
 import com.cuongngo.core_project.utils.convertDpToPixel
@@ -16,11 +17,9 @@ import com.cuongngo.core_project.utils.view.setMargins
 import org.kodein.di.android.x.kodein
 
 class ConfirmAddRequestDialog(
-    private val dialogData: DialogModel
+    private val dialogData: DialogModel,
+    private val viewModel: RequestViewModel
 ) : AppBaseDialog<DialogConfirmDefaultBinding>() {
-
-    override val kodein by kodein()
-    private val viewModel: FormViewModel by kodeinViewModel()
 
     private var onLeftButtonClick: Func? = null
     private var onRightButtonClick: Func? = null
@@ -69,6 +68,7 @@ class ConfirmAddRequestDialog(
             }
 
             btnLeft.setOnClickListener {
+                viewModel.edtSheetName = null
                 onLeftButtonClick?.invoke()
             }
             if (dialogData.isSingle == false) {
@@ -80,9 +80,8 @@ class ConfirmAddRequestDialog(
                         edtSheetName.tvValidate.isVisible = true
                         edtSheetName.tvValidate.text = "Vui lòng nhập tên sheet hoặc tên tần suất"
                     } else {
-                        AppPreferences.setDialogEdtValue(edtSheetName.edtValue.text.toString()).let {
-                            onRightButtonClick?.invoke()
-                        }
+                        viewModel.edtSheetName = edtSheetName.edtValue.text.toString()
+                        onRightButtonClick?.invoke()
                     }
                 }
             } else {

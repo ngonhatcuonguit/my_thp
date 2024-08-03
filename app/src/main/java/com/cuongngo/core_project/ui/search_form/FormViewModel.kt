@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class FormViewModel(private val formRepository: FormRepository, private val requestRepository: RequestRepository) : BaseViewModel() {
+class FormViewModel(private val formRepository: FormRepository) : BaseViewModel() {
 
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
@@ -28,8 +28,8 @@ class FormViewModel(private val formRepository: FormRepository, private val requ
     private val _formId = MutableLiveData<BaseResult<Long>>()
     val formId: LiveData<BaseResult<Long>> = _formId
 
-    private val _formInt = MutableLiveData<BaseResult<Int>>()
-    val formInt: LiveData<BaseResult<Int>> = _formInt
+    private val _formUnit = MutableLiveData<BaseResult<Unit>>()
+    val formUnit: LiveData<BaseResult<Unit>> = _formUnit
 
 
     private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
@@ -92,7 +92,7 @@ class FormViewModel(private val formRepository: FormRepository, private val requ
     fun updateForm(formEntity: FormEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _formInt.postValue(formRepository.updateForm(formEntity))
+                _formUnit.postValue(formRepository.updateForm(formEntity))
             }
         }
     }
@@ -155,19 +155,6 @@ class FormViewModel(private val formRepository: FormRepository, private val requ
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _allRequest.postValue(formRepository.getAllRequest())
-            }
-        }
-    }
-
-    private fun getCurrentTimestamp(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        return dateFormat.format(Date())
-    }
-    fun updateListSheet(requestID: Long, listSheet: List<Sheet>?){
-        _requestUpdate.value = BaseResult.loading(null)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _requestUpdate.postValue(requestRepository.updateListSheet(requestID = requestID, listSheet = listSheet, currentTime = getCurrentTimestamp()))
             }
         }
     }

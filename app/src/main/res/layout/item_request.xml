@@ -44,8 +44,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_logo"
-                android:layout_width="33dp"
-                android:layout_height="16dp"
+                android:layout_width="35dp"
+                android:layout_height="18dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="@dimen/_10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="@dimen/_10dp"
-                android:text="Giấy ra cổng - IT - Ngô Nhật Cường - 43950 - Ngày 24/06/2024"
+                android:text="@{request.requestName}"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="13sp"

@@ -16,22 +16,21 @@ import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
-import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityRequestMasterBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
-import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
 import kotlin.random.Random
 
 class RequestMasterDetailActivity :
-    AppBaseActivityMVVM<ActivityRequestMasterBinding, FormViewModel>() {
+    AppBaseActivityMVVM<ActivityRequestMasterBinding, RequestViewModel>() {
 
-    override val viewModel: FormViewModel by kodeinViewModel()
+    override val viewModel: RequestViewModel by kodeinViewModel()
     override fun inflateLayout(): Int = R.layout.activity_request_master
 
     companion object {
@@ -39,7 +38,7 @@ class RequestMasterDetailActivity :
         const val FORM_DATA_KEY = "FORM_DATA_KEY"
         const val REQUEST_DATA_KEY = "REQUEST_DATA_KEY"
         const val CATEGORY_KEY = "CATEGORY_KEY"
-
+        const val RESULT_DATA = "RESULT_DATA"
         fun newIntent(
             context: Context,
             category: String?,
@@ -56,15 +55,17 @@ class RequestMasterDetailActivity :
 
     private val category by lazy { intent.getStringExtra(CATEGORY_KEY) ?: "" }
     private var addRequestCode: String? = null
-    private var requestEntity: RequestEntity? = null
-    private var formEntity: FormEntity? = null
 
     private lateinit var sheetAdapter: SheetAdapter
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
     private lateinit var formHeaderAdapter: FormHeaderAdapter
+    private var position: Int? = null
 
     override fun onBackPressed() {
-        setResult(Activity.RESULT_OK)
+        val resultIntent = Intent().apply {
+            putExtra(RESULT_DATA, viewModel.requestEntity)
+        }
+        setResult(Activity.RESULT_OK, resultIntent)
         super.onBackPressed()
     }
 
@@ -76,31 +77,32 @@ class RequestMasterDetailActivity :
 
         when (category) {
             ADD -> {
-                formEntity = intent.getSerializableExtra(FORM_DATA_KEY) as FormEntity ?: null
-                addRequestCode = randomString(10)
-                viewModel.insertRequest(
-                    RequestEntity(
-                        requestID = Random.nextLong(1, 1000),
-                        requestName = randomString(40),
-                        formCode = formEntity?.formCode ?: "",
-                        requestCode = addRequestCode ?: "",
-                        formHeader = formEntity?.listHeader,
-                        listSheet = formEntity?.listSheet,
-                        processStep = formEntity?.processStep,
-                        requestStatus = Random.nextInt(1, 6)
+                viewModel.apply {
+                    formEntity = intent.getSerializableExtra(FORM_DATA_KEY) as FormEntity ?: null
+                    addRequestCode = randomString(10)
+                    viewModel.insertRequest(
+                        RequestEntity(
+                            requestID = Random.nextLong(1, 1000),
+                            requestName = randomString(40),
+                            formCode = formEntity?.formCode ?: "",
+                            requestCode = addRequestCode ?: "",
+                            formHeader = formEntity?.listHeader,
+                            listSheet = formEntity?.listSheet,
+                            processStep = formEntity?.processStep,
+                            requestStatus = Random.nextInt(1, 6)
+                        )
                     )
-                )
-                WTF("addRQ ${formEntity?.listSheet?.firstOrNull()?.listField}")
+                }
             }
 
             else -> {
-                requestEntity =
-                    intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
-                requestEntity?.formCode?.let { viewModel.getFormByCode(it) }
-                sheetAdapter.submitListSheet(requestEntity?.listSheet)
-                requestProcessStepAdapter.submitListProcessStep(requestEntity?.processStep)
-                formHeaderAdapter.submitListFormHeader(requestEntity?.formHeader)
-                WTF("viewRQ ${requestEntity?.listSheet?.size}")
+                viewModel.apply {
+                    requestEntity = intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
+                    requestEntity?.formCode?.let { viewModel.getFormByCode(it) }
+                    sheetAdapter.submitListSheet(requestEntity?.listSheet)
+                    requestProcessStepAdapter.submitListProcessStep(requestEntity?.processStep)
+                    formHeaderAdapter.submitListFormHeader(requestEntity?.formHeader)
+                }
             }
         }
 
@@ -116,7 +118,7 @@ class RequestMasterDetailActivity :
             edtRequestDescription.edtValue.hint = "Nhập mô tả yêu cầu"
             edtInformer.edtValue.hint = "Nhập email của informer"
             flAddNew.setOnClickListener {
-                formEntity?.let { form ->
+                viewModel.formEntity?.let { form ->
                     setupShowDialogConfirm(form)
                 }
             }
@@ -129,7 +131,7 @@ class RequestMasterDetailActivity :
                 onLoading = {},
                 onSuccess = {
                     it.data?.let { form ->
-                        this.formEntity = form
+                        viewModel.formEntity = form
                     }
                 },
                 onError = {
@@ -142,7 +144,6 @@ class RequestMasterDetailActivity :
                 showProgressDialog()
             }, onSuccess = {
                 addRequestCode?.let { code -> viewModel.getRequestByCode(code) }
-                WTF("listRequest1: ${addRequestCode}")
             }, onError = {
                 hideProgressDialog()
             })
@@ -152,10 +153,11 @@ class RequestMasterDetailActivity :
                 //
             }, onSuccess = {
                 it.data.let { request ->
-                    if (requestEntity != null) {
+                    if (viewModel.requestEntity != null) {
+                        viewModel.requestEntity = request
                         sheetAdapter.submitListSheet(request?.listSheet)
                     } else {
-                        requestEntity = request
+                        viewModel.requestEntity = request
                         sheetAdapter.submitListSheet(request?.listSheet)
                         requestProcessStepAdapter.submitListProcessStep(request?.processStep)
                         formHeaderAdapter.submitListFormHeader(request?.formHeader)
@@ -171,7 +173,7 @@ class RequestMasterDetailActivity :
                 showProgressDialog()
             }, onSuccess = {
                 it.data.let { id ->
-                    requestEntity?.requestCode?.let { code -> viewModel.getRequestByCode(code) }
+                    viewModel.requestEntity?.requestCode?.let { code -> viewModel.getRequestByCode(code) }
                 }
             }, onError = {
                 hideProgressDialog()
@@ -226,7 +228,7 @@ class RequestMasterDetailActivity :
 
     private fun upsertRequest() {
         //test update value
-        requestEntity?.let {
+        viewModel.requestEntity?.let {
             viewModel.upsertRequest(it)
         }
     }
@@ -242,26 +244,27 @@ class RequestMasterDetailActivity :
                 edtHint = "Nhập tên sheet/tần suất",
                 rightButtonTitle = "Thêm",
                 isSingle = false
-            )
+            ),
+            viewModel
         ).apply {
             onRightButtonClick {
-                var listRQ = requestEntity?.listSheet?.toMutableList() ?: mutableListOf()
+                var listRQ = viewModel.requestEntity?.listSheet?.toMutableList() ?: mutableListOf()
                 listRQ.add(
                     Sheet(
                         id = Random.nextLong(1, 1000),
                         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
                         listField = form.listSheet?.firstOrNull()?.listField,
                         isDone = false,
-                        name = AppPreferences.getDialogEdtValue(),
+                        name = viewModel.edtSheetName.toString() ?: return@onRightButtonClick,
                         formCode = form.formCode,
                         formName = form.name,
-                        requestCode = requestEntity?.requestCode,
+                        requestCode = viewModel.requestEntity?.requestCode,
                         created = randomDate(),
                         updated = randomDate(),
                         deleted = if (randomBoolean()) randomDate() else null,
                     )
                 )
-                requestEntity?.requestID?.let {
+                viewModel.requestEntity?.requestID?.let {
                     viewModel.updateListSheet(
                         requestID = it,
                         listSheet = listRQ

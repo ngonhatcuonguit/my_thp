@@ -1,8 +1,10 @@
 package com.cuongngo.core_project.services.repository
 
 import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSource
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.services.network.BaseResult
 
 class RequestRepository(
     private val requestLocalDataSource: RequestLocalDataSource
@@ -11,18 +13,32 @@ class RequestRepository(
         val TAG = RequestRepository::class.simpleName
     }
 
-    suspend fun getAllFormSchema() = requestLocalDataSource.getAllRequest()
-    suspend fun getRequestByName(name: String) =
-        requestLocalDataSource.getRequestByName(name)
-    suspend fun upsertRequest(request: RequestEntity) =
-        requestLocalDataSource.upsertRequest(request)
+    suspend fun getAllRequest(): BaseResult<List<RequestEntity>> {
+        return requestLocalDataSource.getAllRequest()
+    }
+    suspend fun insertRequest(request: RequestEntity): BaseResult<Long> {
+        return requestLocalDataSource.insertRequest(request)
+    }
+
+    suspend fun upsertRequest(request: RequestEntity): BaseResult<Long> {
+        return requestLocalDataSource.upsertRequest(request)
+    }
+
+    suspend fun getRequestByID(requestID: Long): BaseResult<RequestEntity> {
+        return requestLocalDataSource.getRequestByID(requestID = requestID)
+    }
+    suspend fun getRequestByCode(requestCode: String): BaseResult<RequestEntity> {
+        return requestLocalDataSource.getRequestByCode(requestCode)
+    }
+
     suspend fun updateListSheet(requestID: Long, listSheet: List<Sheet>?, currentTime: String) =
-        requestLocalDataSource.updateListSheet(requestID = requestID, listSheet = listSheet, currentTime = currentTime)
+        requestLocalDataSource.updateListSheet(
+            requestID = requestID,
+            listSheet = listSheet,
+            currentTime = currentTime
+        )
 
-    suspend fun insertRequest(request: RequestEntity) =
-        requestLocalDataSource.insertRequest(request)
-
-    suspend fun deleteRequest(request: RequestEntity) =
-        requestLocalDataSource.deleteRequest(request)
-
+    suspend fun deleteRequest(record: RequestEntity): BaseResult<Unit> {
+        return requestLocalDataSource.deleteRequest(record)
+    }
 }
