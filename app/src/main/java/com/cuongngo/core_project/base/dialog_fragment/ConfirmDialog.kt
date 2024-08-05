@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.dialog.AppBaseDialog
 import com.cuongngo.core_project.base.model.DialogModel
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.DialogConfirmDefaultBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.utils.Func
@@ -67,6 +68,7 @@ class ConfirmDialog(
             if (dialogData.isSingle == false) {
                 binding.btnRight.isVisible = true
                 btnRight.setOnClickListener {
+                    AppPreferences.setDialogData(edtSheetName.edtValue.text.toString())
                     onRightButtonClick?.invoke()
                 }
             } else {

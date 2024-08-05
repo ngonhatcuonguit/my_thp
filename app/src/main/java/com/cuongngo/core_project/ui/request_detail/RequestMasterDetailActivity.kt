@@ -83,7 +83,7 @@ class RequestMasterDetailActivity :
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
-                            requestName = randomString(40),
+                            requestName = listOf("HRM form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Factory form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Parameter form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Office form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Other form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024").random(),
                             formCode = formEntity?.formCode ?: "",
                             requestCode = addRequestCode ?: "",
                             formHeader = formEntity?.listHeader,

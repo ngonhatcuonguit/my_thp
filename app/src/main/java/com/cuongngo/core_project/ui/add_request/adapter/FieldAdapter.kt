@@ -2,6 +2,7 @@ package com.cuongngo.core_project.ui.add_request.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
@@ -27,8 +28,20 @@ class FieldAdapter(
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(field) ?: return@setOnClickListener
         }
+        binding.ivEditValue.setOnClickListener {
+            onChangeValueListener?.invoke(field) ?: return@setOnClickListener
+        }
         binding.tvValue.setOnClickListener{
             onChangeValueListener?.invoke(field) ?: return@setOnClickListener
+        }
+        with(binding){
+            if (field.value.isNullOrEmpty()){
+                ivEditValue.isVisible = true
+                tvValue.isVisible = false
+            }else{
+                ivEditValue.isVisible = false
+                tvValue.isVisible = true
+            }
         }
     }
 
@@ -53,5 +66,13 @@ class FieldAdapter(
     class FieldViewHolder(
         val itemField: ItemFieldBinding
     ) : RecyclerView.ViewHolder(itemField.root)
+
+    fun onChangeValueFile(field: Field, newValue: String?) {
+        val data = listField.find { it.id == field.id}
+        val index = listField.indexOf(data)
+        data?.value = newValue
+        data?.let { listField.set(index, it) }
+        notifyItemChanged(index)
+    }
 
 }

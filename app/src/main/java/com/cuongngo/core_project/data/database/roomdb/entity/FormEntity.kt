@@ -57,16 +57,16 @@ data class Sheet(
 
 data class Field(
     val id: Long?,
-    val label: String?,
-    val value: String?,
+    var label: String?,
+    var value: String?,
     @SerializedName("placeholder") val placeholder: String?,
     val type: String?,
     val required: Boolean?,
-    val options: List<Option>?,
-    val checked: Boolean?,
-    val created: String?,
-    val updated: String?,
-    val deleted: String?,
+    var options: List<Option>?,
+    var checked: Boolean?,
+    var created: String?,
+    var updated: String?,
+    var deleted: String?,
 ):  BaseModel() {
     companion object {
         const val STATUS_ACTIVE = 1
@@ -118,8 +118,35 @@ fun randomOptions(size: Int): List<Option> {
 fun generateRandomField(): Field {
     return Field(
         id = Random.nextLong(1, 1000),
-        label = randomString(10),
-        value = randomString(26),
+        label = listOf(
+            "Họ và tên", "Ngày sinh", "Giới tính", "Nơi ở", "Vị trí công việc",
+            "Số điện thoại", "Email", "Quốc tịch", "Số CMND/CCCD", "Ngày cấp",
+            "Nơi cấp", "Tình trạng hôn nhân", "Trình độ học vấn", "Chuyên ngành",
+            "Ngôn ngữ", "Kinh nghiệm làm việc", "Kỹ năng", "Sở thích", "Giới thiệu bản thân",
+            "Mục tiêu nghề nghiệp"
+        ).random(),
+        value = null,
+        placeholder = randomString(15),
+        type = listOf("text", "select", "checkbox", "radio", "date").random(),
+        required = randomBoolean(),
+        options = if (randomBoolean()) randomOptions(Random.nextInt(1, 5)) else null,
+        checked = randomBoolean(),
+        created = randomDate(),
+        updated = randomDate(),
+        deleted = if (randomBoolean()) randomDate() else null,
+    )
+}
+fun generateRandomFieldHeader(): Field {
+    return Field(
+        id = Random.nextLong(1, 1000),
+        label = listOf(
+            "Họ và tên", "Ngày sinh", "Giới tính", "Nơi ở", "Vị trí công việc",
+            "Số điện thoại", "Email", "Quốc tịch", "Số CMND/CCCD", "Ngày cấp",
+            "Nơi cấp", "Tình trạng hôn nhân", "Trình độ học vấn", "Chuyên ngành",
+            "Ngôn ngữ", "Kinh nghiệm làm việc", "Kỹ năng", "Sở thích", "Giới thiệu bản thân",
+            "Mục tiêu nghề nghiệp"
+        ).random(),
+        value = randomString(24),
         placeholder = randomString(15),
         type = listOf("text", "select", "checkbox", "radio", "date").random(),
         required = randomBoolean(),
@@ -136,7 +163,7 @@ fun generateRandomSheet(): Sheet {
         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
         listField = generateRandomFieldList(18),
         isDone = false,
-        name = randomString(26),
+        name = "Form Sheet 1",
         formCode = randomString(10),
         formName = randomString(10),
         requestCode = randomString(10),
@@ -156,5 +183,8 @@ fun generateRandomProcessStep(): ProcessStep {
 
 fun generateRandomFieldList(size: Int): List<Field> {
     return List(size) { generateRandomField() }
+}
+fun generateRandomHeaderList(size: Int): List<Field> {
+    return List(size) { generateRandomFieldHeader() }
 }
 

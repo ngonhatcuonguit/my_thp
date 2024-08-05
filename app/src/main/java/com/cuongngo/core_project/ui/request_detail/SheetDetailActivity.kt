@@ -3,19 +3,26 @@ package com.cuongngo.core_project.ui.request_detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
+import com.cuongngo.core_project.data.database.roomdb.entity.Field
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
 import com.cuongngo.core_project.ui.search_form.FormViewModel
+import com.cuongngo.core_project.utils.Constants
 import io.reactivex.disposables.Disposable
 
 class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, FormViewModel>() {
@@ -97,6 +104,9 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
             arrayListOf(),
             onItemClickListener = {
                 //
+            },
+            onChangeValueListener = {
+                setupShowDialogChangeValue(it)
             }
         )
         binding.rvListField.apply {
@@ -105,5 +115,39 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
             adapter = fieldAdapter
         }
     }
+
+    private fun setupShowDialogChangeValue(field: Field) {
+        var fieldData = field
+        var edtText = ""
+        if(!field.value.isNullOrEmpty()){
+            edtText = field.value.toString()
+        }
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = field.label.toString() ?: "Sửa dổi thông tin",
+                subTitle = "subtitle",
+                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
+                edtValue = edtText,
+                edtHint = "Vui lòng nhập ${field.label.toString()}",
+                edtTitle = "Nhập ${field.label.toString()}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Lưu thông tin",
+                isSingle = false
+            )
+        ).apply {
+            onRightButtonClick {
+                fieldAdapter.onChangeValueFile(
+                    fieldData,
+                    AppPreferences.getDialogData() ?: ""
+                )
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
 
 }

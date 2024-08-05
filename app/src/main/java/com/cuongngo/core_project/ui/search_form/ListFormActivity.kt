@@ -7,6 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomField
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
@@ -69,7 +70,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     private fun setupRecycleViewListForm() {
-        val gridLayoutManager = GridLayoutManager(this, 1)
+        val gridLayoutManager = GridLayoutManager(this, 2)
         formAdapter = FormAdapter(
             arrayListOf(),
             onItemClickListener = {
@@ -89,7 +90,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     // Create a list of Field objects
-    val headers = List(6) { generateRandomField() }
+    val headers = generateRandomHeaderList(6)
     val sheets = List(1){generateRandomSheet()}
     val processSteps = List(2) { generateRandomProcessStep() }
 
@@ -97,7 +98,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
         viewModel.upsertForm(
             FormEntity(
                 formID = Random.nextLong(1, 1000),
-                name = randomString(20),
+                name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
                 status = listOf(1,2,3,4,5).random(),
                 formCode = randomString(10),
                 schemaCode = randomString(10),
