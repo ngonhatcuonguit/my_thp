@@ -3,9 +3,7 @@ package com.cuongngo.core_project.ui.add_request.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.databinding.ItemFieldBinding
 
@@ -67,7 +65,7 @@ class FieldAdapter(
         val itemField: ItemFieldBinding
     ) : RecyclerView.ViewHolder(itemField.root)
 
-    fun onChangeValueFile(field: Field, newValue: String?) {
+    fun onChangeValueField(field: Field, newValue: String?) {
         val data = listField.find { it.id == field.id}
         val index = listField.indexOf(data)
         data?.value = newValue

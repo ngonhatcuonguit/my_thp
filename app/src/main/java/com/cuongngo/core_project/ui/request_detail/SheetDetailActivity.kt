@@ -3,7 +3,6 @@ package com.cuongngo.core_project.ui.request_detail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
@@ -12,7 +11,6 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
 import com.cuongngo.core_project.data.local.AppPreferences
@@ -21,13 +19,12 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
-import com.cuongngo.core_project.ui.search_form.FormViewModel
-import com.cuongngo.core_project.utils.Constants
+import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import io.reactivex.disposables.Disposable
 
-class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, FormViewModel>() {
+class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, RequestViewModel>() {
 
-    override val viewModel: FormViewModel by kodeinViewModel()
+    override val viewModel: RequestViewModel by kodeinViewModel()
 
     override fun inflateLayout(): Int = R.layout.activity_sheet_detail
 
@@ -50,8 +47,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
 
     private lateinit var fieldAdapter: FieldAdapter
 
-    private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: "" }
-    private val sheet by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Sheet}
+    private val sheet by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Sheet }
     private var request: RequestEntity? = null
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
@@ -66,7 +62,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
     }
 
     override fun setUp() {
-        viewModel.getRequestByCode(requestCode)
+//        viewModel.getRequestByCode(requestCode)
+        request = viewModel.requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
@@ -119,7 +116,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
     private fun setupShowDialogChangeValue(field: Field) {
         var fieldData = field
         var edtText = ""
-        if(!field.value.isNullOrEmpty()){
+        if (!field.value.isNullOrEmpty()) {
             edtText = field.value.toString()
         }
         val confirmDialog = ConfirmDialog(
@@ -136,7 +133,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
             )
         ).apply {
             onRightButtonClick {
-                fieldAdapter.onChangeValueFile(
+//                fieldAdapter.onChangeValueField(
+//                    fieldData,
+//                    AppPreferences.getDialogData() ?: ""
+//                )
+                handleChangeValueField(
                     fieldData,
                     AppPreferences.getDialogData() ?: ""
                 )
@@ -147,6 +148,16 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Form
             }
         }
         confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
+    private fun handleChangeValueField(field: Field, newValue: String?) {
+        val sheetData = viewModel.requestEntity?.listSheet?.find { it.id == sheet.id}
+        val sheetIndex = viewModel.requestEntity?.listSheet?.indexOf(sheetData) ?: return
+
+        val fieldData = viewModel.requestEntity?.listSheet?.get(sheetIndex)?.listField?.find {it.id == field.id}
+        val fieldIndex = viewModel.requestEntity?.listSheet?.get(sheetIndex)?.listField?.indexOf(fieldData)!!
+        fieldData?.value = newValue
+        fieldAdapter.notifyItemChanged(fieldIndex)
     }
 
 

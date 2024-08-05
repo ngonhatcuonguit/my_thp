@@ -10,6 +10,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivitySplashBinding
 import com.cuongngo.core_project.ui.MainActivity
+import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.cuongngo.core_project.ui.onboard.OnBoardActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
@@ -21,9 +22,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         setupSystemWindowInset()
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            gotoMain()
+            gotoLoginMethod()
             if (AppPreferences.isShownOnBoard()) {
-                gotoMain()
+                gotoLoginMethod()
             } else gotoOnBoard()
             finish()
         }, 2000)
@@ -38,6 +39,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private fun gotoOnBoard() {
         Intent(applicationContext, OnBoardActivity::class.java).apply {
             startActivity(this)
+        }
+    }
+    private fun gotoLoginMethod() {
+        Intent(this, LoginMethodActivity::class.java).apply {
+        }.also {
+            finish()
+            startActivity(it)
         }
     }
 

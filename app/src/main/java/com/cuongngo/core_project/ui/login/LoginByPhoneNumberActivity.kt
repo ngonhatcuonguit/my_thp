@@ -30,6 +30,12 @@ class LoginByPhoneNumberActivity :
     }
 
     override fun setUpObserver() {
-        TODO("Not yet implemented")
+        //
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 }

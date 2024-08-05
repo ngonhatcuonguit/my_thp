@@ -194,6 +194,8 @@
                 android:layout_width="60dp"
                 android:layout_height="45dp"
                 app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 android:background="#ECECEC"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -217,6 +219,8 @@
                 android:layout_height="45dp"
                 app:carbon_cornerRadius="@dimen/_10dp"
                 android:background="#ECECEC"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 android:layout_marginStart="@dimen/_12dp"
                 app:layout_constraintStart_toEndOf="@id/cl_phone_call"
                 app:layout_constraintTop_toTopOf="parent">
@@ -240,6 +244,8 @@
                 android:layout_height="45dp"
                 app:carbon_cornerRadius="@dimen/_10dp"
                 android:background="#ECECEC"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 android:layout_marginStart="@dimen/_12dp"
                 app:layout_constraintStart_toEndOf="@id/cl_workchat"
                 app:layout_constraintTop_toTopOf="parent">

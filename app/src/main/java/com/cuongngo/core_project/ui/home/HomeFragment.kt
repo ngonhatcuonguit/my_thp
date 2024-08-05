@@ -5,6 +5,12 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
+import com.cuongngo.core_project.data.database.roomdb.entity.randomString
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -14,6 +20,7 @@ import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import io.reactivex.disposables.Disposable
+import kotlin.random.Random
 
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
@@ -43,6 +50,26 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 viewModel.getAllForm()
             }
         }
+    }
+    val headers = generateRandomHeaderList(6)
+    val sheets = List(1){ generateRandomSheet() }
+    val processSteps = List(2) { generateRandomProcessStep() }
+    fun addForm() {
+        viewModel.insertForm(
+            FormEntity(
+                formID = Random.nextLong(1, 1000),
+                name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
+                status = listOf(1,2,3,4,5).random(),
+                formCode = randomString(10),
+                schemaCode = randomString(10),
+                type = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
+                schemaName = randomString(10),
+                listSheet = sheets,
+                listHeader = headers,
+                processStep = processSteps
+            )
+        )
+
     }
 
     override fun onResume() {
@@ -90,7 +117,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                     hideProgressDialog()
                     it.data?.let { listForm ->
                         formAdapter.submitListForm(listForm)
-                        WTF(ListFormActivity.TAG, "dataForm: ${listForm}")
+                    }
+                    if ((it.data?.size ?: 0) < 3){
+                        addForm()
                     }
                 },
                 onError = {
@@ -98,6 +127,20 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 }
             )
         }
+
+        observeLiveDataChanged(viewModel.formId) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    hideProgressDialog()
+                    viewModel.getAllForm()
+                },
+                onError = {
+                    hideProgressDialog()
+                }
+            )
+        }
+
     }
 
     private fun setupRcvListPopularForm() {

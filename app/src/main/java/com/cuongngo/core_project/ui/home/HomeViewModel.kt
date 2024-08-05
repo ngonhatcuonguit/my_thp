@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
@@ -20,6 +21,9 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
 
+    private val _formId = MutableLiveData<BaseResult<Long>>()
+    val formId: LiveData<BaseResult<Long>> = _formId
+
     var page: Int = 1
     var keyword: String? = null
 
@@ -27,6 +31,14 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     init {
         getHotNew()
         getAllForm()
+    }
+
+    fun insertForm(formEntity: FormEntity) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _formId.postValue(formRepository.insertForm(formEntity))
+            }
+        }
     }
 
     fun getHotNew(
