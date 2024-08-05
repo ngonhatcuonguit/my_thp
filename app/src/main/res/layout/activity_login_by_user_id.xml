@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:text="Đăng nhập"
+            android:text="Đăng nhập MSNV"
             android:textAlignment="center"
             android:textColor="@color/primary_color"
             android:textSize="39sp"
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.6">
+            app:layout_constraintWidth_percent="0.65">
 
             <include
                 android:id="@+id/view_input_user_id"
@@ -120,6 +120,8 @@
                 android:layout_height="45dp"
                 android:background="#ECECEC"
                 app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -143,6 +145,8 @@
                 android:layout_marginStart="@dimen/_12dp"
                 android:background="#ECECEC"
                 app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 app:layout_constraintStart_toEndOf="@id/cl_phone_call"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -166,6 +170,8 @@
                 android:layout_marginStart="@dimen/_12dp"
                 android:background="#ECECEC"
                 app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
                 app:layout_constraintStart_toEndOf="@id/cl_workchat"
                 app:layout_constraintTop_toTopOf="parent">
 

@@ -1,29 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_method_login"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="Đăng nhập SĐT"
+            android:textAlignment="center"
+            android:textColor="@color/primary_color"
+            android:textSize="39sp"
+            app:fontType="extra_bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_title_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:text="Vui lòng nhập  và\nmật khẩu của bạn!"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:fontType="semi_bold"
+            app:layout_constraintBottom_toTopOf="@id/cl_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/cl_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="0dp"
-            app:layout_constraintWidth_percent="0.7"
-            android:layout_height="wrap_content">
-            
+            app:layout_constraintWidth_percent="0.65">
+
             <include
-                android:id="@+id/view_input_phone_number"
+                android:id="@+id/view_input_user_id"
+                layout="@layout/view_phone_input"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                layout="@layout/view_phone_input" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_24dp" />
+
+            <include
+                android:id="@+id/view_input_password"
+                layout="@layout/view_input_user_id"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_input_user_id" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:text="Chúng tôi sẽ gửi mã xác nhận duy nhất đến số điện thoại 0368386501 để xác nhận cho yêu cầu này!"
+                android:gravity="center_vertical"
+                android:textColor="@color/gray_7d"
+                android:textSize="16sp"
+                app:fontType="medium" />
+
+            <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/shape_green_radius_12"
+                android:outlineSpotShadowColor="@color/gray_62"
+                android:shadowDx="0"
+                android:shadowDy="10"
+                android:text="Gửi OTP"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:fontType="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Liên hệ hỗ trợ"
+            android:textColor="#01AA4F"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:fontType="semi_bold"
+            app:layout_constraintBottom_toTopOf="@id/cl_option_contact"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_option_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="69dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_phone_call"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:background="#ECECEC"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_phone_call"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_phone_call" />
+
+
+            </carbon.widget.ConstraintLayout>
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_workchat"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="@dimen/_12dp"
+                android:background="#ECECEC"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                app:layout_constraintStart_toEndOf="@id/cl_phone_call"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_workchat"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_workchat" />
+
+
+            </carbon.widget.ConstraintLayout>
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_email"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="@dimen/_12dp"
+                android:background="#ECECEC"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                app:layout_constraintStart_toEndOf="@id/cl_workchat"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_email_message"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_email_message" />
+            </carbon.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

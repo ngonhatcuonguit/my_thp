@@ -7,6 +7,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.databinding.ActivityOnboardBinding
 import com.cuongngo.core_project.ui.MainActivity
+import com.cuongngo.core_project.ui.login.LoginMethodActivity
 
 class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
 
@@ -25,7 +26,8 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
 
         binding.flSkip.setOnClickListener {
             setShowOnBoard(true)
-            gotoMain()
+//            gotoMain()
+            gotoLoginMethod()
         }
 
         binding.btnNext.setOnClickListener {
@@ -48,7 +50,8 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
                 }
             } else {
                 setShowOnBoard(true)
-                gotoMain()
+//                gotoMain()
+                gotoLoginMethod()
             }
         }
 
@@ -90,6 +93,13 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
 
     private fun gotoMain() {
         Intent(this, MainActivity::class.java).apply {
+        }.also {
+            finish()
+            startActivity(it)
+        }
+    }
+    private fun gotoLoginMethod() {
+        Intent(this, LoginMethodActivity::class.java).apply {
         }.also {
             finish()
             startActivity(it)
