@@ -34,47 +34,43 @@
                 android:id="@+id/card_request"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_white_radius_8"
+                android:background="@drawable/ic_bg_item_file"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginEnd="12dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintDimensionRatio="W,80:177"
                 app:carbon_cornerRadius="6dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="35dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/logo_thp_n1" />
 
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_request_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="42dp"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:textColor="@color/gray_36"
-                    android:textSize="12sp"
-                    android:paddingVertical="3dp"
-                    android:gravity="center_vertical"
-                    android:text="@{sheet.formName}"
-                    app:layout_constraintEnd_toStartOf="@id/tv_status"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Mã yêu cầu: 123456" />
-
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-                    android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_label_item_status"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="3dp"
-                    android:text="26/126"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="7sp"
-                    android:textStyle="bold"
-                    android:layout_marginEnd="10dp"
+                    android:textSize="11sp"
                     android:gravity="center"
-                    app:layout_constraintTop_toTopOf="@id/tv_request_code"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_request_code"
-                    app:layout_constraintStart_toEndOf="@id/tv_request_code"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    android:textAlignment="center"
+                    android:text="@{sheet.formName}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iv_logo"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_logo"
+                    tools:text="Mã yêu cầu: 123456" />
 
                 <View
                     android:id="@+id/view_space"
@@ -92,19 +88,35 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="8dp"
+                    android:layout_marginVertical="6dp"
                     android:text="@{sheet.name}"
                     android:textAlignment="center"
                     android:textColor="@color/black"
-                    android:lines="2"
-                    android:maxLines="2"
                     android:gravity="center"
-                    android:paddingBottom="10dp"
-                    style="@style/TextViewEx.BodyMedium"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/TextViewEx.Heading_6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_space"
+                    app:layout_constraintBottom_toTopOf="@id/tv_status"
                     tools:text="Giấy ra cổng - IT - Ngô Nhật Cường - 43950 - Ngày 24/06/2024" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_yellow_radius6"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:text="26/126"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </carbon.widget.ConstraintLayout>
 
