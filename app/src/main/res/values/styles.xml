@@ -43,4 +43,16 @@
         <item name="android:windowBackground">@drawable/shape_white_radius_8</item>
     </style>
 
+    <style name="AppModalGreenStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/shape_item_bottom_sheet_green</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalGreenStyle</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color</item>
+        <item name="colorAccent">@color/blue_accent</item>
+    </style>
+
 </resources>
