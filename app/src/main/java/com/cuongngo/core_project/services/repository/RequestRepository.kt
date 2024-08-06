@@ -1,9 +1,8 @@
 package com.cuongngo.core_project.services.repository
 
 import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSource
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.services.network.BaseResult
 
 class RequestRepository(
@@ -31,10 +30,10 @@ class RequestRepository(
         return requestLocalDataSource.getRequestByCode(requestCode)
     }
 
-    suspend fun updateListSheet(requestID: Long, listSheet: List<Sheet>?, currentTime: String) =
+    suspend fun updateListSheet(requestID: Long, listBody: List<Body>?, currentTime: String) =
         requestLocalDataSource.updateListSheet(
             requestID = requestID,
-            listSheet = listSheet,
+            listBody = listBody,
             currentTime = currentTime
         )
 

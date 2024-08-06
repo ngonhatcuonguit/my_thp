@@ -45,16 +45,30 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromSheetList(sheetList: List<Sheet>?): String? {
+    fun fromUserList(value: List<UserTHPEntity>?): String? {
         val gson = Gson()
-        val type = object : TypeToken<List<Sheet>>() {}.type
-        return gson.toJson(sheetList, type)
+        val type = object : TypeToken<List<UserTHPEntity>>() {}.type
+        return gson.toJson(value, type)
     }
 
     @TypeConverter
-    fun toSheetList(sheetListString: String?): List<Sheet>? {
+    fun toUserList(value: String?): List<UserTHPEntity>? {
         val gson = Gson()
-        val type = object : TypeToken<List<Sheet>>() {}.type
+        val type = object : TypeToken<List<UserTHPEntity>>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromSheetList(bodyList: List<Body>?): String? {
+        val gson = Gson()
+        val type = object : TypeToken<List<Body>>() {}.type
+        return gson.toJson(bodyList, type)
+    }
+
+    @TypeConverter
+    fun toSheetList(sheetListString: String?): List<Body>? {
+        val gson = Gson()
+        val type = object : TypeToken<List<Body>>() {}.type
         return gson.fromJson(sheetListString, type)
     }
 

@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 
 @Dao
 interface RequestDao {
@@ -27,8 +27,8 @@ interface RequestDao {
     @Query("SELECT * FROM request_value WHERE request_name = :requestName")
     fun getRequestByName(requestName: String): RequestEntity
 
-    @Query("UPDATE request_value SET list_sheet = :listSheet, updated_at = :currentTimestamp WHERE request_id = :requestId")
-    fun updateListSheet(requestId: Long, listSheet: List<Sheet>?, currentTimestamp: String)
+    @Query("UPDATE request_value SET list_body = :listBody, updated_at = :currentTimestamp WHERE request_id = :requestId")
+    fun updateListSheet(requestId: Long, listBody: List<Body>?, currentTimestamp: String)
 
     @Delete
     fun deleteRequest(record: RequestEntity)

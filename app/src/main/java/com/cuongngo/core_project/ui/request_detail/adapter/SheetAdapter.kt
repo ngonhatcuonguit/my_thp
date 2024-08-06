@@ -3,15 +3,15 @@ package com.cuongngo.core_project.ui.request_detail.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.databinding.ItemSheetBinding
 
 class SheetAdapter(
-    listSheet: ArrayList<Sheet>,
-    private val onItemClickListener: ((Sheet) -> Unit)? = null
+    listBody: ArrayList<Body>,
+    private val onItemClickListener: ((Body) -> Unit)? = null
 ): RecyclerView.Adapter<SheetAdapter.SheetViewHolder>() {
 
-    private val listSheet = listSheet
+    private val listSheet = listBody
     class SheetViewHolder(
         val item: ItemSheetBinding
     ): RecyclerView.ViewHolder(item.root)
@@ -37,10 +37,10 @@ class SheetAdapter(
         }
     }
 
-    fun submitListSheet(listSheet: List<Sheet>?){
-        if (listSheet != null){
+    fun submitListSheet(listBody: List<Body>?){
+        if (listBody != null){
             this.listSheet.clear()
-            this.listSheet.addAll(listSheet)
+            this.listSheet.addAll(listBody)
             notifyDataSetChanged()
         }
     }

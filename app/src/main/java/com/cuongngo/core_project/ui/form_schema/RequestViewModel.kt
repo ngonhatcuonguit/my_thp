@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
@@ -103,14 +103,14 @@ class RequestViewModel(
         return dateFormat.format(Date())
     }
 
-    fun updateListSheet(requestID: Long, listSheet: List<Sheet>) {
+    fun updateListSheet(requestID: Long, listBody: List<Body>) {
         _requestUpdate.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _requestUpdate.postValue(
                     requestRepository.updateListSheet(
                         requestID = requestID,
-                        listSheet = listSheet,
+                        listBody = listBody,
                         currentTime = getCurrentTimestamp()
                     )
                 )

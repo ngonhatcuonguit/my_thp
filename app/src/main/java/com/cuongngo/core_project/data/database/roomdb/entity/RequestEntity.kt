@@ -2,7 +2,6 @@ package com.cuongngo.core_project.data.database.roomdb.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -27,15 +26,14 @@ data class RequestEntity(
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "created_by") var createdBy: UserTHPEntity? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "informer") var informer: UserTHPEntity? = null,
+    @ColumnInfo(name = "informer") var informer: List<UserTHPEntity>? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
     @ColumnInfo(name = "request_status") var requestStatus: Int? = null,
-    @ColumnInfo(name = "process_step")
-    var processStep: List<ProcessStep>? = null,
+    @ColumnInfo(name = "process_steps") var processSteps: List<ProcessStep>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "form_header") var formHeader: List<Field>? = null,
+    @ColumnInfo(name = "list_header") var listHeader: List<Field>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "list_sheet") var listSheet: List<Sheet>? = null,
+    @ColumnInfo(name = "list_body") var listBody: List<Body>? = null,
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "form_bottom_sign") var formBottomSign: List<Field>? = null,
     @ColumnInfo(name = "form_bottom_note") var formBottomNote: String? = null,

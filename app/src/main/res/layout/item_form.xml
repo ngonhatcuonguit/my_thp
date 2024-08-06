@@ -106,7 +106,7 @@
                 android:background="@drawable/shape_label_item_status"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:text="@{form.type}"
+                android:text="@{form.category}"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textColor="@color/white"

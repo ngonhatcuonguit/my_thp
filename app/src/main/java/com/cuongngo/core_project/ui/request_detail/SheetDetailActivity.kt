@@ -12,7 +12,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
@@ -34,27 +34,28 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         const val SHEET_DATA_KEY = "SHEET_DATA_KEY"
     }
 
-    fun newIntent(
-        context: Context,
-        requestCode: String,
-        sheet: Sheet
-    ): Intent {
-        return Intent(context, SheetDetailActivity::class.java).apply {
-            putExtra(REQUEST_CODE_KEY, requestCode)
-            putExtra(SHEET_DATA_KEY, sheet)
-        }
-    }
-
-    private lateinit var fieldAdapter: FieldAdapter
-
-    private val sheet by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Sheet }
-    private var request: RequestEntity? = null
-
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var compositeDisposable: Disposable? = null
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
+
+    fun newIntent(
+        context: Context,
+        requestCode: String,
+        body: Body
+    ): Intent {
+        return Intent(context, SheetDetailActivity::class.java).apply {
+            putExtra(REQUEST_CODE_KEY, requestCode)
+            putExtra(SHEET_DATA_KEY, body)
+        }
+    }
+
+    private lateinit var fieldAdapter: FieldAdapter
+
+    private val body by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Body }
+    private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: ""}
+    private var request: RequestEntity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,16 +63,16 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     override fun setUp() {
-//        viewModel.getRequestByCode(requestCode)
+        viewModel.getRequestByCode(requestCode)
         request = viewModel.requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
             }
-            tvFormTitle.text = sheet.formName.toString()
+            tvFormTitle.text = body.formName.toString()
         }
         setupRecycleViewListField()
-        fieldAdapter.submitListField(sheet.listField)
+        fieldAdapter.submitListField(body.listField)
     }
 
     override fun setUpObserver() {
@@ -133,10 +134,10 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             )
         ).apply {
             onRightButtonClick {
-//                fieldAdapter.onChangeValueField(
-//                    fieldData,
-//                    AppPreferences.getDialogData() ?: ""
-//                )
+                fieldAdapter.onChangeValueField(
+                    fieldData,
+                    AppPreferences.getDialogData() ?: ""
+                )
                 handleChangeValueField(
                     fieldData,
                     AppPreferences.getDialogData() ?: ""
@@ -151,12 +152,13 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     private fun handleChangeValueField(field: Field, newValue: String?) {
-        val sheetData = viewModel.requestEntity?.listSheet?.find { it.id == sheet.id}
-        val sheetIndex = viewModel.requestEntity?.listSheet?.indexOf(sheetData) ?: return
+        val sheetData = viewModel.requestEntity?.listBody?.find { it.id == body.id}
+        val sheetIndex = viewModel.requestEntity?.listBody?.indexOf(sheetData) ?: return
 
-        val fieldData = viewModel.requestEntity?.listSheet?.get(sheetIndex)?.listField?.find {it.id == field.id}
-        val fieldIndex = viewModel.requestEntity?.listSheet?.get(sheetIndex)?.listField?.indexOf(fieldData)!!
+        val fieldData = viewModel.requestEntity?.listBody?.get(sheetIndex)?.listField?.find {it.id == field.id}
+        val fieldIndex = viewModel.requestEntity?.listBody?.get(sheetIndex)?.listField?.indexOf(fieldData)!!
         fieldData?.value = newValue
+
         fieldAdapter.notifyItemChanged(fieldIndex)
     }
 

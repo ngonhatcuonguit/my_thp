@@ -21,7 +21,8 @@ data class FormEntity(
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "form_id") val formID: Long? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
     @ColumnInfo(name = "name") var name: String? = null,
-    @ColumnInfo(name = "type") var type: String? = null,
+    @ColumnInfo(name = "category") var category: String? = null,
+    @ColumnInfo(name = "process_id") var processID: Int? = null,
     @ColumnInfo(name = "status") var status: Int? = null,
     @ColumnInfo(name = "title") var title: String? = null,
     @ColumnInfo(name = "schema_name") var schemaName: String?,
@@ -30,23 +31,24 @@ data class FormEntity(
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "list_header") var listHeader: List<Field>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "list_sheet") var listSheet: List<Sheet>? = null,
+    @ColumnInfo(name = "list_body") var listBody: List<Body>? = null,
     @TypeConverters(Converters::class)
-    @ColumnInfo(name = "process_step") var processStep: List<ProcessStep>? = null,
-    @ColumnInfo(name = "sheet_number") var sheetNumber: Int? = null,
-    @ColumnInfo(name = "sheet_name") var sheetName: String? = null,
+    @ColumnInfo(name = "process_steps") var processSteps: List<ProcessStep>? = null,
+    @ColumnInfo(name = "form_bottom_sign") var formBottomSign: List<Field>? = null,
+    @ColumnInfo(name = "form_bottom_note") var formBottomNote: String? = null,
     @ColumnInfo(name = "created_at") var created: String? = null,
     @ColumnInfo(name = "updated_at") var updated: String? = null,
-    @ColumnInfo(name = "deleted_at") var deleted: String? = null
-//    @TypeConverters(SubmitButtonTypeConverter::class) val submitButton: SubmitButton
+    @ColumnInfo(name = "deleted_at") var deleted: String? = null,
+    @ColumnInfo(name = "form_version") var formVersion: String? = null
 ) : BaseModel()
 
-data class Sheet(
+data class Body(
     val id: Long?,
     var name: String?,
     var formCode: String?,
     var requestCode: String?,
     var formName: String?,
+    var listHeader: List<Field>? = null,
     var listField: List<Field>?,
     var isDone: Boolean?,
     var type: String?,
@@ -59,7 +61,7 @@ data class Field(
     val id: Long?,
     var label: String?,
     var value: String?,
-    @SerializedName("placeholder") val placeholder: String?,
+    val placeholder: String?,
     val type: String?,
     val required: Boolean?,
     var options: List<Option>?,
@@ -78,13 +80,14 @@ data class Option(
     val id: Long?,
     val value: String?,
     val label: String?,
+    val type: String? = null
 ): BaseModel()
 
 data class ProcessStep(
     val id: Long,
     val name: String?,
     val status: Int? = null,
-    var owner: UserTHPEntity? = null,
+    var owner: List<UserTHPEntity>? = null,
     var duration: String? = null,
     val created: String? = null,
     val updated: String? = null,
@@ -157,8 +160,8 @@ fun generateRandomFieldHeader(): Field {
         deleted = if (randomBoolean()) randomDate() else null,
     )
 }
-fun generateRandomSheet(): Sheet {
-    return Sheet(
+fun generateRandomSheet(): Body {
+    return Body(
         id = Random.nextLong(1, 1000),
         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
         listField = generateRandomFieldList(18),

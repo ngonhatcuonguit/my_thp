@@ -10,12 +10,9 @@ import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeade
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
-import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
-import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
@@ -62,11 +59,11 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 status = listOf(1,2,3,4,5).random(),
                 formCode = randomString(10),
                 schemaCode = randomString(10),
-                type = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
+                category = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
                 schemaName = randomString(10),
-                listSheet = sheets,
+                listBody = sheets,
                 listHeader = headers,
-                processStep = processSteps
+                processSteps = processSteps
             )
         )
 

@@ -2,7 +2,7 @@ package com.cuongngo.core_project.data.database.data_source
 
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 
 class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataSource() {
 
@@ -18,11 +18,11 @@ class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataS
         database.requestDao().upsertRequest(record)
     }
 
-    suspend fun updateListSheet(requestID: Long, listSheet: List<Sheet>?, currentTime: String) =
+    suspend fun updateListSheet(requestID: Long, listBody: List<Body>?, currentTime: String) =
         getResult {
             database.requestDao().updateListSheet(
                 requestId = requestID,
-                listSheet = listSheet,
+                listBody = listBody,
                 currentTimestamp = currentTime
             )
         }

@@ -6,7 +6,6 @@ import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomField
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
@@ -102,11 +101,11 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
                 status = listOf(1,2,3,4,5).random(),
                 formCode = randomString(10),
                 schemaCode = randomString(10),
-                type = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
+                category = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
                 schemaName = randomString(10),
-                listSheet = sheets,
+                listBody = sheets,
                 listHeader = headers,
-                processStep = processSteps
+                processSteps = processSteps
             )
         )
 

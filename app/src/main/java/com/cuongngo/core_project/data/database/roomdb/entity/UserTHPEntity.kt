@@ -17,6 +17,7 @@ data class UserTHPEntity(
     @ColumnInfo(name = "email") val email: String? = null,
     @ColumnInfo(name = "phone") var phone: String? = null,
     @ColumnInfo(name = "msnv") var msnv: Long? = null,
+    @ColumnInfo(name = "device_id") var deviceID: Long? = null,
     @ColumnInfo(name = "department") var department: String? = null,
     @ColumnInfo(name = "position") var position: String? = null,
 ) : BaseModel()

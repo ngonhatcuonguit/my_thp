@@ -12,7 +12,7 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Sheet
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
@@ -25,6 +25,8 @@ import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.google.gson.Gson
+import java.io.IOException
 import kotlin.random.Random
 
 class RequestMasterDetailActivity :
@@ -83,12 +85,18 @@ class RequestMasterDetailActivity :
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
-                            requestName = listOf("HRM form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Factory form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Parameter form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Office form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024", "Other form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024").random(),
+                            requestName = listOf(
+                                "HRM form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
+                                "Factory form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
+                                "Parameter form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
+                                "Office form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
+                                "Other form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024"
+                            ).random(),
                             formCode = formEntity?.formCode ?: "",
                             requestCode = addRequestCode ?: "",
-                            formHeader = formEntity?.listHeader,
-                            listSheet = formEntity?.listSheet,
-                            processStep = formEntity?.processStep,
+                            listHeader = formEntity?.listHeader,
+                            listBody = formEntity?.listBody,
+                            processSteps = formEntity?.processSteps,
                             requestStatus = Random.nextInt(1, 6)
                         )
                     )
@@ -97,11 +105,14 @@ class RequestMasterDetailActivity :
 
             else -> {
                 viewModel.apply {
-                    requestEntity = intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
+                    requestEntity =
+                        intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
                     requestEntity?.formCode?.let { viewModel.getFormByCode(it) }
-                    sheetAdapter.submitListSheet(requestEntity?.listSheet)
-                    requestProcessStepAdapter.submitListProcessStep(requestEntity?.processStep)
-                    formHeaderAdapter.submitListFormHeader(requestEntity?.formHeader)
+                    sheetAdapter.submitListSheet(requestEntity?.listBody)
+                    requestProcessStepAdapter.submitListProcessStep(requestEntity?.processSteps)
+                    formHeaderAdapter.submitListFormHeader(requestEntity?.listHeader)
+                    logEntityToFile()
+                    WTF("log_json_Entity: ${readLogFile()}")
                 }
             }
         }
@@ -155,14 +166,16 @@ class RequestMasterDetailActivity :
                 it.data.let { request ->
                     if (viewModel.requestEntity != null) {
                         viewModel.requestEntity = request
-                        sheetAdapter.submitListSheet(request?.listSheet)
+                        sheetAdapter.submitListSheet(request?.listBody)
                     } else {
                         viewModel.requestEntity = request
-                        sheetAdapter.submitListSheet(request?.listSheet)
-                        requestProcessStepAdapter.submitListProcessStep(request?.processStep)
-                        formHeaderAdapter.submitListFormHeader(request?.formHeader)
+                        sheetAdapter.submitListSheet(request?.listBody)
+                        requestProcessStepAdapter.submitListProcessStep(request?.processSteps)
+                        formHeaderAdapter.submitListFormHeader(request?.listHeader)
                     }
                 }
+                logEntityToFile()
+                WTF("log_json_Entity: ${readLogFile()}")
                 hideProgressDialog()
             }, onError = {
                 hideProgressDialog()
@@ -173,11 +186,35 @@ class RequestMasterDetailActivity :
                 showProgressDialog()
             }, onSuccess = {
                 it.data.let { id ->
-                    viewModel.requestEntity?.requestCode?.let { code -> viewModel.getRequestByCode(code) }
+                    viewModel.requestEntity?.requestCode?.let { code ->
+                        viewModel.getRequestByCode(
+                            code
+                        )
+                    }
                 }
             }, onError = {
                 hideProgressDialog()
             })
+        }
+    }
+
+    private fun logEntityToFile() {
+        try {
+            val json = Gson().toJson(viewModel.requestEntity)
+            this.openFileOutput("log.txt", Context.MODE_PRIVATE).use { fos ->
+                fos.write(json.toByteArray())
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun readLogFile(): String? {
+        return try {
+            this.openFileInput("log.txt").bufferedReader().use { it.readText() }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            null
         }
     }
 
@@ -248,12 +285,12 @@ class RequestMasterDetailActivity :
             viewModel
         ).apply {
             onRightButtonClick {
-                var listRQ = viewModel.requestEntity?.listSheet?.toMutableList() ?: mutableListOf()
+                var listRQ = viewModel.requestEntity?.listBody?.toMutableList() ?: mutableListOf()
                 listRQ.add(
-                    Sheet(
+                    Body(
                         id = Random.nextLong(1, 1000),
                         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
-                        listField = form.listSheet?.firstOrNull()?.listField,
+                        listField = form.listBody?.firstOrNull()?.listField,
                         isDone = false,
                         name = viewModel.edtSheetName.toString() ?: return@onRightButtonClick,
                         formCode = form.formCode,
@@ -267,7 +304,7 @@ class RequestMasterDetailActivity :
                 viewModel.requestEntity?.requestID?.let {
                     viewModel.updateListSheet(
                         requestID = it,
-                        listSheet = listRQ
+                        listBody = listRQ
                     )
                 }
                 dismiss()
