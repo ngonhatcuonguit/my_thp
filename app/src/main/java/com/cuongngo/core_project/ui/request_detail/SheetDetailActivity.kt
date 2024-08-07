@@ -103,6 +103,9 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                 //
             },
             onChangeValueListener = { fieldData ->
+                val defaultValue = fieldData.options?.find {
+                    fieldData.value == it.value
+                }
                 when (fieldData.type) {
                     "text" -> {
                         setupShowDialogChangeValue(fieldData)
@@ -117,11 +120,13 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                     }
 
                     "select" -> {
-                        fieldData.options?.let { options -> ArrayList(options) }?.let { arrayList ->
+
+                        fieldData.options?.let { options ->
                             onShowPopupOption(
                                 this,
-                                fieldAdapter.getItemRootView(fieldData),
-                                arrayList,
+                                view = fieldAdapter.getItemRootView(fieldData),
+                                listOption = options,
+                                optionDefault = defaultValue,
                                 onSelectedListener = {
                                     WTF("select_value ${it.value} $fieldData")
                                     handleChangeValueField(

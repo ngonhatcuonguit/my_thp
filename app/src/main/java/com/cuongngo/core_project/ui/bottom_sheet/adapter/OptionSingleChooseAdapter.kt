@@ -11,8 +11,8 @@ import com.cuongngo.core_project.data.database.roomdb.entity.Option
 import com.cuongngo.core_project.databinding.ItemSelectFieldValueBinding
 
 class OptionSingleChooseAdapter(
-    private val listOption: List<Option>,
-    private val defaultOption: Option? = null,
+    listOption: List<Option>,
+    defaultOption: Option? = null,
     private val onOptionSelected: (Option) -> Unit
 ) : SingleChoiceAdapter<ItemSelectFieldValueBinding, SingleChoiceViewHolder<ItemSelectFieldValueBinding>, Option>(
     listData = listOption.map {

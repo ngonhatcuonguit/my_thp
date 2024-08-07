@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.model.SelectableDataModel
 import com.cuongngo.core_project.data.database.roomdb.entity.Option
 import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.getScreenHeight
@@ -19,7 +20,8 @@ import com.cuongngo.core_project.utils.getScreenHeight
 fun onShowPopupOption(
     context: Context,
     view: View,
-    listOption: ArrayList<Option>,
+    listOption: List<Option>,
+    optionDefault: Option? = null,
     onSelectedListener: ((Option) -> Unit)? = null
 ) {
     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -49,7 +51,12 @@ fun onShowPopupOption(
         }
     }
 
-    val adapter = DropdownAdapter(listOption) { selectedOption ->
+    val adapter = DropdownAdapter(
+        listData = listOption.map {
+            SelectableDataModel(it)
+        },
+        optionDefault = optionDefault
+    ) { selectedOption ->
         onSelectedListener?.invoke(selectedOption) ?: return@DropdownAdapter
         optionPopupWindow.dismiss()
     }

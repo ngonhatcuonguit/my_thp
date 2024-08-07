@@ -79,8 +79,7 @@ data class Option(
     val id: Long?,
     val value: String?,
     val label: String?,
-    val type: String? = null,
-    var isSelect: Boolean? = false
+    val type: String? = null
 ): BaseModel()
 
 data class ProcessStep(
