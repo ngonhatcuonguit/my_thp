@@ -16,13 +16,18 @@ import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.getScreenHeight
 
 @SuppressLint("InflateParams", "ClickableViewAccessibility")
-fun onShowPopupMenu(context: Context, view: View, listOption: ArrayList<Option>) {
+fun onShowPopupOption(
+    context: Context,
+    view: View,
+    listOption: ArrayList<Option>,
+    onSelectedListener: ((Option) -> Unit)? = null
+) {
     val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     val root = inflater.inflate(R.layout.layout_show_dropdown, null)
     val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_dropdown)
 
     val popupWidth = context.resources.getDimensionPixelSize(R.dimen._300dp)
-    val popupHeight = context.resources.getDimensionPixelSize(R.dimen._350dp)
+    val popupHeight = context.resources.getDimensionPixelSize(R.dimen._360dp)
     val optionPopupWindow = PopupWindow(
         root,
         popupWidth,
@@ -45,9 +50,7 @@ fun onShowPopupMenu(context: Context, view: View, listOption: ArrayList<Option>)
     }
 
     val adapter = DropdownAdapter(listOption) { selectedOption ->
-//            if (homeViewModel.sorter != selectedOption.type) {
-//                onSortTypeChanged(selectedOption.type)
-//            }
+        onSelectedListener?.invoke(selectedOption) ?: return@DropdownAdapter
         optionPopupWindow.dismiss()
     }
     recyclerView.adapter = adapter

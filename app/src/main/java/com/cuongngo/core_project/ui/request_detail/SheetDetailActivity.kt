@@ -12,7 +12,6 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
@@ -20,7 +19,7 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
 import com.cuongngo.core_project.ui.bottom_sheet.SelectFieldValueBottomSheet
-import com.cuongngo.core_project.ui.dropdown.onShowPopupMenu
+import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.utils.getScreenHeight
 import io.reactivex.disposables.Disposable
@@ -58,8 +57,6 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
 
     private val body by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Body }
     private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: "" }
-    private var request: RequestEntity? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableLightStatusBar()
@@ -67,7 +64,6 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
 
     override fun setUp() {
         viewModel.getRequestByCode(requestCode)
-        request = viewModel.requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
@@ -87,8 +83,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.let { request ->
-                        this.request = request
-                        WTF(TAG, "requestForm: ${request.requestCode}")
+                        viewModel.requestEntity = request
+                        WTF(TAG, "requestFormEntity: ${request.requestCode}")
                     }
                 },
                 onError = {
@@ -106,15 +102,43 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             onItemClickListener = {
                 //
             },
-            onChangeValueListener = {
-                if (it.type == "select") {
-//                    showBottomSheetOption(it)
-                    //test Dropdown
-                    it.options?.let { opttions -> ArrayList(opttions) }?.let { arrayList ->
-                        onShowPopupMenu(this, fieldAdapter.getItemRootView(it), arrayList)
+            onChangeValueListener = { fieldData ->
+                when (fieldData.type) {
+                    "text" -> {
+                        setupShowDialogChangeValue(fieldData)
                     }
-                } else {
-                    setupShowDialogChangeValue(it)
+
+                    "date" -> {
+                        setupShowDialogChangeValue(fieldData)
+                    }
+
+                    "time" -> {
+                        setupShowDialogChangeValue(fieldData)
+                    }
+
+                    "select" -> {
+                        fieldData.options?.let { options -> ArrayList(options) }?.let { arrayList ->
+                            onShowPopupOption(
+                                this,
+                                fieldAdapter.getItemRootView(fieldData),
+                                arrayList,
+                                onSelectedListener = {
+                                    WTF("select_value ${it.value} $fieldData")
+                                    handleChangeValueField(
+                                        fieldData,
+                                        it.value
+                                    )
+                                })
+                        }
+                    }
+
+                    "checkbox" -> {
+                        showBottomSheetOption(fieldData)
+                    }
+
+                    else -> {
+                        setupShowDialogChangeValue(fieldData)
+                    }
                 }
             }
         )
@@ -135,7 +159,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             optionDefault = defaultValue,
             heightValue = (getScreenHeight() * 0.85).toInt()
         ).setOnOptionSelected {
-            //handle fill & update value
+            WTF("select_value ${it?.value} ${field.label}")
+            handleChangeValueField(field, it?.value)
         }.show(supportFragmentManager, TAG)
     }
 
@@ -177,14 +202,10 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     private fun handleChangeValueField(field: Field, newValue: String?) {
-        val sheetData = viewModel.requestEntity?.listBody?.find { it.id == body.id }
-        val sheetIndex = viewModel.requestEntity?.listBody?.indexOf(sheetData) ?: return
-
-        val fieldData =
-            viewModel.requestEntity?.listBody?.get(sheetIndex)?.listField?.find { it.id == field.id }
-        val fieldIndex =
-            viewModel.requestEntity?.listBody?.get(sheetIndex)?.listField?.indexOf(fieldData)!!
+        val fieldData = body.listField?.find { it.id == field.id }
+        val fieldIndex = body.listField?.indexOf(fieldData) ?: return
         fieldData?.value = newValue
+        WTF("testRequestEntity $newValue -- $field --- ${viewModel.requestEntity?.requestID}")
 
         fieldAdapter.notifyItemChanged(fieldIndex)
     }

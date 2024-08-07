@@ -5,16 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.databinding.ItemFieldBinding
+import com.cuongngo.core_project.ext.WTF
 
 class FieldAdapter(
     listField: ArrayList<Field>,
     private val onItemClickListener: ((Field) -> Unit)? = null,
     private val onChangeValueListener: ((Field) -> Unit)? = null
-): RecyclerView.Adapter<FieldAdapter.FieldViewHolder>() {
+) : RecyclerView.Adapter<FieldAdapter.FieldViewHolder>() {
 
-    private val listField = listField
+    private var listField = listField
 
     override fun getItemCount(): Int {
         return listField.size
@@ -42,18 +44,47 @@ class FieldAdapter(
         binding.ivEditValue.setOnClickListener {
             onChangeValueListener?.invoke(field) ?: return@setOnClickListener
         }
-        binding.tvValue.setOnClickListener{
+        binding.tvValue.setOnClickListener {
             onChangeValueListener?.invoke(field) ?: return@setOnClickListener
         }
-        with(binding){
-            if (field.value.isNullOrEmpty()){
+        with(binding) {
+            if (field.value.isNullOrEmpty()) {
+                tvValue.text= field.value
                 ivEditValue.isVisible = true
                 tvValue.isVisible = false
-            }else{
+                when (field.type) {
+                    "text" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                    }
+
+                    "date" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_date)
+                    }
+
+                    "time" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_clock)
+                    }
+
+                    "select" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
+                    }
+
+                    "checkbox" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
+                    }
+
+                    else -> {
+                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                    }
+                }
+
+            } else {
                 ivEditValue.isVisible = false
                 tvValue.isVisible = true
+                tvValue.text= field.value
             }
         }
+
     }
 
     fun getItemRootView(field: Field): View {
@@ -84,11 +115,12 @@ class FieldAdapter(
     ) : RecyclerView.ViewHolder(itemField.root)
 
     fun onChangeValueField(field: Field, newValue: String?) {
-        val data = listField.find { it.id == field.id}
+        val data = listField.find { it.id == field.id }
         val index = listField.indexOf(data)
         data?.value = newValue
         data?.let { listField.set(index, it) }
         notifyItemChanged(index)
+        WTF("fieldDataChange ${data?.value.toString()}")
     }
 
 }

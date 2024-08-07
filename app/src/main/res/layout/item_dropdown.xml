@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
     android:background="@color/white">
 
     <com.cuongngo.core_project.common.view.view_ex.TextViewEx
@@ -15,6 +14,8 @@
         android:paddingStart="12dp"
         android:paddingEnd="26dp"
         android:singleLine="true"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         android:textSize="14sp"

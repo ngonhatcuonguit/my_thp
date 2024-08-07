@@ -44,10 +44,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_edit_value"
-            android:layout_width="30dp"
+            android:layout_width="26dp"
             android:layout_height="0dp"
             app:srcCompat="@drawable/ic_edit_value"
-            android:tint="@color/orange_26"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_label"

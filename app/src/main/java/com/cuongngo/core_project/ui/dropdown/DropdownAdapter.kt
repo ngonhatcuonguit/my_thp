@@ -10,7 +10,8 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.Option
 
 class DropdownAdapter(
-    private val listOption: ArrayList<Option>, private val onOptionSelected: (Option) -> Unit
+    private val listOption: ArrayList<Option>,
+    private val onOptionSelected: (Option) -> Unit
 ) : RecyclerView.Adapter<DropdownAdapter.OptionViewHolder>() {
 
 
@@ -22,7 +23,7 @@ class DropdownAdapter(
             ivOptionChecked.visibility =
                 if (option.isSelect == true) View.VISIBLE else View.INVISIBLE
             itemView.setOnClickListener {
-                onOptionSelected(option)
+                onOptionSelected.invoke(option)
             }
         }
     }
