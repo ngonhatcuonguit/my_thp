@@ -207,7 +207,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         fieldData?.value = newValue
         WTF("testRequestEntity $newValue -- $field --- ${viewModel.requestEntity?.requestID}")
 
-        fieldAdapter.notifyItemChanged(fieldIndex)
+        fieldData?.let { fieldAdapter.onChangeValueFieldV2(it, fieldIndex) }
     }
 
 

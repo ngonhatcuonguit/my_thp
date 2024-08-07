@@ -122,5 +122,9 @@ class FieldAdapter(
         notifyItemChanged(index)
         WTF("fieldDataChange ${data?.value.toString()}")
     }
+    fun onChangeValueFieldV2(field: Field, index: Int) {
+        field.let { listField.set(index, it) }
+        notifyItemChanged(index)
+    }
 
 }
