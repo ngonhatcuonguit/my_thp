@@ -45,7 +45,7 @@
 
     <style name="AppModalGreenStyle"
         parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/shape_item_bottom_sheet_green</item>
+        <item name="android:background">@drawable/shape_item_bottom_sheet</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

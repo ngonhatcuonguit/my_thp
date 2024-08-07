@@ -112,7 +112,21 @@ fun randomDate(): String {
 fun randomOptions(size: Int): List<Option> {
     return List(size) {
         Option(
-            value = randomString(5), label = randomString(5), id = Random.nextLong(1, 1000)
+            value =  listOf(
+                "Họ và tên", "Ngày sinh", "Giới tính", "Nơi ở", "Vị trí công việc",
+                "Số điện thoại", "Email", "Quốc tịch", "Số CMND/CCCD", "Ngày cấp",
+                "Nơi cấp", "Tình trạng hôn nhân", "Trình độ học vấn", "Chuyên ngành",
+                "Ngôn ngữ", "Kinh nghiệm làm việc", "Kỹ năng", "Sở thích", "Giới thiệu bản thân",
+                "Mục tiêu nghề nghiệp"
+            ).random(),
+            label = listOf(
+                "Họ và tên", "Ngày sinh", "Giới tính", "Nơi ở", "Vị trí công việc",
+                "Số điện thoại", "Email", "Quốc tịch", "Số CMND/CCCD", "Ngày cấp",
+                "Nơi cấp", "Tình trạng hôn nhân", "Trình độ học vấn", "Chuyên ngành",
+                "Ngôn ngữ", "Kinh nghiệm làm việc", "Kỹ năng", "Sở thích", "Giới thiệu bản thân",
+                "Mục tiêu nghề nghiệp"
+            ).random(),
+            id = Random.nextLong(1, 1000)
         )
     }
 }
@@ -131,7 +145,7 @@ fun generateRandomField(): Field {
         placeholder = randomString(15),
         type = listOf("text", "select", "checkbox", "radio", "date").random(),
         required = randomBoolean(),
-        options = if (randomBoolean()) randomOptions(Random.nextInt(1, 5)) else null,
+        options = if (randomBoolean()) randomOptions(Random.nextInt(3, 20)) else null,
         checked = randomBoolean(),
         created = randomDate(),
         updated = randomDate(),

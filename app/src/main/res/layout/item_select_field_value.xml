@@ -5,17 +5,18 @@
 
     <data>
         <variable
-            name="option"
-            type="com.cuongngo.core_project.data.database.roomdb.entity.Option" />
+            name="value"
+            type="String" />
     </data>
 
     <carbon.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/shape_grayf9_radius3_stroke">
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_grayf9_radius5_stroke">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSelected"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/shape_option_selected"
@@ -25,7 +26,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_selected"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -40,9 +42,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bep_medium"
-            android:paddingHorizontal="@dimen/_12dp"
-            android:paddingVertical="@dimen/_12dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp"
             android:singleLine="true"
+            android:text="@{value}"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
             android:textSize="14sp"

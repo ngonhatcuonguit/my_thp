@@ -19,7 +19,9 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
+import com.cuongngo.core_project.ui.bottom_sheet.SelectFieldValueBottomSheet
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
+import com.cuongngo.core_project.utils.getScreenHeight
 import io.reactivex.disposables.Disposable
 
 class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, RequestViewModel>() {
@@ -104,7 +106,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                 //
             },
             onChangeValueListener = {
-                setupShowDialogChangeValue(it)
+                if(it.type == "select"){
+                    showBottomSheetOption(it)
+                }else{
+                    setupShowDialogChangeValue(it)
+                }
             }
         )
         binding.rvListField.apply {
@@ -112,6 +118,19 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             isScrollContainer = false
             adapter = fieldAdapter
         }
+    }
+
+    private fun showBottomSheetOption(field: Field){
+        val defaultValue = field.options?.find {
+            field.value == it.value
+        }
+        SelectFieldValueBottomSheet(
+            field = field,
+            optionDefault = defaultValue,
+            heightValue = (getScreenHeight() * 0.85).toInt()
+        ).setOnOptionSelected {
+            //handle fill & update value
+        }.show(supportFragmentManager, TAG)
     }
 
     private fun setupShowDialogChangeValue(field: Field) {
