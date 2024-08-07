@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.ui.add_request.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,18 @@ class FieldAdapter(
 
     override fun getItemCount(): Int {
         return listField.size
+    }
+
+    private var recyclerView: RecyclerView? = null
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        this.recyclerView = recyclerView
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        this.recyclerView = null
     }
 
     override fun onBindViewHolder(holder: FieldViewHolder, position: Int) {
@@ -41,6 +54,11 @@ class FieldAdapter(
                 tvValue.isVisible = true
             }
         }
+    }
+
+    fun getItemRootView(field: Field): View {
+        val position = listField.indexOf(listField.find { it.id == field.id })
+        return recyclerView?.findViewHolderForAdapterPosition(position)?.itemView!!
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FieldViewHolder {

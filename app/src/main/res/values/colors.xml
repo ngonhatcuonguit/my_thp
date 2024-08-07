@@ -27,6 +27,7 @@
     <color name="gray_7d">#6C6F7D</color>
     <color name="gray_f6">#F1F4F6</color>
     <color name="gray_fb">#F9FAFB</color>
+    <color name="gray_ee">#EEEEEE</color>
     <color name="yellow_700">#FFC700</color>
     <color name="orange_26">#FC5C26</color>
 </resources>

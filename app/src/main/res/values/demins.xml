@@ -4,9 +4,15 @@
     <dimen name="banner_max_margin_next_page">50dp</dimen>
     <dimen name="banner_margin_offset">40dp</dimen>
     <dimen name="banner_height">154dp</dimen>
-    <dimen name="banner_width">295</dimen>
+    <dimen name="banner_width">295dp</dimen>
+    <dimen name="dropdown_height">350dp</dimen>
+    <dimen name="dropdown_width">250dp</dimen>
     <dimen name="banner_spacing">12dp</dimen>
     <dimen name="_10dp">10dp</dimen>
     <dimen name="_12dp">12dp</dimen>
     <dimen name="_24dp">24dp</dimen>
+    <dimen name="_250dp">250dp</dimen>
+    <dimen name="_300dp">300dp</dimen>
+    <dimen name="_350dp">350dp</dimen>
+    <dimen name="_450dp">450dp</dimen>
 </resources>
