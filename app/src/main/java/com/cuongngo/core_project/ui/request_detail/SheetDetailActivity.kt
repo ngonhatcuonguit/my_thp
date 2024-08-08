@@ -120,7 +120,6 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                     }
 
                     "select" -> {
-
                         fieldData.options?.let { options ->
                             onShowPopupOption(
                                 this,
@@ -128,7 +127,6 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                                 listOption = options,
                                 optionDefault = defaultValue,
                                 onSelectedListener = {
-                                    WTF("select_value ${it.value} $fieldData")
                                     handleChangeValueField(
                                         fieldData,
                                         it.value
@@ -189,14 +187,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             )
         ).apply {
             onRightButtonClick {
-                fieldAdapter.onChangeValueField(
-                    fieldData,
-                    AppPreferences.getDialogData() ?: ""
-                )
-                handleChangeValueField(
-                    fieldData,
-                    AppPreferences.getDialogData() ?: ""
-                )
+                handleChangeValueField(fieldData, edtText)
                 dismiss()
             }
             onLeftButtonClick {
@@ -210,9 +201,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         val fieldData = body.listField?.find { it.id == field.id }
         val fieldIndex = body.listField?.indexOf(fieldData) ?: return
         fieldData?.value = newValue
-        WTF("testRequestEntity $newValue -- $field --- ${viewModel.requestEntity?.requestID}")
-
-        fieldData?.let { fieldAdapter.onChangeValueFieldV2(it, fieldIndex) }
+        fieldData?.let { fieldAdapter.onChangeValueField(it, fieldIndex) }
     }
 
 

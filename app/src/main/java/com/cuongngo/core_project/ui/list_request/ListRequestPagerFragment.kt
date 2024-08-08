@@ -83,6 +83,7 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
     private fun setupRecycleViewListRequest() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         requestAdapter = RequestAdapter(
+            requireContext(),
             arrayListOf(),
             onItemClickListener = {
                 requestDetailResult.launch(

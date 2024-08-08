@@ -13,6 +13,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.randomString
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.MainActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
@@ -143,6 +144,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private fun setupRcvListPopularForm() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         formAdapter = FormAdapter(
+            requireContext(),
             arrayListOf(),
             onItemClickListener = {
                 //show detail

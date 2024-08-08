@@ -68,7 +68,6 @@ class ConfirmDialog(
             if (dialogData.isSingle == false) {
                 binding.btnRight.isVisible = true
                 btnRight.setOnClickListener {
-                    AppPreferences.setDialogData(edtSheetName.edtValue.text.toString())
                     onRightButtonClick?.invoke()
                 }
             } else {

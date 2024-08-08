@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.cuongngo.core_project.App.Companion.getDrawableResource
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.databinding.ItemFieldBinding
-import com.cuongngo.core_project.ext.WTF
 
 class FieldAdapter(
     listField: ArrayList<Field>,
@@ -82,6 +82,31 @@ class FieldAdapter(
                 ivEditValue.isVisible = false
                 tvValue.isVisible = true
                 tvValue.text= field.value
+                when (field.type) {
+                    "text" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
+                    }
+
+                    "date" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_date), null)
+                    }
+
+                    "time" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_clock), null)
+                    }
+
+                    "select" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
+                    }
+
+                    "checkbox" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
+                    }
+
+                    else -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
+                    }
+                }
             }
         }
 
@@ -114,15 +139,15 @@ class FieldAdapter(
         val itemField: ItemFieldBinding
     ) : RecyclerView.ViewHolder(itemField.root)
 
-    fun onChangeValueField(field: Field, newValue: String?) {
-        val data = listField.find { it.id == field.id }
-        val index = listField.indexOf(data)
-        data?.value = newValue
-        data?.let { listField.set(index, it) }
-        notifyItemChanged(index)
-        WTF("fieldDataChange ${data?.value.toString()}")
-    }
-    fun onChangeValueFieldV2(field: Field, index: Int) {
+//    fun onChangeValueField(field: Field, newValue: String?) {
+//        val data = listField.find { it.id == field.id }
+//        val index = listField.indexOf(data)
+//        data?.value = newValue
+//        data?.let { listField.set(index, it) }
+//        notifyItemChanged(index)
+//        WTF("fieldDataChange ${data?.value.toString()}")
+//    }
+    fun onChangeValueField(field: Field, index: Int) {
         field.let { listField.set(index, it) }
         notifyItemChanged(index)
     }

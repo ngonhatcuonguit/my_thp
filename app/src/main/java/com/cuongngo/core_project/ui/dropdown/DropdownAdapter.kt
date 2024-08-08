@@ -15,7 +15,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.Option
 /**
 * @param DATA data model
 */
-class DropdownAdapter(
+open class DropdownAdapter(
     private var listData: List<SelectableDataModel<Option>>,
     private var optionDefault: Option? = null,
     private val onOptionSelected: (Option) -> Unit
@@ -27,6 +27,7 @@ class DropdownAdapter(
         cloneListData()
     }
     private fun cloneListData() {
+        listData.find { it.isSelected }?.isSelected = false
         listData.find {
             isSameItem(it.data, optionDefault)
         }?.isSelected = true

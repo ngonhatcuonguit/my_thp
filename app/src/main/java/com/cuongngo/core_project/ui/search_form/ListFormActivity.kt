@@ -71,6 +71,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     private fun setupRecycleViewListForm() {
         val gridLayoutManager = GridLayoutManager(this, 2)
         formAdapter = FormAdapter(
+            this,
             arrayListOf(),
             onItemClickListener = {
                 //show detail

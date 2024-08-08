@@ -1,17 +1,21 @@
 package com.cuongngo.core_project.ui.request_detail.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.databinding.ItemSheetBinding
+import com.cuongngo.core_project.utils.convertDpToPixel
 
 class SheetAdapter(
+    context: Context,
     listBody: ArrayList<Body>,
     private val onItemClickListener: ((Body) -> Unit)? = null
 ): RecyclerView.Adapter<SheetAdapter.SheetViewHolder>() {
 
     private val listSheet = listBody
+    private val context = context
     class SheetViewHolder(
         val item: ItemSheetBinding
     ): RecyclerView.ViewHolder(item.root)
@@ -31,6 +35,7 @@ class SheetAdapter(
     override fun onBindViewHolder(holder: SheetViewHolder, position: Int) {
         val binding = holder.item
         var sheet = listSheet[position]
+        binding.root.elevation = convertDpToPixel(8F, context)
         binding.sheet = sheet
         binding.root.setOnClickListener{
             onItemClickListener?.invoke(sheet) ?: return@setOnClickListener

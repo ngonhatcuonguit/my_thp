@@ -221,6 +221,7 @@ class RequestMasterDetailActivity :
     private fun setupRecycleViewListSheet() {
         val gridLayoutManager = GridLayoutManager(this, 2)
         sheetAdapter = SheetAdapter(
+            this,
             arrayListOf(),
             onItemClickListener = {
                 startActivity(

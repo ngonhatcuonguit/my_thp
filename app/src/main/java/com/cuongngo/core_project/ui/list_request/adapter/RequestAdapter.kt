@@ -1,22 +1,27 @@
 package com.cuongngo.core_project.ui.list_request.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestBinding
 import com.cuongngo.core_project.ext.WTF
+import com.cuongngo.core_project.utils.convertDpToPixel
 
 class RequestAdapter(
+    context: Context,
     listRequest: ArrayList<RequestEntity>,
     private val onItemClickListener: ((RequestEntity) -> Unit)? = null
 ): RecyclerView.Adapter<RequestAdapter.RequestViewHolder>() {
 
     private val listRequest = listRequest
+    private val context = context
 
     override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val binding = holder.itemRequest
         var request = listRequest[position]
+        binding.root.elevation = convertDpToPixel(8F, context)
         binding.request = request
         binding.tvRequestCode.text = "Mã yêu cầu: ${request.requestCode}"
         binding.root.setOnClickListener {
