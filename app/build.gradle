@@ -120,4 +120,5 @@ dependencies {
 //    implementation "dev.ahamed.mva3:ext-diffutil-rx:3.0.0"
 
     implementation 'com.github.thelumiereguy:NeumorphismView-Android:1.5'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

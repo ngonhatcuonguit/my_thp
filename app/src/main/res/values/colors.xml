@@ -30,4 +30,10 @@
     <color name="gray_ee">#EEEEEE</color>
     <color name="yellow_700">#FFC700</color>
     <color name="orange_26">#FC5C26</color>
+    <color name="gray_93">#868D93</color>
+    <color name="black_1c">#171B1C</color>
+    <color name="blue_f0">#E0E7F0</color>
+    <color name="gray_fa">#F5F6FA</color>
+    <color name="gray_db">#D6D9DB</color>
+
 </resources>

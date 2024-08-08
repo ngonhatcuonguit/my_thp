@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CoreProject</string>
+    <string name="search_hint"><font size="14">Nhập từ khóa tìm kiếm</font></string>
 </resources>
