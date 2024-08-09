@@ -12,13 +12,13 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
-import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
-import com.cuongngo.core_project.ui.bottom_sheet.SelectFieldValueBottomSheet
+import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
+import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.utils.getScreenHeight
@@ -119,7 +119,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         setupShowDialogChangeValue(fieldData)
                     }
 
-                    "select" -> {
+                    "singleChoice" -> {
                         fieldData.options?.let { options ->
                             onShowPopupOption(
                                 this,
@@ -135,8 +135,12 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         }
                     }
 
+                    "multiChoice" -> {
+                        showMultiChoiceBottomSheet(fieldData)
+                    }
+
                     "checkbox" -> {
-                        showBottomSheetOption(fieldData)
+                        showSingleChoiceBottomSheet(fieldData)
                     }
 
                     else -> {
@@ -153,17 +157,32 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
 
-    private fun showBottomSheetOption(field: Field) {
+    private fun showSingleChoiceBottomSheet(field: Field) {
         val defaultValue = field.options?.find {
             field.value == it.value
         }
-        SelectFieldValueBottomSheet(
+        SingleChoiceOptionBottomSheet(
             field = field,
             optionDefault = defaultValue,
             heightValue = (getScreenHeight() * 0.85).toInt()
         ).setOnOptionSelected {
             WTF("select_value ${it?.value} ${field.label}")
             handleChangeValueField(field, it?.value)
+        }.show(supportFragmentManager, TAG)
+    }
+
+    private fun showMultiChoiceBottomSheet(field: Field){
+        WTF("listOption: ${field.options}")
+        MultiChoiceOptionBottomSheet(
+            listOption = field.options,
+            listSelectedDefault = emptyList(),
+            (getScreenHeight() * 0.95).toInt()
+        ).onOptionSelected {listSelected ->
+            var displayText: String? = ""
+            listSelected?.forEach {
+                displayText = "$displayText, ${it.value}"
+            }
+            handleChangeValueField(field, displayText)
         }.show(supportFragmentManager, TAG)
     }
 

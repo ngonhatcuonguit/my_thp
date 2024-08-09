@@ -65,10 +65,13 @@ class FieldAdapter(
                         ivEditValue.setImageResource(R.drawable.ic_clock)
                     }
 
-                    "select" -> {
+                    "singleChoice" -> {
                         ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
                     }
 
+                    "multiChoice" -> {
+                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
+                    }
                     "checkbox" -> {
                         ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
                     }
@@ -95,10 +98,13 @@ class FieldAdapter(
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_clock), null)
                     }
 
-                    "select" -> {
+                    "singleChoice" -> {
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
                     }
 
+                    "multiChoice" -> {
+                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
+                    }
                     "checkbox" -> {
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
                     }

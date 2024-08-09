@@ -20,11 +20,13 @@ import com.cuongngo.core_project.databinding.ActivityRequestMasterBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.cuongngo.core_project.utils.getScreenHeight
 import com.google.gson.Gson
 import java.io.IOException
 import kotlin.random.Random
@@ -122,6 +124,10 @@ class RequestMasterDetailActivity :
                 onBackPressed()
             }
             edtInformer.tvTitle.text = "Informer"
+            edtInformer.edtValue.setOnClickListener {
+                //search user bottom sheet show
+            }
+
             edtRequestName.tvTitle.text = "Tên yêu cầu/ Request Name"
             edtRequestDescription.tvTitle.text = "Mô tả yêu cầu/ Request  description"
 

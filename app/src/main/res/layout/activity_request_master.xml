@@ -88,7 +88,7 @@
 
                 <include
                     android:id="@+id/edt_informer"
-                    layout="@layout/item_edit_text_request"
+                    layout="@layout/item_input_list_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"

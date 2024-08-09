@@ -14,15 +14,15 @@ import com.cuongngo.core_project.utils.TFunc
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.getScreenWidth
 
-class SelectFieldValueBottomSheet : FullHeightBottomSheet<FragmentSelectFieldValueBinding>() {
+class SingleChoiceOptionBottomSheet : FullHeightBottomSheet<FragmentSelectFieldValueBinding>() {
     companion object {
 
         const val DEFAULT_OPTION = "DEFAULT_OPTION"
         const val FIELD_DATA = "FIELD_DATA"
         const val BOTTOM_SHEET_HEIGHT_VALUE = "BOTTOM_SHEET_HEIGHT_VALUE"
         var DEFAULT_HEIGHT = (getScreenHeight() * 0.8).toInt()
-        operator fun invoke(field: Field, optionDefault: Option?, heightValue: Int? = DEFAULT_HEIGHT): SelectFieldValueBottomSheet {
-            return SelectFieldValueBottomSheet().apply {
+        operator fun invoke(field: Field, optionDefault: Option?, heightValue: Int? = DEFAULT_HEIGHT): SingleChoiceOptionBottomSheet {
+            return SingleChoiceOptionBottomSheet().apply {
                 arguments = bundleOf(
                     DEFAULT_OPTION to optionDefault,
                     FIELD_DATA to field,
@@ -82,7 +82,7 @@ class SelectFieldValueBottomSheet : FullHeightBottomSheet<FragmentSelectFieldVal
         }
     }
 
-    fun setOnOptionSelected(onOptionSelected: TFunc<Option?>): SelectFieldValueBottomSheet {
+    fun setOnOptionSelected(onOptionSelected: TFunc<Option?>): SingleChoiceOptionBottomSheet {
         this.onOptionSelected = onOptionSelected
         return this
     }
