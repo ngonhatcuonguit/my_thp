@@ -3,6 +3,7 @@ package com.cuongngo.core_project.ui.request_detail
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
@@ -21,6 +22,7 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
+import com.cuongngo.core_project.ui.bottom_sheet.SearchUserBottomSheet
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
@@ -126,6 +128,7 @@ class RequestMasterDetailActivity :
             edtInformer.tvTitle.text = "Informer"
             edtInformer.edtValue.setOnClickListener {
                 //search user bottom sheet show
+                showSearchUserBottomSheet()
             }
 
             edtRequestName.tvTitle.text = "Tên yêu cầu/ Request Name"
@@ -275,6 +278,15 @@ class RequestMasterDetailActivity :
         viewModel.requestEntity?.let {
             viewModel.upsertRequest(it)
         }
+    }
+
+    private fun showSearchUserBottomSheet(){
+        SearchUserBottomSheet(
+            requestData = viewModel.requestEntity,
+            heightValue = (getScreenHeight() * 0.95).toInt()
+        ).setOnUserSelected {
+            //handle after choice
+        }.show(supportFragmentManager, TAG)
     }
 
     private fun setupShowDialogConfirm(form: FormEntity) {

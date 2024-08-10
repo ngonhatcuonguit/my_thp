@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_header"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/shape_item_bottom_sheet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_close_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tìm kiếm thông tin"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edt_search_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/shape_grayf7_radius12_stroke"
+                android:drawableStart="@drawable/ic_search_black"
+                android:drawablePadding="@dimen/_10dp"
+                android:hint="Nhập từ khoá tìm kiếm"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions"
+                android:paddingStart="14dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blue_f0"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_header"
+                tools:ignore="RtlSymmetry" />
+
+            <View
+                android:id="@+id/view_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/blue_f0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edt_search_keyword" />
+
+            <View
+                android:id="@+id/view_separator_2"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/gray_fa"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_separator" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_clear_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="6dp"
+                android:padding="6dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/edt_search_keyword"
+                app:layout_constraintEnd_toEndOf="@id/edt_search_keyword"
+                app:layout_constraintTop_toTopOf="@id/edt_search_keyword"
+                app:srcCompat="@drawable/ic_search_clear" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_option"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintBottom_toTopOf="@id/container_bottom"
+                app:layout_constraintTop_toBottomOf="@id/view_separator_2"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/container_bottom"
+                style="@style/carbonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/white"
+                android:elevation="20dp"
+                android:stateListAnimator="@null"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible">
+
+                <carbon.widget.TextView
+                    android:id="@+id/btn_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/primary_color"
+                    android:fontFamily="@font/bep_medium"
+                    android:gravity="center"
+                    android:paddingVertical="14dp"
+                    android:text="Xác nhận"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:carbon_cornerRadius="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </carbon.widget.ConstraintLayout>
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/edt_search_keyword"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -40,13 +40,14 @@ class ConfirmDialog(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         binding.root.setMargins(
-            convertDpToPixel(20f, requireContext()).toInt(),
+            convertDpToPixel(40f, requireContext()).toInt(),
             0,
-            convertDpToPixel(20f, requireContext()).toInt(),
+            convertDpToPixel(40f, requireContext()).toInt(),
             0
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         binding.root.setOnTouchListener { _, event ->
+            !binding.edtSheetName.edtValue.isFocused
             hideKeyboard()
             false
         }
@@ -101,6 +102,12 @@ class ConfirmDialog(
         hideKeyboard()
         super.dismiss()
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        hideKeyboard()
+        super.onDismiss(dialog)
+    }
+
 
     fun onLeftButtonClick(func: Func?): ConfirmDialog {
         this.onLeftButtonClick = func

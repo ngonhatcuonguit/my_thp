@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.view.BaseView
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.getScreenWidth
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -141,4 +142,13 @@ abstract class FullHeightBottomSheet<DB: ViewDataBinding>: BottomSheetDialogFrag
     open fun hideProgressLoading(){
         progressDialog?.dismiss()
     }
+
+    open fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusedView = requireActivity().currentFocus
+        currentFocusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+    }
+
 }
