@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.ui.request_detail
 
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,8 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
+import com.cuongngo.core_project.base.view.date_time_picker.DatePickerDialog
+import com.cuongngo.core_project.base.view.date_time_picker.Listener
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
@@ -21,8 +24,13 @@ import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
+import com.cuongngo.core_project.utils.date.getCurrentDayOfMonth
+import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
+import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
+import com.cuongngo.core_project.utils.date.getDaysDiff
 import com.cuongngo.core_project.utils.getScreenHeight
 import io.reactivex.disposables.Disposable
+import java.util.Calendar
 
 class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, RequestViewModel>() {
 
@@ -41,6 +49,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
+    private var date : Calendar = Calendar.getInstance()
 
     fun newIntent(
         context: Context,
@@ -112,11 +121,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                     }
 
                     "date" -> {
-                        setupShowDialogChangeValue(fieldData)
+                        showDatePickerDialog(fieldData)
                     }
 
                     "time" -> {
-                        setupShowDialogChangeValue(fieldData)
+                        showTimePickerDialog(fieldData)
                     }
 
                     "singleChoice" -> {
@@ -166,28 +175,70 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             optionDefault = defaultValue,
             heightValue = (getScreenHeight() * 0.85).toInt()
         ).setOnOptionSelected {
-            WTF("select_value ${it?.value} ${field.label}")
             handleChangeValueField(field, it?.value)
         }.show(supportFragmentManager, TAG)
     }
 
     private fun showMultiChoiceBottomSheet(field: Field){
-        WTF("listOption: ${field.options}")
         MultiChoiceOptionBottomSheet(
             listOption = field.options,
             listSelectedDefault = emptyList(),
             (getScreenHeight() * 0.95).toInt()
         ).onOptionSelected {listSelected ->
-            var displayText: String? = ""
+            var displayText = ""
             listSelected?.forEach {
-                displayText = "$displayText, ${it.value}"
+                displayText = if(displayText.isEmpty()){
+                    "${it.value}"
+                }else{
+                    "$displayText, ${it.value}"
+                }
             }
             handleChangeValueField(field, displayText)
         }.show(supportFragmentManager, TAG)
     }
 
+    private fun showDatePickerDialog(field: Field) {
+        val cal : Calendar = Calendar.getInstance()
+        cal.add(Calendar.YEAR, 5)
+        val dateAdd : Calendar = Calendar.getInstance()
+        dateAdd.add(Calendar.MINUTE, 5)
+        DatePickerDialog(
+            calendar = dateAdd,
+            context = this,
+            listener = object : Listener {
+                override fun onDateSelected(calendar: Calendar) {
+                    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+                    val monthOfYear = calendar.get(Calendar.MONTH) + 1
+                    val year = calendar.get(Calendar.YEAR)
+
+                    val dayStr = if (dayOfMonth < 10) "0${dayOfMonth}" else "$dayOfMonth"
+                    val monthStr = if (monthOfYear < 10) "0${monthOfYear}" else "$monthOfYear"
+                    handleChangeValueField(field, "$dayStr/$monthStr/$year")
+                }
+            },
+            maxDate = cal.timeInMillis,
+            minDate = dateAdd.timeInMillis,
+            isCancelable = true
+        ).show()
+    }
+
+    private fun showTimePickerDialog(field: Field) {
+        val dateAdd : Calendar = Calendar.getInstance()
+        dateAdd.add(Calendar.MINUTE, 10)
+        TimePickerDialog(
+            this,
+            { _ , hour , minute ->
+                date.set(Calendar.HOUR_OF_DAY, hour)
+                date.set(Calendar.MINUTE, minute)
+                handleChangeValueField(field, "${hour.toString()}:${minute.toString()}")
+            },
+            dateAdd.get(Calendar.HOUR_OF_DAY) ?: getCurrentHourOfDay(),
+            dateAdd.get(Calendar.MINUTE) ?: getCurrentMinuteOfHour(),
+            true
+        ).show()
+    }
+
     private fun setupShowDialogChangeValue(field: Field) {
-        var fieldData = field
         var edtText = ""
         if (!field.value.isNullOrEmpty()) {
             edtText = field.value.toString()
@@ -206,7 +257,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             )
         ).apply {
             onRightButtonClick {
-                handleChangeValueField(fieldData, edtText)
+                handleChangeValueField(field, it)
                 dismiss()
             }
             onLeftButtonClick {
