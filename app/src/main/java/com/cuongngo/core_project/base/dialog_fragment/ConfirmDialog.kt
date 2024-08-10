@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.base.dialog_fragment
 
+import android.content.DialogInterface
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -46,9 +47,7 @@ class ConfirmDialog(
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
         binding.root.setOnTouchListener { _, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                hideKeyboard()
-            }
+            hideKeyboard()
             false
         }
     }
@@ -69,7 +68,11 @@ class ConfirmDialog(
                     edtSheetName.edtValue.setText(it)
                 }
                 edtSheetName.edtValue.requestFocus()
-                showKeyBoard()
+                if (!edtSheetName.edtValue.isFocused){
+                    hideKeyboard()
+                }else{
+                    showKeyBoard()
+                }
             } else {
                 edtSheetName.root.isVisible = false
             }
@@ -93,6 +96,11 @@ class ConfirmDialog(
     }
 
     override fun inflateLayout() = R.layout.dialog_confirm_default
+
+    override fun dismiss() {
+        hideKeyboard()
+        super.dismiss()
+    }
 
     fun onLeftButtonClick(func: Func?): ConfirmDialog {
         this.onLeftButtonClick = func
