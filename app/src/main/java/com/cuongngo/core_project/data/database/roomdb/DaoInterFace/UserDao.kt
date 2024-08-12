@@ -13,6 +13,12 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addUser(genre: UserTHPEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertUsers(users: List<UserTHPEntity>)
+
+    @Query("SELECT * FROM users WHERE name LIKE :keyword OR email LIKE :keyword OR department LIKE :keyword OR position LIKE :keyword")
+    suspend fun searchUsers(keyword: String): List<UserTHPEntity>
+
     @Query("SELECT * FROM users")
     fun getAllUser(): List<UserTHPEntity>
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
@@ -27,6 +28,7 @@ import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
+import com.cuongngo.core_project.ui.user_thp.adapter.UserAddedAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.google.gson.Gson
@@ -65,7 +67,7 @@ class RequestMasterDetailActivity :
     private lateinit var sheetAdapter: SheetAdapter
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
     private lateinit var formHeaderAdapter: FormHeaderAdapter
-    private var position: Int? = null
+    private lateinit var informerAdapter: UserAddedAdapter
 
     override fun onBackPressed() {
         val resultIntent = Intent().apply {
@@ -80,6 +82,7 @@ class RequestMasterDetailActivity :
         setupRecycleViewListSheet()
         setupRecycleViewListProcessStep()
         setupRecycleViewFormHeader()
+        setupRecyclerViewInformer()
 
         when (category) {
             ADD -> {
@@ -125,8 +128,8 @@ class RequestMasterDetailActivity :
             ivBack.setOnClickListener {
                 onBackPressed()
             }
-            edtInformer.tvTitle.text = "Informer"
-            edtInformer.edtValue.setOnClickListener {
+            layoutInformer.tvTitle.text = "Informer"
+            layoutInformer.tvHint.setOnClickListener {
                 //search user bottom sheet show
                 showSearchUserBottomSheet()
             }
@@ -136,7 +139,6 @@ class RequestMasterDetailActivity :
 
             edtRequestName.edtValue.hint = "Nhập tên yêu cầu"
             edtRequestDescription.edtValue.hint = "Nhập mô tả yêu cầu"
-            edtInformer.edtValue.hint = "Nhập email của informer"
             flAddNew.setOnClickListener {
                 viewModel.formEntity?.let { form ->
                     setupShowDialogConfirm(form)
@@ -273,6 +275,33 @@ class RequestMasterDetailActivity :
         }
     }
 
+    private fun setupRecyclerViewInformer(){
+        val gridLayoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
+        informerAdapter = UserAddedAdapter(
+            arrayListOf(),
+            onItemSelected = {
+                // action show tooltip
+            },
+            onAddListener = {
+                showSearchUserBottomSheet()
+            },
+            onRemoveListener = {
+                informerAdapter.onRemoveItem(it)
+                if (informerAdapter.itemCount == 1){
+                    binding.layoutInformer.tvHint.text = "Tìm kiếm user"
+                    binding.layoutInformer.rvListAdded.isVisible = false
+                }else{
+                    binding.layoutInformer.rvListAdded.isVisible = true
+                    binding.layoutInformer.tvHint.text = ""
+                }
+            }
+        )
+        binding.layoutInformer.rvListAdded.apply {
+            layoutManager = gridLayoutManager
+            adapter = informerAdapter
+        }
+    }
+
     private fun upsertRequest() {
         //test update value
         viewModel.requestEntity?.let {
@@ -285,7 +314,14 @@ class RequestMasterDetailActivity :
             requestData = viewModel.requestEntity,
             heightValue = (getScreenHeight() * 0.95).toInt()
         ).setOnUserSelected {
-            //handle after choice
+            it?.let { data -> informerAdapter.onAddNew(data)}
+            if (informerAdapter.itemCount == 1){
+                binding.layoutInformer.tvHint.text = "Tìm kiếm user"
+                binding.layoutInformer.rvListAdded.isVisible = false
+            }else{
+                binding.layoutInformer.rvListAdded.isVisible = true
+                binding.layoutInformer.tvHint.text = ""
+            }
         }.show(supportFragmentManager, TAG)
     }
 

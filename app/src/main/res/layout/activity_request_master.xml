@@ -87,7 +87,7 @@
                     app:layout_constraintTop_toBottomOf="@id/edt_request_name" />
 
                 <include
-                    android:id="@+id/edt_informer"
+                    android:id="@+id/layout_informer"
                     layout="@layout/item_input_list_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edt_informer"
+                    app:layout_constraintTop_toBottomOf="@id/layout_informer"
                     app:srcCompat="@drawable/ic_globe_black" />
 
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx

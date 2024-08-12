@@ -78,8 +78,7 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
 
     private fun setupView() {
         setupHeightRecycleView()
-        binding.ivClose.setOnClickListener {
-            dismiss()
+        binding.ivClose.setOnClickListener {           dismiss()
         }
         binding.tvTitle.text = "Tìm kiếm user"
         binding.ivClearSearch.setOnClickListener {

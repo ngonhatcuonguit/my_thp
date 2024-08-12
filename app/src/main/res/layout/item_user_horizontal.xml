@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="user"
+            type="com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <carbon.widget.ConstraintLayout
+            android:id="@+id/cl_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_ee"
+            app:carbon_strokeWidth="0.8dp"
+            app:carbon_stroke="@color/gray_F5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:carbon_cornerRadius="5dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp">
+
+            <carbon.widget.TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bep_medium"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxLength="20"
+                android:paddingEnd="3dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/black_1c"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Hello 123" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_add_new"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:visibility="gone"
+                android:layout_marginStart="3dp"
+                android:src="@drawable/ic_add_circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_user_name"
+                app:layout_constraintTop_toTopOf="parent" />
+        </carbon.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fl_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-12dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:paddingEnd="5dp"
+            app:srcCompat="@drawable/ic_search_clear"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cl_container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
