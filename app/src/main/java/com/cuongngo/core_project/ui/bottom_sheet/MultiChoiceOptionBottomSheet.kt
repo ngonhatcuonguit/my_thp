@@ -11,7 +11,6 @@ import com.cuongngo.core_project.base.model.WrapperModel
 import com.cuongngo.core_project.data.database.roomdb.entity.Option
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.FragmentSelectFieldValueBinding
-import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.nullableCast
 import com.cuongngo.core_project.ui.bottom_sheet.adapter.OptionMultiChoiceAdapter
 import com.cuongngo.core_project.utils.TFunc
@@ -84,7 +83,6 @@ class MultiChoiceOptionBottomSheet : FullHeightBottomSheet<FragmentSelectFieldVa
             }
         }
 
-        WTF("listOption: $listOption")
 
         //rcv
         binding.rcvOption.run {
