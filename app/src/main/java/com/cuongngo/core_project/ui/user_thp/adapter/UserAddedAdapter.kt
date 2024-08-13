@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.ui.user_thp.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,17 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.databinding.ItemUserHorizontalBinding
 import com.cuongngo.core_project.utils.TFunc
+import com.cuongngo.core_project.utils.mark.setupTooltip
 
 class UserAddedAdapter(
+    context: Context,
     listUser: ArrayList<UserTHPEntity>,
     private val onAddListener: TFunc<UserTHPEntity>,
     private val onRemoveListener: TFunc<UserTHPEntity>,
     private val onItemSelected: TFunc<UserTHPEntity>
 ) : RecyclerView.Adapter<UserAddedAdapter.UserAddedViewHolder>() {
 
+    private var context = context
     private var listUser = listUser
     private var moreItem = UserTHPEntity(
         id = 8888,
@@ -88,6 +92,8 @@ class UserAddedAdapter(
             binding.tvUserName.setTextColor(App.getResources().getColor(R.color.black_1c))
             binding.tvUserName.setOnClickListener {
                 onItemSelected.invoke(user)
+                val text = "${user.name}-${user.msnv}-${user.position}-${user.department}"
+                    setupTooltip(context, text, binding.flRemove)
             }
             binding.flRemove.setOnClickListener {
                 onRemoveListener.invoke(user)

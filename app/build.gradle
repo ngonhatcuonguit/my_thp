@@ -121,4 +121,6 @@ dependencies {
 
     implementation 'com.github.thelumiereguy:NeumorphismView-Android:1.5'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.github.douglasjunior:android-simple-tooltip:1.0.0-rc.0'
+    implementation 'com.github.skydoves:balloon:1.2.7'
 }

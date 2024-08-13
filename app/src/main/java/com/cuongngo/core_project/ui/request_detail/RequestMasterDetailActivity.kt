@@ -118,6 +118,7 @@ class RequestMasterDetailActivity :
                     sheetAdapter.submitListSheet(requestEntity?.listBody)
                     requestProcessStepAdapter.submitListProcessStep(requestEntity?.processSteps)
                     formHeaderAdapter.submitListFormHeader(requestEntity?.listHeader)
+                    viewModel.requestEntity = requestEntity
                     logEntityToFile()
                     WTF("log_json_Entity: ${readLogFile()}")
                 }
@@ -278,15 +279,17 @@ class RequestMasterDetailActivity :
     private fun setupRecyclerViewInformer(){
         val gridLayoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         informerAdapter = UserAddedAdapter(
+            this,
             arrayListOf(),
             onItemSelected = {
-                // action show tooltip
+                //show tool tip
             },
             onAddListener = {
                 showSearchUserBottomSheet()
             },
             onRemoveListener = {
                 informerAdapter.onRemoveItem(it)
+                viewModel.requestEntity?.informer?.toMutableList()?.remove(it)
                 if (informerAdapter.itemCount == 1){
                     binding.layoutInformer.tvHint.text = "Tìm kiếm user"
                     binding.layoutInformer.rvListAdded.isVisible = false
@@ -314,7 +317,15 @@ class RequestMasterDetailActivity :
             requestData = viewModel.requestEntity,
             heightValue = (getScreenHeight() * 0.95).toInt()
         ).setOnUserSelected {
-            it?.let { data -> informerAdapter.onAddNew(data)}
+            it?.let { data ->
+                if (viewModel.requestEntity?.informer?.contains(data) != true){
+                    viewModel.requestEntity?.informer?.toMutableList()?.add(data)
+                    informerAdapter.onAddNew(data)
+                    WTF("addUser ${viewModel.requestEntity?.informer}")
+                }else{
+                    //show warning
+                }
+            }
             if (informerAdapter.itemCount == 1){
                 binding.layoutInformer.tvHint.text = "Tìm kiếm user"
                 binding.layoutInformer.rvListAdded.isVisible = false
