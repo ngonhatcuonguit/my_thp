@@ -3,7 +3,6 @@ package com.cuongngo.core_project.ui.request_detail
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
@@ -12,9 +11,9 @@ import com.cuongngo.core_project.base.dialog_fragment.ConfirmAddRequestDialog
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
@@ -22,7 +21,6 @@ import com.cuongngo.core_project.databinding.ActivityRequestMasterBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SearchUserBottomSheet
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
@@ -253,10 +251,19 @@ class RequestMasterDetailActivity :
     private fun setupRecycleViewListProcessStep() {
         val gridLayoutManager = GridLayoutManager(this, 1)
         requestProcessStepAdapter = RequestProcessStepAdapter(
+            this,
             arrayListOf(),
+            supportFragmentManager,
             onItemClickListener = {
-                // update data
-            })
+               //test
+            },
+            onStepAddUserListener = {
+
+            },
+            onStepRemoveUserListener = {
+
+            }
+            )
         binding.rvProcessStep.apply {
             layoutManager = gridLayoutManager
             adapter = requestProcessStepAdapter

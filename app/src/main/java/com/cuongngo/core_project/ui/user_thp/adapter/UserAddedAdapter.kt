@@ -2,7 +2,6 @@ package com.cuongngo.core_project.ui.user_thp.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -15,27 +14,18 @@ import com.cuongngo.core_project.utils.mark.setupTooltip
 
 class UserAddedAdapter(
     context: Context,
-    listUser: ArrayList<UserTHPEntity>,
+    listUser: List<UserTHPEntity>,
     private val onAddListener: TFunc<UserTHPEntity>,
     private val onRemoveListener: TFunc<UserTHPEntity>,
     private val onItemSelected: TFunc<UserTHPEntity>
 ) : RecyclerView.Adapter<UserAddedAdapter.UserAddedViewHolder>() {
 
     private var context = context
-    private var listUser = listUser
+    private var listUser = listUser.toMutableList() ?: mutableListOf()
     private var moreItem = UserTHPEntity(
         id = 8888,
         name = "Thêm"
     )
-    private fun listUserAddMore():ArrayList<UserTHPEntity>{
-        var list = listUser
-        return if(listUser.isNotEmpty()){
-            list.add(moreItem)
-            list
-        }else{
-            list
-        }
-    }
 
     fun submitNewList(listUser: List<UserTHPEntity>?){
         if (listUser.isNullOrEmpty()){
@@ -119,6 +109,22 @@ class UserAddedAdapter(
             listUser.add(moreItem)
         }
         notifyDataSetChanged()
+    }
+    fun onRemoveOwnerStep(userTHPEntity: UserTHPEntity){
+        if (listUser.size > 1){
+            listUser.remove(userTHPEntity)
+        }else{
+            listUser = arrayListOf()
+        }
+    }
+
+    fun onAddOwnerStep(userTHPEntity: UserTHPEntity){
+        if (listUser.size > 0){
+            listUser.add(listUser.size-1,userTHPEntity)
+        }else{
+            listUser.add(userTHPEntity)
+            listUser.add(moreItem)
+        }
     }
 
     fun onItemClick(){
