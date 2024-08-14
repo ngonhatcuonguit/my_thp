@@ -257,11 +257,8 @@ class RequestMasterDetailActivity :
             onItemClickListener = {
                //test
             },
-            onStepAddUserListener = {
-
-            },
-            onStepRemoveUserListener = {
-
+            onChangeProcessStep = {
+                // change list Process
             }
             )
         binding.rvProcessStep.apply {
