@@ -101,6 +101,14 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
             }
         }
     }
+    fun getCountUserLocal(){
+        _checkUserTable.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _checkUserTable.postValue(userRepository.getUserCountLocal())
+            }
+        }
+    }
     fun addListUser(listUser: List<UserTHPEntity>){
         _insertListUserToLocal.value = BaseResult.loading(null)
         viewModelScope.launch {

@@ -5,11 +5,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
-import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
-import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
-import com.cuongngo.core_project.data.database.roomdb.entity.randomString
+import com.cuongngo.core_project.data.database.roomdb.entity.*
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -34,6 +30,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
+    private var listUserRemote: List<UserTHPEntity>? = emptyList()
 
     private lateinit var formAdapter: FormAdapter
 
@@ -82,7 +79,6 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
-
         observeLiveDataChanged(viewModel.getListUser){
             it.onResultReceived(
                 onLoading = {
@@ -91,10 +87,40 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 onSuccess = {
                     WTF("testApiUser ${it.data?.data}")
                     if(it.data?.data?.isEmpty() != true){
-                        viewModel.addListUser(
-                            it.data?.data!!
-                        )
+                        viewModel.getCountUserLocal()
+                        listUserRemote = it.data?.data
                     }
+                },
+                onError = {
+
+                }
+            )
+        }
+
+        observeLiveDataChanged(viewModel.checkUserTable){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testApiUser ${it.data}")
+                    if (it.data != 0){
+                        listUserRemote.let{
+                            viewModel.addListUser(
+                                it ?: arrayListOf()
+                            )
+                        }
+                    }else{
+
+                    }
+                },
+                onError = {}
+            )
+        }
+
+        observeLiveDataChanged(viewModel.insertListUserToLocal){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testApiUser -----------------ok")
                 },
                 onError = {
 

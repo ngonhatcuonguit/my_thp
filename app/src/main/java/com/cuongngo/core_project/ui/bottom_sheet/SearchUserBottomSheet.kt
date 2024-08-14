@@ -1,9 +1,7 @@
 package com.cuongngo.core_project.ui.bottom_sheet
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
@@ -16,8 +14,10 @@ import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomUsers
 import com.cuongngo.core_project.databinding.FragmentSearchFieldValueBinding
 import com.cuongngo.core_project.ext.WTF
+import com.cuongngo.core_project.ext.observeLiveDataChanged
+import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.bottom_sheet.adapter.UserSingleChoiceAdapter
-import com.cuongngo.core_project.ui.form_schema.RequestViewModel
+import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.utils.TFunc
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.getScreenWidth
@@ -46,7 +46,7 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         }
     }
 
-    private val viewModel: RequestViewModel by kodeinViewModel() //thay = userViewModel
+    private val viewModel: HomeViewModel by kodeinViewModel() //thay = userViewModel
 
     private var onUserSelected: TFunc<UserTHPEntity?>? = null
     private var heightValue: Int = DEFAULT_HEIGHT
@@ -73,12 +73,12 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         setupView()
         setupFeatureSearch()
         setupObserver()
-        setupRecycleView(generateRandomUsers(10))
     }
 
     private fun setupView() {
         setupHeightRecycleView()
-        binding.ivClose.setOnClickListener {           dismiss()
+        binding.ivClose.setOnClickListener {
+            dismiss()
         }
         binding.tvTitle.text = "Tìm kiếm user"
         binding.ivClearSearch.setOnClickListener {
@@ -94,15 +94,15 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    hideKeyboard()
                     //page=1
                     keyword = it.text.trim().toString()
                     //call query user like keyword
+                    viewModel.getAllUserLocal
                     hideKeyboard()
                     WTF("testSearchKeyWord $keyword")
                 }
         binding.edtSearchKeyword.doOnTextChanged { text, _, _, _ ->
-            text?.let {keySearch ->
+            text?.let { keySearch ->
                 binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
             }
         }
@@ -110,22 +110,22 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
     }
 
     private fun setupObserver() {
-//        observeLiveDataChanged(viewModel.request) {
-//            it.onResultReceived(
-//                onLoading = {
-//                    binding.progressBar.visibility = View.VISIBLE
-//                },
-//                onError = {
-//                    binding.progressBar.visibility = View.GONE
-//                },
-//                onSuccess = {
-//                    binding.progressBar.visibility = View.GONE
-//                    it.data?.data?.apply {
-//                        setupRecyclerView(this)
-//                    }
-//                }
-//            )
-//        }
+        observeLiveDataChanged(viewModel.getAllUserLocal) {
+            it.onResultReceived(
+                onLoading = {
+                    binding.progressBar.visibility = View.VISIBLE
+                },
+                onError = {
+                    binding.progressBar.visibility = View.GONE
+                },
+                onSuccess = {
+                    binding.progressBar.visibility = View.GONE
+                    it.data?.apply {
+                        setupRecycleView(this)
+                    }
+                }
+            )
+        }
     }
 
     private fun setupRecycleView(listData: List<UserTHPEntity>) {
