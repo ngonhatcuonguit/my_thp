@@ -38,5 +38,8 @@ class UserRepository(private val userRemoteDataSource: UserRemoteDataSource, pri
     suspend fun getUserCountLocal():BaseResult<Int>{
         return userLocalDataSource.getUserCount()
     }
+    suspend fun addListUser(listUser: List<UserTHPEntity>):BaseResult<Unit>{
+        return userLocalDataSource.upsertListUser(listUser)
+    }
 
 }

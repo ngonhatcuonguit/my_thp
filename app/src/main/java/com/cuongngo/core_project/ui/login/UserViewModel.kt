@@ -32,6 +32,9 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
     private val _getAllUserLocal = MutableLiveData<BaseResult<List<UserTHPEntity>>>()
     val getAllUserLocal: LiveData<BaseResult<List<UserTHPEntity>>>get() = _getAllUserLocal
 
+    private val _insertListUserToLocal = MutableLiveData<BaseResult<Unit>>()
+    val insertListUserToLocal: LiveData<BaseResult<Unit>>get() = _insertListUserToLocal
+
 
     fun login(
         user_name: String,
@@ -71,13 +74,15 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
 
     //Local
 
-//    fun getAllUserLocal(){
-//        _getAllUserLocal.value = BaseResult.loading(null)
-//        viewModelScope.launch {
-//            withContext(Dispatchers.IO){
-//                _getAllUserLocal.postValue(userRepository.getAllUserLocal())
-//            }
-//        }
-//    }
+    fun getAllUserLocal(){
+        _getAllUserLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _getAllUserLocal.postValue(userRepository.getAllUserLocal())
+            }
+        }
+    }
+
+
 
 }

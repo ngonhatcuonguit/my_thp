@@ -11,9 +11,11 @@ import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProce
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
+import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.MainActivity
+import com.cuongngo.core_project.ui.login.UserViewModel
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
@@ -36,6 +38,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private lateinit var formAdapter: FormAdapter
 
     override fun setUp() {
+        viewModel.getListUser(true)
         setupRcvListPopularForm()
         binding.apply {
             tvHintSearch.setOnClickListener {
@@ -79,6 +82,26 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
+
+        observeLiveDataChanged(viewModel.getListUser){
+            it.onResultReceived(
+                onLoading = {
+
+                },
+                onSuccess = {
+                    WTF("testApiUser ${it.data?.data}")
+                    if(it.data?.data?.isEmpty() != true){
+                        viewModel.addListUser(
+                            it.data?.data!!
+                        )
+                    }
+                },
+                onError = {
+
+                }
+            )
+        }
+
         observeLiveDataChanged(viewModel.hotNew){
             it.onResultReceived(
                 onLoading = {

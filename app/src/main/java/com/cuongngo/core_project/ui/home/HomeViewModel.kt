@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
@@ -23,6 +25,24 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
 
     private val _formId = MutableLiveData<BaseResult<Long>>()
     val formId: LiveData<BaseResult<Long>> = _formId
+
+
+    private val _getListUser = MutableLiveData<BaseResult<UserTHPResponse>>()
+    val getListUser: LiveData<BaseResult<UserTHPResponse>> get() = _getListUser
+
+    //Local
+
+    private val _getAllUserLocal = MutableLiveData<BaseResult<List<UserTHPEntity>>>()
+    val getAllUserLocal: LiveData<BaseResult<List<UserTHPEntity>>>get() = _getAllUserLocal
+
+    private val _insertListUserToLocal = MutableLiveData<BaseResult<Unit>>()
+    val insertListUserToLocal: LiveData<BaseResult<Unit>>get() = _insertListUserToLocal
+
+    private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
+    val checkUserTable: LiveData<BaseResult<Int>>get() = _checkUserTable
+
+
+
 
     var page: Int = 1
     var keyword: String? = null
@@ -56,6 +76,36 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _allForm.postValue(formRepository.getAllForm())
+            }
+        }
+    }
+
+    fun getListUser(isGetAll: Boolean){
+        _getListUser.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _getListUser.postValue(
+                    userRepository.getListUser(isGetAll)
+                )
+            }
+        }
+    }
+
+    //Local
+
+    fun getAllUserLocal(){
+        _getAllUserLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _getAllUserLocal.postValue(userRepository.getAllUserLocal())
+            }
+        }
+    }
+    fun addListUser(listUser: List<UserTHPEntity>){
+        _insertListUserToLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _insertListUserToLocal.postValue(userRepository.addListUser(listUser))
             }
         }
     }
