@@ -23,8 +23,7 @@ class RequestProcessStepAdapter(
     listProcessStep: ArrayList<ProcessStep>,
     private val fragmentManager: FragmentManager,
     private val onItemClickListener: TFunc<ProcessStep>? = null,
-    private val onStepAddUserListener: TFunc<List<ProcessStep>>,
-    private val onStepRemoveUserListener: TFunc<List<ProcessStep>>,
+    private val onChangeProcessStep: TFunc<List<ProcessStep>>,
 ) : RecyclerView.Adapter<RequestProcessStepAdapter.RequestProcessStepViewHolder>() {
 
     private var listProcessStep = listProcessStep
@@ -71,10 +70,15 @@ class RequestProcessStepAdapter(
     ) : RecyclerView.ViewHolder(itemStep.root) {
         fun bind(processStep: ProcessStep) {
             with(itemStep) {
-                tvHintStep.setOnClickListener {
+                if(processStep.owner.isNullOrEmpty()){
+                    tvHintStep.setOnClickListener {
 //                    onItemClickListener?.invoke(processStep)
-                    showSearchUserBottomSheet(processStep)
+                        showSearchUserBottomSheet()
+                    }
+                }else{
+
                 }
+
                 // Set up the nested RecyclerView
                 val gridLayoutManager =
                     GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
@@ -93,10 +97,9 @@ class RequestProcessStepAdapter(
                         //show tool tip
                     },
                     onAddListener = {
-                        showSearchUserBottomSheet(processStep)
+                        showSearchUserBottomSheet()
                     },
                     onRemoveListener = { data ->
-                        ownerAdapter.onRemoveOwnerStep(data)
                         processStep.let { stepData ->
                             var currentListOwner =
                                 stepData.owner?.toMutableList() ?: mutableListOf()
@@ -123,7 +126,7 @@ class RequestProcessStepAdapter(
             }
         }
 
-        private fun showSearchUserBottomSheet(processStep: ProcessStep) {
+        private fun showSearchUserBottomSheet() {
             SearchUserBottomSheet(
                 requestData = null,
                 heightValue = (getScreenHeight() * 0.95).toInt()
@@ -132,7 +135,6 @@ class RequestProcessStepAdapter(
                     var currentOwners = listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
                     if (!currentOwners.contains(data)) {
                         currentOwners.add(data)
-                        ownerAdapter.onAddOwnerStep(data)
                         listProcessStep[adapterPosition].owner = currentOwners
                         notifyItemChanged(adapterPosition, listProcessStep[adapterPosition])
                         WTF("addOwner $listProcessStep")

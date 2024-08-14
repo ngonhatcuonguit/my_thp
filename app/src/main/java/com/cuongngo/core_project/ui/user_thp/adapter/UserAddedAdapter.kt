@@ -54,7 +54,11 @@ class UserAddedAdapter(
     override fun onBindViewHolder(holder: UserAddedViewHolder, position: Int) {
         var binding = holder.item
         var user = listUser[position]
-        binding.tvUserName.text = user.name
+        if(user != moreItem){
+            binding.tvUserName.text = user.name + "-${user.msnv}"
+        }else{
+            binding.tvUserName.text = user.name
+        }
 
         binding.flRemove.setOnClickListener {
             onRemoveListener.invoke(user)
@@ -109,26 +113,6 @@ class UserAddedAdapter(
             listUser.add(moreItem)
         }
         notifyDataSetChanged()
-    }
-    fun onRemoveOwnerStep(userTHPEntity: UserTHPEntity){
-        if (listUser.size > 1){
-            listUser.remove(userTHPEntity)
-        }else{
-            listUser = arrayListOf()
-        }
-    }
-
-    fun onAddOwnerStep(userTHPEntity: UserTHPEntity){
-        if (listUser.size > 0){
-            listUser.add(listUser.size-1,userTHPEntity)
-        }else{
-            listUser.add(userTHPEntity)
-            listUser.add(moreItem)
-        }
-    }
-
-    fun onItemClick(){
-        //
     }
 
 }
