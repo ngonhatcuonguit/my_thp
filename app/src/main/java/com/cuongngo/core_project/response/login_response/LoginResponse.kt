@@ -3,12 +3,9 @@ package com.cuongngo.core_project.response.login_response
 import com.cuongngo.core_project.response.BaseModel
 
 data class LoginResponse(
-    var access_token: String?,
-    var token_type: String?,
+    var token: String?,
     var userName: String?,
-    var fullName: String?,
-    var appPrivacyApproved: String?,
+    var device_is_active: Boolean?,
     var expires_in: Long?,
-): BaseModel(){
-
-}
+    var message: String?,
+): BaseModel()

@@ -1,5 +1,7 @@
 package com.cuongngo.core_project.services
 
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
@@ -8,19 +10,22 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
+
 interface THPApi {
     @FormUrlEncoded
-    @POST("token")
+    @POST("api/account/gettoken")
     suspend fun loginWithAccount(
-        @Field("username") username: String,
-        @Field("password") password: String,
-        @Field("grant_type") grant_type: String,
-    ): Response<LoginResponse>
+        @Field("UserName") username: String,
+        @Field("Password") password: String,
+        @Field("device_code") device_code: String,
+    ): Response<AppBaseResponse<LoginResponse>>
 
-//    @GET("/api/Order/MGetProduct")
-//    suspend fun getProduct(
-//        @Query("sale_org") sale_org: Int  = 4100
-//    ): Response<>
+    @GET("api/employee/list")
+    suspend fun getListUser(
+        @Query("isGetAll") sale_org: Boolean = true
+    ): Response<UserTHPResponse>
+
     @GET("/api/News/MGetHotNews")
     suspend fun getHotNew(
     ): Response<HotNewResponse>

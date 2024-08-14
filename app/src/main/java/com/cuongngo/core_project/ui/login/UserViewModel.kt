@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
@@ -14,25 +17,47 @@ import kotlinx.coroutines.withContext
 
 class UserViewModel(private val userRepository: UserRepository): BaseViewModel() {
 
-    private val _login = MutableLiveData<BaseResult<LoginResponse>>()
-    val login: LiveData<BaseResult<LoginResponse>> get() = _login
+    //Remote
+    private val _login = MutableLiveData<BaseResult<AppBaseResponse<LoginResponse>>>()
+    val login: LiveData<BaseResult<AppBaseResponse<LoginResponse>>> get() = _login
 
     private val _hotNew = MutableLiveData<BaseResult<HotNewResponse>>()
     val hotNew: LiveData<BaseResult<HotNewResponse>> get() = _hotNew
 
+    private val _getListUser = MutableLiveData<BaseResult<UserTHPResponse>>()
+    val getListUser: LiveData<BaseResult<UserTHPResponse>> get() = _getListUser
+
+    //Local
+
+    private val _getAllUserLocal = MutableLiveData<BaseResult<List<UserTHPEntity>>>()
+    val getAllUserLocal: LiveData<BaseResult<List<UserTHPEntity>>>get() = _getAllUserLocal
+
+
     fun login(
         user_name: String,
         password: String,
-        grant_type: String
+        device_code: String
     ){
         _login.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO){
-                _login.postValue(userRepository.login(user_name=user_name, password=password, grant_type=grant_type))
+                _login.postValue(userRepository.login(user_name = user_name, password=password, device_code=device_code))
             }
         }
 
     }
+
+    fun getListUser(isGetAll: Boolean){
+        _getListUser.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _getListUser.postValue(
+                    userRepository.getListUser(isGetAll)
+                )
+            }
+        }
+    }
+
     fun getHotNew(
     ){
         _hotNew.value = BaseResult.loading(null)
@@ -43,5 +68,16 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
         }
 
     }
+
+    //Local
+
+//    fun getAllUserLocal(){
+//        _getAllUserLocal.value = BaseResult.loading(null)
+//        viewModelScope.launch {
+//            withContext(Dispatchers.IO){
+//                _getAllUserLocal.postValue(userRepository.getAllUserLocal())
+//            }
+//        }
+//    }
 
 }

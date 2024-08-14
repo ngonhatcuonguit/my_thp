@@ -11,19 +11,25 @@ import androidx.room.Update
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addUser(genre: UserTHPEntity)
+    fun addUser(record: UserTHPEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<UserTHPEntity>)
 
-    @Query("SELECT * FROM users WHERE name LIKE :keyword OR email LIKE :keyword OR department LIKE :keyword OR position LIKE :keyword")
+    @Query("SELECT * FROM users WHERE first_name LIKE :keyword OR email LIKE :keyword OR last_name LIKE :keyword OR initial LIKE :keyword OR position_name LIKE :keyword")
     suspend fun searchUsers(keyword: String): List<UserTHPEntity>
 
     @Query("SELECT * FROM users")
     fun getAllUser(): List<UserTHPEntity>
 
+    @Query("SELECT * FROM users WHERE personal_number = :id")
+    fun getUserById(id: Long): UserTHPEntity
+
     @Update
     fun updateUser(genre: UserTHPEntity)
+
+    @Query("SELECT COUNT(*) FROM users")
+    fun getUserCount(): Int
 
     @Delete
     fun deleteUser(genre: UserTHPEntity)

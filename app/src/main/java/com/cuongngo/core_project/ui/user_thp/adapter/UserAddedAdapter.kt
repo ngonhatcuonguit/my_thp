@@ -23,8 +23,8 @@ class UserAddedAdapter(
     private var context = context
     private var listUser = listUser.toMutableList() ?: mutableListOf()
     private var moreItem = UserTHPEntity(
-        id = 8888,
-        name = "Thêm"
+        personal_number = 8888,
+        first_name = "Thêm"
     )
 
     fun submitNewList(listUser: List<UserTHPEntity>?){
@@ -55,9 +55,9 @@ class UserAddedAdapter(
         var binding = holder.item
         var user = listUser[position]
         if(user != moreItem){
-            binding.tvUserName.text = user.name + "-${user.msnv}"
+            binding.tvUserName.text = user.first_name + " ${user.last_name}-${user.initial}"
         }else{
-            binding.tvUserName.text = user.name
+            binding.tvUserName.text = user.first_name
         }
 
         binding.flRemove.setOnClickListener {
@@ -86,7 +86,7 @@ class UserAddedAdapter(
             binding.tvUserName.setTextColor(App.getResources().getColor(R.color.black_1c))
             binding.tvUserName.setOnClickListener {
                 onItemSelected.invoke(user)
-                val text = "${user.name}-${user.msnv}-${user.position}-${user.department}"
+                val text = "${user.first_name} ${user.last_name}-${user.initial}-${user.position_name}"
                     setupTooltip(context, text, binding.flRemove)
             }
             binding.flRemove.setOnClickListener {

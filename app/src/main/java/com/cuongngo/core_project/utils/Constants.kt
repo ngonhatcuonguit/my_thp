@@ -12,7 +12,7 @@ class Constants {
         val APP = "core_project"
         val FACEBOOK_APPLICATION_ID = "com.facebook.katana"
         val BOTTOM_SHEET_HEIGHT_VALUE = "height_value"
-        val BASE_API_URL ="https://b2b-beta.thp.com.vn/"
+        val BASE_API_URL ="https://salereport.thp.com.vn/"
         val YOUTUBE_API_KEY = "AIzaSyC_MiFZ-xai5-TnhHLdnpbIMWSw9HC27vA"
         val ENGLISH = "eng"
         val VIETNAM = "vi"

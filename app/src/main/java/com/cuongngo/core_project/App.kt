@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
-import com.cuongngo.core_project.di.appMovieModule
+import com.cuongngo.core_project.di.appModule
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
@@ -21,7 +21,7 @@ class App : Application(), KodeinAware, LifecycleObserver {
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@App))
-        import(appMovieModule)
+        import(appModule)
         import(localModule)
     }
     override fun onCreate() {

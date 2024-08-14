@@ -27,7 +27,7 @@ class UserSingleChoiceAdapter(
         isSelected: Boolean,
         position: Int
     ) {
-        binding?.value = itemData.name
+        binding?.value = itemData.first_name
         binding?.clSelected?.isVisible = isSelected
         binding?.ivSelected?.isVisible = isSelected
     }

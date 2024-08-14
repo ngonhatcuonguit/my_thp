@@ -84,8 +84,8 @@ class RequestProcessStepAdapter(
                     GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
                 var displayListOwner = listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
                 var moreItem = UserTHPEntity(
-                    id = 8888,
-                    name = "Thêm"
+                    personal_number = 8888,
+                    first_name = "Thêm"
                 )
                 if (displayListOwner.isNotEmpty() && !displayListOwner.contains(moreItem)){
                     displayListOwner.add(moreItem)

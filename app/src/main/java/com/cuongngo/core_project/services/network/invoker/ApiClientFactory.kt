@@ -9,16 +9,47 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSession
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 class ApiClientFactory {
-    companion object{
-        inline fun <reified T> createService(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): T{
-            val okkHttpClient = OkHttpClient.Builder()
-                .addInterceptor(BaseInterceptor().apply {
+    companion object {
+        inline fun <reified T> createService(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): T {
+            val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+                override fun checkClientTrusted(
+                    chain: Array<java.security.cert.X509Certificate>,
+                    authType: String
+                ) {
+                }
+
+                override fun checkServerTrusted(
+                    chain: Array<java.security.cert.X509Certificate>,
+                    authType: String
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> {
+                    return arrayOf()
+                }
+            })
+
+            // Install the all-trusting trust manager
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+
+            // Create an ssl socket factory with our all-trusting manager
+            val sslSocketFactory = sslContext.socketFactory
+
+            val okkHttpClient = OkHttpClient.Builder().apply {
+                sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+                hostnameVerifier { _: String, _: SSLSession -> true }
+            }.addInterceptor(BaseInterceptor().apply {
 //                    addParam("language" to Constants.ENGLISH)
 //                    addParam("api_key" to Constants.API_KEY)
-                    setToken("Bearer ${AppPreferences.getUserAccessToken()}")
-                })
+                setToken("Bearer ${AppPreferences.getUserAccessToken()}")
+            })
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)

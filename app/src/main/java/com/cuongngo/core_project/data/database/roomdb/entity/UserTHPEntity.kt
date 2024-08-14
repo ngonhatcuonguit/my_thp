@@ -9,22 +9,58 @@ import kotlin.random.Random
 
 @Entity(
     tableName = "users",
-    indices = [Index(value = ["msnv"], unique = true)],
+    indices = [Index(value = ["personal_number"], unique = true)],
 )
 data class UserTHPEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long?,
-    @ColumnInfo(name = "status") val status: Int? = null,
-    @ColumnInfo(name = "name") val name: String? = null,
+    @PrimaryKey(autoGenerate = false) val personal_number: Long?,
+    @ColumnInfo(name = "organization_number") val organization_number: Long? = null,
+    @ColumnInfo(name = "initial") val initial: String? = null,
+    @ColumnInfo(name = "department_name") val department_name: String? = null,
+    @ColumnInfo(name = "position_name") val position_name: String? = null,
+    @ColumnInfo(name = "employee_subgroup") val employee_subgroup: String? = null,
+    @ColumnInfo(name = "startdate") val startdate: String? = null,
+    @ColumnInfo(name = "enddate") val enddate: String? = null,
     @ColumnInfo(name = "email") val email: String? = null,
-    @ColumnInfo(name = "phone") var phone: String? = null,
-    @ColumnInfo(name = "msnv") var msnv: Long? = null,
-    @ColumnInfo(name = "device_id") var deviceID: Long? = null,
-    @ColumnInfo(name = "department") var department: String? = null,
-    @ColumnInfo(name = "position") var position: String? = null,
+    @ColumnInfo(name = "status") val status: String? = null,
+    @ColumnInfo(name = "first_name") val first_name: String? = null,
+    @ColumnInfo(name = "last_name") val last_name: String? = null,
+) : BaseModel()
+
+
+data class UserTHPResponse(
+    var status: String?,
+    var data: List<UserTHPEntity>?
 ) : BaseModel()
 
 fun getRandomName(): String {
-    val names = listOf("John", "Jane", "Alex", "Emily", "Chris", "Katie", "Michael", "Sarah", "David", "Laura")
+    val names = listOf(
+        "John",
+        "Jane",
+        "Alex",
+        "Emily",
+        "Chris",
+        "Katie",
+        "Michael",
+        "Sarah",
+        "David",
+        "Laura"
+    )
+    return names[Random.nextInt(names.size)]
+}
+
+fun getRandomLastName(): String {
+    val names = listOf(
+        "John",
+        "Jane",
+        "Alex",
+        "Emily",
+        "Chris",
+        "Katie",
+        "Michael",
+        "Sarah",
+        "David",
+        "Laura"
+    )
     return names[Random.nextInt(names.size)]
 }
 
@@ -43,7 +79,8 @@ fun getRandomDepartment(): String {
 }
 
 fun getRandomPosition(): String {
-    val positions = listOf("Manager", "Engineer", "Analyst", "Specialist", "Coordinator", "Assistant")
+    val positions =
+        listOf("Manager", "Engineer", "Analyst", "Specialist", "Coordinator", "Assistant")
     return positions[Random.nextInt(positions.size)]
 }
 
@@ -51,15 +88,13 @@ fun generateRandomUsers(count: Int): List<UserTHPEntity> {
     return List(count) {
         val name = getRandomName()
         UserTHPEntity(
-            id = it.toLong(),
-            status = Random.nextInt(0, 2),
-            name = name,
+            personal_number = it.toLong(),
+            organization_number = it.toLong(),
+            first_name = getRandomName(),
+            last_name = getRandomLastName(),
             email = getRandomEmail(name),
-            phone = getRandomPhone(),
-            msnv = Random.nextLong(1000, 9999),
-            deviceID = Random.nextLong(10000, 99999),
-            department = getRandomDepartment(),
-            position = getRandomPosition()
+            initial = Random.nextLong(1000, 9999).toString(),
+            position_name = getRandomPosition()
         )
     }
 }
