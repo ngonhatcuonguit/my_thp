@@ -41,12 +41,21 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     }
 
     override fun setUp() {
+//        syncForm()
         viewModel.getAllForm()
         binding.btnAddForm.setOnClickListener {
             addForm()
         }
         setupRecycleViewListForm()
     }
+
+//    fun syncForm(){
+//        if (AppPreferences.getCountRecordLocalForm() != 0){
+//            viewModel.getListForm()
+//        }else{
+//            //
+//        }
+//    }
 
     override fun setUpObserver() {
         observeLiveDataChanged(viewModel.allForm) {

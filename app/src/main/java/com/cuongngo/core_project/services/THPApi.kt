@@ -34,8 +34,8 @@ interface THPApi {
 
     @GET("api/formstructure/SyncStructure")
     suspend fun getListForm(
-        @Query("isGetAll") sale_org: Boolean = true,
-        @Query("structureID") structureID: Int
+        @Query("isGetAll") isGetAll: Boolean? = true,
+        @Query("structureID") structureID: Int? = null
     ): Response<AppBaseResponse<List<FormEntity>>>
 
     companion object {

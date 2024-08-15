@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +27,6 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _formUnit = MutableLiveData<BaseResult<Unit>>()
     val formUnit: LiveData<BaseResult<Unit>> = _formUnit
 
-
     private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
     val allRequest: LiveData<BaseResult<List<RequestEntity>>> = _allRequest
 
@@ -42,12 +42,20 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
+
+    //-----remote----
+    private val _listFormRemote = MutableLiveData<BaseResult<AppBaseResponse<List<FormEntity>>>>()
+    val listFormRemote: LiveData<BaseResult<AppBaseResponse<List<FormEntity>>>> = _listFormRemote
+
+
     var category = ""
     var edtSheetName = ""
 
 //    init {
 //        getAllForm()
 //    }
+
+    //----------local---------
 
     fun getAllForm() {
         _allForm.value = BaseResult.loading(null)
@@ -153,5 +161,17 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
             }
         }
     }
+
+
+    //----------remote----------
+
+    fun getListForm() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _listFormRemote.postValue(formRepository.getListForm())
+            }
+        }
+    }
+
 
 }

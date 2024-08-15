@@ -1,13 +1,18 @@
 package com.cuongngo.core_project.services.repository
 
 import com.cuongngo.core_project.data.database.data_source.FormLocalDataSource
+import com.cuongngo.core_project.data.database.data_source.FormRemoteDatSource
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.services.network.BaseResult
 
 class FormRepository(
-    private val formLocalDataSource: FormLocalDataSource
+    private val formLocalDataSource: FormLocalDataSource,
+    private val formRemoteDatSource: FormRemoteDatSource
 ) {
+
+    //Local
 
     companion object {
         val TAG = FormRepository::class.simpleName
@@ -60,6 +65,12 @@ class FormRepository(
     }
     suspend fun getAllRequest(): BaseResult<List<RequestEntity>> {
         return formLocalDataSource.getAllRequest()
+    }
+
+    //-----------remote-------------
+
+    suspend fun getListForm(): BaseResult<AppBaseResponse<List<FormEntity>>>{
+        return formRemoteDatSource.getListForm()
     }
 
 }

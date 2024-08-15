@@ -72,17 +72,14 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         )
 
     }
-    fun syncUser(){
-        if(AppPreferences.getCountRecordLocalUser() == 0){
-            viewModel.getListUser(true)
-        }else{
-            viewModel.getListUser(false)
-        }
+    private fun syncUser() = if(AppPreferences.getCountRecordLocalUser() == 0){
+        viewModel.getListUser(true)
+    }else{
+        viewModel.getListUser(false)
     }
 
     override fun onResume() {
         super.onResume()
-//        syncUser()
     }
 
     private val sliderRunnable = Runnable {

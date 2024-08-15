@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
@@ -41,6 +41,11 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
     val checkUserTable: LiveData<BaseResult<Int>>get() = _checkUserTable
 
+
+
+    //-----form remote----
+    private val _listFormRemote = MutableLiveData<BaseResult<AppBaseResponse<List<FormEntity>>>>()
+    val listFormRemote: LiveData<BaseResult<AppBaseResponse<List<FormEntity>>>> = _listFormRemote
 
 
 
@@ -90,6 +95,17 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
             }
         }
     }
+
+
+    fun getListForm() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _listFormRemote.postValue(formRepository.getListForm())
+            }
+        }
+    }
+
+
 
     //Local
 

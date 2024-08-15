@@ -39,7 +39,7 @@ val appModule = Kodein.Module(APP_MODULE, false) {
      * Repository binding
      */
     bind() from singleton { UserRepository(instance(), instance()) }
-    bind() from singleton { FormRepository(instance()) }
+    bind() from singleton { FormRepository(instance(), instance()) }
     bind() from singleton { RequestRepository(instance()) }
 
     /**

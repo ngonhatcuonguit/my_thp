@@ -8,6 +8,7 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentAddRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -38,6 +39,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     override fun setUp() {
+        syncForm()
         viewModel.getAllForm()
         setupRcvListForm()
     }
@@ -47,6 +49,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     override fun setUpObserver() {
+
         observeLiveDataChanged(viewModel.allForm) {
             it.onResultReceived(
                 onLoading = {
@@ -64,6 +67,29 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 }
             )
         }
+
+        observeLiveDataChanged(viewModel.listFormRemote){
+            it.onResultReceived(
+                onLoading = {
+
+                },
+                onSuccess = {
+                    WTF("testAPiForm countRecord ${it.data?.data}")
+                },
+                onError = {
+
+                }
+            )
+        }
+
+
+
+    }
+
+    private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){
+        viewModel.getListForm()
+    }else{
+        viewModel.getAllForm()
     }
 
     private fun setupRcvListForm() {

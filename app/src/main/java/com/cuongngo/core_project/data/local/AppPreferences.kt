@@ -14,6 +14,7 @@ object AppPreferences {
     private const val KEY_SHOWN_ON_BOARD = "key_shown_on_board"
     const val KEY_USER_ACCESS_TOKEN = "USER_ACCESS_TOKEN"
     const val KEY_COUNT_RECORD_LOCAL_USER = "KEY_COUNT_RECORD_LOCAL_USER"
+    const val KEY_COUNT_RECORD_LOCAL_FORM = "KEY_COUNT_RECORD_LOCAL_FORM"
     const val KEY_USER_INFO = "KEY_USER_INFO"
 
     init{
@@ -39,6 +40,16 @@ object AppPreferences {
     fun setCountRecordLocalUser(count: Int) {
         editor.also {
             it.putInt(KEY_COUNT_RECORD_LOCAL_USER, count)
+            it.commit()
+        }
+    }
+    fun getCountRecordLocalForm(): Int {
+        return preferences.getInt(KEY_COUNT_RECORD_LOCAL_FORM, 0) ?: 0
+    }
+
+    fun setCountRecordLocalForm(count: Int) {
+        editor.also {
+            it.putInt(KEY_COUNT_RECORD_LOCAL_FORM, count)
             it.commit()
         }
     }

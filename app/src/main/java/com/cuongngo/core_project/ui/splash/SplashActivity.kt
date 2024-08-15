@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySplashBinding
+import com.cuongngo.core_project.services.THPApi
 import com.cuongngo.core_project.ui.MainActivity
 import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.cuongngo.core_project.ui.onboard.OnBoardActivity
@@ -18,6 +19,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        THPApi.updateToken(AppPreferences.getUserAccessToken() ?: "")
         enableLightStatusBar()
         setupSystemWindowInset()
         val handler = Handler(Looper.getMainLooper())
