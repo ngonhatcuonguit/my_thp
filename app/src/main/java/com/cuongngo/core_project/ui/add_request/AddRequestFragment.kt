@@ -87,7 +87,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             DialogModel(
                 title = "Tạo yêu cầu mới",
                 subTitle = form.title,
-                content = "Bạn muốn tạo một yêu cầu mới với mẫu form: \n${form.formCode} - ${form.name}",
+                content = "Bạn muốn tạo một yêu cầu mới với mẫu form: \n${form.form_code} - ${form.name}",
                 leftButtonTitle = "Huỷ bỏ",
                 rightButtonTitle = "Tạo yêu cầu",
                 isSingle = false

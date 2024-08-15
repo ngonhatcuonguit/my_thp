@@ -9,7 +9,7 @@ class UserLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     }
 
     suspend fun getAllUser() = getResult {
-        database.userDao().getAllUser(20)
+        database.userDao().getAllUser(50)
     }
 
     suspend fun getUserById(id: Long) = getResult {

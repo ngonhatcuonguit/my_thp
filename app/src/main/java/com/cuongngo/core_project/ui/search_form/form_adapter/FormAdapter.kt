@@ -35,7 +35,7 @@ class FormAdapter(
         var form = listForm[position]
         binding.form = form
         binding.root.elevation = convertDpToPixel(8F, context)
-        binding.tvFormCode.text = "Mã form: ${form.formCode}"
+        binding.tvFormCode.text = "Mã form: ${form.form_code}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(form) ?: return@setOnClickListener
         }

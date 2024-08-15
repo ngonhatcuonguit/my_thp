@@ -61,13 +61,13 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 formID = Random.nextLong(1, 1000),
                 name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
                 status = listOf(1,2,3,4,5).random(),
-                formCode = randomString(10),
-                schemaCode = randomString(10),
+                form_code = randomString(10),
+                schema_code = randomString(10),
                 category = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
-                schemaName = randomString(10),
-                listBody = sheets,
-                listHeader = headers,
-                processSteps = processSteps
+                schema_name = randomString(10),
+                list_body = sheets,
+                list_header = headers,
+                process_steps = processSteps
             )
         )
 

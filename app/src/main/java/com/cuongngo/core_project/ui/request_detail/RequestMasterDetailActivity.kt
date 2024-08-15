@@ -97,11 +97,11 @@ class RequestMasterDetailActivity :
                                 "Office form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
                                 "Other form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024"
                             ).random(),
-                            formCode = formEntity?.formCode ?: "",
+                            formCode = formEntity?.form_code ?: "",
                             requestCode = addRequestCode ?: "",
-                            listHeader = formEntity?.listHeader,
-                            listBody = formEntity?.listBody,
-                            processSteps = formEntity?.processSteps,
+                            listHeader = formEntity?.list_header,
+                            listBody = formEntity?.list_body,
+                            processSteps = formEntity?.process_steps,
                             requestStatus = Random.nextInt(1, 6)
                         )
                     )
@@ -237,7 +237,7 @@ class RequestMasterDetailActivity :
                 startActivity(
                     SheetDetailActivity().newIntent(
                         this,
-                        it.requestCode ?: "",
+                        it.request_code ?: "",
                         it
                     )
                 )
@@ -345,7 +345,7 @@ class RequestMasterDetailActivity :
             DialogModel(
                 title = "Thêm sheet mới",
                 subTitle = form.title,
-                content = "Bạn muốn thêm 1 sheet mới cho yêu cầu: ${form.formCode} - ${form.name} \nVui lòng nhập tên sheet hoặc tần suất vào bên dưới",
+                content = "Bạn muốn thêm 1 sheet mới cho yêu cầu: ${form.form_code} - ${form.name} \nVui lòng nhập tên sheet hoặc tần suất vào bên dưới",
                 leftButtonTitle = "Huỷ bỏ",
                 edtTitle = "Tên sheet hoặc tần suất",
                 edtHint = "Nhập tên sheet/tần suất",
@@ -360,12 +360,12 @@ class RequestMasterDetailActivity :
                     Body(
                         id = Random.nextLong(1, 1000),
                         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
-                        listField = form.listBody?.firstOrNull()?.listField,
-                        isDone = false,
+                        list_field = form.list_body?.firstOrNull()?.list_field,
+                        is_done = false,
                         name = viewModel.edtSheetName.toString() ?: return@onRightButtonClick,
-                        formCode = form.formCode,
-                        formName = form.name,
-                        requestCode = viewModel.requestEntity?.requestCode,
+                        form_code = form.form_code,
+                        form_name = form.name,
+                        request_code = viewModel.requestEntity?.requestCode,
                         created = randomDate(),
                         updated = randomDate(),
                         deleted = if (randomBoolean()) randomDate() else null,

@@ -65,7 +65,7 @@
                     android:textSize="11sp"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:text="@{sheet.formName}"
+                    android:text="@{sheet.form_name}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/iv_logo"

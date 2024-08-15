@@ -1,4 +1,4 @@
-package com.okxe.core_okxe.common.view.enum
+package com.cuongngo.core_project.common.enum
 
 enum class ActionBarGravity(val gravityValue: String) {
     START("1"),

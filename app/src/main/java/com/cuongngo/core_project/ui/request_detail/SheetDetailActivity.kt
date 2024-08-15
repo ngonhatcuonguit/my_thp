@@ -13,6 +13,7 @@ import com.cuongngo.core_project.base.view.date_time_picker.DatePickerDialog
 import com.cuongngo.core_project.base.view.date_time_picker.Listener
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
+import com.cuongngo.core_project.common.enum.FieldType
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
@@ -77,10 +78,10 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             ivBack.setOnClickListener {
                 onBackPressed()
             }
-            tvFormTitle.text = body.formName.toString()
+            tvFormTitle.text = body.form_name.toString()
         }
         setupRecycleViewListField()
-        fieldAdapter.submitListField(body.listField)
+        fieldAdapter.submitListField(body.list_field)
     }
 
     override fun setUpObserver() {
@@ -116,7 +117,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                     fieldData.value == it.value
                 }
                 when (fieldData.type) {
-                    "text" -> {
+                    "textarea" -> {
                         setupShowDialogChangeValue(fieldData)
                     }
 
@@ -128,7 +129,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         showTimePickerDialog(fieldData)
                     }
 
-                    "singleChoice" -> {
+                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, -> {
                         fieldData.options?.let { options ->
                             onShowPopupOption(
                                 this,
@@ -144,11 +145,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         }
                     }
 
-                    "multiChoice" -> {
+                    "checkbox-group" -> {
                         showMultiChoiceBottomSheet(fieldData)
                     }
 
-                    "checkbox" -> {
+                    "radio-group" -> {
                         showSingleChoiceBottomSheet(fieldData)
                     }
 
@@ -268,8 +269,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     private fun handleChangeValueField(field: Field, newValue: String?) {
-        val fieldData = body.listField?.find { it.id == field.id }
-        val fieldIndex = body.listField?.indexOf(fieldData) ?: return
+        val fieldData = body.list_field?.find { it.id == field.id }
+        val fieldIndex = body.list_field?.indexOf(fieldData) ?: return
         fieldData?.value = newValue
         fieldData?.let { fieldAdapter.onChangeValueField(it, fieldIndex) }
     }
