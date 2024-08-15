@@ -35,6 +35,9 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
     private val _insertListUserToLocal = MutableLiveData<BaseResult<Unit>>()
     val insertListUserToLocal: LiveData<BaseResult<Unit>>get() = _insertListUserToLocal
 
+    private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
+    val checkUserTable: LiveData<BaseResult<Int>>get() = _checkUserTable
+
 
     fun login(
         user_name: String,
@@ -79,6 +82,23 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _getAllUserLocal.postValue(userRepository.getAllUserLocal())
+            }
+        }
+    }
+
+    fun getCountUserLocal(){
+        _checkUserTable.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _checkUserTable.postValue(userRepository.getUserCountLocal())
+            }
+        }
+    }
+    fun addListUser(listUser: List<UserTHPEntity>){
+        _insertListUserToLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _insertListUserToLocal.postValue(userRepository.addListUser(listUser))
             }
         }
     }

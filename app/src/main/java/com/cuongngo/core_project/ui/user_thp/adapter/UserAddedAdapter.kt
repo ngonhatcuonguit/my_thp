@@ -23,7 +23,7 @@ class UserAddedAdapter(
     private var context = context
     private var listUser = listUser.toMutableList() ?: mutableListOf()
     private var moreItem = UserTHPEntity(
-        personal_number = 8888,
+        personal_number = 0,
         first_name = "Thêm"
     )
 
@@ -54,8 +54,24 @@ class UserAddedAdapter(
     override fun onBindViewHolder(holder: UserAddedViewHolder, position: Int) {
         var binding = holder.item
         var user = listUser[position]
+        var positionName = if (!user.position_name.isNullOrEmpty()){
+            " - " + user.position_name
+        }else{
+            ""
+        }
+        var lastName = if (user.last_name.isNullOrEmpty()){
+            ""
+        }else{
+            " " + user.last_name
+        }
+        var initial = if (user.initial.isNullOrEmpty()){
+            ""
+        }else{
+            " - " + user.initial
+        }
+
         if(user != moreItem){
-            binding.tvUserName.text = user.first_name + " ${user.last_name}-${user.initial}"
+            binding.tvUserName.text = user.first_name + lastName + initial + positionName
         }else{
             binding.tvUserName.text = user.first_name
         }
@@ -86,8 +102,13 @@ class UserAddedAdapter(
             binding.tvUserName.setTextColor(App.getResources().getColor(R.color.black_1c))
             binding.tvUserName.setOnClickListener {
                 onItemSelected.invoke(user)
-                val text = "${user.first_name} ${user.last_name}-${user.initial}-${user.position_name}"
-                    setupTooltip(context, text, binding.flRemove)
+                var positionName = if(user.position_name.isNullOrEmpty()){
+                    ""
+                }else{
+                    "-" + user.position_name
+                }
+                val text = "${user.first_name} ${user.last_name}-${user.initial}$positionName"
+                    setupTooltip(context, text, binding.tvUserName)
             }
             binding.flRemove.setOnClickListener {
                 onRemoveListener.invoke(user)

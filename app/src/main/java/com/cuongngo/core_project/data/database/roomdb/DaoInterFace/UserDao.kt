@@ -19,8 +19,8 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE first_name LIKE :keyword OR email LIKE :keyword OR last_name LIKE :keyword OR initial LIKE :keyword OR position_name LIKE :keyword")
     suspend fun searchUsers(keyword: String): List<UserTHPEntity>
 
-    @Query("SELECT * FROM users")
-    fun getAllUser(): List<UserTHPEntity>
+    @Query("SELECT * FROM users LIMIT :limit")
+    fun getAllUser(limit: Int): List<UserTHPEntity>
 
     @Query("SELECT * FROM users WHERE personal_number = :id")
     fun getUserById(id: Long): UserTHPEntity

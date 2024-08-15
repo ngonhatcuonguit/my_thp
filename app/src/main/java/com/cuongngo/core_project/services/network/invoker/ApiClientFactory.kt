@@ -46,15 +46,14 @@ class ApiClientFactory {
                 sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
                 hostnameVerifier { _: String, _: SSLSession -> true }
             }.addInterceptor(BaseInterceptor().apply {
-//                    addParam("language" to Constants.ENGLISH)
-//                    addParam("api_key" to Constants.API_KEY)
                 setToken("Bearer ${AppPreferences.getUserAccessToken()}")
-            })
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
-                .connectionPool(ConnectionPool(0, 5, TimeUnit.MINUTES))
-                .protocols(listOf(Protocol.HTTP_1_1))
+            }).apply {
+                    connectTimeout(60, TimeUnit.SECONDS)
+                    readTimeout(60, TimeUnit.SECONDS)
+                    writeTimeout(60, TimeUnit.SECONDS)
+                    connectionPool(ConnectionPool(0, 5, TimeUnit.MINUTES))
+                    protocols(listOf(Protocol.HTTP_1_1))
+            }
 
             if (networkConnectionInterceptor != null) {
                 okkHttpClient.addInterceptor(networkConnectionInterceptor)

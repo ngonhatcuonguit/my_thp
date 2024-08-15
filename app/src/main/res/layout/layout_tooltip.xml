@@ -12,14 +12,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_content_tooltip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Test tool tip 1234567890 "
-            android:textColor="@color/gray_4b"
+            android:textColor="@color/black_1c"
             android:textSize="13sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:lineSpacingExtra="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

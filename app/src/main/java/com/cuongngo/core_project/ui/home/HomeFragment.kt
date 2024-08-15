@@ -5,13 +5,16 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
-import com.cuongngo.core_project.data.database.roomdb.entity.*
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
+import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
+import com.cuongngo.core_project.data.database.roomdb.entity.randomString
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.MainActivity
-import com.cuongngo.core_project.ui.login.UserViewModel
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
@@ -30,12 +33,12 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
-    private var listUserRemote: List<UserTHPEntity>? = emptyList()
 
     private lateinit var formAdapter: FormAdapter
 
     override fun setUp() {
-        viewModel.getListUser(true)
+        WTF("testApiUser token ${AppPreferences.getUserAccessToken()}")
+        syncUser()
         setupRcvListPopularForm()
         binding.apply {
             tvHintSearch.setOnClickListener {
@@ -69,9 +72,17 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         )
 
     }
+    fun syncUser(){
+        if(AppPreferences.getCountRecordLocalUser() == 0){
+            viewModel.getListUser(true)
+        }else{
+            viewModel.getListUser(false)
+        }
+    }
 
     override fun onResume() {
         super.onResume()
+//        syncUser()
     }
 
     private val sliderRunnable = Runnable {
@@ -79,16 +90,20 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
+
         observeLiveDataChanged(viewModel.getListUser){
             it.onResultReceived(
                 onLoading = {
 
                 },
                 onSuccess = {
-                    WTF("testApiUser ${it.data?.data}")
+                    WTF("testApiUser getRemote ${it.data?.data}")
                     if(it.data?.data?.isEmpty() != true){
-                        viewModel.getCountUserLocal()
-                        listUserRemote = it.data?.data
+                        it.data?.data.let{
+                            viewModel.addListUser(
+                                it ?: arrayListOf()
+                            )
+                        }
                     }
                 },
                 onError = {
@@ -101,16 +116,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             it.onResultReceived(
                 onLoading = {},
                 onSuccess = {
-                    WTF("testApiUser ${it.data}")
-                    if (it.data != 0){
-                        listUserRemote.let{
-                            viewModel.addListUser(
-                                it ?: arrayListOf()
-                            )
-                        }
-                    }else{
-
-                    }
+                    WTF("testApiUser count ${it.data}")
+                    AppPreferences.setCountRecordLocalUser(it.data ?: 0)
                 },
                 onError = {}
             )
@@ -120,13 +127,15 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             it.onResultReceived(
                 onLoading = {},
                 onSuccess = {
-                    WTF("testApiUser -----------------ok")
+                    WTF("testApiUser -----------------sync ok")
+                    viewModel.getCountUserLocal()
                 },
                 onError = {
 
                 }
             )
         }
+
 
         observeLiveDataChanged(viewModel.hotNew){
             it.onResultReceived(

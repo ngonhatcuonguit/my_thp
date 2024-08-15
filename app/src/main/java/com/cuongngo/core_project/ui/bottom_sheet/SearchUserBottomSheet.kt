@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.bottom_sheet.FullHeightBottomSheet
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.base.viewmodel.kodeinViewModelFromActivity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomUsers
@@ -17,7 +18,9 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.bottom_sheet.adapter.UserSingleChoiceAdapter
+import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
+import com.cuongngo.core_project.ui.login.UserViewModel
 import com.cuongngo.core_project.utils.TFunc
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.getScreenWidth
@@ -46,7 +49,7 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         }
     }
 
-    private val viewModel: HomeViewModel by kodeinViewModel() //thay = userViewModel
+    private val viewModel: UserViewModel by kodeinViewModel()
 
     private var onUserSelected: TFunc<UserTHPEntity?>? = null
     private var heightValue: Int = DEFAULT_HEIGHT
@@ -76,6 +79,7 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
     }
 
     private fun setupView() {
+        viewModel.getAllUserLocal()
         setupHeightRecycleView()
         binding.ivClose.setOnClickListener {
             dismiss()
@@ -90,16 +94,17 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         compositeDisposable =
             binding.edtSearchKeyword.textChangeEvents()
                 .skip(1)
-                .debounce(600, TimeUnit.MILLISECONDS)
+                .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    hideKeyboard()
                     //page=1
                     keyword = it.text.trim().toString()
                     //call query user like keyword
-                    viewModel.getAllUserLocal
-                    hideKeyboard()
+                    viewModel.getAllUserLocal()
                     WTF("testSearchKeyWord $keyword")
+                    hideKeyboard()
                 }
         binding.edtSearchKeyword.doOnTextChanged { text, _, _, _ ->
             text?.let { keySearch ->
@@ -114,12 +119,16 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
             it.onResultReceived(
                 onLoading = {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.rcvOption.isVisible = false
                 },
                 onError = {
                     binding.progressBar.visibility = View.GONE
+                    binding.rcvOption.isVisible = true
                 },
                 onSuccess = {
+                    WTF("testApiUser -- ${it.data}")
                     binding.progressBar.visibility = View.GONE
+                    binding.rcvOption.isVisible = true
                     it.data?.apply {
                         setupRecycleView(this)
                     }

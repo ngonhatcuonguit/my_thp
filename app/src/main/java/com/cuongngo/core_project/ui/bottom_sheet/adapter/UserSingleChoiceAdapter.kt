@@ -27,7 +27,12 @@ class UserSingleChoiceAdapter(
         isSelected: Boolean,
         position: Int
     ) {
-        binding?.value = itemData.first_name
+        var positionName = if (!itemData.position_name.isNullOrEmpty()){
+            " - " + itemData.position_name
+        }else{
+            ""
+        }
+        binding?.value = itemData.first_name + " " + itemData.last_name + " - " + itemData.initial + positionName
         binding?.clSelected?.isVisible = isSelected
         binding?.ivSelected?.isVisible = isSelected
     }

@@ -9,6 +9,7 @@ import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityLoginByUserIdBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
+import com.cuongngo.core_project.services.network.invoker.BaseInterceptor
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.MainActivity
 
@@ -42,10 +43,10 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     showProgressDialog()
                 },
                 onSuccess = {
-                    hideProgressDialog()
                     WTF("responseApi ${it.data}")
                     if ((it.data?.data?.token ?: "").isNotEmpty()){
-                        AppPreferences.setUserAccessToken(it.data?.data?.token.toString())
+                        saveUserData(it.data?.data)
+                        AppPreferences.setUserAccessToken(it.data?.data?.token ?: "")
                         gotoMain()
                     }else{
                         //check thử bị cái gì

@@ -27,19 +27,17 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="5dp">
 
-            <carbon.widget.TextView
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bep_medium"
-                android:singleLine="true"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:maxLength="20"
+                android:maxLength="25"
                 android:paddingEnd="3dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/black_1c"
                 android:textSize="13sp"
+                android:textAlignment="textStart"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Hello 123" />
 
@@ -63,6 +61,7 @@
             android:visibility="gone"
             tools:visibility="visible"
             android:paddingEnd="5dp"
+            android:tint="@color/text_color_validate_red"
             app:srcCompat="@drawable/ic_search_clear"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/cl_container" />
