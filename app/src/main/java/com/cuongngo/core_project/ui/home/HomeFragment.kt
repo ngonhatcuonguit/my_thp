@@ -60,7 +60,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             FormEntity(
                 formID = Random.nextLong(1, 1000),
                 name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
-                status = listOf(1,2,3,4,5).random(),
+                status = listOf(1,2,3,4,5).random().toString(),
                 form_code = randomString(10),
                 schema_code = randomString(10),
                 category = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),

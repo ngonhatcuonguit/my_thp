@@ -50,6 +50,28 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
 
     override fun setUpObserver() {
 
+        observeLiveDataChanged(viewModel.upsertListFormToLocal){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testAPiForm upsert-OK")
+                    viewModel.getCountRecord()
+                },
+                onError = {}
+            )
+        }
+        observeLiveDataChanged(viewModel.checkCountRecord){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testAPiForm countRecord ${it.data}")
+                    AppPreferences.setCountRecordLocalForm(it.data ?:0)
+                    viewModel.getAllForm()
+                },
+                onError = {}
+            )
+        }
+
         observeLiveDataChanged(viewModel.allForm) {
             it.onResultReceived(
                 onLoading = {
@@ -75,6 +97,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 },
                 onSuccess = {
                     WTF("testAPiForm countRecord ${it.data?.data}")
+                    viewModel.upsertListForm(it.data?.data ?: arrayListOf())
                 },
                 onError = {
 
@@ -89,7 +112,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){
         viewModel.getListForm()
     }else{
-        viewModel.getAllForm()
+//        viewModel.getAllForm()
     }
 
     private fun setupRcvListForm() {

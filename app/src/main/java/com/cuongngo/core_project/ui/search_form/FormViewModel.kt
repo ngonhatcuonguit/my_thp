@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import kotlinx.coroutines.Dispatchers
@@ -42,10 +42,16 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
+    private val _upsertListFormToLocal = MutableLiveData<BaseResult<Unit>>()
+    val upsertListFormToLocal: LiveData<BaseResult<Unit>> = _upsertListFormToLocal
+
+    private val _checkCountRecord = MutableLiveData<BaseResult<Int>>()
+    val checkCountRecord: LiveData<BaseResult<Int>> = _checkCountRecord
+
 
     //-----remote----
-    private val _listFormRemote = MutableLiveData<BaseResult<AppBaseResponse<List<FormEntity>>>>()
-    val listFormRemote: LiveData<BaseResult<AppBaseResponse<List<FormEntity>>>> = _listFormRemote
+    private val _listFormRemote = MutableLiveData<BaseResult<FormResponse>>()
+    val listFormRemote: LiveData<BaseResult<FormResponse>> = _listFormRemote
 
 
     var category = ""
@@ -65,6 +71,24 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
             }
         }
     }
+    fun getCountRecord() {
+        _checkCountRecord.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _checkCountRecord.postValue(formRepository.getFormCountLocal())
+            }
+        }
+    }
+
+    fun upsertListForm(listForm: List<FormEntity>){
+        _upsertListFormToLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _upsertListFormToLocal.postValue(formRepository.upsertListForm(listForm))
+            }
+        }
+    }
+
     fun getFormById(id: String) {
         _form.value = BaseResult.loading(null)
         viewModelScope.launch {

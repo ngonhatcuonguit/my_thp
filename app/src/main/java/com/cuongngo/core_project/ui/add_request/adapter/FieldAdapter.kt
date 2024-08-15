@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.App.Companion.getDrawableResource
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.common.enum.FieldType
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.databinding.ItemFieldBinding
 
@@ -53,7 +54,7 @@ class FieldAdapter(
                 ivEditValue.isVisible = true
                 tvValue.isVisible = false
                 when (field.type) {
-                    "text" -> {
+                    "text", "textarea" -> {
                         ivEditValue.setImageResource(R.drawable.ic_edit_value)
                     }
 
@@ -65,14 +66,7 @@ class FieldAdapter(
                         ivEditValue.setImageResource(R.drawable.ic_clock)
                     }
 
-                    "singleChoice" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
-                    }
-
-                    "multiChoice" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
-                    }
-                    "checkbox" -> {
+                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
                         ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
                     }
 
@@ -86,7 +80,7 @@ class FieldAdapter(
                 tvValue.isVisible = true
                 tvValue.text= field.value
                 when (field.type) {
-                    "text" -> {
+                    "text", "textarea"  -> {
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
                     }
 
@@ -98,14 +92,7 @@ class FieldAdapter(
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_clock), null)
                     }
 
-                    "singleChoice" -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
-                    }
-
-                    "multiChoice" -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
-                    }
-                    "checkbox" -> {
+                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
                         tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
                     }
 

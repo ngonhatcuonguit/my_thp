@@ -22,7 +22,7 @@ data class FormEntity(
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "category") var category: String? = null,
     @ColumnInfo(name = "process_id") var process_id: Int? = null,
-    @ColumnInfo(name = "status") var status: Int? = null,
+    @ColumnInfo(name = "status") var status: String? = null,
     @ColumnInfo(name = "title") var title: String? = null,
     @ColumnInfo(name = "schema_name") var schema_name: String?=null,
     @ColumnInfo(name = "schema_code") var schema_code: String?=null,
@@ -39,6 +39,11 @@ data class FormEntity(
     @ColumnInfo(name = "updated_at") var updated_at: String? = null,
     @ColumnInfo(name = "deleted_at") var deleted_at: String? = null,
     @ColumnInfo(name = "form_version") var form_version: String? = null
+) : BaseModel()
+
+data class FormResponse(
+    var status: String?,
+    var data: List<FormEntity>?
 ) : BaseModel()
 
 data class Body(

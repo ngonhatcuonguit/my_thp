@@ -8,6 +8,10 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun getAllForm() = getResult {
         database.thpFormDao().getAllForm()
     }
+     suspend fun upsertListForm(listForm: List<FormEntity>) = getResult {
+        database.thpFormDao().upsertListForm(listForm)
+    }
+
     suspend fun getFormById(id: Long) = getResult {
         database.thpFormDao().getFormById(id)
     }
@@ -26,6 +30,11 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun updateForm(record: FormEntity) = getResult {
         database.thpFormDao().updateForm(record)
     }
+
+    suspend fun getFormCount() = getResult {
+        database.thpFormDao().getFormCount()
+    }
+
     suspend fun deleteForm(record: FormEntity) = getResult {
         database.thpFormDao().deleteForm(record)
     }

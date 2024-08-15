@@ -20,6 +20,9 @@ interface FormDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun upsertForm(formEntity: FormEntity): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsertListForm(forms: List<FormEntity>)
+
     @Query("SELECT * FROM forms")
     fun getAllForm(): List<FormEntity>
 
@@ -32,6 +35,9 @@ interface FormDao {
     fun getFormByCode(code: String): FormEntity
     @Query("SELECT * FROM forms WHERE name = :title")
     fun searchFormByKeyWord(title: String): FormEntity
+
+    @Query("SELECT COUNT(*) FROM forms")
+    fun getFormCount(): Int
 
     @Delete
     fun deleteForm(record: FormEntity): Int

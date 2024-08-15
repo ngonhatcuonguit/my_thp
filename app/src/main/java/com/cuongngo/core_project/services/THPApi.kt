@@ -1,6 +1,6 @@
 package com.cuongngo.core_project.services
 
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
@@ -36,7 +36,7 @@ interface THPApi {
     suspend fun getListForm(
         @Query("isGetAll") isGetAll: Boolean? = true,
         @Query("structureID") structureID: Int? = null
-    ): Response<AppBaseResponse<List<FormEntity>>>
+    ): Response<FormResponse>
 
     companion object {
         operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): THPApi {

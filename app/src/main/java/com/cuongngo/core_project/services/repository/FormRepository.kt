@@ -3,8 +3,8 @@ package com.cuongngo.core_project.services.repository
 import com.cuongngo.core_project.data.database.data_source.FormLocalDataSource
 import com.cuongngo.core_project.data.database.data_source.FormRemoteDatSource
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.services.network.BaseResult
 
 class FormRepository(
@@ -20,6 +20,9 @@ class FormRepository(
 
     suspend fun getAllForm(): BaseResult<List<FormEntity>> {
         return formLocalDataSource.getAllForm()
+    }
+    suspend fun upsertListForm(listForm: List<FormEntity>): BaseResult<Unit> {
+        return formLocalDataSource.upsertListForm(listForm)
     }
 
     suspend fun updateForm(formEntity: FormEntity): BaseResult<Unit> {
@@ -43,6 +46,11 @@ class FormRepository(
     suspend fun upsertForm(formEntity: FormEntity): BaseResult<Long> {
         return formLocalDataSource.upsertForm(formEntity)
     }
+
+    suspend fun getFormCountLocal():BaseResult<Int>{
+        return formLocalDataSource.getFormCount()
+    }
+
     suspend fun deleteForm(formEntity: FormEntity): BaseResult<Int> {
         return formLocalDataSource.deleteForm(formEntity)
     }
@@ -69,7 +77,7 @@ class FormRepository(
 
     //-----------remote-------------
 
-    suspend fun getListForm(): BaseResult<AppBaseResponse<List<FormEntity>>>{
+    suspend fun getListForm(): BaseResult<FormResponse>{
         return formRemoteDatSource.getListForm()
     }
 
