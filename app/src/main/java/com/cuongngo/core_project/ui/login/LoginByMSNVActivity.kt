@@ -46,7 +46,6 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     WTF("responseApi ${it.data}")
                     if ((it.data?.data?.token ?: "").isNotEmpty()){
                         saveUserData(it.data?.data)
-                        AppPreferences.setUserAccessToken(it.data?.data?.token ?: "")
                         gotoMain()
                     }else{
                         //check thử bị cái gì

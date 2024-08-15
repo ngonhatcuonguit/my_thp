@@ -5,6 +5,7 @@ import com.cuongngo.core_project.response.base.AppBaseResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
+import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -31,8 +32,12 @@ interface THPApi {
     ): Response<HotNewResponse>
 
     companion object {
-        operator fun invoke(): THPApi {
-            return ApiClientFactory.createService()
+        operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): THPApi {
+            return ApiClientFactory.createService(networkConnectionInterceptor)
+        }
+
+        fun updateToken(newToken: String) {
+            ApiClientFactory.updateToken(newToken)
         }
     }
 }
