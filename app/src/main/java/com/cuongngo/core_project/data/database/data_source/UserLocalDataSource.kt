@@ -8,6 +8,10 @@ class UserLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
         database.userDao().getUserCount()
     }
 
+    suspend fun formatUserTable() = getResult {
+        database.userDao().formatUserTable()
+    }
+
     suspend fun getAllUser() = getResult {
         database.userDao().getAllUser(50)
     }

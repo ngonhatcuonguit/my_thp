@@ -5,6 +5,9 @@ import android.net.ConnectivityManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.ViewCompat
+import com.cuongngo.core_project.data.local.AppPreferences
+import com.cuongngo.core_project.response.login_response.LoginResponse
+import com.cuongngo.core_project.services.THPApi
 
 interface BaseView {
     fun provideRootView(): View?
@@ -14,6 +17,22 @@ interface BaseView {
     fun provideLoading(): ProgressDialog?
 
     fun setUp()
+
+    fun saveUserData(loginResponse: LoginResponse?) {
+        with(AppPreferences){
+            setUserAccessToken(loginResponse?.token ?: "")
+            saveUserInfo(loginResponse)
+            THPApi.updateToken(loginResponse?.token ?: "")
+        }
+    }
+
+    fun clearUserData(){
+        with(AppPreferences){
+            setUserAccessToken("")
+            saveUserInfo(null)
+            THPApi.updateToken("")
+        }
+    }
 
     fun setUpObserver()
 

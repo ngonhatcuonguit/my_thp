@@ -11,7 +11,9 @@ import com.cuongngo.core_project.services.repository.UserRepository
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.login.UserViewModel
+import com.cuongngo.core_project.ui.profile.ProfileViewModel
 import com.cuongngo.core_project.ui.search_form.FormViewModel
+import com.cuongngo.core_project.ui.sync_data.SyncDataViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.direct
 import org.kodein.di.generic.bind
@@ -56,6 +58,12 @@ val appModule = Kodein.Module(APP_MODULE, false) {
     }
     bindViewModel<RequestViewModel>() with provider {
         RequestViewModel(instance(), instance())
+    }
+    bindViewModel<ProfileViewModel>() with provider {
+        ProfileViewModel(instance())
+    }
+    bindViewModel<SyncDataViewModel>() with provider {
+        SyncDataViewModel(instance(), instance())
     }
 
 }

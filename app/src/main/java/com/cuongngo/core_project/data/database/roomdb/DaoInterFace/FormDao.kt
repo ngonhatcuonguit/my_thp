@@ -42,9 +42,11 @@ interface FormDao {
     @Delete
     fun deleteForm(record: FormEntity): Int
 
+    @Query("DELETE FROM forms")
+    suspend fun formatFormTable()
+
 
     //interface for RequestEntity
-
     @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insertRequest(request: RequestEntity): Long
     @Insert(onConflict = OnConflictStrategy.REPLACE)

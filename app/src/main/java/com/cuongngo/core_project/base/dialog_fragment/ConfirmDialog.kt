@@ -18,7 +18,8 @@ import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.view.setMargins
 
 class ConfirmDialog(
-    private val dialogData: DialogModel
+    private val dialogData: DialogModel,
+    private val margins: Float? = 40f
 ) : AppBaseDialog<DialogConfirmDefaultBinding>() {
 
     private var onLeftButtonClick: Func? = null
@@ -40,9 +41,9 @@ class ConfirmDialog(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         binding.root.setMargins(
-            convertDpToPixel(40f, requireContext()).toInt(),
+            convertDpToPixel(margins ?: 50f, requireContext()).toInt(),
             0,
-            convertDpToPixel(40f, requireContext()).toInt(),
+            convertDpToPixel(margins ?: 50f, requireContext()).toInt(),
             0
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)

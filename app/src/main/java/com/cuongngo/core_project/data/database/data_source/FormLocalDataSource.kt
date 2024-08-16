@@ -38,6 +38,9 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun deleteForm(record: FormEntity) = getResult {
         database.thpFormDao().deleteForm(record)
     }
+    suspend fun formatFormTable() = getResult {
+        database.thpFormDao().formatFormTable()
+    }
 
     //request
 

@@ -71,6 +71,10 @@
             android:name=".ui.login.LoginByPhoneNumberActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.sync_data.ActivitySyncData"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
 
     </application>
 

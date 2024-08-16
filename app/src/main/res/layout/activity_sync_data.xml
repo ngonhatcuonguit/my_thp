@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đồng Bộ Dữ Liệu"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#01AA4F"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_content_sync_data"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content_sync_data"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Sau khi đồng bộ dữ liệu. Các dữ liệu đã tạo của bạn sẽ không thay đổi."
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginHorizontal="49dp"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cl_method_sync_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="80dp"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_method_sync_data"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.7"
+            android:layout_height="wrap_content">
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_sync_all_form"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                app:carbon_cornerRadius="16dp"
+                android:background="#EEA46B"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sync_form"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        app:srcCompat="@drawable/ic_file_down"
+                        android:tint="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/iv_sync_form"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="Đồng bộ tất cả Form" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </carbon.widget.ConstraintLayout>
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_sync_all_user"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                app:carbon_cornerRadius="16dp"
+                android:background="#2F80ED"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_sync_all_form"
+                app:layout_constraintEnd_toEndOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sync_all_user"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_user_profile_down"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/iv_sync_all_user"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="Đồng bộ tất cả User" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </carbon.widget.ConstraintLayout>
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_sync_all_data"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                app:carbon_cornerRadius="16dp"
+                android:background="#828282"
+                android:layout_marginTop="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_sync_all_user"
+                app:layout_constraintEnd_toEndOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sync_all_data"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:tint="@color/white"
+                        app:srcCompat="@drawable/ic_download_clound"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toEndOf="@id/iv_sync_all_data"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="Đồng bộ tất cả dữ liệu" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </carbon.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liên hệ hỗ trợ"
+            android:layout_marginBottom="16dp"
+            android:textColor="#01AA4F"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/cl_option_contact" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_option_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="80dp"
+            >
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_phone_call"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                android:background="#ECECEC"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_phone_call"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_phone_call"
+                    />
+
+
+            </carbon.widget.ConstraintLayout>
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_workchat"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                android:background="#ECECEC"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                android:layout_marginStart="@dimen/_12dp"
+                app:layout_constraintStart_toEndOf="@id/cl_phone_call"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_workchat"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_workchat"
+                    />
+
+
+            </carbon.widget.ConstraintLayout>
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_email"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                app:carbon_cornerRadius="@dimen/_10dp"
+                android:background="#ECECEC"
+                app:carbon_strokeWidth="1dp"
+                app:carbon_stroke="@color/gray_7d"
+                android:layout_marginStart="@dimen/_12dp"
+                app:layout_constraintStart_toEndOf="@id/cl_workchat"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_email_message"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_email_message"
+                    />
+            </carbon.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

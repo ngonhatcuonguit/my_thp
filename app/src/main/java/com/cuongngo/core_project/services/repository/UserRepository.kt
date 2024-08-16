@@ -42,4 +42,8 @@ class UserRepository(private val userRemoteDataSource: UserRemoteDataSource, pri
         return userLocalDataSource.upsertListUser(listUser)
     }
 
+    suspend fun formatUserTable():BaseResult<Unit>{
+        return userLocalDataSource.formatUserTable()
+    }
+
 }

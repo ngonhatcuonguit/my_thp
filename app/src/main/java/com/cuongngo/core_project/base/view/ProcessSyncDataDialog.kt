@@ -6,16 +6,14 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import com.cuongngo.core_project.R
 
-class ProgressDialog @JvmOverloads constructor(
+class ProcessSyncDataDialog @JvmOverloads constructor(
     var context: Context,
-    var isCancelable: Boolean = false,
-    var view: View? = LayoutInflater.from(context).inflate(R.layout.dialog_progress, null)
+    var isCancelable: Boolean = false
 ) {
 
     lateinit var progressDialog: AlertDialog
@@ -31,7 +29,7 @@ class ProgressDialog @JvmOverloads constructor(
      * Setup progress dialog
      * */
     private fun setupDialog() {
-        val mDialogView = view ?: LayoutInflater.from(context).inflate(R.layout.dialog_progress, null)
+        val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_process_sync_data, null)
         val mBuilder = AlertDialog.Builder(context)
             .setView(mDialogView)
         progressDialog = mBuilder.show()

@@ -240,7 +240,7 @@
                         app:layout_constraintStart_toStartOf="@id/iv_bg_notify"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_notify"
+                        android:id="@+id/iv_bg_sync_data"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginTop="@dimen/_24dp"
@@ -248,6 +248,55 @@
                         android:src="@drawable/ic_bg_circle_gray_f5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_notify_title"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sync_data"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_sync_data"
+                        android:padding="6dp"
+                        android:tint="#92929D"
+                        app:layout_constraintStart_toStartOf="@+id/iv_bg_sync_data"
+                        app:layout_constraintTop_toTopOf="@+id/iv_bg_sync_data"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_sync_data"
+                        app:layout_constraintEnd_toEndOf="@id/iv_bg_sync_data"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_sync_data"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="top"
+                        android:text="Sync Data"
+                        android:textColor="@color/gray_36"
+                        android:textSize="14sp"
+                        android:paddingVertical="8dp"
+                        android:drawableEnd="@drawable/ic_arrow_right"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_bg_sync_data"
+                        app:layout_constraintTop_toTopOf="@id/iv_bg_sync_data"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_sync_data"/>
+
+                    <View
+                        android:id="@+id/view_space_sync_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/gray_F5"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_sync_data"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_bg_notify"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view_space_sync_data"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_notify"

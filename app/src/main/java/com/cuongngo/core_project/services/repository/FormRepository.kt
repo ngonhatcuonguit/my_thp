@@ -51,6 +51,10 @@ class FormRepository(
         return formLocalDataSource.getFormCount()
     }
 
+    suspend fun formatFormTable():BaseResult<Unit>{
+        return formLocalDataSource.formatFormTable()
+    }
+
     suspend fun deleteForm(formEntity: FormEntity): BaseResult<Int> {
         return formLocalDataSource.deleteForm(formEntity)
     }

@@ -31,6 +31,8 @@ interface UserDao {
     @Query("SELECT COUNT(*) FROM users")
     fun getUserCount(): Int
 
+    @Query("DELETE FROM users")
+    suspend fun formatUserTable()
     @Delete
     fun deleteUser(genre: UserTHPEntity)
 }
