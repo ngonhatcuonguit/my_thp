@@ -60,7 +60,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
         compositeDisposable =
             binding.edtSearch.textChangeEvents()
                 .skip(1)
-                .debounce(900, TimeUnit.MILLISECONDS)
+                .debounce(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {

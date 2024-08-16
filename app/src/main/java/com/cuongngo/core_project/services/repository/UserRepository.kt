@@ -35,6 +35,10 @@ class UserRepository(private val userRemoteDataSource: UserRemoteDataSource, pri
         return userLocalDataSource.getAllUser()
     }
 
+    suspend fun searchUsers(keyword: String):BaseResult<List<UserTHPEntity>>{
+        return userLocalDataSource.searchUsers(keyword)
+    }
+
     suspend fun getUserCountLocal():BaseResult<Int>{
         return userLocalDataSource.getUserCount()
     }

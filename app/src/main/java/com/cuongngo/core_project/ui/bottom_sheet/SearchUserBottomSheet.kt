@@ -94,15 +94,20 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         compositeDisposable =
             binding.edtSearchKeyword.textChangeEvents()
                 .skip(1)
-                .debounce(900, TimeUnit.MILLISECONDS)
+                .debounce(1, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     hideKeyboard()
-                    //page=1
-                    keyword = it.text.trim().toString()
-                    //call query user like keyword
-                    viewModel.getAllUserLocal()
+                    if (keyword != it.text.trim().toString() && it.text.trim().toString().isNotEmpty()){
+                        keyword = it.text.trim().toString()
+                        keyword?.let {
+                            if (keyword=="all"){
+                                viewModel.getAllUserLocal()
+                            }
+                            viewModel.searchUsers(it)
+                        }
+                    }
                     WTF("testSearchKeyWord $keyword")
                     hideKeyboard()
                 }

@@ -46,7 +46,7 @@ interface FormDao {
     @Query("DELETE FROM forms")
     suspend fun formatFormTable()
 
-    @Query("SELECT * FROM forms WHERE name LIKE '%' || :keyword || '%' COLLATE NOCASE OR form_code LIKE '%' || :keyword || '%' COLLATE NOCASE OR title LIKE '%' || :keyword || '%' COLLATE NOCASE")
+    @Query("SELECT * FROM forms WHERE name LIKE '%' || :keyword || '%' COLLATE NOCASE OR form_code LIKE '%' || :keyword || '%' COLLATE NOCASE OR title LIKE '%' || :keyword || '%' COLLATE NOCASE OR form_id LIKE '%' || :keyword || '%' COLLATE NOCASE")
     suspend fun searchForms(keyword: String): List<FormEntity>
 
 

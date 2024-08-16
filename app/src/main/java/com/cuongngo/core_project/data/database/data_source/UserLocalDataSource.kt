@@ -27,4 +27,7 @@ class UserLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
     suspend fun insertUser(record: UserTHPEntity) = getResult {
         database.userDao().addUser(record)
     }
+    suspend fun searchUsers(keyword: String) = getResult {
+        database.userDao().searchUsers(keyword)
+    }
 }

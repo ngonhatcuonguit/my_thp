@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UserViewModel(private val userRepository: UserRepository): BaseViewModel() {
+class UserViewModel(private val userRepository: UserRepository) : BaseViewModel() {
 
     //Remote
     private val _login = MutableLiveData<BaseResult<AppBaseResponse<LoginResponse>>>()
@@ -30,33 +30,39 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
     //Local
 
     private val _getAllUserLocal = MutableLiveData<BaseResult<List<UserTHPEntity>>>()
-    val getAllUserLocal: LiveData<BaseResult<List<UserTHPEntity>>>get() = _getAllUserLocal
+    val getAllUserLocal: LiveData<BaseResult<List<UserTHPEntity>>> get() = _getAllUserLocal
 
     private val _insertListUserToLocal = MutableLiveData<BaseResult<Unit>>()
-    val insertListUserToLocal: LiveData<BaseResult<Unit>>get() = _insertListUserToLocal
+    val insertListUserToLocal: LiveData<BaseResult<Unit>> get() = _insertListUserToLocal
 
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
-    val checkUserTable: LiveData<BaseResult<Int>>get() = _checkUserTable
+    val checkUserTable: LiveData<BaseResult<Int>> get() = _checkUserTable
 
 
     fun login(
         user_name: String,
         password: String,
         device_code: String
-    ){
+    ) {
         _login.value = BaseResult.loading(null)
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                _login.postValue(userRepository.login(user_name = user_name, password=password, device_code=device_code))
+            withContext(Dispatchers.IO) {
+                _login.postValue(
+                    userRepository.login(
+                        user_name = user_name,
+                        password = password,
+                        device_code = device_code
+                    )
+                )
             }
         }
 
     }
 
-    fun getListUser(isGetAll: Boolean){
+    fun getListUser(isGetAll: Boolean) {
         _getListUser.value = BaseResult.loading(null)
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 _getListUser.postValue(
                     userRepository.getListUser(isGetAll)
                 )
@@ -65,10 +71,10 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
     }
 
     fun getHotNew(
-    ){
+    ) {
         _hotNew.value = BaseResult.loading(null)
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 _hotNew.postValue(userRepository.getHotNew())
             }
         }
@@ -77,32 +83,41 @@ class UserViewModel(private val userRepository: UserRepository): BaseViewModel()
 
     //Local
 
-    fun getAllUserLocal(){
+    fun getAllUserLocal() {
         _getAllUserLocal.value = BaseResult.loading(null)
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 _getAllUserLocal.postValue(userRepository.getAllUserLocal())
             }
         }
     }
 
-    fun getCountUserLocal(){
-        _checkUserTable.value = BaseResult.loading(null)
+    fun searchUsers(keyword: String) {
+        _getAllUserLocal.value = BaseResult.loading(null)
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                _checkUserTable.postValue(userRepository.getUserCountLocal())
-            }
-        }
-    }
-    fun addListUser(listUser: List<UserTHPEntity>){
-        _insertListUserToLocal.value = BaseResult.loading(null)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO){
-                _insertListUserToLocal.postValue(userRepository.addListUser(listUser))
+            withContext(Dispatchers.IO) {
+                _getAllUserLocal.postValue(userRepository.searchUsers(keyword))
             }
         }
     }
 
+    fun getCountUserLocal() {
+        _checkUserTable.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _checkUserTable.postValue(userRepository.getUserCountLocal())
+            }
+        }
+    }
+
+    fun addListUser(listUser: List<UserTHPEntity>) {
+        _insertListUserToLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _insertListUserToLocal.postValue(userRepository.addListUser(listUser))
+            }
+        }
+    }
 
 
 }

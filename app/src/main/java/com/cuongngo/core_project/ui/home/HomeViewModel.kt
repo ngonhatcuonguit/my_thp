@@ -117,6 +117,14 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
             }
         }
     }
+    fun searchUsers(keyword: String) {
+        _getAllUserLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _getAllUserLocal.postValue(userRepository.searchUsers(keyword))
+            }
+        }
+    }
     fun getCountUserLocal(){
         _checkUserTable.value = BaseResult.loading(null)
         viewModelScope.launch {

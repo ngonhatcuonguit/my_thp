@@ -16,7 +16,7 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<UserTHPEntity>)
 
-    @Query("SELECT * FROM users WHERE first_name LIKE :keyword OR email LIKE :keyword OR last_name LIKE :keyword OR initial LIKE :keyword OR position_name LIKE :keyword")
+    @Query("SELECT * FROM users WHERE first_name LIKE '%' || :keyword || '%' COLLATE NOCASE OR last_name LIKE '%' || :keyword || '%' COLLATE NOCASE OR initial LIKE '%' || :keyword || '%' COLLATE NOCASE OR email LIKE '%' || :keyword || '%' COLLATE NOCASE OR position_name LIKE '%' || :keyword || '%' COLLATE NOCASE")
     suspend fun searchUsers(keyword: String): List<UserTHPEntity>
 
     @Query("SELECT * FROM users LIMIT :limit")
