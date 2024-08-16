@@ -23,7 +23,7 @@ class RequestAdapter(
         var request = listRequest[position]
         binding.root.elevation = convertDpToPixel(8F, context)
         binding.request = request
-        binding.tvRequestCode.text = "Mã yêu cầu: ${request.requestCode}"
+        binding.tvRequestCode.text = "Code: ${request.requestCode}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(request) ?: return@setOnClickListener
         }

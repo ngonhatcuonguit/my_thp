@@ -3,6 +3,7 @@ package com.cuongngo.core_project.utils.date
 import com.cuongngo.core_project.utils.date.enum.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import java.util.concurrent.TimeUnit
@@ -65,6 +66,11 @@ fun getCurrentTimeSecond() : Long = System.currentTimeMillis()/1000
 fun Calendar.getDaysDiff(calendar: Calendar): Long {
     val diff = this.timeInMillis - calendar.timeInMillis
     return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)
+}
+
+fun getCurrentDateTime(): String {
+    val dateFormat = SimpleDateFormat("HH:mm dd/MM/yyyy", Locale.getDefault())
+    return dateFormat.format(Date())
 }
 
 class DateUtils {

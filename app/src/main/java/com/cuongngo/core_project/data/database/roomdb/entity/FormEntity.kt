@@ -90,7 +90,7 @@ data class Option(
 data class ProcessStep(
     val id: Long,
     val name: String?,
-    val status: Int? = null,
+    val status: String? = null,
     var owner: List<UserTHPEntity>? = mutableListOf(),
     var duration: String? = null,
     val created: String? = null,

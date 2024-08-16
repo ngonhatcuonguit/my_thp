@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.ui.request_detail
 
 import android.app.Activity
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import androidx.core.view.isVisible
@@ -10,8 +11,12 @@ import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmAddRequestDialog
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
+import com.cuongngo.core_project.base.view.date_time_picker.DatePickerDialog
+import com.cuongngo.core_project.base.view.date_time_picker.Listener
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.common.enum.FieldType
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
+import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
@@ -21,16 +26,23 @@ import com.cuongngo.core_project.databinding.ActivityRequestMasterBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SearchUserBottomSheet
+import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
+import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
 import com.cuongngo.core_project.ui.user_thp.adapter.UserAddedAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.cuongngo.core_project.utils.date.getCurrentDateTime
+import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
+import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.google.gson.Gson
 import java.io.IOException
+import java.util.Calendar
 import kotlin.random.Random
 
 class RequestMasterDetailActivity :
@@ -66,6 +78,7 @@ class RequestMasterDetailActivity :
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
     private lateinit var formHeaderAdapter: FormHeaderAdapter
     private lateinit var informerAdapter: UserAddedAdapter
+    private var date: Calendar = Calendar.getInstance()
 
     override fun onBackPressed() {
         val resultIntent = Intent().apply {
@@ -90,13 +103,7 @@ class RequestMasterDetailActivity :
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
-                            requestName = listOf(
-                                "HRM form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
-                                "Factory form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
-                                "Parameter form test-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
-                                "Office form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024",
-                                "Other form-IT-Ngô Nhật Cường-43950-Ngày 24/06/2024"
-                            ).random(),
+                            requestName = formEntity?.name + "-" + getCurrentDateTime(),
                             formCode = formEntity?.form_code ?: "",
                             requestCode = addRequestCode ?: "",
                             listHeader = formEntity?.list_header,
@@ -255,12 +262,12 @@ class RequestMasterDetailActivity :
             arrayListOf(),
             supportFragmentManager,
             onItemClickListener = {
-               //test
+                //test
             },
             onChangeProcessStep = {
                 // change list Process
             }
-            )
+        )
         binding.rvProcessStep.apply {
             layoutManager = gridLayoutManager
             adapter = requestProcessStepAdapter
@@ -271,8 +278,51 @@ class RequestMasterDetailActivity :
         val gridLayoutManager = GridLayoutManager(this, 1)
         formHeaderAdapter = FormHeaderAdapter(
             arrayListOf(),
-            onItemClickListener = {
-                // action
+            onItemClickListener = { field ->
+                val defaultValue = field.options?.find {
+                    field.value == it.value
+                }
+                when (field.type) {
+                    "textarea" -> {
+                        setupShowDialogChangeValue(field)
+                    }
+
+                    "date" -> {
+                        showDatePickerDialog(field)
+                    }
+
+                    "time" -> {
+                        showTimePickerDialog(field)
+                    }
+
+                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType -> {
+                        field.options?.let { options ->
+                            onShowPopupOption(
+                                this,
+                                view = formHeaderAdapter.getItemRootView(field),
+                                listOption = options,
+                                optionDefault = defaultValue,
+                                onSelectedListener = {
+                                    handleChangeValueHeader(
+                                        field,
+                                        it.value
+                                    )
+                                })
+                        }
+                    }
+
+                    "checkbox-group" -> {
+                        showMultiChoiceBottomSheet(field)
+                    }
+
+                    "radio-group" -> {
+                        showSingleChoiceBottomSheet(field)
+                    }
+
+                    else -> {
+                        setupShowDialogChangeValue(field)
+                    }
+                }
             })
         binding.rvHeader.apply {
             layoutManager = gridLayoutManager
@@ -280,7 +330,7 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun setupRecyclerViewInformer(){
+    private fun setupRecyclerViewInformer() {
         val gridLayoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         informerAdapter = UserAddedAdapter(
             this,
@@ -294,10 +344,10 @@ class RequestMasterDetailActivity :
             onRemoveListener = {
                 informerAdapter.onRemoveItem(it)
                 viewModel.requestEntity?.informer?.toMutableList()?.remove(it)
-                if (informerAdapter.itemCount == 1){
+                if (informerAdapter.itemCount == 1) {
                     binding.layoutInformer.tvHint.text = "Tìm kiếm user"
                     binding.layoutInformer.rvListAdded.isVisible = false
-                }else{
+                } else {
                     binding.layoutInformer.rvListAdded.isVisible = true
                     binding.layoutInformer.tvHint.text = ""
                 }
@@ -316,24 +366,24 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun showSearchUserBottomSheet(){
+    private fun showSearchUserBottomSheet() {
         SearchUserBottomSheet(
             requestData = viewModel.requestEntity,
             heightValue = (getScreenHeight() * 0.95).toInt()
         ).setOnUserSelected {
             it?.let { data ->
-                if (viewModel.requestEntity?.informer?.contains(data) != true){
+                if (viewModel.requestEntity?.informer?.contains(data) != true) {
                     viewModel.requestEntity?.informer?.toMutableList()?.add(data)
                     informerAdapter.onAddNew(data)
                     WTF("addUser ${viewModel.requestEntity?.informer}")
-                }else{
+                } else {
                     //show warning
                 }
             }
-            if (informerAdapter.itemCount == 1){
+            if (informerAdapter.itemCount == 1) {
                 binding.layoutInformer.tvHint.text = "Tìm kiếm user"
                 binding.layoutInformer.rvListAdded.isVisible = false
-            }else{
+            } else {
                 binding.layoutInformer.rvListAdded.isVisible = true
                 binding.layoutInformer.tvHint.text = ""
             }
@@ -385,5 +435,114 @@ class RequestMasterDetailActivity :
         }
         confirmAddRequestDialog.show(supportFragmentManager, ConfirmDialog.TAG)
     }
+
+    private fun showSingleChoiceBottomSheet(field: Field) {
+        val defaultValue = field.options?.find {
+            field.value == it.value
+        }
+        SingleChoiceOptionBottomSheet(
+            field = field,
+            optionDefault = defaultValue,
+            heightValue = (getScreenHeight() * 0.85).toInt()
+        ).setOnOptionSelected {
+            handleChangeValueHeader(field, it?.value)
+        }.show(supportFragmentManager, SheetDetailActivity.TAG)
+    }
+
+    private fun showMultiChoiceBottomSheet(field: Field) {
+        MultiChoiceOptionBottomSheet(
+            listOption = field.options,
+            listSelectedDefault = emptyList(),
+            (getScreenHeight() * 0.95).toInt()
+        ).onOptionSelected { listSelected ->
+            var displayText = ""
+            listSelected?.forEach {
+                displayText = if (displayText.isEmpty()) {
+                    "${it.value}"
+                } else {
+                    "$displayText, ${it.value}"
+                }
+            }
+            handleChangeValueHeader(field, displayText)
+        }.show(supportFragmentManager, SheetDetailActivity.TAG)
+    }
+
+    private fun showDatePickerDialog(field: Field) {
+        val cal: Calendar = Calendar.getInstance()
+        cal.add(Calendar.YEAR, 5)
+        val dateAdd: Calendar = Calendar.getInstance()
+        dateAdd.add(Calendar.MINUTE, 5)
+        DatePickerDialog(
+            calendar = dateAdd,
+            context = this,
+            listener = object : Listener {
+                override fun onDateSelected(calendar: Calendar) {
+                    val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+                    val monthOfYear = calendar.get(Calendar.MONTH) + 1
+                    val year = calendar.get(Calendar.YEAR)
+
+                    val dayStr = if (dayOfMonth < 10) "0${dayOfMonth}" else "$dayOfMonth"
+                    val monthStr = if (monthOfYear < 10) "0${monthOfYear}" else "$monthOfYear"
+                    handleChangeValueHeader(field, "$dayStr/$monthStr/$year")
+                }
+            },
+            maxDate = cal.timeInMillis,
+            minDate = dateAdd.timeInMillis,
+            isCancelable = true
+        ).show()
+    }
+
+    private fun showTimePickerDialog(field: Field) {
+        val dateAdd: Calendar = Calendar.getInstance()
+        dateAdd.add(Calendar.MINUTE, 10)
+        TimePickerDialog(
+            this,
+            { _, hour, minute ->
+                date.set(Calendar.HOUR_OF_DAY, hour)
+                date.set(Calendar.MINUTE, minute)
+                handleChangeValueHeader(field, "${hour.toString()}:${minute.toString()}")
+            },
+            dateAdd.get(Calendar.HOUR_OF_DAY) ?: getCurrentHourOfDay(),
+            dateAdd.get(Calendar.MINUTE) ?: getCurrentMinuteOfHour(),
+            true
+        ).show()
+    }
+
+    private fun setupShowDialogChangeValue(field: Field) {
+        var edtText = ""
+        if (!field.value.isNullOrEmpty()) {
+            edtText = field.value.toString()
+        }
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = field.label.toString() ?: "Sửa dổi thông tin",
+                subTitle = "subtitle",
+                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
+                edtValue = edtText,
+                edtHint = "Vui lòng nhập ${field.label.toString()}",
+                edtTitle = "Nhập ${field.label.toString()}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Lưu thông tin",
+                isSingle = false
+            )
+        ).apply {
+            onRightButtonClick {
+                handleChangeValueHeader(field, it)
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
+    private fun handleChangeValueHeader(field: Field, newValue: String?) {
+        val fieldData = viewModel.requestEntity?.listHeader?.find { it.id == field.id }
+        val fieldIndex = viewModel.requestEntity?.listHeader?.indexOf(fieldData) ?: return
+        fieldData?.value = newValue
+        fieldData?.let { formHeaderAdapter.onChangeValueField(it, fieldIndex) }
+    }
+
 
 }
