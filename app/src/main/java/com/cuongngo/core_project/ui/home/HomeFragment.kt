@@ -2,7 +2,9 @@ package com.cuongngo.core_project.ui.home
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
@@ -15,9 +17,11 @@ import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
+import com.cuongngo.core_project.utils.Constants
 import io.reactivex.disposables.Disposable
 import kotlin.random.Random
 
@@ -171,9 +175,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                     it.data?.let { listForm ->
                         formAdapter.submitListForm(listForm)
                     }
-                    if ((it.data?.size ?: 0) < 3){
-                        addForm()
-                    }
+//                    if ((it.data?.size ?: 0) < 3){
+//                        addForm()
+//                    }
                 },
                 onError = {
                     hideProgressDialog()
@@ -196,13 +200,42 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
     }
 
+    private fun setupShowDialogConfirm(form: FormEntity) {
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = "Tạo yêu cầu mới",
+                subTitle = form.title,
+                content = "Bạn muốn tạo một yêu cầu mới với mẫu form: \n${form.form_code} - ${form.name}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Tạo yêu cầu",
+                isSingle = false
+            )
+        ).apply {
+            onRightButtonClick {
+                startActivity(
+                    RequestMasterDetailActivity.newIntent(
+                        requireContext(),
+                        category = Constants.CategoryRequestDetail.ADD,
+                        request = null,
+                        form = form
+                    )
+                )
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
+    }
+
     private fun setupRcvListPopularForm() {
         val gridLayoutManager = GridLayoutManager(requireContext(), 2)
         formAdapter = FormAdapter(
             requireContext(),
             arrayListOf(),
             onItemClickListener = {
-                //show detail
+                setupShowDialogConfirm(it)
             }
         )
 //        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
 
     </data>
@@ -33,7 +32,7 @@
                 app:srcCompat="@drawable/ic_search_gray" />
 
             <com.cuongngo.core_project.common.view.view_ex.EditTextEx
-                android:id="@+id/tv_hint_search"
+                android:id="@+id/edt_search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
@@ -49,6 +48,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/view_space"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_clear_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="5dp"
+                android:padding="6dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@id/view_space"
+                app:layout_constraintTop_toTopOf="@id/view_space"
+                app:layout_constraintBottom_toBottomOf="@id/view_space"
+                app:srcCompat="@drawable/ic_search_clear" />
 
             <View
                 android:id="@+id/view_space"
@@ -99,6 +112,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cl_search"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

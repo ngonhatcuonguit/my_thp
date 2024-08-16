@@ -1,5 +1,7 @@
 package com.cuongngo.core_project.ui.add_request
 
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
@@ -18,7 +20,11 @@ import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.jakewharton.rxbinding3.widget.textChangeEvents
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewModel>() {
 
@@ -31,6 +37,8 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     private var totalPages: Int = 1
     private var isMore: Boolean = true
 
+    private var keyword: String? = null
+
     private lateinit var formAdapter: FormAdapter
     override fun inflateLayout(): Int = R.layout.fragment_add_request
 
@@ -40,11 +48,40 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
 
     override fun setUp() {
         viewModel.getAllForm()
+        setupFeatureSearch()
         setupRcvListForm()
     }
 
     override fun onResume() {
         super.onResume()
+    }
+
+    private fun setupFeatureSearch() {
+        compositeDisposable =
+            binding.edtSearch.textChangeEvents()
+                .skip(1)
+                .debounce(900, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    hideKeyboard()
+                    if (keyword != it.text.trim().toString() && it.text.trim().toString().isNotEmpty()){
+                        keyword = it.text.trim().toString()
+                        keyword?.let {
+                            if (keyword=="all"){
+                                viewModel.getAllForm()
+                            }
+                            viewModel.searchForms(it)
+                        }
+                    }
+                    WTF("testSearchKeyWord $keyword")
+                    hideKeyboard()
+                }
+        binding.edtSearch.doOnTextChanged { text, _, _, _ ->
+            text?.let { keySearch ->
+                binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
+            }
+        }
     }
 
     override fun setUpObserver() {
@@ -111,7 +148,24 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
             )
         }
 
-
+        observeLiveDataChanged(viewModel.searchForms){
+            it.onResultReceived(
+                onLoading = {
+                    binding.rvListForm.isVisible = false
+                    binding.progressBar.isVisible = true
+                },
+                onSuccess = {
+                    binding.rvListForm.isVisible = true
+                    binding.progressBar.isVisible = false
+                    formAdapter.submitListForm(it.data)
+                    WTF("testSearchForm ${it.data}")
+                },
+                onError = {
+                    binding.rvListForm.isVisible = true
+                    binding.progressBar.isVisible = false
+                }
+            )
+        }
 
     }
     private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){

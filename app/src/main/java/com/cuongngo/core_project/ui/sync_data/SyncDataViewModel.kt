@@ -145,7 +145,7 @@ class SyncDataViewModel(
         _listFormRemote.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFormRemote.postValue(formRepository.getListForm())
+                _listFormRemote.postValue(formRepository.getListForm(true))
             }
         }
     }

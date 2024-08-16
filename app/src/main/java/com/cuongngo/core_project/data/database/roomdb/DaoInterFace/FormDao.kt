@@ -8,6 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 
 @Dao
 interface FormDao {
@@ -44,6 +45,9 @@ interface FormDao {
 
     @Query("DELETE FROM forms")
     suspend fun formatFormTable()
+
+    @Query("SELECT * FROM forms WHERE name LIKE '%' || :keyword || '%' COLLATE NOCASE OR form_code LIKE '%' || :keyword || '%' COLLATE NOCASE OR title LIKE '%' || :keyword || '%' COLLATE NOCASE")
+    suspend fun searchForms(keyword: String): List<FormEntity>
 
 
     //interface for RequestEntity

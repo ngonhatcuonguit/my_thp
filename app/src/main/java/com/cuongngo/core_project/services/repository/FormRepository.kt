@@ -55,6 +55,10 @@ class FormRepository(
         return formLocalDataSource.formatFormTable()
     }
 
+    suspend fun searchForms(keyword: String):BaseResult<List<FormEntity>>{
+        return formLocalDataSource.searchForms(keyword)
+    }
+
     suspend fun deleteForm(formEntity: FormEntity): BaseResult<Int> {
         return formLocalDataSource.deleteForm(formEntity)
     }

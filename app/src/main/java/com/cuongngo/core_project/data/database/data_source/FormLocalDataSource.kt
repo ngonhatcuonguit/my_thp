@@ -42,6 +42,10 @@ class FormLocalDataSource(private val database: AppDatabase) : BaseLocalDataSour
         database.thpFormDao().formatFormTable()
     }
 
+    suspend fun searchForms(keyword: String) = getResult {
+        database.thpFormDao().searchForms(keyword)
+    }
+
     //request
 
     suspend fun insertRequest(request: RequestEntity) = getResult {

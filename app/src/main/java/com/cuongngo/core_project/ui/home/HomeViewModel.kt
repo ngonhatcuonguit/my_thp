@@ -100,7 +100,7 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     fun getListForm() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFormRemote.postValue(formRepository.getListForm())
+                _listFormRemote.postValue(formRepository.getListForm(true))
             }
         }
     }

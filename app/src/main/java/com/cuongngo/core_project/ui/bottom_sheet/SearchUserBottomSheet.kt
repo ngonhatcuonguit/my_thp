@@ -94,7 +94,7 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
         compositeDisposable =
             binding.edtSearchKeyword.textChangeEvents()
                 .skip(1)
-                .debounce(500, TimeUnit.MILLISECONDS)
+                .debounce(900, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -111,7 +111,6 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
                 binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
             }
         }
-
     }
 
     private fun setupObserver() {

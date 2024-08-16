@@ -18,6 +18,9 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
     private val _allForm = MutableLiveData<BaseResult<List<FormEntity>>>()
     val allForm: LiveData<BaseResult<List<FormEntity>>> = _allForm
 
+    private val _searchForms = MutableLiveData<BaseResult<List<FormEntity>>>()
+    val searchForms: LiveData<BaseResult<List<FormEntity>>> = _searchForms
+
     private val _form = MutableLiveData<BaseResult<FormEntity>>()
     val form: LiveData<BaseResult<FormEntity>> = _form
 
@@ -68,6 +71,15 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _allForm.postValue(formRepository.getAllForm())
+            }
+        }
+    }
+
+    fun searchForms(keyword: String) {
+        _searchForms.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _searchForms.postValue(formRepository.searchForms(keyword))
             }
         }
     }
