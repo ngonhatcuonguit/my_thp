@@ -42,7 +42,7 @@ abstract class BaseRemoteDataSource {
     }
 
     private fun <T> error(message: String,errorBody: ResponseBody?,errorCode:Int?): BaseResult<T> {
-        Log.e("BaseRemoteDataSource","Network call has failed for a following reason: $message")
+        Log.e("BaseRemoteDataSource","Network call has failed for a following reason: $message, $errorCode")
         return if(errorBody==null){
             BaseResult.error(
                 "Network call has failed for a following reason: $message",

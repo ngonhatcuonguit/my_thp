@@ -1,7 +1,10 @@
 package com.cuongngo.core_project.base.activity
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,8 +23,11 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.view.BaseView
 import com.cuongngo.core_project.base.view.ProgressDialog
+import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -121,6 +127,20 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         return inputMethodManager.isAcceptingText
     }
 
+    //check internet connect
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities = connectivityManager.activeNetwork?.let{ connectivityManager.getNetworkCapabilities(it) }
+        return capabilities != null && (
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+
+                )
+    }
+
+
+
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         val view: View? = currentFocus
         val ret = super.dispatchTouchEvent(event)
@@ -140,6 +160,76 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
             }
         }
         return ret
+    }
+
+
+    open fun setupShowDialogResult(isSuccess: Boolean, errorCode: Int? = null) {
+        var title = "Thành Công"
+        var content = "Dữ liệu từ hệ thống của THP đã được đồng bộ về thiết bị của bạn"
+        var btnContent = "Đồng ý"
+        if (!isSuccess) {
+            when(errorCode){
+                401 -> {
+                    title = "Phiên đăng nhập hết hạn"
+                    content = "Phiên đăng nhập của bạn đã quá hạn, vui lòng đăng nhập lại!"
+                    btnContent = "Đăng nhập"
+                }
+
+                404 -> {
+                    title = "Lỗi 404"
+                    content = "Đã có lỗi xảy ra, vui lòng kiểm tra lại!"
+                    btnContent = "Đồng ý"
+                }
+
+                else -> {
+                    title = "Lỗi $errorCode"
+                    content = "Đã có lỗi xảy ra, vui lòng kiểm tra lại!"
+                    btnContent = "Đồng ý"
+                }
+            }
+        }
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = title,
+                subTitle = "",
+                content = content,
+                leftButtonTitle = btnContent,
+                rightButtonTitle = "",
+                isSingle = true
+            ),
+            margins = 90f
+        ).apply {
+            onRightButtonClick {
+                dismiss()
+            }
+            onLeftButtonClick {
+                if (!isSuccess) {
+                    when(errorCode){
+                        401 -> {
+                            gotoLoginMethod()
+                        }
+
+                        404 -> {
+                            //
+                        }
+
+                        else -> {
+                            //
+                        }
+                    }
+                }else{
+                    dismiss()
+                }
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
+    private fun gotoLoginMethod() {
+        Intent(this, LoginMethodActivity::class.java).apply {
+        }.also {
+            startActivity(it)
+        }
     }
 
 }
