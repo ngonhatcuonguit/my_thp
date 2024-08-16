@@ -87,12 +87,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
-
         observeLiveDataChanged(viewModel.getListUser){
             it.onResultReceived(
-                onLoading = {
-
-                },
+                onLoading = {},
                 onSuccess = {
                     WTF("testApiUser getRemote ${it.data?.data}")
                     if(it.data?.data?.isEmpty() != true){
@@ -104,7 +101,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                     }
                 },
                 onError = {
-
+                    processSyncDialog.hide()
                 }
             )
         }
@@ -122,13 +119,16 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
         observeLiveDataChanged(viewModel.insertListUserToLocal){
             it.onResultReceived(
-                onLoading = {},
+                onLoading = {
+                    processSyncDialog.show()
+                },
                 onSuccess = {
+                    processSyncDialog.hide()
                     WTF("testApiUser -----------------sync ok")
                     viewModel.getCountUserLocal()
                 },
                 onError = {
-
+                    processSyncDialog.hide()
                 }
             )
         }

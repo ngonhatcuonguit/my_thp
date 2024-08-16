@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.view.BaseView
 import com.cuongngo.core_project.base.view.ProgressDialog
 import org.kodein.di.KodeinAware
@@ -21,6 +22,13 @@ abstract class BaseFragment<DB: ViewDataBinding>: Fragment(), KodeinAware, BaseV
 
     private val progressDialog by lazy {
         ProgressDialog(requireContext())
+    }
+
+    val processSyncDialog by lazy {
+        ProgressDialog(
+            requireContext(),
+            view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_process_sync_data, null)
+        )
     }
     @LayoutRes
     abstract fun inflateLayout(): Int

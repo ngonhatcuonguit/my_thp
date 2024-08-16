@@ -81,8 +81,8 @@ class FormRepository(
 
     //-----------remote-------------
 
-    suspend fun getListForm(): BaseResult<FormResponse>{
-        return formRemoteDatSource.getListForm()
+    suspend fun getListForm(isGetAll: Boolean): BaseResult<FormResponse>{
+        return formRemoteDatSource.getListForm(isGetAll)
     }
 
 }

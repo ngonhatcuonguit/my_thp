@@ -6,7 +6,7 @@ import com.cuongngo.core_project.services.network.BaseRemoteDataSource
 class FormRemoteDatSource(
     private val apiService: THPApi
 ) : BaseRemoteDataSource() {
-    suspend fun getListForm() = getResult {
-        apiService.getListForm(isGetAll = true)
+    suspend fun getListForm(isGetAll: Boolean) = getResult {
+        apiService.getListForm(isGetAll = isGetAll)
     }
 }

@@ -189,10 +189,10 @@ class FormViewModel(private val formRepository: FormRepository) : BaseViewModel(
 
     //----------remote----------
 
-    fun getListForm() {
+    fun getListForm(isGetAll: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFormRemote.postValue(formRepository.getListForm())
+                _listFormRemote.postValue(formRepository.getListForm(isGetAll))
             }
         }
     }

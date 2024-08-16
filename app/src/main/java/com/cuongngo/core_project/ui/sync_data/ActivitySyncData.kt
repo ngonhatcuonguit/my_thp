@@ -1,17 +1,14 @@
 package com.cuongngo.core_project.ui.sync_data
 
-import android.view.LayoutInflater
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
-import com.cuongngo.core_project.base.view.ProgressDialog
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.databinding.ActivitySyncDataBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.home.HomeFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,13 +19,6 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
     override val viewModel: SyncDataViewModel by kodeinViewModel()
 
     override fun inflateLayout(): Int = R.layout.activity_sync_data
-
-    private val processSyncDialog by lazy {
-        ProgressDialog(
-            this,
-            view = LayoutInflater.from(this).inflate(R.layout.dialog_process_sync_data, null)
-        )
-    }
 
     override fun setUp() {
         with(binding) {

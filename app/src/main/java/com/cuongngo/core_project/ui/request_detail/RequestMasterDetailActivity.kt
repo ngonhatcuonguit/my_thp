@@ -125,6 +125,7 @@ class RequestMasterDetailActivity :
                     formHeaderAdapter.submitListFormHeader(requestEntity?.listHeader)
                     viewModel.requestEntity = requestEntity
                     logEntityToFile()
+                    binding.tvRequestTitle.text = requestEntity?.requestName ?: "Tạo yêu cầu mới"
                     WTF("log_json_Entity: ${readLogFile()}")
                 }
             }
@@ -181,6 +182,7 @@ class RequestMasterDetailActivity :
                 //
             }, onSuccess = {
                 it.data.let { request ->
+                    binding.tvRequestTitle.text = request?.requestName ?: "Tạo yêu cầu mới"
                     if (viewModel.requestEntity != null) {
                         viewModel.requestEntity = request
                         sheetAdapter.submitListSheet(request?.listBody)

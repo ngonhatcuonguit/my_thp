@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
@@ -32,6 +33,13 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
 
     private val progressDialog by lazy {
         ProgressDialog(this)
+    }
+
+    val processSyncDialog by lazy {
+        ProgressDialog(
+            this,
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_process_sync_data, null)
+        )
     }
 
     @LayoutRes

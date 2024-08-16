@@ -39,7 +39,6 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     override fun setUp() {
-        syncForm()
         viewModel.getAllForm()
         setupRcvListForm()
     }
@@ -52,12 +51,17 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
 
         observeLiveDataChanged(viewModel.upsertListFormToLocal){
             it.onResultReceived(
-                onLoading = {},
+                onLoading = {
+                    processSyncDialog.show()
+                },
                 onSuccess = {
+                    processSyncDialog.hide()
                     WTF("testAPiForm upsert-OK")
                     viewModel.getCountRecord()
                 },
-                onError = {}
+                onError = {
+                    processSyncDialog.hide()
+                }
             )
         }
         observeLiveDataChanged(viewModel.checkCountRecord){
@@ -83,24 +87,26 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                         formAdapter.submitListForm(listForm)
                         WTF(ListFormActivity.TAG, "dataForm: ${listForm}")
                     }
+                    syncForm()
                 },
                 onError = {
                     hideProgressDialog()
+                    syncForm()
                 }
             )
         }
 
         observeLiveDataChanged(viewModel.listFormRemote){
             it.onResultReceived(
-                onLoading = {
-
-                },
+                onLoading = {},
                 onSuccess = {
                     WTF("testAPiForm countRecord ${it.data?.data}")
-                    viewModel.upsertListForm(it.data?.data ?: arrayListOf())
+                    if (it.data?.data?.isNotEmpty() == true){
+                        viewModel.upsertListForm(it.data?.data ?: arrayListOf())
+                    }
                 },
                 onError = {
-
+                    processSyncDialog.hide()
                 }
             )
         }
@@ -108,11 +114,10 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
 
 
     }
-
     private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){
-        viewModel.getListForm()
+        viewModel.getListForm(true)
     }else{
-//        viewModel.getAllForm()
+        viewModel.getListForm(false)
     }
 
     private fun setupRcvListForm() {
