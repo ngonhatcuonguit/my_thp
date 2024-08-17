@@ -9,6 +9,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.BaseActivity
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivitySplashBinding
+import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.services.THPApi
 import com.cuongngo.core_project.ui.MainActivity
 import com.cuongngo.core_project.ui.login.LoginMethodActivity
@@ -17,6 +18,8 @@ import com.cuongngo.core_project.utils.toast.showMessageCheckInternet
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun inflateLayout(): Int = R.layout.activity_splash
+
+    private val deviceInfo = getDeviceInfo(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +30,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         handler.postDelayed({
 //            gotoLoginMethod()
             if (AppPreferences.isShownOnBoard()) {
-                if(AppPreferences.getUserAccessToken().isNullOrEmpty()){
+                if (AppPreferences.getUserAccessToken().isNullOrEmpty()) {
                     gotoLoginMethod()
-                }else{
+                } else {
                     gotoMain()
                 }
             } else gotoOnBoard()
@@ -68,17 +71,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun setUp() {
+        // Log the device information
+        AppPreferences.saveDeviceInfo(deviceInfo)
         checkNetworkAvailable()
+        WTF("DeviceInfo ${AppPreferences.getDeviceInfo()}")
     }
 
     override fun setUpObserver() {
 
     }
 
-    private fun checkNetworkAvailable(){
+    private fun checkNetworkAvailable() {
         if (!isNetworkAvailable(this)) {
             showMessageCheckInternet(this, false)
-        }else{
+        } else {
             showMessageCheckInternet(this, true)
         }
     }

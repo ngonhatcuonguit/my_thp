@@ -5,6 +5,7 @@ import androidx.core.view.isVisible
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityLoginByUserIdBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -29,7 +30,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                         viewModel.login(
                             user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
                             password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
-                            device_code = "123"
+                            device_code = AppPreferences.getDeviceInfo()?.id ?: AppPreferences.getDeviceInfo()?.display ?: ""
                         )
                     }else{
                         showMessageCheckInternet(this@LoginByMSNVActivity, false)

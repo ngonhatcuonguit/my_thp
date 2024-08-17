@@ -8,6 +8,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.ViewCompat
 import com.cuongngo.core_project.data.local.AppPreferences
+import com.cuongngo.core_project.model.DeviceInfo
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.services.THPApi
 
@@ -21,15 +22,15 @@ interface BaseView {
     fun setUp()
 
     fun saveUserData(loginResponse: LoginResponse?) {
-        with(AppPreferences){
+        with(AppPreferences) {
             setUserAccessToken(loginResponse?.token ?: "")
             saveUserInfo(loginResponse)
             THPApi.updateToken(loginResponse?.token ?: "")
         }
     }
 
-    fun clearUserData(){
-        with(AppPreferences){
+    fun clearUserData() {
+        with(AppPreferences) {
             setUserAccessToken("")
             saveUserInfo(null)
             THPApi.updateToken("")
@@ -58,7 +59,8 @@ interface BaseView {
      * */
     fun hideKeyboard() {
         provideRootView()?.let {
-            val inputMethodManager = provideContext()?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val inputMethodManager =
+                provideContext()?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
@@ -67,7 +69,8 @@ interface BaseView {
      *  Show key board
      * */
     fun showKeyBoard() {
-        val imm = provideContext()?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            provideContext()?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
     }
 
@@ -77,10 +80,13 @@ interface BaseView {
     //check internet connect
     @Suppress("DEPRECATION")
     fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val capabilities = connectivityManager.activeNetwork?.let { connectivityManager.getNetworkCapabilities(it) }
+            val capabilities = connectivityManager.activeNetwork?.let {
+                connectivityManager.getNetworkCapabilities(it)
+            }
             capabilities != null && (
                     capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
                             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
@@ -108,4 +114,22 @@ interface BaseView {
             )
         }
     }
+
+    fun getDeviceInfo(context: Context): DeviceInfo {
+        return DeviceInfo(
+            manufacturer = Build.MANUFACTURER,
+            model = Build.MODEL,
+            osVersion = Build.VERSION.RELEASE,
+            apiLevel = Build.VERSION.SDK_INT,
+            device = Build.DEVICE,
+            product = Build.PRODUCT,
+            brand = Build.BRAND,
+            hardware = Build.HARDWARE,
+            id = Build.ID,
+            user = Build.USER,
+            host = Build.HOST,
+            display = Build.DISPLAY
+        )
+    }
+
 }

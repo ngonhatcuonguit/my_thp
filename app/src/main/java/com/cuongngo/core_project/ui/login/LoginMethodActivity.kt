@@ -5,10 +5,12 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.databinding.ActivityLoginMethodBinding
+
 class LoginMethodActivity : AppBaseActivityMVVM<ActivityLoginMethodBinding, UserViewModel>() {
 
     companion object {
         val TAG = LoginMethodActivity::class.simpleName
+        private val REQUEST_CODE = 1990
     }
 
     override val viewModel: UserViewModel by kodeinViewModel()
@@ -28,6 +30,7 @@ class LoginMethodActivity : AppBaseActivityMVVM<ActivityLoginMethodBinding, User
             }
         }
     }
+
     private fun gotoLoginMSNV() {
         Intent(this, LoginByMSNVActivity::class.java).apply {
             startActivity(this)

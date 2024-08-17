@@ -3,6 +3,7 @@ package com.cuongngo.core_project.data.local
 import android.content.Context
 import android.content.SharedPreferences
 import com.cuongngo.core_project.App
+import com.cuongngo.core_project.model.DeviceInfo
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.google.gson.GsonBuilder
 
@@ -16,6 +17,7 @@ object AppPreferences {
     const val KEY_COUNT_RECORD_LOCAL_USER = "KEY_COUNT_RECORD_LOCAL_USER"
     const val KEY_COUNT_RECORD_LOCAL_FORM = "KEY_COUNT_RECORD_LOCAL_FORM"
     const val KEY_USER_INFO = "KEY_USER_INFO"
+    const val KEY_DEVICE_INFO = "KEY_DEVICE_INFO"
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
@@ -60,6 +62,13 @@ object AppPreferences {
 
     fun getUserInfo(): LoginResponse? {
         return preferences.getObject(KEY_USER_INFO)
+    }
+    fun saveDeviceInfo(deviceInfo: DeviceInfo?) {
+        editor.putObject(deviceInfo, KEY_DEVICE_INFO)
+    }
+
+    fun getDeviceInfo(): DeviceInfo? {
+        return preferences.getObject(KEY_DEVICE_INFO)
     }
 
     /**

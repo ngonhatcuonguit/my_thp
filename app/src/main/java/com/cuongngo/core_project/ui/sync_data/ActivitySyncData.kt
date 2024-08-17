@@ -24,6 +24,10 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
     override fun setUp() {
         with(binding) {
 
+            layoutAppBar.ivBack.setOnClickListener {
+                onBackPressed()
+            }
+
             clSyncAllForm.setOnClickListener {
                 if(isNetworkAvailable(this@ActivitySyncData)){
                     viewModel.getAllFormRemote()
