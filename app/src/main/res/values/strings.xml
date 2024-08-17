@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CoreProject</string>
     <string name="search_hint"><font size="14">Nhập từ khóa tìm kiếm</font></string>
+    <string name="no_internet_connection">Không có kết nối mạng.</string>
 </resources>

@@ -7,6 +7,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/layout_app_bar"
+            layout="@layout/layout_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -14,7 +25,7 @@
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="#01AA4F"
+            android:textColor="@color/primary_color"
             android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toTopOf="@id/tv_content_sync_data"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 app:carbon_cornerRadius="16dp"
-                android:background="#EEA46B"
+                android:background="@color/primary_color"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -130,7 +141,7 @@
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 app:carbon_cornerRadius="16dp"
-                android:background="#828282"
+                android:background="@color/orange_26"
                 android:layout_marginTop="25dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_sync_all_user"

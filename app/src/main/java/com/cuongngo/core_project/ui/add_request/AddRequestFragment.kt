@@ -20,6 +20,7 @@ import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
 import com.jakewharton.rxbinding3.widget.textChangeEvents
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -94,10 +95,12 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 onSuccess = {
                     processSyncDialog.hide()
                     WTF("testAPiForm upsert-OK")
+                    showMessageOnSyncDataSuccess(requireContext(), true)
                     viewModel.getCountRecord()
                 },
                 onError = {
                     processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
         }
@@ -144,6 +147,7 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 },
                 onError = {
                     processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
         }

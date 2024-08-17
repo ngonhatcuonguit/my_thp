@@ -13,6 +13,7 @@ import com.cuongngo.core_project.services.THPApi
 import com.cuongngo.core_project.ui.MainActivity
 import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.cuongngo.core_project.ui.onboard.OnBoardActivity
+import com.cuongngo.core_project.utils.toast.showMessageCheckInternet
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     override fun inflateLayout(): Int = R.layout.activity_splash
@@ -67,10 +68,19 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     }
 
     override fun setUp() {
-
+        checkNetworkAvailable()
     }
 
     override fun setUpObserver() {
 
     }
+
+    private fun checkNetworkAvailable(){
+        if (!isNetworkAvailable(this)) {
+            showMessageCheckInternet(this, false)
+        }else{
+            showMessageCheckInternet(this, true)
+        }
+    }
+
 }

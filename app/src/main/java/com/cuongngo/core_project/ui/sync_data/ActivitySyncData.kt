@@ -1,5 +1,7 @@
 package com.cuongngo.core_project.ui.sync_data
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
@@ -18,14 +20,29 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
 
     override fun inflateLayout(): Int = R.layout.activity_sync_data
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun setUp() {
         with(binding) {
 
             clSyncAllForm.setOnClickListener {
-                viewModel.getAllFormRemote()
+                if(isNetworkAvailable(this@ActivitySyncData)){
+                    viewModel.getAllFormRemote()
+                }else{
+                    showDialogWarning(
+                        content = "Thiết bị chưa được kết nối mạng. Vui lòng kết nối mạng trước khi đồng bộ dữ liệu!",
+                        btnLeftContent = "Đã hiểu"
+                    )
+                }
             }
             clSyncAllUser.setOnClickListener {
-                viewModel.getAllUserRemote(true)
+                if(isNetworkAvailable(this@ActivitySyncData)){
+                    viewModel.getAllUserRemote(true)
+                }else{
+                    showDialogWarning(
+                        content = "Thiết bị chưa được kết nối mạng. Vui lòng kết nối mạng trước khi đồng bộ dữ liệu!",
+                        btnLeftContent = "Đã hiểu"
+                    )
+                }
             }
             clSyncAllData.setOnClickListener {
 
@@ -136,6 +153,5 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
             )
         }
     }
-
 
 }

@@ -13,6 +13,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -127,20 +128,6 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         return inputMethodManager.isAcceptingText
     }
 
-    //check internet connect
-    @RequiresApi(Build.VERSION_CODES.M)
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val capabilities = connectivityManager.activeNetwork?.let{ connectivityManager.getNetworkCapabilities(it) }
-        return capabilities != null && (
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-
-                )
-    }
-
-
-
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         val view: View? = currentFocus
         val ret = super.dispatchTouchEvent(event)
@@ -220,6 +207,36 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
                 }else{
                     dismiss()
                 }
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
+    open fun showDialogWarning(
+        title: String? = "Chú ý",
+        subTitle: String? = "",
+        content: String? = "Chú ý!",
+        btnLeftContent: String? = "Huỷ bỏ",
+        btnRightContent: String? = "Đồng ý",
+        isSingle: Boolean? = true,
+        margins: Float? = 50f
+        ){
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = title,
+                subTitle = subTitle,
+                content = content,
+                leftButtonTitle = btnLeftContent,
+                rightButtonTitle = btnRightContent,
+                isSingle = isSingle
+            ),
+            margins = margins
+        ).apply {
+            onRightButtonClick {
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
             }
         }
         confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)

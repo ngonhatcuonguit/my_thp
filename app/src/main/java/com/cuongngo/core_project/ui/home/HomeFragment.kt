@@ -22,6 +22,7 @@ import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
+import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
 import io.reactivex.disposables.Disposable
 import kotlin.random.Random
 
@@ -45,6 +46,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         syncUser()
         setupRcvListPopularForm()
         binding.apply {
+            tvName.text = "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
             tvHintSearch.setOnClickListener {
                 //
             }
@@ -106,6 +108,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 },
                 onError = {
                     processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
         }
@@ -128,11 +131,13 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 },
                 onSuccess = {
                     processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), true)
                     WTF("testApiUser -----------------sync ok")
                     viewModel.getCountUserLocal()
                 },
                 onError = {
                     processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
         }

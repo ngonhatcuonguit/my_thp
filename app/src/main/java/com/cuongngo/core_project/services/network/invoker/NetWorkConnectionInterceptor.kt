@@ -2,39 +2,68 @@ package com.cuongngo.core_project.services.network.invoker
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
+import com.cuongngo.core_project.App
+import com.cuongngo.core_project.R
+import com.cuongngo.core_project.utils.toast.showMessageCheckInternet
 import okhttp3.Interceptor
 import okhttp3.Response
 
 class NetworkConnectionInterceptor(
-    context: Context
-): Interceptor {
+    private var context: Context
+) : Interceptor {
     private val applicationContext = context.applicationContext
     private var toast: Toast? = null
     private val handler = Handler(Looper.getMainLooper())
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        if(!isInternetAvailabel()) {
-            val urlString  =  chain.request().url.toString()
-            if(!urlString.contains("notifications/status")){
-                //connection failed
-            }
-            throw NoInternetException("Make sure you have an active data connection")
+        if (!isNetworkAvailable(context)) {
+            showMessageCheckInternet(context, false)
         }
-
         return chain.proceed(chain.request())
-
     }
 
-    private fun isInternetAvailabel() : Boolean {
-
+    /**
+     *  Check internet available
+     * */
+    //check internet connect
+    @Suppress("DEPRECATION")
+    private fun isNetworkAvailable(context: Context): Boolean {
         val connectivityManager =
-            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        connectivityManager.activeNetworkInfo.also {
-            return it != null && it.isConnected
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val capabilities = connectivityManager.activeNetwork?.let {
+                connectivityManager.getNetworkCapabilities(it)
+            }
+            capabilities != null && (
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                    )
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
     }
+
+    private fun showErrorToast() {
+        handler.post {
+            val context = App.getInstance()
+            if (toast == null) {
+                toast = Toast.makeText(
+                    context,
+                    context.getString(R.string.no_internet_connection),
+                    Toast.LENGTH_LONG
+                )
+            }
+            toast?.setText(context.getString(R.string.no_internet_connection))
+            toast?.show()
+        }
+    }
+
 }
