@@ -101,7 +101,6 @@ class RequestMasterDetailActivity :
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
-                            requestName = formEntity?.name + "-" + getCurrentDateTime(),
                             formCode = formEntity?.form_code ?: "",
                             requestCode = addRequestCode ?: "",
                             formName = formEntity?.name + "-" + getCurrentDateTime(),
