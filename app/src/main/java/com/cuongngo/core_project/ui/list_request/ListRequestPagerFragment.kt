@@ -68,7 +68,6 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
         }
     }
 
-    //test
     private val requestDetailResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -76,7 +75,6 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
                     ?: return@registerForActivityResult
                 WTF("result_request $returnedRequest")
                 requestAdapter.refreshItem(returnedRequest)
-//                viewModel.getAllRequest()
             }
         }
 

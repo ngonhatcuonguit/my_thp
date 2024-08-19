@@ -145,4 +145,8 @@ class FieldAdapter(
         notifyItemChanged(index)
     }
 
+    fun getListField(): List<Field>{
+        return listField
+    }
+
 }

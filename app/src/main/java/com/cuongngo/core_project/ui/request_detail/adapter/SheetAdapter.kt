@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.databinding.ItemSheetBinding
 import com.cuongngo.core_project.utils.convertDpToPixel
@@ -36,8 +37,20 @@ class SheetAdapter(
     override fun onBindViewHolder(holder: SheetViewHolder, position: Int) {
         val binding = holder.item
         var sheet = listSheet[position]
+        var countHaveValue = 0
+        sheet.list_field?.forEach {
+            if(!it.value.isNullOrEmpty()){
+                countHaveValue++
+            }
+        }
+        if(countHaveValue == (sheet.list_field?.size ?: 0)){
+            binding.tvStatus.setBackgroundResource(R.drawable.shape_primary_radius6)
+        }else{
+            binding.tvStatus.setBackgroundResource(R.drawable.shape_yellow_radius6)
+        }
         binding.root.elevation = convertDpToPixel(8F, context)
         binding.sheet = sheet
+        binding.tvStatus.text = "${countHaveValue.toString() ?: 0}/${sheet.list_field?.size.toString() ?: 0}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(sheet) ?: return@setOnClickListener
         }

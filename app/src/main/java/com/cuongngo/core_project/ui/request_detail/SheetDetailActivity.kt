@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.ui.request_detail
 
+import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -16,6 +17,7 @@ import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollList
 import com.cuongngo.core_project.common.enum.FieldType
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ActivitySheetDetailBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -42,7 +44,21 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     companion object {
         val TAG = SheetDetailActivity::class.java.simpleName
         const val REQUEST_CODE_KEY = "REQUEST_CODE_KEY"
+        const val REQUEST_DATA_KEY = "REQUEST_DATA_KEY"
         const val SHEET_DATA_KEY = "SHEET_DATA_KEY"
+        const val RESULT_BODY_DATA = "RESULT_BODY_DATA"
+
+        fun newIntent(
+            context: Context,
+            body: Body,
+            requestEntity: RequestEntity?
+        ): Intent {
+            return Intent(context, SheetDetailActivity::class.java).apply {
+                putExtra(REQUEST_DATA_KEY, requestEntity)
+                putExtra(SHEET_DATA_KEY, body)
+            }
+        }
+
     }
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
@@ -52,28 +68,34 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     private var isMore: Boolean = true
     private var date : Calendar = Calendar.getInstance()
 
-    fun newIntent(
-        context: Context,
-        requestCode: String,
-        body: Body
-    ): Intent {
-        return Intent(context, SheetDetailActivity::class.java).apply {
-            putExtra(REQUEST_CODE_KEY, requestCode)
-            putExtra(SHEET_DATA_KEY, body)
-        }
-    }
-
     private lateinit var fieldAdapter: FieldAdapter
 
     private val body by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Body }
-    private val requestCode by lazy { intent.getStringExtra(REQUEST_CODE_KEY) ?: "" }
+    private val requestEntity by lazy { intent.getSerializableExtra(RequestMasterDetailActivity.REQUEST_DATA_KEY) as RequestEntity }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableLightStatusBar()
     }
 
+    override fun onBackPressed() {
+        var lisFieldAfterChange = fieldAdapter.getListField()
+        var currentData = viewModel.requestEntity?.listBody?.find {
+            it.id == body.id && it.name == body.name
+        }
+        var index = viewModel.requestEntity?.listBody?.indexOf(currentData) ?: -1
+        currentData?.list_field = lisFieldAfterChange
+        viewModel.requestEntity?.listBody!!.toMutableList()[index]= currentData ?: body
+        WTF("testSheetDetail --${viewModel.requestEntity?.listBody!!.toMutableList()[index]}")
+
+        val resultIntent = Intent().apply {
+            putExtra(RESULT_BODY_DATA, viewModel.requestEntity)
+        }
+        setResult(Activity.RESULT_OK, resultIntent)
+        super.onBackPressed()
+    }
+
     override fun setUp() {
-        viewModel.getRequestByCode(requestCode)
+        viewModel.requestEntity = requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()

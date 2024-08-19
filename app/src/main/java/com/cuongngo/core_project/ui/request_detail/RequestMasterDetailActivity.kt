@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.core_project.R
@@ -33,10 +34,12 @@ import com.cuongngo.core_project.ui.bottom_sheet.SearchUserBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
+import com.cuongngo.core_project.ui.request_detail.SheetDetailActivity.Companion.RESULT_BODY_DATA
 import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
 import com.cuongngo.core_project.ui.user_thp.adapter.UserAddedAdapter
+import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
 import com.cuongngo.core_project.utils.date.getCurrentDateTime
 import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
@@ -221,7 +224,7 @@ class RequestMasterDetailActivity :
             }, onSuccess = {
                 WTF("updateRQ ----Ok ${viewModel.requestEntity}")
                 hideProgressDialog()
-                if(isOnBack == true){
+                if (isOnBack == true) {
                     val resultIntent = Intent().apply {
                         putExtra(RESULT_DATA, viewModel.requestEntity)
                     }
@@ -280,17 +283,29 @@ class RequestMasterDetailActivity :
         }
     }
 
+
+    private val requestDetailBodyResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                val returnedRequest = it.data?.getSerializableExtra(RESULT_BODY_DATA) as RequestEntity?
+                    ?: return@registerForActivityResult
+                viewModel.requestEntity = returnedRequest
+                sheetAdapter.submitListSheet(viewModel.requestEntity!!.listBody)
+            }
+        }
+
     private fun setupRecycleViewListSheet(listSheet: List<Body>?) {
         val gridLayoutManager = GridLayoutManager(this, 2)
         sheetAdapter = SheetAdapter(
             this,
             listSheet ?: arrayListOf(),
             onItemClickListener = {
-                startActivity(
-                    SheetDetailActivity().newIntent(
+                cacheData()
+                requestDetailBodyResult.launch(
+                    SheetDetailActivity.newIntent(
                         this,
-                        it.request_code ?: "",
-                        it
+                        body = it,
+                        requestEntity = viewModel.requestEntity
                     )
                 )
             })
@@ -426,6 +441,27 @@ class RequestMasterDetailActivity :
             viewModel.requestEntity?.let {
                 viewModel.updateRequest(it)
             }
+        }
+    }
+
+    private fun cacheData() {
+        with(binding) {
+            var requestName = edtRequestName.edtValue.text.toString()
+            var requestDescription = edtRequestDescription.edtValue.text.toString()
+            var listInformer = informerAdapter.getListInformer() ?: null
+            var listProcessStep = requestProcessStepAdapter.getListProcessStep()
+            var listHeader = formHeaderAdapter.getListHeader()
+            var listBody = sheetAdapter.getListBody()
+            var currentRequest = viewModel.requestEntity?.copy(
+                requestName = requestName,
+                requestDescription = requestDescription,
+                informer = listInformer,
+                processSteps = listProcessStep,
+                listHeader = listHeader,
+                listBody = listBody,
+
+                )
+            viewModel.requestEntity = currentRequest
         }
     }
 
