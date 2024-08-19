@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
@@ -31,8 +31,11 @@ class RequestViewModel(
     private val _requestId = MutableLiveData<BaseResult<Long>>()
     val requestId: LiveData<BaseResult<Long>> = _requestId
 
-    private val _requestUpdate = MutableLiveData<BaseResult<Unit>>()
-    val requestUpdate: LiveData<BaseResult<Unit>> = _requestUpdate
+    private val _updateRequest = MutableLiveData<BaseResult<Long>>()
+    val updateRequest: LiveData<BaseResult<Long>> = _updateRequest
+
+    private val _requestUpdateListSheet = MutableLiveData<BaseResult<Unit>>()
+    val requestUpdateListSheet: LiveData<BaseResult<Unit>> = _requestUpdateListSheet
 
     //form
     private val _form = MutableLiveData<BaseResult<FormEntity>>()
@@ -47,8 +50,6 @@ class RequestViewModel(
     //variable
     var formEntity: FormEntity? = null
     var requestEntity: RequestEntity? = null
-    var edtSheetName: String? = null
-
     fun insertRequest(requestEntity: RequestEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -104,10 +105,10 @@ class RequestViewModel(
     }
 
     fun updateListSheet(requestID: Long, listBody: List<Body>) {
-        _requestUpdate.value = BaseResult.loading(null)
+        _requestUpdateListSheet.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _requestUpdate.postValue(
+                _requestUpdateListSheet.postValue(
                     requestRepository.updateListSheet(
                         requestID = requestID,
                         listBody = listBody,
@@ -117,5 +118,16 @@ class RequestViewModel(
             }
         }
     }
+
+    fun updateRequest(requestEntity: RequestEntity) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _updateRequest.postValue(
+                    requestRepository.upsertRequest(requestEntity)
+                )
+            }
+        }
+    }
+
 
 }

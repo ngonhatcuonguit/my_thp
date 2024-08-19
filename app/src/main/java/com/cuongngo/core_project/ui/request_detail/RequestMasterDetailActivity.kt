@@ -18,7 +18,9 @@ import com.cuongngo.core_project.common.enum.FieldType
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.ProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
 import com.cuongngo.core_project.data.database.roomdb.entity.randomString
@@ -40,6 +42,7 @@ import com.cuongngo.core_project.utils.date.getCurrentDateTime
 import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
 import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
 import com.cuongngo.core_project.utils.getScreenHeight
+import com.cuongngo.core_project.utils.toast.showMessageSaveData
 import com.google.gson.Gson
 import java.io.IOException
 import java.util.Calendar
@@ -73,6 +76,7 @@ class RequestMasterDetailActivity :
 
     private val category by lazy { intent.getStringExtra(CATEGORY_KEY) ?: "" }
     private var addRequestCode: String? = null
+    private var isOnBack: Boolean? = false
 
     private lateinit var sheetAdapter: SheetAdapter
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
@@ -81,20 +85,11 @@ class RequestMasterDetailActivity :
     private var date: Calendar = Calendar.getInstance()
 
     override fun onBackPressed() {
-        val resultIntent = Intent().apply {
-            putExtra(RESULT_DATA, viewModel.requestEntity)
-        }
-        setResult(Activity.RESULT_OK, resultIntent)
-        super.onBackPressed()
+        updateRequest()
+        isOnBack = true
     }
 
     override fun setUp() {
-        //setup rcv
-        setupRecycleViewListSheet()
-        setupRecycleViewListProcessStep()
-        setupRecycleViewFormHeader()
-        setupRecyclerViewInformer()
-
         when (category) {
             ADD -> {
                 viewModel.apply {
@@ -113,6 +108,7 @@ class RequestMasterDetailActivity :
                         )
                     )
                 }
+                setupShowDefaultInfo(viewModel.requestEntity)
             }
 
             else -> {
@@ -120,18 +116,17 @@ class RequestMasterDetailActivity :
                     requestEntity =
                         intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
                     requestEntity?.formCode?.let { viewModel.getFormByCode(it) }
-                    sheetAdapter.submitListSheet(requestEntity?.listBody)
-                    requestProcessStepAdapter.submitListProcessStep(requestEntity?.processSteps)
-                    formHeaderAdapter.submitListFormHeader(requestEntity?.listHeader)
                     viewModel.requestEntity = requestEntity
                     logEntityToFile()
                     binding.tvRequestTitle.text = requestEntity?.requestName ?: "Tạo yêu cầu mới"
                     WTF("log_json_Entity: ${readLogFile()}")
+
+                    setupShowDefaultInfo(viewModel.requestEntity)
                 }
             }
         }
 
-        binding.apply {
+        with(binding) {
             ivBack.setOnClickListener {
                 onBackPressed()
             }
@@ -146,10 +141,14 @@ class RequestMasterDetailActivity :
 
             edtRequestName.edtValue.hint = "Nhập tên yêu cầu"
             edtRequestDescription.edtValue.hint = "Nhập mô tả yêu cầu"
+
             flAddNew.setOnClickListener {
                 viewModel.formEntity?.let { form ->
                     setupShowDialogConfirm(form)
                 }
+            }
+            layoutSubmitButton.btnSecond.setOnClickListener {
+                updateRequest()
             }
         }
     }
@@ -200,7 +199,7 @@ class RequestMasterDetailActivity :
                 hideProgressDialog()
             })
         }
-        observeLiveDataChanged(viewModel.requestUpdate) {
+        observeLiveDataChanged(viewModel.requestUpdateListSheet) {
             it.onResultReceived(onLoading = {
                 showProgressDialog()
             }, onSuccess = {
@@ -214,6 +213,50 @@ class RequestMasterDetailActivity :
             }, onError = {
                 hideProgressDialog()
             })
+        }
+
+        observeLiveDataChanged(viewModel.updateRequest) {
+            it.onResultReceived(onLoading = {
+                showProgressDialog()
+            }, onSuccess = {
+                WTF("updateRQ ----Ok ${viewModel.requestEntity}")
+                hideProgressDialog()
+                if(isOnBack == true){
+                    val resultIntent = Intent().apply {
+                        putExtra(RESULT_DATA, viewModel.requestEntity)
+                    }
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    super.onBackPressed()
+                }
+                showMessageSaveData(this, done = true)
+            }, onError = {
+                hideProgressDialog()
+                showMessageSaveData(this, done = false)
+            })
+        }
+
+    }
+
+    private fun setupShowDefaultInfo(requestEntity: RequestEntity?) {
+        with(binding) {
+            requestEntity?.requestName?.let {
+                edtRequestName.edtValue.setText(requestEntity.requestName.toString())
+            }
+            requestEntity?.requestDescription?.let {
+                edtRequestDescription.edtValue.setText(requestEntity.requestDescription.toString())
+            }
+        }
+        setupRecycleViewListSheet(requestEntity?.listBody ?: arrayListOf())
+        setupRecycleViewListProcessStep(requestEntity?.processSteps ?: arrayListOf())
+        setupRecycleViewFormHeader(requestEntity?.listHeader ?: arrayListOf())
+        setupRecyclerViewInformer(requestEntity?.informer?.toMutableList() ?: arrayListOf())
+
+        if (informerAdapter.itemCount == 1) {
+            binding.layoutInformer.tvHint.text = "Tìm kiếm user"
+            binding.layoutInformer.rvListAdded.isVisible = false
+        } else {
+            binding.layoutInformer.rvListAdded.isVisible = true
+            binding.layoutInformer.tvHint.text = ""
         }
     }
 
@@ -237,11 +280,11 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun setupRecycleViewListSheet() {
+    private fun setupRecycleViewListSheet(listSheet: List<Body>?) {
         val gridLayoutManager = GridLayoutManager(this, 2)
         sheetAdapter = SheetAdapter(
             this,
-            arrayListOf(),
+            listSheet ?: arrayListOf(),
             onItemClickListener = {
                 startActivity(
                     SheetDetailActivity().newIntent(
@@ -257,11 +300,11 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun setupRecycleViewListProcessStep() {
+    private fun setupRecycleViewListProcessStep(listProcessStep: List<ProcessStep>?) {
         val gridLayoutManager = GridLayoutManager(this, 1)
         requestProcessStepAdapter = RequestProcessStepAdapter(
             this,
-            arrayListOf(),
+            listProcessStep ?: arrayListOf(),
             supportFragmentManager,
             onItemClickListener = {
                 //test
@@ -276,10 +319,10 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun setupRecycleViewFormHeader() {
+    private fun setupRecycleViewFormHeader(listHeader: List<Field>?) {
         val gridLayoutManager = GridLayoutManager(this, 1)
         formHeaderAdapter = FormHeaderAdapter(
-            arrayListOf(),
+            listHeader ?: arrayListOf(),
             onItemClickListener = { field ->
                 val defaultValue = field.options?.find {
                     field.value == it.value
@@ -298,6 +341,7 @@ class RequestMasterDetailActivity :
                     }
 
                     FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType -> {
+                        WTF("testOptions ${field.options}")
                         field.options?.let { options ->
                             onShowPopupOption(
                                 this,
@@ -332,11 +376,11 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun setupRecyclerViewInformer() {
+    private fun setupRecyclerViewInformer(listInformer: List<UserTHPEntity>?) {
         val gridLayoutManager = GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false)
         informerAdapter = UserAddedAdapter(
             this,
-            arrayListOf(),
+            listInformer ?: arrayListOf(),
             onItemSelected = {
                 //show tool tip
             },
@@ -361,10 +405,27 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun upsertRequest() {
-        //test update value
-        viewModel.requestEntity?.let {
-            viewModel.upsertRequest(it)
+    private fun updateRequest() {
+        with(binding) {
+            var requestName = edtRequestName.edtValue.text.toString()
+            var requestDescription = edtRequestDescription.edtValue.text.toString()
+            var listInformer = informerAdapter.getListInformer() ?: null
+            var listProcessStep = requestProcessStepAdapter.getListProcessStep()
+            var listHeader = formHeaderAdapter.getListHeader()
+            var listBody = sheetAdapter.getListBody()
+            var currentRequest = viewModel.requestEntity?.copy(
+                requestName = requestName,
+                requestDescription = requestDescription,
+                informer = listInformer,
+                processSteps = listProcessStep,
+                listHeader = listHeader,
+                listBody = listBody,
+
+                )
+            viewModel.requestEntity = currentRequest
+            viewModel.requestEntity?.let {
+                viewModel.updateRequest(it)
+            }
         }
     }
 
@@ -406,7 +467,7 @@ class RequestMasterDetailActivity :
             ),
             viewModel
         ).apply {
-            onRightButtonClick {
+            onRightButtonClick { sheetName ->
                 var listRQ = viewModel.requestEntity?.listBody?.toMutableList() ?: mutableListOf()
                 listRQ.add(
                     Body(
@@ -414,7 +475,7 @@ class RequestMasterDetailActivity :
                         type = listOf("Sheet", "Tần suất", "Nhiều tờ", "Other").random(),
                         list_field = form.list_body?.firstOrNull()?.list_field,
                         is_done = false,
-                        name = viewModel.edtSheetName.toString() ?: return@onRightButtonClick,
+                        name = sheetName,
                         form_code = form.form_code,
                         form_name = form.name,
                         request_code = viewModel.requestEntity?.requestCode,

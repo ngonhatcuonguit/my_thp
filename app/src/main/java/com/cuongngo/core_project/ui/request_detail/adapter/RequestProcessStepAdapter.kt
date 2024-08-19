@@ -20,13 +20,13 @@ import com.cuongngo.core_project.utils.getScreenHeight
 
 class RequestProcessStepAdapter(
     private val context: Context,
-    listProcessStep: ArrayList<ProcessStep>,
+    listProcessStep: List<ProcessStep>,
     private val fragmentManager: FragmentManager,
     private val onItemClickListener: TFunc<ProcessStep>? = null,
     private val onChangeProcessStep: TFunc<List<ProcessStep>>,
 ) : RecyclerView.Adapter<RequestProcessStepAdapter.RequestProcessStepViewHolder>() {
 
-    private var listProcessStep = listProcessStep
+    private var listProcessStep = listProcessStep.toMutableList() ?: mutableListOf()
     private lateinit var ownerAdapter: UserAddedAdapter
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -70,24 +70,24 @@ class RequestProcessStepAdapter(
     ) : RecyclerView.ViewHolder(itemStep.root) {
         fun bind(processStep: ProcessStep) {
             with(itemStep) {
-                if(processStep.owner.isNullOrEmpty()){
+                if (processStep.owner.isNullOrEmpty()) {
                     tvHintStep.setOnClickListener {
 //                    onItemClickListener?.invoke(processStep)
                         showSearchUserBottomSheet()
                     }
-                }else{
+                } else {
 
                 }
-
                 // Set up the nested RecyclerView
                 val gridLayoutManager =
                     GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-                var displayListOwner = listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
+                var displayListOwner =
+                    listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
                 var moreItem = UserTHPEntity(
                     personal_number = 0,
                     first_name = "Thêm"
                 )
-                if (displayListOwner.isNotEmpty() && !displayListOwner.contains(moreItem)){
+                if (displayListOwner.isNotEmpty() && !displayListOwner.contains(moreItem)) {
                     displayListOwner.add(moreItem)
                 }
                 ownerAdapter = UserAddedAdapter(
@@ -123,6 +123,14 @@ class RequestProcessStepAdapter(
                     layoutManager = gridLayoutManager
                     adapter = ownerAdapter
                 }
+
+                if (ownerAdapter.itemCount == 1) {
+                    itemStep.tvHintStep.text = "Tìm kiếm user"
+                    itemStep.rvListUserStep.isVisible = false
+                } else {
+                    itemStep.rvListUserStep.isVisible = true
+                    itemStep.tvHintStep.text = ""
+                }
             }
         }
 
@@ -132,7 +140,8 @@ class RequestProcessStepAdapter(
                 heightValue = (getScreenHeight() * 0.95).toInt()
             ).setOnUserSelected {
                 it?.let { data ->
-                    var currentOwners = listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
+                    var currentOwners =
+                        listProcessStep[adapterPosition].owner?.toMutableList() ?: mutableListOf()
                     if (!currentOwners.contains(data)) {
                         currentOwners.add(data)
                         listProcessStep[adapterPosition].owner = currentOwners
@@ -153,6 +162,10 @@ class RequestProcessStepAdapter(
             }.show(fragmentManager, "add_owner_step")
         }
 
+    }
+
+    fun getListProcessStep(): List<ProcessStep> {
+        return listProcessStep
     }
 
 }

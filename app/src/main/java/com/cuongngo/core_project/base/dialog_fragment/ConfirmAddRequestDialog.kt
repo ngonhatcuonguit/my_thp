@@ -12,6 +12,7 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.search_form.FormViewModel
 import com.cuongngo.core_project.utils.Func
+import com.cuongngo.core_project.utils.TFunc
 import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.view.setMargins
 import org.kodein.di.android.x.kodein
@@ -22,7 +23,7 @@ class ConfirmAddRequestDialog(
 ) : AppBaseDialog<DialogConfirmDefaultBinding>() {
 
     private var onLeftButtonClick: Func? = null
-    private var onRightButtonClick: Func? = null
+    private var onRightButtonClick: TFunc<String>? = null
 
     companion object {
         val TAG = ConfirmAddRequestDialog::class.simpleName
@@ -68,7 +69,6 @@ class ConfirmAddRequestDialog(
             }
 
             btnLeft.setOnClickListener {
-                viewModel.edtSheetName = null
                 onLeftButtonClick?.invoke()
             }
             if (dialogData.isSingle == false) {
@@ -80,8 +80,7 @@ class ConfirmAddRequestDialog(
                         edtSheetName.tvValidate.isVisible = true
                         edtSheetName.tvValidate.text = "Vui lòng nhập tên sheet hoặc tên tần suất"
                     } else {
-                        viewModel.edtSheetName = edtSheetName.edtValue.text.toString()
-                        onRightButtonClick?.invoke()
+                        onRightButtonClick?.invoke(edtSheetName.edtValue.text.toString())
                     }
                 }
             } else {
@@ -101,7 +100,7 @@ class ConfirmAddRequestDialog(
         return this
     }
 
-    fun onRightButtonClick(func: Func?): ConfirmAddRequestDialog {
+    fun onRightButtonClick(func: TFunc<String>?): ConfirmAddRequestDialog {
         this.onRightButtonClick = func
         return this
     }

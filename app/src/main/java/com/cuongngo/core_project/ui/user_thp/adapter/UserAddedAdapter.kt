@@ -135,5 +135,8 @@ class UserAddedAdapter(
         }
         notifyDataSetChanged()
     }
+    fun getListInformer(): List<UserTHPEntity>{
+        return listUser
+    }
 
 }

@@ -10,15 +10,16 @@ import com.cuongngo.core_project.utils.convertDpToPixel
 
 class SheetAdapter(
     context: Context,
-    listBody: ArrayList<Body>,
+    listBody: List<Body>,
     private val onItemClickListener: ((Body) -> Unit)? = null
-): RecyclerView.Adapter<SheetAdapter.SheetViewHolder>() {
+) : RecyclerView.Adapter<SheetAdapter.SheetViewHolder>() {
 
-    private val listSheet = listBody
+    private val listSheet = listBody.toMutableList() ?: mutableListOf()
     private val context = context
+
     class SheetViewHolder(
         val item: ItemSheetBinding
-    ): RecyclerView.ViewHolder(item.root)
+    ) : RecyclerView.ViewHolder(item.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SheetViewHolder {
         return SheetViewHolder(
@@ -37,17 +38,21 @@ class SheetAdapter(
         var sheet = listSheet[position]
         binding.root.elevation = convertDpToPixel(8F, context)
         binding.sheet = sheet
-        binding.root.setOnClickListener{
+        binding.root.setOnClickListener {
             onItemClickListener?.invoke(sheet) ?: return@setOnClickListener
         }
     }
 
-    fun submitListSheet(listBody: List<Body>?){
-        if (listBody != null){
+    fun submitListSheet(listBody: List<Body>?) {
+        if (listBody != null) {
             this.listSheet.clear()
             this.listSheet.addAll(listBody)
             notifyDataSetChanged()
         }
+    }
+
+    fun getListBody(): List<Body> {
+        return listSheet
     }
 
 }

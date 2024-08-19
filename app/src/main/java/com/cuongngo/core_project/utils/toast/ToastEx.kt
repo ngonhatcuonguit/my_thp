@@ -44,3 +44,24 @@ fun showMessageCheckInternet(context: Context, isConnect: Boolean){
         )
         .show()
 }
+
+fun showMessageSaveData(context: Context, done: Boolean){
+    ToastEx
+        .makeText(
+            context,
+            if (done)
+                "Lưu dữ liệu thành công"
+            else
+                "Đã có lỗi xảy ra! Vui lòng kiểm tra lại",
+
+            if (done){
+                ToastType.SUCCESS
+            }else ToastType.ERROR,
+
+            if (done){
+                R.drawable.ic_tick
+            }else R.drawable.ic_toast_err,
+            isForeground = true
+        )
+        .show()
+}

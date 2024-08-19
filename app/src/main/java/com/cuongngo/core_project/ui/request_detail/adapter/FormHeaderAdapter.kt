@@ -27,11 +27,11 @@ import com.cuongngo.core_project.utils.getScreenHeight
 import java.util.Calendar
 
 class FormHeaderAdapter(
-    listFormHeader: ArrayList<Field>,
+    listFormHeader: List<Field>,
     private val onItemClickListener: ((Field) -> Unit)? = null
 ) : RecyclerView.Adapter<FormHeaderAdapter.FormHeaderViewHolder>() {
 
-    private val listFormHeader = listFormHeader
+    private val listFormHeader = listFormHeader.toMutableList()
 
     private var recyclerView: RecyclerView? = null
 
@@ -149,6 +149,10 @@ class FormHeaderAdapter(
     fun onChangeValueField(field: Field, index: Int) {
         field.let { listFormHeader.set(index, it) }
         notifyItemChanged(index)
+    }
+
+    fun getListHeader(): List<Field>{
+        return listFormHeader
     }
 
 }
