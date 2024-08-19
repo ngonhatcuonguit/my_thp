@@ -23,6 +23,11 @@ class RequestAdapter(
         var request = listRequest[position]
         binding.root.elevation = convertDpToPixel(8F, context)
         binding.request = request
+        if (request.requestName.isNullOrEmpty()){
+            binding.tvRequestName.text = request.formName
+        }else{
+            binding.tvRequestName.text = request.requestName
+        }
         binding.tvRequestCode.text = "Code: ${request.requestCode}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(request) ?: return@setOnClickListener

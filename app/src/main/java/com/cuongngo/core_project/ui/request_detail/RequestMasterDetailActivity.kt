@@ -104,6 +104,7 @@ class RequestMasterDetailActivity :
                             requestName = formEntity?.name + "-" + getCurrentDateTime(),
                             formCode = formEntity?.form_code ?: "",
                             requestCode = addRequestCode ?: "",
+                            formName = formEntity?.name + "-" + getCurrentDateTime(),
                             listHeader = formEntity?.list_header,
                             listBody = formEntity?.list_body,
                             processSteps = formEntity?.process_steps,

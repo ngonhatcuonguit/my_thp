@@ -83,7 +83,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="@dimen/_10dp"
-                android:text="@{request.requestName}"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="13sp"
