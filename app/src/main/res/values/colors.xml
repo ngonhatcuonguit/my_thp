@@ -40,5 +40,6 @@
     <color name="red_ed">#FEEDED</color>
     <color name="blue_0ff">#EAF0FF</color>
     <color name="green_ec">#E6F8EC</color>
+    <color name="gray_ed">#EBECED</color>
 
 </resources>

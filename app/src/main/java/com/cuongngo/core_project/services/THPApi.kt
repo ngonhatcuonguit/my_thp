@@ -3,6 +3,7 @@ package com.cuongngo.core_project.services
 import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.base.AppBaseResponse
+import com.cuongngo.core_project.response.login_response.ActiveDeviceResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
@@ -22,6 +23,22 @@ interface THPApi {
         @Field("Password") password: String,
         @Field("device_code") device_code: String,
     ): Response<AppBaseResponse<LoginResponse>>
+    @FormUrlEncoded
+    @POST("api/account/device")
+    suspend fun activeDevice(
+        @Field("id") device_id: String,
+        @Field("manufacturer") manufacturer: String?,
+        @Field("model") model: String?,
+        @Field("brand") brand: String?,
+        @Field("product") product: String?,
+        @Field("osVersion") os_version: String?,
+        @Field("apiLevel") apiLevel: String?,
+        @Field("hardware") hardware: String?,
+        @Field("user") user: String?,
+        @Field("host") host: String?,
+        @Field("display") display: String?,
+        @Field("device") device: String?,
+    ): Response<ActiveDeviceResponse>
 
     @GET("api/employee/list")
     suspend fun getListUser(

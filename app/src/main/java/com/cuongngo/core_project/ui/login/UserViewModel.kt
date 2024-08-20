@@ -7,6 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.base.AppBaseResponse
+import com.cuongngo.core_project.response.login_response.ActiveDeviceResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
@@ -27,6 +28,9 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     private val _getListUser = MutableLiveData<BaseResult<UserTHPResponse>>()
     val getListUser: LiveData<BaseResult<UserTHPResponse>> get() = _getListUser
 
+    private val _activeDevice = MutableLiveData<BaseResult<ActiveDeviceResponse>>()
+    val activeDevice: LiveData<BaseResult<ActiveDeviceResponse>> = _activeDevice
+
     //Local
 
     private val _getAllUserLocal = MutableLiveData<BaseResult<List<UserTHPEntity>>>()
@@ -38,6 +42,8 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
     val checkUserTable: LiveData<BaseResult<Int>> get() = _checkUserTable
 
+
+    var loginData : LoginResponse? = null
 
     fun login(
         user_name: String,
@@ -56,7 +62,43 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                 )
             }
         }
+    }
 
+    fun activeDevice(
+        device_id: String,
+        manufacturer: String?,
+        model: String?,
+        brand: String?,
+        product: String?,
+        os_version: String?,
+        apiLevel: String?,
+        hardware: String?,
+        user: String?,
+        host: String?,
+        display: String?,
+        device: String?
+    ) {
+        _activeDevice.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _activeDevice.postValue(
+                    userRepository.activeDevice(
+                        device_id = device_id,
+                        manufacturer = manufacturer,
+                        model = model,
+                        brand = brand,
+                        product = product,
+                        os_version = os_version,
+                        apiLevel = apiLevel,
+                        hardware = hardware,
+                        user = user,
+                        host = host,
+                        display = display,
+                        device = device
+                    )
+                )
+            }
+        }
     }
 
     fun getListUser(isGetAll: Boolean) {

@@ -65,3 +65,23 @@ fun showMessageSaveData(context: Context, done: Boolean){
         )
         .show()
 }
+fun showMessageToast(context: Context, done: Boolean, contentDone: String?, contentFail: String?){
+    ToastEx
+        .makeText(
+            context,
+            if (done)
+                contentDone
+            else
+                contentFail,
+
+            if (done){
+                ToastType.SUCCESS
+            }else ToastType.ERROR,
+
+            if (done){
+                R.drawable.ic_tick
+            }else R.drawable.ic_toast_err,
+            isForeground = true
+        )
+        .show()
+}

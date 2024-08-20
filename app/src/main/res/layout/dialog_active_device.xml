@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_radius_8"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="@dimen/_24dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="67dp"
+            android:layout_height="73dp"
+            app:srcCompat="@drawable/ic_defender" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            style="@style/TextViewEx.Heading_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4dp"
+            android:text="Đăng ký thiết bị"
+            android:textAlignment="center" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:paddingVertical="2dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_security_safe" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                style="@style/TextViewEx.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_4dp"
+                android:text="Thiết bị cần được đăng ký với tài khoản của bạn!" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray_ed" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingVertical="2dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_security_safe" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                style="@style/TextViewEx.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_4dp"
+                android:text="Cam kết dữ liệu gắn liền với tài khoản và thiết bị cụ thể!" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/gray_ed" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:paddingVertical="2dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_security_safe" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                style="@style/TextViewEx.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_4dp"
+                android:text="Hỗ trợ giải quyết bảo mật dữ liệu trên thiết bị" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cl_bottom_button">
+
+            <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+                android:id="@+id/btn_left"
+                style="@style/TextViewEx.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="@dimen/_24dp"
+                android:background="@drawable/shape_gray7d_radius5"
+                android:text="Thoát"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toStartOf="@id/btn_right"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+                android:id="@+id/btn_right"
+                style="@style/TextViewEx.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="18dp"
+                android:background="@drawable/shape_primary_color_radius5"
+                android:text="Đăng ký"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_left"
+                app:layout_constraintTop_toTopOf="@id/btn_left" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

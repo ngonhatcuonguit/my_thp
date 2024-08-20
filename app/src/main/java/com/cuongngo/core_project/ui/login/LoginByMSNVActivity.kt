@@ -1,9 +1,14 @@
 package com.cuongngo.core_project.ui.login
 
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
+import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
+import com.cuongngo.core_project.base.dialog_fragment.ActiveDeviceDialog
+import com.cuongngo.core_project.base.view.ProgressDialog
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityLoginByUserIdBinding
@@ -12,6 +17,11 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.MainActivity
 import com.cuongngo.core_project.utils.toast.showMessageCheckInternet
+import com.cuongngo.core_project.utils.toast.showMessageToast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, UserViewModel>() {
 
@@ -21,6 +31,13 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
         val TAG = LoginByMSNVActivity::class.java.simpleName
     }
     override fun inflateLayout(): Int = R.layout.activity_login_by_user_id
+
+    val processActiveDevice by lazy {
+        ProgressDialog(
+            this,
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_process_active_device, null)
+        )
+    }
 
     override fun setUp() {
         with(binding){
@@ -47,17 +64,64 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     showProgressDialog()
                 },
                 onSuccess = {
-                    WTF("responseApi ${it.data}")
-                    if ((it.data?.data?.token ?: "").isNotEmpty()){
-                        saveUserData(it.data?.data)
-                        gotoMain()
-                    }else{
-                        //check thử bị cái gì
+                    hideProgressDialog()
+                    viewModel.loginData = it.data?.data
+                    saveUserData(viewModel.loginData)
+
+                    if (viewModel.loginData?.device_is_active != true) {
+                        activeDevice()
+                    } else {
+                        if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
+                            gotoMain()
+                        } else {
+                            showMessageToast(
+                                this,
+                                false,
+                                contentFail = "Đã có lỗi xảy ra: Empty Token",
+                                contentDone = ""
+                            )
+                        }
                     }
                 },
                 onError = {
-                    WTF("responseApi ${it.data}")
                     hideProgressDialog()
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.activeDevice){
+            it.onResultReceived(
+                onLoading = {
+                    processActiveDevice.show()
+                },
+                onSuccess = {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        processActiveDevice.hide()
+                        if(it.data?.status == "success"){
+                            viewModel.loginData = viewModel.loginData?.copy(
+                                device_is_active = true
+                            )
+                            saveUserData(viewModel.loginData)
+                            gotoMain()
+                        }else{
+                            showMessageToast(
+                                this,
+                                false,
+                                contentFail = "Đã có lỗi xảy ra",
+                                contentDone = ""
+                            )
+                        }
+                    }, 3000L)
+                },
+                onError = {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        processActiveDevice.hide()
+                    }, 3000L)
+                    showMessageToast(
+                        this,
+                        false,
+                        contentFail = "Đã có lỗi xảy ra",
+                        contentDone = ""
+                    )
                 }
             )
         }
@@ -76,6 +140,33 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
             binding.viewInputUserId.tvValidate.isVisible = false
             return true
         }
+    }
+
+    private fun activeDevice(){
+        val deviceData = AppPreferences.getDeviceInfo()
+        val activeDeviceDialog = ActiveDeviceDialog().apply {
+            onRightButtonClick {
+                viewModel.activeDevice(
+                    device_id = deviceData?.id ?: "",
+                    manufacturer = deviceData?.manufacturer,
+                    model = deviceData?.model,
+                    brand = deviceData?.brand,
+                    product = deviceData?.product,
+                    os_version = deviceData?.osVersion,
+                    apiLevel = deviceData?.apiLevel.toString(),
+                    hardware = deviceData?.hardware,
+                    user = deviceData?.user,
+                    host = deviceData?.host,
+                    display = deviceData?.display,
+                    device = deviceData?.device
+                )
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        activeDeviceDialog.show(supportFragmentManager, ActiveDeviceDialog.TAG)
     }
 
     private fun gotoMain() {

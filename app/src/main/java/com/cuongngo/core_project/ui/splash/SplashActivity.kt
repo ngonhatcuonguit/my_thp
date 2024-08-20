@@ -30,10 +30,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         handler.postDelayed({
 //            gotoLoginMethod()
             if (AppPreferences.isShownOnBoard()) {
-                if (AppPreferences.getUserAccessToken().isNullOrEmpty()) {
-                    gotoLoginMethod()
-                } else {
+                if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true && AppPreferences.getUserInfo()?.device_is_active == true) {
                     gotoMain()
+                } else {
+                    gotoLoginMethod()
                 }
             } else gotoOnBoard()
             finish()
