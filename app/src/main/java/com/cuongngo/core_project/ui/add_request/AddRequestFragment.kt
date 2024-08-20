@@ -66,22 +66,25 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     hideKeyboard()
-                    if (keyword != it.text.trim().toString() && it.text.trim().toString().isNotEmpty()){
+                    if (keyword != it.text.trim().toString()){
                         keyword = it.text.trim().toString()
-                        keyword?.let {
-                            if (keyword=="all"){
-                                viewModel.getAllForm()
-                            }
-                            viewModel.searchForms(it)
+                        if (it.text.trim().toString().isNotEmpty()){
+                            viewModel.searchForms(keyword ?: return@subscribe)
+                        }else{
+                            viewModel.getAllForm()
                         }
                     }
-                    WTF("testSearchKeyWord $keyword")
                     hideKeyboard()
                 }
         binding.edtSearch.doOnTextChanged { text, _, _, _ ->
             text?.let { keySearch ->
                 binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
             }
+        }
+        binding.ivClearSearch.setOnClickListener {
+            keyword = ""
+            binding.edtSearch.text?.clear()
+            viewModel.getAllForm()
         }
     }
 
@@ -123,9 +126,16 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 },
                 onSuccess = {
                     hideProgressDialog()
+                    if (it.data.isNullOrEmpty()){
+                        WTF("testSearchForm ${it.data}")
+                        binding.rvListForm.isVisible = false
+                        binding.layoutEmptyList.isVisible = true
+                    }else{
+                        binding.rvListForm.isVisible = true
+                        binding.layoutEmptyList.isVisible = false
+                    }
                     it.data?.let { listForm ->
                         formAdapter.submitListForm(listForm)
-                        WTF(ListFormActivity.TAG, "dataForm: ${listForm}")
                     }
                     syncForm()
                 },
@@ -161,8 +171,16 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                 onSuccess = {
                     binding.rvListForm.isVisible = true
                     binding.progressBar.isVisible = false
-                    formAdapter.submitListForm(it.data)
                     WTF("testSearchForm ${it.data}")
+                    if (it.data.isNullOrEmpty()){
+                        WTF("testSearchForm ${it.data}")
+                        binding.rvListForm.isVisible = false
+                        binding.layoutEmptyList.isVisible = true
+                    }else{
+                        binding.rvListForm.isVisible = true
+                        binding.layoutEmptyList.isVisible = false
+                        formAdapter.submitListForm(it.data)
+                    }
                 },
                 onError = {
                     binding.rvListForm.isVisible = true

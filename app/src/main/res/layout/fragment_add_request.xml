@@ -125,6 +125,20 @@
             tools:visibility="visible"
             />
 
+        <include
+            android:id="@+id/layout_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_empty"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.3"
+            tools:visibility="visible"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

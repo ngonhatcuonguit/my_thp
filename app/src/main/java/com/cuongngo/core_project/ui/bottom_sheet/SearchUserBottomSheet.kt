@@ -3,6 +3,7 @@ package com.cuongngo.core_project.ui.bottom_sheet
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -99,13 +100,12 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     hideKeyboard()
-                    if (keyword != it.text.trim().toString() && it.text.trim().toString().isNotEmpty()){
+                    if (keyword != it.text.trim().toString()){
                         keyword = it.text.trim().toString()
-                        keyword?.let {
-                            if (keyword=="all"){
-                                viewModel.getAllUserLocal()
-                            }
-                            viewModel.searchUsers(it)
+                        if (keyword.isNullOrEmpty()){
+                            viewModel.getAllUserLocal()
+                        }else{
+                            viewModel.searchUsers(it.text.trim().toString())
                         }
                     }
                     WTF("testSearchKeyWord $keyword")
@@ -115,6 +115,11 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
             text?.let { keySearch ->
                 binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
             }
+        }
+        binding.ivClearSearch.setOnClickListener {
+            keyword = ""
+            binding.edtSearchKeyword.text?.clear()
+            viewModel.getAllUserLocal()
         }
     }
 
@@ -130,10 +135,16 @@ class SearchUserBottomSheet : FullHeightBottomSheet<FragmentSearchFieldValueBind
                     binding.rcvOption.isVisible = true
                 },
                 onSuccess = {
-                    WTF("testApiUser -- ${it.data}")
                     binding.progressBar.visibility = View.GONE
                     binding.rcvOption.isVisible = true
                     it.data?.apply {
+                        if (it.data.isEmpty()){
+                            binding.layoutEmptyList.isVisible = true
+                            binding.rcvOption.isVisible = false
+                        }else{
+                            binding.layoutEmptyList.isVisible = false
+                            binding.rcvOption.isVisible = true
+                        }
                         setupRecycleView(this)
                     }
                 }

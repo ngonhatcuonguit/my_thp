@@ -84,7 +84,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:text="Đăng nhập Emmail" />
+                        android:text="Đăng nhập Email" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </carbon.widget.ConstraintLayout>
             <carbon.widget.ConstraintLayout
@@ -123,7 +123,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:text="Đăng nhập MSSNV" />
+                        android:text="Đăng nhập MSNV" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </carbon.widget.ConstraintLayout>
             <carbon.widget.ConstraintLayout

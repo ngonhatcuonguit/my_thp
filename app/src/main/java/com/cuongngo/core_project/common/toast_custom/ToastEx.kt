@@ -96,7 +96,7 @@ open class ToastEx(context: Context) : Toast(context) {
         } else {
             toast.apply {
                 view = layoutToast
-                setGravity(Gravity.TOP, 0, 60)
+                setGravity(Gravity.TOP, 0, 80)
             }
         }
     }
