@@ -1,7 +1,6 @@
 package com.cuongngo.core_project.response.login_response
 
 import com.cuongngo.core_project.response.BaseModel
-import com.cuongngo.core_project.ui.sync_data.ActivitySyncData
 
 data class LoginResponse(
     var token: String?,
@@ -20,7 +19,7 @@ data class LoginResponse(
     var last_name: String?,
 ): BaseModel()
 
-data class ActiveDeviceResponse(
+data class ApiResponse(
     var status: String?,
     var message: String?
 ): BaseModel()

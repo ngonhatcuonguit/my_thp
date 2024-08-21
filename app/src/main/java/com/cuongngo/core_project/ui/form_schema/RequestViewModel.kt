@@ -7,6 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
@@ -46,6 +47,10 @@ class RequestViewModel(
 
     private val _formUnit = MutableLiveData<BaseResult<Unit>>()
     val formUnit: LiveData<BaseResult<Unit>> = _formUnit
+
+    //---remote---
+    private val _pushRequest = MutableLiveData<BaseResult<ApiResponse>>()
+    val pushRequest: LiveData<BaseResult<ApiResponse>> = _pushRequest
 
     //variable
     var formEntity: FormEntity? = null
@@ -124,6 +129,28 @@ class RequestViewModel(
             withContext(Dispatchers.IO) {
                 _updateRequest.postValue(
                     requestRepository.upsertRequest(requestEntity)
+                )
+            }
+        }
+    }
+
+    fun pushRequest(
+        device_code: String,
+        json_data: String?,
+        process_id: String?,
+        version: Int?,
+        id: String?
+    ) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _pushRequest.postValue(
+                    requestRepository.pushRequest(
+                        device_code = device_code,
+                        json_data = json_data,
+                        process_id = process_id,
+                        version = version,
+                        id = id
+                    )
                 )
             }
         }

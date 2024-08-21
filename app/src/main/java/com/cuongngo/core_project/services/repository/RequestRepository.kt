@@ -1,12 +1,15 @@
 package com.cuongngo.core_project.services.repository
 
 import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSource
+import com.cuongngo.core_project.data.database.data_source.RequestRemoteDataSource
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
+import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.services.network.BaseResult
 
 class RequestRepository(
-    private val requestLocalDataSource: RequestLocalDataSource
+    private val requestLocalDataSource: RequestLocalDataSource,
+    private val requestRemoteDataSource: RequestRemoteDataSource
 ) {
     companion object {
         val TAG = RequestRepository::class.simpleName
@@ -40,4 +43,22 @@ class RequestRepository(
     suspend fun deleteRequest(record: RequestEntity): BaseResult<Unit> {
         return requestLocalDataSource.deleteRequest(record)
     }
+
+    //---remote---
+    suspend fun pushRequest(
+        device_code: String,
+        json_data: String?,
+        process_id: String?,
+        version: Int?,
+        id: String?
+    ): BaseResult<ApiResponse>{
+        return requestRemoteDataSource.pushRequest(
+            device_code = device_code,
+            json_data = json_data,
+            process_id = process_id,
+            version = version,
+            id = id
+        )
+    }
+
 }

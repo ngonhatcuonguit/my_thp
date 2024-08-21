@@ -7,7 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.base.AppBaseResponse
-import com.cuongngo.core_project.response.login_response.ActiveDeviceResponse
+import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
@@ -28,8 +28,8 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     private val _getListUser = MutableLiveData<BaseResult<UserTHPResponse>>()
     val getListUser: LiveData<BaseResult<UserTHPResponse>> get() = _getListUser
 
-    private val _activeDevice = MutableLiveData<BaseResult<ActiveDeviceResponse>>()
-    val activeDevice: LiveData<BaseResult<ActiveDeviceResponse>> = _activeDevice
+    private val _activeDevice = MutableLiveData<BaseResult<ApiResponse>>()
+    val activeDevice: LiveData<BaseResult<ApiResponse>> = _activeDevice
 
     //Local
 

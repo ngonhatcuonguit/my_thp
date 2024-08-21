@@ -4,7 +4,7 @@ import com.cuongngo.core_project.data.database.data_source.UserLocalDataSource
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.base.AppBaseResponse
-import com.cuongngo.core_project.response.login_response.ActiveDeviceResponse
+import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
@@ -38,7 +38,7 @@ class UserRepository(
         host: String?,
         display: String?,
         device: String?
-    ): BaseResult<ActiveDeviceResponse> {
+    ): BaseResult<ApiResponse> {
         return userRemoteDataSource.activeDevice(
             device_id = device_id,
             manufacturer = manufacturer,
