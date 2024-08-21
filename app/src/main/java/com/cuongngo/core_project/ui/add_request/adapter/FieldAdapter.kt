@@ -49,55 +49,67 @@ class FieldAdapter(
             onChangeValueListener?.invoke(field) ?: return@setOnClickListener
         }
         with(binding) {
-            if (field.value.isNullOrEmpty()) {
-                tvValue.text= field.value
-                ivEditValue.isVisible = true
-                tvValue.isVisible = false
-                when (field.type) {
-                    "text", "textarea" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
+
+            if (field.type == "header"){
+                clContainerField.isVisible = false
+                tvHeaderGroup.isVisible = true
+                root.setBackgroundResource(R.drawable.shape_primary_stroke_black)
+            }else{
+                if (field.value.isNullOrEmpty()) {
+                    tvValue.text= field.value
+                    ivEditValue.isVisible = true
+                    tvValue.isVisible = false
+                    root.setBackgroundResource(R.drawable.shape_item_field)
+                    when (field.type) {
+                        "text", "textarea" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                        }
+
+                        "date" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_date)
+                        }
+
+                        "time" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_clock)
+                        }
+
+                        FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
+                        }
+
+                        else -> {
+                            ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                        }
                     }
 
-                    "date" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_date)
-                    }
+                } else {
+                    ivEditValue.isVisible = false
+                    tvValue.isVisible = true
+                    tvValue.text= field.value
+                    tvValue.text= field.value
+                    ivEditValue.isVisible = true
+                    tvValue.isVisible = false
+                    root.setBackgroundResource(R.drawable.shape_item_field)
+                    when (field.type) {
+                        "text", "textarea"  -> {
+                            tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
+                        }
 
-                    "time" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_clock)
-                    }
+                        "date" -> {
+                            tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_date), null)
+                        }
 
-                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
-                    }
+                        "time" -> {
+                            tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_clock), null)
+                        }
 
-                    else -> {
-                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
-                    }
-                }
+                        FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
+                            tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
+                        }
 
-            } else {
-                ivEditValue.isVisible = false
-                tvValue.isVisible = true
-                tvValue.text= field.value
-                when (field.type) {
-                    "text", "textarea"  -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
-                    }
-
-                    "date" -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_date), null)
-                    }
-
-                    "time" -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_clock), null)
-                    }
-
-                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_arrow_down_gray), null)
-                    }
-
-                    else -> {
-                        tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
+                        else -> {
+                            tvValue.setCompoundDrawablesWithIntrinsicBounds(null, null, getDrawableResource(R.drawable.ic_edit_value), null)
+                        }
                     }
                 }
             }

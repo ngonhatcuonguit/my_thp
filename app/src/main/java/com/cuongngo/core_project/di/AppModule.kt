@@ -2,6 +2,8 @@ package com.cuongngo.core_project.di
 
 import androidx.lifecycle.ViewModelProvider
 import com.cuongngo.core_project.base.viewmodel.bindViewModel
+import com.cuongngo.core_project.data.database.data_source.FormRemoteDatSource
+import com.cuongngo.core_project.data.database.data_source.RequestRemoteDataSource
 import com.cuongngo.core_project.services.THPApi
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.core_project.services.remote.UserRemoteDataSource
@@ -30,6 +32,8 @@ val appModule = Kodein.Module(APP_MODULE, false) {
      * RemoteDataSource binding
      */
     bind() from singleton { UserRemoteDataSource(instance()) }
+    bind() from singleton { RequestRemoteDataSource(instance()) }
+    bind() from singleton { FormRemoteDatSource(instance()) }
 
     /**
      * Network binding
@@ -42,7 +46,7 @@ val appModule = Kodein.Module(APP_MODULE, false) {
      */
     bind() from singleton { UserRepository(instance(), instance()) }
     bind() from singleton { FormRepository(instance(), instance()) }
-    bind() from singleton { RequestRepository(instance()) }
+    bind() from singleton { RequestRepository(instance(), instance()) }
 
     /**
      * ViewModel binding

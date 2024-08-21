@@ -17,5 +17,4 @@ val localModule = Kodein.Module(LOCAL_MODULE, false) {
     bind() from singleton { FormLocalDataSource(instance()) }
     bind() from singleton { RequestLocalDataSource(instance()) }
     bind() from singleton { UserLocalDataSource(instance()) }
-    bind() from singleton { FormRemoteDatSource(instance()) }
 }

@@ -38,19 +38,24 @@ class SheetAdapter(
         val binding = holder.item
         var sheet = listSheet[position]
         var countHaveValue = 0
+        var countHeader = 0
         sheet.list_field?.forEach {
             if(!it.value.isNullOrEmpty()){
                 countHaveValue++
             }
+            if (it.type == "header"){
+                countHeader++
+            }
         }
-        if(countHaveValue == (sheet.list_field?.size ?: 0)){
+        if(countHaveValue == (sheet.list_field?.size ?: 0) - countHeader){
             binding.tvStatus.setBackgroundResource(R.drawable.shape_primary_radius6)
         }else{
             binding.tvStatus.setBackgroundResource(R.drawable.shape_yellow_radius6)
         }
+        var countSize = (sheet.list_field?.size ?: 0) - countHeader
         binding.root.elevation = convertDpToPixel(8F, context)
         binding.sheet = sheet
-        binding.tvStatus.text = "${countHaveValue.toString() ?: 0}/${sheet.list_field?.size.toString() ?: 0}"
+        binding.tvStatus.text = "${countHaveValue.toString() ?: 0}/${countSize}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(sheet) ?: return@setOnClickListener
         }

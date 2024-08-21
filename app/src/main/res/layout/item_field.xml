@@ -11,69 +11,98 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:background="@drawable/shape_item_field">
+        android:background="@drawable/shape_item_field"
+        android:layout_marginHorizontal="12dp">
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-            android:id="@+id/tv_label"
-            style="@style/TextViewEx.BodyMedium"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_container_field"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="2"
-            android:paddingHorizontal="@dimen/_10dp"
-            android:paddingVertical="15dp"
-            android:text="@{field.label}"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.4"
-            tools:text="Họ và tên của NV / Employee Name" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <View
-            android:id="@+id/view_space"
-            android:layout_width="1dp"
-            android:layout_height="0dp"
-            android:background="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_label"
-            app:layout_constraintTop_toTopOf="parent" />
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_label"
+                style="@style/TextViewEx.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:paddingHorizontal="@dimen/_10dp"
+                android:paddingVertical="15dp"
+                android:text="@{field.label}"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4"
+                tools:text="Họ và tên của NV / Employee Name" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_edit_value"
-            android:layout_width="26dp"
-            android:layout_height="0dp"
-            app:srcCompat="@drawable/ic_edit_value"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_label"
-            app:layout_constraintTop_toTopOf="@id/tv_label" />
+            <View
+                android:id="@+id/view_space"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_label"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_edit_value"
+                android:layout_width="26dp"
+                android:layout_height="0dp"
+                app:srcCompat="@drawable/ic_edit_value"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_label"
+                app:layout_constraintTop_toTopOf="@id/tv_label" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_value"
+                style="@style/TextViewEx.BodyMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:paddingHorizontal="@dimen/_10dp"
+                android:paddingVertical="15dp"
+                android:text="@{field.value}"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:drawableEnd="@drawable/ic_edit_value"
+                android:drawablePadding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_label"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.6"
+                tools:text="Nguyen Van ABCXYZ" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-            android:id="@+id/tv_value"
-            style="@style/TextViewEx.BodyMedium"
+            android:id="@+id/tv_header_group"
+            style="@style/TextViewEx.BodyLarge"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:maxLines="2"
             android:ellipsize="end"
+            android:textStyle="bold"
             android:paddingHorizontal="@dimen/_10dp"
-            android:paddingVertical="15dp"
-            android:text="@{field.value}"
+            android:paddingVertical="6dp"
+            android:text="@{field.label}"
             android:visibility="gone"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:drawableEnd="@drawable/ic_edit_value"
-            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_label"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.6"
             tools:text="Nguyen Van ABCXYZ" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
