@@ -2,12 +2,14 @@ package com.cuongngo.core_project.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
+import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.UserRepository
@@ -47,7 +49,19 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     private val _listFormRemote = MutableLiveData<BaseResult<FormResponse>>()
     val listFormRemote: LiveData<BaseResult<FormResponse>> = _listFormRemote
 
-
+    var news = News(
+        1,
+        "",
+        "",
+        R.drawable.banner_default,
+        ""
+    )
+    var listDefaultHotNews = arrayListOf(
+        news.copy(drawableId = R.drawable.banner_default),
+        news.copy(drawableId = R.drawable.banner_default_2),
+        news.copy(drawableId = R.drawable.banner_default_3),
+        news.copy(drawableId = R.drawable.banner_default_4),
+    )
 
     var page: Int = 1
     var keyword: String? = null

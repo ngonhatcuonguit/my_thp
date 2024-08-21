@@ -45,7 +45,7 @@ class ViewPagerAdapter (
         binding.root.setOnClickListener {
             onItemClick?.invoke(hotNew)
         }
-
+        binding.imgBanner.setBackgroundResource(hotNew.drawableId)
     }
 
     fun submitList(listHotNew: ArrayList<News>){

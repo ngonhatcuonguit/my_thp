@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.ui.home
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
@@ -16,6 +17,7 @@ import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
+import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
@@ -44,6 +46,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     override fun setUp() {
         WTF("testApiUser token ${AppPreferences.getUserAccessToken()}")
         syncUser()
+        setupTopViewPager(viewModel.listDefaultHotNews)
         setupRcvListPopularForm()
         binding.apply {
             tvName.text = "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
@@ -142,34 +145,6 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             )
         }
 
-
-        observeLiveDataChanged(viewModel.hotNew){
-            it.onResultReceived(
-                onLoading = {
-
-                },
-                onSuccess = {
-                    if (it.data?.data?.isNotEmpty() == true){
-                       ViewPagerHelper(
-                           viewPager2 = binding.vpTopViewpager,
-                           defaultPos = 0,
-                           viewPagerAdapter = ViewPagerAdapter(
-                               data = it.data.data ?: return@onResultReceived,
-                               viewPager2 = binding.vpTopViewpager,
-                               onItemClick = {
-                                   //set event on click
-                               }
-                           ),
-                           onPageChanged = {}
-                       ).autoScroll(lifecycleScope, 3000).execute()
-                    }
-                },
-                onError = {
-
-                }
-            )
-        }
-
         observeLiveDataChanged(viewModel.allForm) {
             it.onResultReceived(
                 onLoading = {
@@ -203,6 +178,23 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             )
         }
 
+    }
+
+    private fun setupTopViewPager(listHotNew: List<News>?){
+        if (listHotNew?.isNotEmpty() == true){
+            ViewPagerHelper(
+                viewPager2 = binding.vpTopViewpager,
+                defaultPos = 0,
+                viewPagerAdapter = ViewPagerAdapter(
+                    data = listHotNew ?: return,
+                    viewPager2 = binding.vpTopViewpager,
+                    onItemClick = {
+                        //set event on click
+                    }
+                ),
+                onPageChanged = {}
+            ).autoScroll(lifecycleScope, 3000).execute()
+        }
     }
 
     private fun setupShowDialogConfirm(form: FormEntity) {

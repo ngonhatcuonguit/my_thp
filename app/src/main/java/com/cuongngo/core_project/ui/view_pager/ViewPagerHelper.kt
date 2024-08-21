@@ -99,7 +99,7 @@ class ViewPagerHelper(
             // retain 1 page on each size
             offscreenPageLimit = offscreen
             val screenWidth = resources.displayMetrics.widthPixels
-            val nextItemTranslationX = 0.2319f *screenWidth
+            val nextItemTranslationX = 0.2609f *screenWidth
             setPageTransformer { page, position ->
                 // position  -1: left, 0: center, 1: right
                 val absPosition = abs(position)
