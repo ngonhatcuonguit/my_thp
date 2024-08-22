@@ -5,6 +5,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.databinding.ActivityLoginMethodBinding
+import com.cuongngo.core_project.utils.mark.setupTooltip
 
 class LoginMethodActivity : AppBaseActivityMVVM<ActivityLoginMethodBinding, UserViewModel>() {
 
@@ -20,13 +21,22 @@ class LoginMethodActivity : AppBaseActivityMVVM<ActivityLoginMethodBinding, User
     override fun setUp() {
         with(binding) {
             clEmail.setOnClickListener {
-                //
+                setupTooltip(
+                    this@LoginMethodActivity,
+                    "Feature Coming Soon",
+                    it
+                )
             }
             clLoginUserId.setOnClickListener {
                 gotoLoginMSNV()
             }
             clLoginPhoneNumber.setOnClickListener {
-                gotoLoginPhoneNumber()
+//                gotoLoginPhoneNumber()
+                setupTooltip(
+                    this@LoginMethodActivity,
+                    "Feature Coming Soon",
+                    it
+                )
             }
         }
     }

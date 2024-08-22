@@ -6,18 +6,24 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.FormResponse
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
+import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeViewModel(private val userRepository: UserRepository, private val formRepository: FormRepository) : BaseViewModel() {
+class HomeViewModel(
+    private val userRepository: UserRepository,
+    private val formRepository: FormRepository,
+    private val requestRepository: RequestRepository
+    ) : BaseViewModel() {
 
     private val _hotNew = MutableLiveData<BaseResult<HotNewResponse>>()
     val hotNew: LiveData<BaseResult<HotNewResponse>> get() = _hotNew
@@ -49,6 +55,9 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
     private val _listFormRemote = MutableLiveData<BaseResult<FormResponse>>()
     val listFormRemote: LiveData<BaseResult<FormResponse>> = _listFormRemote
 
+    private val _listRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
+    val listRequest: LiveData<BaseResult<List<RequestEntity>>> = _listRequest
+
     var news = News(
         1,
         "",
@@ -68,8 +77,10 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
 
 
     init {
-        getHotNew()
+//        getHotNew()
         getAllForm()
+        getListSyncRequest()
+
     }
 
     fun insertForm(formEntity: FormEntity) {
@@ -152,6 +163,14 @@ class HomeViewModel(private val userRepository: UserRepository, private val form
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _insertListUserToLocal.postValue(userRepository.addListUser(listUser))
+            }
+        }
+    }
+
+    fun getListSyncRequest() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _listRequest.postValue(formRepository.getAllRequest())
             }
         }
     }

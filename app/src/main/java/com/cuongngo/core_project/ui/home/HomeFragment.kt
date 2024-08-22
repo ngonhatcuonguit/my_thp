@@ -1,4 +1,5 @@
 package com.cuongngo.core_project.ui.home
+
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,8 +20,9 @@ import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.onResultReceived
+import com.cuongngo.core_project.ui.list_request.adapter.RequestHorizontalAdapter
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
-import com.cuongngo.core_project.ui.search_form.form_adapter.FormAdapter
+import com.cuongngo.core_project.ui.search_form.form_adapter.FormHorizontalAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
@@ -41,35 +43,45 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private var totalPages: Int = 1
     private var isMore: Boolean = true
 
-    private lateinit var formAdapter: FormAdapter
+    private lateinit var formHorizontalAdapter: FormHorizontalAdapter
+    private lateinit var requestHorizontalAdapter: RequestHorizontalAdapter
 
     override fun setUp() {
         WTF("testApiUser token ${AppPreferences.getUserAccessToken()}")
         syncUser()
         setupTopViewPager(viewModel.listDefaultHotNews)
-        setupRcvListPopularForm()
+        setupRcvFavouriteForm()
+        setupRcvSyncRequest()
         binding.apply {
-            tvName.text = "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
+            tvName.text =
+                "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
             tvHintSearch.setOnClickListener {
                 //
             }
             ivSearch.setOnClickListener {
 
             }
-            tvPopularTitle.setOnClickListener{
+            tvFavouriteTitle.setOnClickListener {
                 viewModel.getAllForm()
             }
         }
     }
+
     val headers = generateRandomHeaderList(6)
-    val sheets = List(1){ generateRandomSheet() }
+    val sheets = List(1) { generateRandomSheet() }
     val processSteps = List(2) { generateRandomProcessStep() }
     fun addForm() {
         viewModel.insertForm(
             FormEntity(
                 formID = Random.nextLong(1, 1000),
-                name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
-                status = listOf(1,2,3,4,5).random().toString(),
+                name = listOf(
+                    "HRM form test",
+                    "Factory form test",
+                    "Parameter form test",
+                    "Office form",
+                    "Other form"
+                ).random(),
+                status = listOf(1, 2, 3, 4, 5).random().toString(),
                 form_code = randomString(10),
                 schema_code = randomString(10),
                 category = listOf("HRM", "Factory", "Parameter", "Office", "Other").random(),
@@ -81,9 +93,10 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         )
 
     }
-    private fun syncUser() = if(AppPreferences.getCountRecordLocalUser() == 0){
+
+    private fun syncUser() = if (AppPreferences.getCountRecordLocalUser() == 0) {
         viewModel.getListUser(true)
-    }else{
+    } else {
         viewModel.getListUser(false)
     }
 
@@ -96,13 +109,13 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
-        observeLiveDataChanged(viewModel.getListUser){
+        observeLiveDataChanged(viewModel.getListUser) {
             it.onResultReceived(
                 onLoading = {},
                 onSuccess = {
                     WTF("testApiUser getRemote ${it.data?.data}")
-                    if(it.data?.data?.isEmpty() != true){
-                        it.data?.data.let{
+                    if (it.data?.data?.isEmpty() != true) {
+                        it.data?.data.let {
                             viewModel.addListUser(
                                 it ?: arrayListOf()
                             )
@@ -116,7 +129,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             )
         }
 
-        observeLiveDataChanged(viewModel.checkUserTable){
+        observeLiveDataChanged(viewModel.checkUserTable) {
             it.onResultReceived(
                 onLoading = {},
                 onSuccess = {
@@ -127,7 +140,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             )
         }
 
-        observeLiveDataChanged(viewModel.insertListUserToLocal){
+        observeLiveDataChanged(viewModel.insertListUserToLocal) {
             it.onResultReceived(
                 onLoading = {
                     processSyncDialog.show()
@@ -153,7 +166,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.let { listForm ->
-                        formAdapter.submitListForm(listForm)
+                        formHorizontalAdapter.submitListForm(listForm)
                     }
 //                    if ((it.data?.size ?: 0) < 3){
 //                        addForm()
@@ -161,6 +174,19 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 },
                 onError = {
                     hideProgressDialog()
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.listRequest) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    it.data?.let { listRequest ->
+                        requestHorizontalAdapter.submitListForm(listRequest)
+                    }
+                },
+                onError = {
+                    //
                 }
             )
         }
@@ -180,8 +206,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
     }
 
-    private fun setupTopViewPager(listHotNew: List<News>?){
-        if (listHotNew?.isNotEmpty() == true){
+    private fun setupTopViewPager(listHotNew: List<News>?) {
+        if (listHotNew?.isNotEmpty() == true) {
             ViewPagerHelper(
                 viewPager2 = binding.vpTopViewpager,
                 defaultPos = 0,
@@ -226,9 +252,10 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
     }
 
-    private fun setupRcvListPopularForm() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
-        formAdapter = FormAdapter(
+    private fun setupRcvFavouriteForm() {
+        val gridLayoutManager =
+            GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
+        formHorizontalAdapter = FormHorizontalAdapter(
             requireContext(),
             arrayListOf(),
             onItemClickListener = {
@@ -241,7 +268,29 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 //            }
 //        }
         binding.rcvListPopularForm.apply {
-            adapter = formAdapter
+            adapter = formHorizontalAdapter
+            layoutManager = gridLayoutManager
+//            addOnScrollListener(scrollListener)
+        }
+    }
+
+    private fun setupRcvSyncRequest() {
+        val gridLayoutManager =
+            GridLayoutManager(requireContext(), 1, RecyclerView.HORIZONTAL, false)
+        requestHorizontalAdapter = RequestHorizontalAdapter(
+            requireContext(),
+            arrayListOf(),
+            onItemClickListener = {
+//                setupShowDialogConfirm(it)
+            }
+        )
+//        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {
+//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+//                viewModel.loadMoreSearch(totalPages)
+//            }
+//        }
+        binding.rcvListSyncRequest.apply {
+            adapter = requestHorizontalAdapter
             layoutManager = gridLayoutManager
 //            addOnScrollListener(scrollListener)
         }

@@ -52,7 +52,7 @@ val appModule = Kodein.Module(APP_MODULE, false) {
      * ViewModel binding
      */
     bindViewModel<HomeViewModel>() with provider {
-        HomeViewModel(instance(), instance())
+        HomeViewModel(instance(), instance(), instance())
     }
     bindViewModel<UserViewModel>() with provider {
         UserViewModel(instance())

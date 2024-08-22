@@ -54,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="@id/img_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_avatar"
-            app:srcCompat="@drawable/ic_wishlist_active" />
+            app:srcCompat="@drawable/logo_thp_n1" />
 
         <carbon.widget.ConstraintLayout
             android:id="@+id/cl_search"
@@ -85,7 +85,7 @@
                 android:layout_marginHorizontal="8dp"
                 android:background="@null"
                 android:ellipsize="end"
-                android:text="Search a Form title..."
+                android:text="Search and filter everything..."
                 android:maxLines="1"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -139,65 +139,127 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_list_favourite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/vp_top_viewpager"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_favourite_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="My favourite"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="25dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_view_all_popular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="See all"
+                        android:textSize="15sp"
+                        android:textColor="@color/blue_accent"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintTop_toTopOf="@id/tv_favourite_title"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_favourite_title"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcv_list_popular_form"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        android:orientation="horizontal"
+                        app:spanCount="1"
+                        tools:listitem="@layout/item_form_horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_favourite_title"
+                        />
+
+                    <FrameLayout
+                        android:id="@+id/fl_progress_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/rcv_list_popular_form"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/rcv_list_popular_form">
+                        <ProgressBar
+                            android:id="@+id/progress_bar_list_movie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminateTint="@color/blue_accent" />
+                    </FrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_list_request"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/cl_list_favourite"
+                    app:layout_constraintStart_toStartOf="parent">
+
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_popular_title"
+                    android:id="@+id/tv_sync_request_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="Most popular form"
+                    android:text="Sync Requests"
                     android:textSize="16sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:layout_marginStart="@dimen/_24dp"
-                    android:layout_marginTop="@dimen/_24dp"
-                    app:layout_constraintTop_toBottomOf="@id/vp_top_viewpager"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_view_all_popular"
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_view_all_sync_request"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:ellipsize="end"
-                    android:text="See All"
+                    android:text="Push all"
                     android:textSize="15sp"
                     android:textColor="@color/blue_accent"
-                    android:layout_marginEnd="@dimen/_24dp"
-                    app:layout_constraintTop_toTopOf="@id/tv_popular_title"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_popular_title"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_sync_request_title"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sync_request_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcv_list_popular_form"
+                    android:id="@+id/rcv_list_sync_request"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="3dp"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     app:spanCount="1"
+                    tools:listitem="@layout/item_request_horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_popular_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sync_request_title"
                     />
 
-                <FrameLayout
-                    android:id="@+id/fl_progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/rcv_list_popular_form"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/rcv_list_popular_form">
-                    <ProgressBar
-                        android:id="@+id/progress_bar_list_movie"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:indeterminateTint="@color/blue_accent" />
-                </FrameLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
