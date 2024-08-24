@@ -139,6 +139,7 @@ class RequestViewModel(
     fun pushRequest(
         requestBodyPush : List<RequestBodyPush>
     ) {
+        _pushRequest.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _pushRequest.postValue(

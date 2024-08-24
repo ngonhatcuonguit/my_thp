@@ -47,6 +47,10 @@ import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.toast.showMessageSaveData
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.Calendar
 import java.util.UUID
@@ -182,7 +186,6 @@ class RequestMasterDetailActivity :
                 }else{
                     //show warning
                     WTF("sosanh true")
-                    viewModel.newRequestEntity?.requestDescription = "test12345"
                 }
             }
         }
@@ -209,9 +212,11 @@ class RequestMasterDetailActivity :
                     processUploadDialog.show()
                 },
                 onSuccess = {
-                    processUploadDialog.hide()
-                    viewModel.currentRequestEntity = viewModel.newRequestEntity
-
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(3900)
+                        processUploadDialog.hide()
+                        viewModel.currentRequestEntity = viewModel.newRequestEntity
+                    }
                 },
                 onError = {
                     processUploadDialog.hide()
