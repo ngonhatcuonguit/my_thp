@@ -58,6 +58,16 @@ class HomeViewModel(
     private val _listRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
     val listRequest: LiveData<BaseResult<List<RequestEntity>>> = _listRequest
 
+    //--------------
+
+    private val _listUploadRequest = MutableLiveData<List<RequestEntity>>()
+    val listUploadRequest: LiveData<List<RequestEntity>> = _listUploadRequest
+
+    fun updateListUploadRequest(requestEntity: RequestEntity) {
+        listUpload.add(requestEntity)
+        this._listUploadRequest.value = listUpload
+    }
+
     var news = News(
         1,
         "",
@@ -74,7 +84,7 @@ class HomeViewModel(
 
     var page: Int = 1
     var keyword: String? = null
-
+    var listUpload: ArrayList<RequestEntity> = arrayListOf()
 
     init {
 //        getHotNew()

@@ -7,10 +7,11 @@ import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
-import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
+import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,12 +50,13 @@ class RequestViewModel(
     val formUnit: LiveData<BaseResult<Unit>> = _formUnit
 
     //---remote---
-    private val _pushRequest = MutableLiveData<BaseResult<ApiResponse>>()
-    val pushRequest: LiveData<BaseResult<ApiResponse>> = _pushRequest
+    private val _pushRequest = MutableLiveData<BaseResult<PushRequestModel>>()
+    val pushRequest: LiveData<BaseResult<PushRequestModel>> = _pushRequest
 
     //variable
     var formEntity: FormEntity? = null
-    var requestEntity: RequestEntity? = null
+    var currentRequestEntity: RequestEntity? = null
+    var newRequestEntity: RequestEntity? = null
     fun insertRequest(requestEntity: RequestEntity) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -135,21 +137,13 @@ class RequestViewModel(
     }
 
     fun pushRequest(
-        device_code: String,
-        json_data: String?,
-        process_id: String?,
-        version: Int?,
-        id: String?
+        requestBodyPush : List<RequestBodyPush>
     ) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 _pushRequest.postValue(
                     requestRepository.pushRequest(
-                        device_code = device_code,
-                        json_data = json_data,
-                        process_id = process_id,
-                        version = version,
-                        id = id
+                        requestBodyPush = requestBodyPush
                     )
                 )
             }

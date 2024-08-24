@@ -83,12 +83,9 @@ class FieldAdapter(
                     }
 
                 } else {
+                    tvValue.text= field.value
                     ivEditValue.isVisible = false
                     tvValue.isVisible = true
-                    tvValue.text= field.value
-                    tvValue.text= field.value
-                    ivEditValue.isVisible = true
-                    tvValue.isVisible = false
                     root.setBackgroundResource(R.drawable.shape_item_field)
                     when (field.type) {
                         "text", "textarea"  -> {

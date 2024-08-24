@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="request"
             type="com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity" />
@@ -35,12 +37,12 @@
             android:id="@+id/card_request"
             android:layout_width="239dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_bg_item_file"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_bg_item_file"
+            app:carbon_cornerRadius="5dp"
             app:layout_constraintDimensionRatio="W,76:177"
-            app:carbon_cornerRadius="5dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_logo"
@@ -83,12 +85,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="@dimen/_10dp"
+                android:ellipsize="end"
+                android:lines="2"
+                android:maxLines="2"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="11sp"
-                android:lines="2"
-                android:maxLines="2"
-                android:ellipsize="end"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/tv_status"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +115,48 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_bg_sync"
+                android:layout_width="239dp"
+                android:layout_height="0dp"
+                android:background="@drawable/ic_file_blur_background"
+                app:carbon_cornerRadius="5dp"
+                app:layout_constraintDimensionRatio="W,96:177"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_push_data"
+                    android:layout_width="60dp"
+                    android:layout_height="49dp"
+                    android:alpha="0.85"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_upload_cloud" />
+
+                <FrameLayout
+                    android:id="@+id/fl_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible">
+                    <ProgressBar
+                        android:id="@+id/progress_upload_file"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:indeterminateTint="@color/blue_accent" />
+                </FrameLayout>
+
+            </carbon.widget.ConstraintLayout>
         </carbon.widget.ConstraintLayout>
+
     </com.thelumiereguy.neumorphicview.views.NeumorphicCardView>
 
 </layout>

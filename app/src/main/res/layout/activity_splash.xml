@@ -6,13 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:background="#FFCB00">
+        android:background="@color/yellow_B00">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
             android:text="Welcome To\nE-Approval"
             android:textAlignment="center"
             android:textSize="24sp"
@@ -20,14 +19,28 @@
             android:fontFamily="sans-serif-medium"
             android:textColor="@android:color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/iv_logo_thp"
             app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_logo_thp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintWidth_percent="0.39"
+            app:srcCompat="@drawable/logo_thp_number1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.59"
             app:layout_constraintWidth_percent="0.5"
-            app:srcCompat="@drawable/logo_number_one"
+            app:srcCompat="@drawable/logo_e_approval"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

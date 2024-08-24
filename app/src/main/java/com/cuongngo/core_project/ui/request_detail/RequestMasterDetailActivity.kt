@@ -24,7 +24,8 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
-import com.cuongngo.core_project.data.database.roomdb.entity.randomString
+import com.cuongngo.core_project.data.database.roomdb.entity.toDataClass
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityRequestMasterBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
@@ -39,7 +40,6 @@ import com.cuongngo.core_project.ui.request_detail.adapter.FormHeaderAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.RequestProcessStepAdapter
 import com.cuongngo.core_project.ui.request_detail.adapter.SheetAdapter
 import com.cuongngo.core_project.ui.user_thp.adapter.UserAddedAdapter
-import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.Constants.CategoryRequestDetail.Companion.ADD
 import com.cuongngo.core_project.utils.date.getCurrentDateTime
 import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
@@ -49,6 +49,7 @@ import com.cuongngo.core_project.utils.toast.showMessageSaveData
 import com.google.gson.Gson
 import java.io.IOException
 import java.util.Calendar
+import java.util.UUID
 import kotlin.random.Random
 
 class RequestMasterDetailActivity :
@@ -92,39 +93,48 @@ class RequestMasterDetailActivity :
         isOnBack = true
     }
 
+    private fun generateUUID(): String {
+        // Generate a random UUID
+        val myUuid = UUID.randomUUID()
+        return myUuid.toString()
+    }
+
     override fun setUp() {
         when (category) {
             ADD -> {
                 viewModel.apply {
                     formEntity = intent.getSerializableExtra(FORM_DATA_KEY) as FormEntity ?: null
-                    addRequestCode = randomString(10)
+                    addRequestCode = generateUUID()
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
                             formCode = formEntity?.form_code ?: "",
+                            formID = formEntity?.formID.toString() ?: "",
                             requestCode = addRequestCode ?: "",
                             formName = formEntity?.name + "-" + getCurrentDateTime(),
                             listHeader = formEntity?.list_header,
                             listBody = formEntity?.list_body,
                             processSteps = formEntity?.process_steps,
-                            requestStatus = Random.nextInt(1, 6)
+                            requestStatus = Random.nextInt(1, 6),
+                            process_id = formEntity?.process_id.toString() ?: ""
                         )
                     )
                 }
-                setupShowDefaultInfo(viewModel.requestEntity)
+                setupShowDefaultInfo(viewModel.newRequestEntity)
             }
 
             else -> {
                 viewModel.apply {
-                    requestEntity =
+                    newRequestEntity =
                         intent.getSerializableExtra(REQUEST_DATA_KEY) as RequestEntity ?: null
-                    requestEntity?.formCode?.let { viewModel.getFormByCode(it) }
-                    viewModel.requestEntity = requestEntity
+                    newRequestEntity?.formCode?.let { viewModel.getFormByCode(it) }
+                    currentRequestEntity = newRequestEntity
+                    viewModel.newRequestEntity = newRequestEntity
                     logEntityToFile()
-                    binding.tvRequestTitle.text = requestEntity?.requestName ?: "Tạo yêu cầu mới"
+                    binding.tvRequestTitle.text = newRequestEntity?.requestName ?: "Tạo yêu cầu mới"
                     WTF("log_json_Entity: ${readLogFile()}")
 
-                    setupShowDefaultInfo(viewModel.requestEntity)
+                    setupShowDefaultInfo(viewModel.newRequestEntity)
                 }
             }
         }
@@ -153,6 +163,28 @@ class RequestMasterDetailActivity :
             layoutSubmitButton.btnSecond.setOnClickListener {
                 updateRequest()
             }
+            layoutSubmitButton.btnPrimary.setOnClickListener {
+
+                viewModel.pushRequest(
+                    listOf(
+                        RequestBodyPush(
+                            device_code = AppPreferences.getDeviceInfo()?.device ?: "",
+                            json_data = convertRequestEntityToString(viewModel.newRequestEntity),
+                            request_code = viewModel.newRequestEntity?.requestCode,
+                            process_id = viewModel.newRequestEntity?.requestID.toString(),
+                            version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
+                        )
+                    )
+                )
+
+                if (viewModel.currentRequestEntity?.toDataClass() != viewModel.newRequestEntity?.toDataClass()){
+                    WTF("sosanh false")
+                }else{
+                    //show warning
+                    WTF("sosanh true")
+                    viewModel.newRequestEntity?.requestDescription = "test12345"
+                }
+            }
         }
     }
 
@@ -167,6 +199,22 @@ class RequestMasterDetailActivity :
                 },
                 onError = {
                     hideProgressDialog()
+                }
+            )
+        }
+
+        observeLiveDataChanged(viewModel.pushRequest) {
+            it.onResultReceived(
+                onLoading = {
+                    processUploadDialog.show()
+                },
+                onSuccess = {
+                    processUploadDialog.hide()
+                    viewModel.currentRequestEntity = viewModel.newRequestEntity
+
+                },
+                onError = {
+                    processUploadDialog.hide()
                 }
             )
         }
@@ -185,11 +233,12 @@ class RequestMasterDetailActivity :
             }, onSuccess = {
                 it.data.let { request ->
                     binding.tvRequestTitle.text = request?.requestName ?: "Tạo yêu cầu mới"
-                    if (viewModel.requestEntity != null) {
-                        viewModel.requestEntity = request
+                    if (viewModel.newRequestEntity != null) {
+                        viewModel.newRequestEntity = request
                         sheetAdapter.submitListSheet(request?.listBody)
                     } else {
-                        viewModel.requestEntity = request
+                        viewModel.newRequestEntity = request
+                        viewModel.currentRequestEntity = request
                         sheetAdapter.submitListSheet(request?.listBody)
                         requestProcessStepAdapter.submitListProcessStep(request?.processSteps)
                         formHeaderAdapter.submitListFormHeader(request?.listHeader)
@@ -207,7 +256,7 @@ class RequestMasterDetailActivity :
                 showProgressDialog()
             }, onSuccess = {
                 it.data.let { id ->
-                    viewModel.requestEntity?.requestCode?.let { code ->
+                    viewModel.newRequestEntity?.requestCode?.let { code ->
                         viewModel.getRequestByCode(
                             code
                         )
@@ -222,11 +271,11 @@ class RequestMasterDetailActivity :
             it.onResultReceived(onLoading = {
                 showProgressDialog()
             }, onSuccess = {
-                WTF("updateRQ ----Ok ${viewModel.requestEntity}")
+                WTF("updateRQ ----Ok ${viewModel.newRequestEntity}")
                 hideProgressDialog()
                 if (isOnBack == true) {
                     val resultIntent = Intent().apply {
-                        putExtra(RESULT_DATA, viewModel.requestEntity)
+                        putExtra(RESULT_DATA, viewModel.newRequestEntity)
                     }
                     setResult(Activity.RESULT_OK, resultIntent)
                     super.onBackPressed()
@@ -265,7 +314,7 @@ class RequestMasterDetailActivity :
 
     private fun logEntityToFile() {
         try {
-            val json = Gson().toJson(viewModel.requestEntity)
+            val json = Gson().toJson(viewModel.newRequestEntity)
             this.openFileOutput("log.txt", Context.MODE_PRIVATE).use { fos ->
                 fos.write(json.toByteArray())
             }
@@ -287,10 +336,11 @@ class RequestMasterDetailActivity :
     private val requestDetailBodyResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val returnedRequest = it.data?.getSerializableExtra(RESULT_BODY_DATA) as RequestEntity?
-                    ?: return@registerForActivityResult
-                viewModel.requestEntity = returnedRequest
-                sheetAdapter.submitListSheet(viewModel.requestEntity!!.listBody)
+                val returnedRequest =
+                    it.data?.getSerializableExtra(RESULT_BODY_DATA) as RequestEntity?
+                        ?: return@registerForActivityResult
+                viewModel.newRequestEntity = returnedRequest
+                sheetAdapter.submitListSheet(viewModel.newRequestEntity!!.listBody)
             }
         }
 
@@ -305,7 +355,7 @@ class RequestMasterDetailActivity :
                     SheetDetailActivity.newIntent(
                         this,
                         body = it,
-                        requestEntity = viewModel.requestEntity
+                        requestEntity = viewModel.newRequestEntity
                     )
                 )
             })
@@ -404,7 +454,7 @@ class RequestMasterDetailActivity :
             },
             onRemoveListener = {
                 informerAdapter.onRemoveItem(it)
-                viewModel.requestEntity?.informer?.toMutableList()?.remove(it)
+                viewModel.newRequestEntity?.informer?.toMutableList()?.remove(it)
                 if (informerAdapter.itemCount == 1) {
                     binding.layoutInformer.tvHint.text = "Tìm kiếm user"
                     binding.layoutInformer.rvListAdded.isVisible = false
@@ -428,7 +478,7 @@ class RequestMasterDetailActivity :
             var listProcessStep = requestProcessStepAdapter.getListProcessStep()
             var listHeader = formHeaderAdapter.getListHeader()
             var listBody = sheetAdapter.getListBody()
-            var currentRequest = viewModel.requestEntity?.copy(
+            var currentRequest = viewModel.newRequestEntity?.copy(
                 requestName = requestName,
                 requestDescription = requestDescription,
                 informer = listInformer,
@@ -437,8 +487,8 @@ class RequestMasterDetailActivity :
                 listBody = listBody,
 
                 )
-            viewModel.requestEntity = currentRequest
-            viewModel.requestEntity?.let {
+            viewModel.newRequestEntity = currentRequest
+            viewModel.newRequestEntity?.let {
                 viewModel.updateRequest(it)
             }
         }
@@ -452,7 +502,7 @@ class RequestMasterDetailActivity :
             var listProcessStep = requestProcessStepAdapter.getListProcessStep()
             var listHeader = formHeaderAdapter.getListHeader()
             var listBody = sheetAdapter.getListBody()
-            var currentRequest = viewModel.requestEntity?.copy(
+            var currentRequest = viewModel.newRequestEntity?.copy(
                 requestName = requestName,
                 requestDescription = requestDescription,
                 informer = listInformer,
@@ -461,20 +511,20 @@ class RequestMasterDetailActivity :
                 listBody = listBody,
 
                 )
-            viewModel.requestEntity = currentRequest
+            viewModel.newRequestEntity = currentRequest
         }
     }
 
     private fun showSearchUserBottomSheet() {
         SearchUserBottomSheet(
-            requestData = viewModel.requestEntity,
+            requestData = viewModel.newRequestEntity,
             heightValue = (getScreenHeight() * 0.95).toInt()
         ).setOnUserSelected {
             it?.let { data ->
-                if (viewModel.requestEntity?.informer?.contains(data) != true) {
-                    viewModel.requestEntity?.informer?.toMutableList()?.add(data)
+                if (viewModel.newRequestEntity?.informer?.contains(data) != true) {
+                    viewModel.newRequestEntity?.informer?.toMutableList()?.add(data)
                     informerAdapter.onAddNew(data)
-                    WTF("addUser ${viewModel.requestEntity?.informer}")
+                    WTF("addUser ${viewModel.newRequestEntity?.informer}")
                 } else {
                     //show warning
                 }
@@ -504,7 +554,7 @@ class RequestMasterDetailActivity :
             viewModel
         ).apply {
             onRightButtonClick { sheetName ->
-                var listRQ = viewModel.requestEntity?.listBody?.toMutableList() ?: mutableListOf()
+                var listRQ = viewModel.newRequestEntity?.listBody?.toMutableList() ?: mutableListOf()
                 listRQ.add(
                     Body(
                         id = Random.nextLong(1, 1000),
@@ -514,13 +564,13 @@ class RequestMasterDetailActivity :
                         name = sheetName,
                         form_code = form.form_code,
                         form_name = form.name,
-                        request_code = viewModel.requestEntity?.requestCode,
+                        request_code = viewModel.newRequestEntity?.requestCode,
                         created = randomDate(),
                         updated = randomDate(),
                         deleted = if (randomBoolean()) randomDate() else null,
                     )
                 )
-                viewModel.requestEntity?.requestID?.let {
+                viewModel.newRequestEntity?.requestID?.let {
                     viewModel.updateListSheet(
                         requestID = it,
                         listBody = listRQ
@@ -637,11 +687,21 @@ class RequestMasterDetailActivity :
     }
 
     private fun handleChangeValueHeader(field: Field, newValue: String?) {
-        val fieldData = viewModel.requestEntity?.listHeader?.find { it.id == field.id }
-        val fieldIndex = viewModel.requestEntity?.listHeader?.indexOf(fieldData) ?: return
+        val fieldData = viewModel.newRequestEntity?.listHeader?.find { it.id == field.id }
+        val fieldIndex = viewModel.newRequestEntity?.listHeader?.indexOf(fieldData) ?: return
         fieldData?.value = newValue
         fieldData?.let { formHeaderAdapter.onChangeValueField(it, fieldIndex) }
     }
 
+    //convert to json and string
+    fun convertRequestEntityToString(requestEntity: RequestEntity?): String {
+        // Convert RequestEntity to JSON String
+        return Gson().toJson(requestEntity)
+    }
+
+    fun convertStringToRequestEntity(requestString: String?): RequestEntity {
+        // Convert JSON String back to FormEntity (if needed)
+        return Gson().fromJson(requestString, RequestEntity::class.java)
+    }
 
 }

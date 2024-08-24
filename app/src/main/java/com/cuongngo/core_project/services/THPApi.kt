@@ -8,7 +8,10 @@ import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
+import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -41,15 +44,11 @@ interface THPApi {
         @Field("device") device: String?,
     ): Response<ApiResponse>
 
-    @FormUrlEncoded
+
     @POST("api/request/push-request")
     suspend fun pushRequest(
-        @Field("device_code") device_code: String,
-        @Field("json_data") json_data: String?,
-        @Field("process_id") process_id: String?,
-        @Field("version") version: Int?,
-        @Field("id") id: String?
-    ): Response<ApiResponse>
+        @Body requestBodyPush: List<RequestBodyPush>,
+    ): Response<PushRequestModel>
 
     @GET("api/employee/list")
     suspend fun getListUser(

@@ -9,6 +9,7 @@ import com.cuongngo.core_project.response.BaseModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import kotlin.random.Random
 
 @Entity(

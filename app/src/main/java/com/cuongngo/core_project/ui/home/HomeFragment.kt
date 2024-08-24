@@ -58,12 +58,6 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         binding.apply {
             tvName.text =
                 "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
-            tvHintSearch.setOnClickListener {
-                //
-            }
-            ivSearch.setOnClickListener {
-
-            }
             tvFavouriteTitle.setOnClickListener {
                 viewModel.getAllForm()
             }
@@ -284,8 +278,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             requireContext(),
             arrayListOf(),
             onItemClickListener = {
-
-
+                viewModel.listUpload.add(it)
+                requestHorizontalAdapter.refreshItem(it)
             }
         )
 //        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {

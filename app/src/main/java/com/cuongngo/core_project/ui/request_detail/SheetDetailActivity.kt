@@ -27,10 +27,8 @@ import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
-import com.cuongngo.core_project.utils.date.getCurrentDayOfMonth
 import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
 import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
-import com.cuongngo.core_project.utils.date.getDaysDiff
 import com.cuongngo.core_project.utils.getScreenHeight
 import io.reactivex.disposables.Disposable
 import java.util.Calendar
@@ -79,23 +77,23 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
 
     override fun onBackPressed() {
         var lisFieldAfterChange = fieldAdapter.getListField()
-        var currentData = viewModel.requestEntity?.listBody?.find {
+        var currentData = viewModel.newRequestEntity?.listBody?.find {
             it.id == body.id && it.name == body.name
         }
-        var index = viewModel.requestEntity?.listBody?.indexOf(currentData) ?: -1
+        var index = viewModel.newRequestEntity?.listBody?.indexOf(currentData) ?: -1
         currentData?.list_field = lisFieldAfterChange
-        viewModel.requestEntity?.listBody!!.toMutableList()[index]= currentData ?: body
-        WTF("testSheetDetail --${viewModel.requestEntity?.listBody!!.toMutableList()[index]}")
+        viewModel.newRequestEntity?.listBody!!.toMutableList()[index]= currentData ?: body
+        WTF("testSheetDetail --${viewModel.newRequestEntity?.listBody!!.toMutableList()[index]}")
 
         val resultIntent = Intent().apply {
-            putExtra(RESULT_BODY_DATA, viewModel.requestEntity)
+            putExtra(RESULT_BODY_DATA, viewModel.newRequestEntity)
         }
         setResult(Activity.RESULT_OK, resultIntent)
         super.onBackPressed()
     }
 
     override fun setUp() {
-        viewModel.requestEntity = requestEntity
+        viewModel.newRequestEntity = requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
@@ -115,7 +113,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                 onSuccess = {
                     hideProgressDialog()
                     it.data?.let { request ->
-                        viewModel.requestEntity = request
+                        viewModel.newRequestEntity = request
                         WTF(TAG, "requestFormEntity: ${request.requestCode}")
                     }
                 },

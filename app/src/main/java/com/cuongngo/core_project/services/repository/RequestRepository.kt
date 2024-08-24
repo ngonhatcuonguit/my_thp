@@ -4,8 +4,9 @@ import com.cuongngo.core_project.data.database.data_source.RequestLocalDataSourc
 import com.cuongngo.core_project.data.database.data_source.RequestRemoteDataSource
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
-import com.cuongngo.core_project.response.login_response.ApiResponse
 import com.cuongngo.core_project.services.network.BaseResult
+import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 
 class RequestRepository(
     private val requestLocalDataSource: RequestLocalDataSource,
@@ -46,18 +47,10 @@ class RequestRepository(
 
     //---remote---
     suspend fun pushRequest(
-        device_code: String,
-        json_data: String?,
-        process_id: String?,
-        version: Int?,
-        id: String?
-    ): BaseResult<ApiResponse>{
+        requestBodyPush : List<RequestBodyPush>
+    ): BaseResult<PushRequestModel>{
         return requestRemoteDataSource.pushRequest(
-            device_code = device_code,
-            json_data = json_data,
-            process_id = process_id,
-            version = version,
-            id = id
+            requestBodyPush = requestBodyPush
         )
     }
 

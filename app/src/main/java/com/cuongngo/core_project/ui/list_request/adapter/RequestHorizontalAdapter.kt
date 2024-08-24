@@ -3,6 +3,7 @@ package com.cuongngo.core_project.ui.list_request.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
@@ -14,12 +15,12 @@ class RequestHorizontalAdapter(
     context: Context,
     listRequest: ArrayList<RequestEntity>,
     private val onItemClickListener: ((RequestEntity) -> Unit)? = null
-) : RecyclerView.Adapter<RequestHorizontalAdapter.FormViewHolder>() {
+) : RecyclerView.Adapter<RequestHorizontalAdapter.RequestViewHolder>() {
 
     private val listRequest = listRequest
     private val context = context
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormViewHolder {
-        return FormViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RequestViewHolder {
+        return RequestViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context),
                 R.layout.item_request_horizontal,
@@ -28,20 +29,26 @@ class RequestHorizontalAdapter(
             )
         )
     }
-
-    override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RequestViewHolder, position: Int) {
         val binding = holder.itemRequest
         var request = listRequest[position]
-        binding.request = request
-        binding.root.elevation = convertDpToPixel(8F, context)
-        binding.tvRequestCode.text = "Mã Y/Cầu: ${request.requestCode}"
-        if (request.requestName.isNullOrEmpty()){
-            binding.tvRequestName.text = request.formName
-        }else{
-            binding.tvRequestName.text = request.requestName
-        }
-        binding.root.setOnClickListener {
-            onItemClickListener?.invoke(request) ?: return@setOnClickListener
+        with(binding){
+            ivPushData.setOnClickListener {
+                flProgressBar.isVisible = true
+                binding.ivPushData.isVisible = false
+            }
+            flProgressBar.setOnClickListener {
+                flProgressBar.isVisible = false
+                ivPushData.isVisible = true
+            }
+            request = request
+            root.elevation = convertDpToPixel(8F, context)
+            tvRequestCode.text = "Mã Y/Cầu: ${request.requestCode}"
+            if (request.requestName.isNullOrEmpty()){
+                binding.tvRequestName.text = request.formName
+            }else{
+                tvRequestName.text = request.requestName
+            }
         }
     }
 
@@ -58,7 +65,18 @@ class RequestHorizontalAdapter(
         }
     }
 
-    class FormViewHolder(
+    fun refreshItem(requestEntity: RequestEntity?) {
+        if (requestEntity != null) {
+            val oldData = listRequest.find {
+                requestEntity.requestID == it.requestID
+            }
+            val index = listRequest.indexOf(oldData)
+            listRequest[index] = requestEntity
+            notifyItemChanged(index)
+        }
+    }
+
+    class RequestViewHolder(
         val itemRequest: ItemRequestHorizontalBinding
     ) : RecyclerView.ViewHolder(itemRequest.root)
 
