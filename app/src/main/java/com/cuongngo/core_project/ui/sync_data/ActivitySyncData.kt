@@ -34,17 +34,20 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
                 }else{
                     showDialogWarning(
                         content = "Thiết bị chưa được kết nối mạng. Vui lòng kết nối mạng trước khi đồng bộ dữ liệu!",
-                        btnLeftContent = "Đã hiểu"
+                        btnLeftContent = "Đã hiểu",
+                        supportFragmentManager = supportFragmentManager
                     )
                 }
             }
             clSyncAllUser.setOnClickListener {
+                viewModel.getAllUserRemote(true)
                 if(isNetworkAvailable(this@ActivitySyncData)){
                     viewModel.getAllUserRemote(true)
                 }else{
                     showDialogWarning(
                         content = "Thiết bị chưa được kết nối mạng. Vui lòng kết nối mạng trước khi đồng bộ dữ liệu!",
-                        btnLeftContent = "Đã hiểu"
+                        btnLeftContent = "Đã hiểu",
+                        supportFragmentManager = supportFragmentManager
                     )
                 }
             }
@@ -70,7 +73,7 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
                 },
                 onError = {
                     processSyncDialog.hide()
-                    setupShowDialogResult(false, it.errorCode)
+                    setupShowDialogResult(false, it.errorCode, "Có lỗi xảy ra")
                 }
             )
         }
@@ -83,7 +86,7 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
                 },
                 onError = {
                     processSyncDialog.hide()
-                    setupShowDialogResult(false, it.errorCode)
+                    setupShowDialogResult(false, it.errorCode, "Có lỗi xảy ra")
                 }
             )
         }
@@ -95,7 +98,7 @@ class ActivitySyncData : AppBaseActivityMVVM<ActivitySyncDataBinding, SyncDataVi
                     CoroutineScope(Dispatchers.Main).launch {
                         delay(3900)
                         processSyncDialog.hide()
-                        setupShowDialogResult(true)
+                        setupShowDialogResult(true, showContent = "Dữ liệu từ hệ thống của THP đã được đồng bộ về thiết bị của bạn")
                     }
 //                    HomeFragment().viewModel.getAllForm()
                 },

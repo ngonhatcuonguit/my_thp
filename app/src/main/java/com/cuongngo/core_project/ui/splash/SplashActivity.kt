@@ -51,13 +51,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             startActivity(this)
         }
     }
-    private fun gotoLoginMethod() {
-        Intent(this, LoginMethodActivity::class.java).apply {
-        }.also {
-            finish()
-            startActivity(it)
-        }
-    }
+//    private fun gotoLoginMethod() {
+//        Intent(this, LoginMethodActivity::class.java).apply {
+//        }.also {
+//            finish()
+//            startActivity(it)
+//        }
+//    }
 
     private fun setupSystemWindowInset() {
         window.setFlags(

@@ -98,13 +98,13 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
             startActivity(it)
         }
     }
-    private fun gotoLoginMethod() {
-        Intent(this, LoginMethodActivity::class.java).apply {
-        }.also {
-            finish()
-            startActivity(it)
-        }
-    }
+//    private fun gotoLoginMethod() {
+//        Intent(this, LoginMethodActivity::class.java).apply {
+//        }.also {
+//            finish()
+//            startActivity(it)
+//        }
+//    }
 
     override fun onBackPressed() {
         //do nothing

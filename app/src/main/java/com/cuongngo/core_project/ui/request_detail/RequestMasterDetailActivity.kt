@@ -202,6 +202,7 @@ class RequestMasterDetailActivity :
                 },
                 onError = {
                     hideProgressDialog()
+                    setupShowDialogResult(false, it.errorCode)
                 }
             )
         }
@@ -220,6 +221,7 @@ class RequestMasterDetailActivity :
                 },
                 onError = {
                     processUploadDialog.hide()
+                    setupShowDialogResult(false, it.errorCode)
                 }
             )
         }
@@ -230,6 +232,7 @@ class RequestMasterDetailActivity :
                 addRequestCode?.let { code -> viewModel.getRequestByCode(code) }
             }, onError = {
                 hideProgressDialog()
+                setupShowDialogResult(false, it.errorCode)
             })
         }
         observeLiveDataChanged(viewModel.request) {
@@ -254,6 +257,7 @@ class RequestMasterDetailActivity :
                 hideProgressDialog()
             }, onError = {
                 hideProgressDialog()
+                setupShowDialogResult(false, it.errorCode)
             })
         }
         observeLiveDataChanged(viewModel.requestUpdateListSheet) {
@@ -269,6 +273,7 @@ class RequestMasterDetailActivity :
                 }
             }, onError = {
                 hideProgressDialog()
+                setupShowDialogResult(false, it.errorCode)
             })
         }
 

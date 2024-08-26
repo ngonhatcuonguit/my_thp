@@ -3,8 +3,6 @@ package com.cuongngo.core_project.base.activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,11 +11,9 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -34,7 +30,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 
 
-abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinAware, BaseView {
+abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinAware, BaseView {
     open lateinit var binding: DB
     override val kodein by kodein()
 
@@ -59,7 +55,7 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
     @LayoutRes
     abstract fun inflateLayout(): Int
 
-    override fun provideLoading() : ProgressDialog = progressDialog
+    override fun provideLoading(): ProgressDialog = progressDialog
 
     override fun provideContext(): Context? = this
 
@@ -77,15 +73,15 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         setUpObserver()
     }
 
-    open fun setDefaultStatusBarColor(){
+    open fun setDefaultStatusBarColor() {
         window.also {
             it.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             it.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            it.statusBarColor = ContextCompat.getColor(applicationContext,R.color.dark)
+            it.statusBarColor = ContextCompat.getColor(applicationContext, R.color.dark)
         }
     }
 
-    open fun enableLightStatusBar(){
+    open fun enableLightStatusBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val window = window
             val decorView: View = window.decorView
@@ -93,7 +89,7 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
                 wic.isAppearanceLightStatusBars = true // true or false as desired.
             }
             window.statusBarColor = customStatusBarColor
-        }else {
+        } else {
             setDefaultStatusBarColor()
         }
 
@@ -114,7 +110,7 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
     /**
      * If increase version code to 30 (R) , remove brackets
      * */
-    private fun hideSystemUI(){
+    private fun hideSystemUI() {
         /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
               window.setDecorFitsSystemWindows(false)
               window.insetsController?.let {
@@ -130,8 +126,9 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         /*}*/
     }
 
-    fun isShowKeyBoard() : Boolean {
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    fun isShowKeyBoard(): Boolean {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         return inputMethodManager.isAcceptingText
     }
 
@@ -156,13 +153,16 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         return ret
     }
 
-
-    open fun setupShowDialogResult(isSuccess: Boolean, errorCode: Int? = null) {
+    open fun setupShowDialogResult(
+        isSuccess: Boolean,
+        errorCode: Int? = null,
+        showContent: String? = null
+    ) {
         var title = "Thành Công"
-        var content = "Dữ liệu từ hệ thống của THP đã được đồng bộ về thiết bị của bạn"
+        var content = showContent
         var btnContent = "Đồng ý"
         if (!isSuccess) {
-            when(errorCode){
+            when (errorCode) {
                 401 -> {
                     title = "Phiên đăng nhập hết hạn"
                     content = "Phiên đăng nhập của bạn đã quá hạn, vui lòng đăng nhập lại!"
@@ -176,11 +176,27 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
                 }
 
                 else -> {
-                    title = "Lỗi $errorCode"
-                    content = "Đã có lỗi xảy ra, vui lòng kiểm tra lại!"
-                    btnContent = "Đồng ý"
+                    if (isNetworkAvailable(this)) {
+//                        showMessageToast(
+//                            this,
+//                            true,
+//                            contentDone = "Thiết bị đã được kết nối internet",
+//                            contentFail = ""
+//                        )
+                        title = "Lỗi $errorCode"
+                        content = "Đã có lỗi xảy ra, vui lòng kiểm tra lại!"
+                        btnContent = "Đồng ý"
+                    } else {
+                        title = "Chú ý"
+                        content = "Thiết bị chưa được kết nối mạng. Vui lòng kết nối mạng trước khi đồng bộ dữ liệu!"
+                        btnContent = "Đồng ý"
+                    }
                 }
             }
+        } else {
+            title = "Thành công"
+            content = showContent
+            btnContent = "Đồng ý"
         }
         val confirmDialog = ConfirmDialog(
             DialogModel(
@@ -198,20 +214,22 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
             }
             onLeftButtonClick {
                 if (!isSuccess) {
-                    when(errorCode){
+                    when (errorCode) {
                         401 -> {
                             gotoLoginMethod()
                         }
 
                         404 -> {
                             //
+                            dismiss()
                         }
 
                         else -> {
+                            dismiss()
                             //
                         }
                     }
-                }else{
+                } else {
                     dismiss()
                 }
             }
@@ -219,39 +237,10 @@ abstract class BaseActivity <DB : ViewDataBinding>: AppCompatActivity(), KodeinA
         confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
     }
 
-    open fun showDialogWarning(
-        title: String? = "Chú ý",
-        subTitle: String? = "",
-        content: String? = "Chú ý!",
-        btnLeftContent: String? = "Huỷ bỏ",
-        btnRightContent: String? = "Đồng ý",
-        isSingle: Boolean? = true,
-        margins: Float? = 50f
-        ){
-        val confirmDialog = ConfirmDialog(
-            DialogModel(
-                title = title,
-                subTitle = subTitle,
-                content = content,
-                leftButtonTitle = btnLeftContent,
-                rightButtonTitle = btnRightContent,
-                isSingle = isSingle
-            ),
-            margins = margins
-        ).apply {
-            onRightButtonClick {
-                dismiss()
-            }
-            onLeftButtonClick {
-                dismiss()
-            }
-        }
-        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
-    }
-
-    private fun gotoLoginMethod() {
+    open fun gotoLoginMethod() {
         Intent(this, LoginMethodActivity::class.java).apply {
         }.also {
+            finish()
             startActivity(it)
         }
     }

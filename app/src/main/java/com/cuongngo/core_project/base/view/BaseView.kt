@@ -7,6 +7,9 @@ import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.FragmentManager
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.model.DeviceInfo
 import com.cuongngo.core_project.response.login_response.LoginResponse
@@ -131,5 +134,37 @@ interface BaseView {
             display = Build.DISPLAY
         )
     }
+
+    open fun showDialogWarning(
+        title: String? = "Chú ý",
+        subTitle: String? = "",
+        content: String? = "Chú ý!",
+        btnLeftContent: String? = "Huỷ bỏ",
+        btnRightContent: String? = "Đồng ý",
+        isSingle: Boolean? = true,
+        margins: Float? = 50f,
+        supportFragmentManager: FragmentManager
+    ) {
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = title,
+                subTitle = subTitle,
+                content = content,
+                leftButtonTitle = btnLeftContent,
+                rightButtonTitle = btnRightContent,
+                isSingle = isSingle
+            ),
+            margins = margins
+        ).apply {
+            onRightButtonClick {
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
 
 }
