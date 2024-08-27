@@ -50,7 +50,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     private lateinit var requestHorizontalAdapter: RequestHorizontalAdapter
 
     override fun setUp() {
-        WTF("testApiUser token ${AppPreferences.getUserAccessToken()}")
+        syncForm()
         syncUser()
         setupTopViewPager(viewModel.listDefaultHotNews)
         setupRcvFavouriteForm()
@@ -94,15 +94,21 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
     }
 
+    override fun onResume() {
+//        syncForm()
+        viewModel.getListSyncRequest()
+        super.onResume()
+    }
+
     private fun syncUser() = if (AppPreferences.getCountRecordLocalUser() == 0) {
         viewModel.getListUser(true)
     } else {
         viewModel.getListUser(false)
     }
-
-    override fun onResume() {
-        viewModel.getListSyncRequest()
-        super.onResume()
+    private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){
+        viewModel.getListRemoteForm(true)
+    }else{
+        viewModel.getListRemoteForm(false)
     }
 
     private val sliderRunnable = Runnable {
@@ -110,6 +116,54 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun setUpObserver() {
+
+        observeLiveDataChanged(viewModel.listFormRemote){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testAPiForm countRecord ${it.data?.data}")
+                    if (it.data?.data?.isNotEmpty() == true){
+                        viewModel.upsertListForm(it.data?.data ?: arrayListOf())
+                    }
+                },
+                onError = {
+                    processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
+                }
+            )
+        }
+
+        observeLiveDataChanged(viewModel.upsertListFormToLocal){
+            it.onResultReceived(
+                onLoading = {
+                    processSyncDialog.show()
+                },
+                onSuccess = {
+                    processSyncDialog.hide()
+                    WTF("testAPiForm upsert-OK")
+                    showMessageOnSyncDataSuccess(requireContext(), true)
+                    viewModel.getCountFormRecord()
+                },
+                onError = {
+                    processSyncDialog.hide()
+                    showMessageOnSyncDataSuccess(requireContext(), false)
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.checkCountFormRecord){
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("testAPiForm countRecord ${it.data}")
+                    AppPreferences.setCountRecordLocalForm(it.data ?:0)
+                    viewModel.getAllForm()
+                },
+                onError = {}
+            )
+        }
+
+        //sync user
+
         observeLiveDataChanged(viewModel.getListUser) {
             it.onResultReceived(
                 onLoading = {},

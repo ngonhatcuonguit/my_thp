@@ -13,16 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:paddingVertical="4dp">
+        android:paddingVertical="5dp">
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            style="@style/TextViewEx.BodyMedium"
+            android:textSize="14sp"
+            android:textStyle="bold"
             android:textAlignment="textStart"
             android:text="@{field.label}"
-            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintWidth_percent="0.42"
             app:layout_constraintEnd_toStartOf="@id/tv_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +33,8 @@
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_content"
             android:layout_width="0dp"
-            style="@style/TextViewEx.Heading_5"
+            android:textSize="14sp"
+            android:textStyle="normal"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
             android:visibility="invisible"
@@ -42,7 +44,7 @@
             android:drawableEnd="@drawable/ic_edit_value"
             android:drawablePadding="8dp"
             android:paddingEnd="2dp"
-            app:layout_constraintWidth_percent="0.6"
+            app:layout_constraintWidth_percent="0.55"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_title"

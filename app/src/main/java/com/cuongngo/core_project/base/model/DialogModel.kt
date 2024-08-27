@@ -9,6 +9,7 @@ data class DialogModel(
     var edtValue: String? = null,
     var edtTitle: String? = null,
     var edtHint: String? = null,
+    var typeInput: String? = null,
     var isSingle: Boolean? = false,
     var leftButtonTitle: String?,
     var rightButtonTitle: String?

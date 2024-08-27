@@ -286,13 +286,14 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             DialogModel(
                 title = field.label.toString() ?: "Sửa dổi thông tin",
                 subTitle = "subtitle",
-                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
+                content = field.placeholder ?: "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
                 edtValue = edtText,
                 edtHint = "Vui lòng nhập ${field.label.toString()}",
                 edtTitle = "Nhập ${field.label.toString()}",
                 leftButtonTitle = "Huỷ bỏ",
                 rightButtonTitle = "Lưu thông tin",
-                isSingle = false
+                isSingle = false,
+                typeInput = field.type
             )
         ).apply {
             onRightButtonClick {

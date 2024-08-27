@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.base.dialog_fragment
 
 import android.content.DialogInterface
+import android.text.InputType
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -52,14 +53,22 @@ class ConfirmDialog(
             hideKeyboard()
             false
         }
+        dialog?.setCanceledOnTouchOutside(true)
     }
 
     override fun setUp() {
         binding.data = dialogData
-        WTF("dialogData: $dialogData")
         with(binding) {
             if (dialogData.edtTitle != null) {
                 edtSheetName.root.isVisible = true
+                dialogData.edtValue?.let {
+                    if (dialogData.typeInput == "number"){
+                        edtSheetName.edtValue.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+                    }else{
+                        edtSheetName.edtValue.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+                    }
+
+                }
                 dialogData.edtTitle?.let {
                     edtSheetName.tvTitle.text = it
                 }
@@ -100,11 +109,13 @@ class ConfirmDialog(
     override fun inflateLayout() = R.layout.dialog_confirm_default
 
     override fun dismiss() {
+        binding.edtSheetName.edtValue.clearFocus()
         hideKeyboard()
         super.dismiss()
     }
 
     override fun onDismiss(dialog: DialogInterface) {
+        binding.edtSheetName.edtValue.clearFocus()
         hideKeyboard()
         super.onDismiss(dialog)
     }

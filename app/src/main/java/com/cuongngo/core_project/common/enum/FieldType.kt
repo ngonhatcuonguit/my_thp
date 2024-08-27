@@ -12,6 +12,6 @@ enum class FieldType(val fileType: String) {
     TEXT("text"),
     PARAGRAPH("paragraph"),
     RADIO_GROUP("radio-group"),
-    SELECT("textarea"),
+    SELECT("select"),
     TEXT_AREA("textarea"),
 }

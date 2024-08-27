@@ -89,35 +89,50 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     override fun setUpObserver() {
+//        observeLiveDataChanged(viewModel.listFormRemote){
+//            it.onResultReceived(
+//                onLoading = {},
+//                onSuccess = {
+//                    WTF("testAPiForm countRecord ${it.data?.data}")
+//                    if (it.data?.data?.isNotEmpty() == true){
+//                        viewModel.upsertListForm(it.data?.data ?: arrayListOf())
+//                    }
+//                },
+//                onError = {
+//                    processSyncDialog.hide()
+//                    showMessageOnSyncDataSuccess(requireContext(), false)
+//                }
+//            )
+//        }
 
-        observeLiveDataChanged(viewModel.upsertListFormToLocal){
-            it.onResultReceived(
-                onLoading = {
-                    processSyncDialog.show()
-                },
-                onSuccess = {
-                    processSyncDialog.hide()
-                    WTF("testAPiForm upsert-OK")
-                    showMessageOnSyncDataSuccess(requireContext(), true)
-                    viewModel.getCountRecord()
-                },
-                onError = {
-                    processSyncDialog.hide()
-                    showMessageOnSyncDataSuccess(requireContext(), false)
-                }
-            )
-        }
-        observeLiveDataChanged(viewModel.checkCountRecord){
-            it.onResultReceived(
-                onLoading = {},
-                onSuccess = {
-                    WTF("testAPiForm countRecord ${it.data}")
-                    AppPreferences.setCountRecordLocalForm(it.data ?:0)
-                    viewModel.getAllForm()
-                },
-                onError = {}
-            )
-        }
+//        observeLiveDataChanged(viewModel.upsertListFormToLocal){
+//            it.onResultReceived(
+//                onLoading = {
+//                    processSyncDialog.show()
+//                },
+//                onSuccess = {
+//                    processSyncDialog.hide()
+//                    WTF("testAPiForm upsert-OK")
+//                    showMessageOnSyncDataSuccess(requireContext(), true)
+//                    viewModel.getCountRecord()
+//                },
+//                onError = {
+//                    processSyncDialog.hide()
+//                    showMessageOnSyncDataSuccess(requireContext(), false)
+//                }
+//            )
+//        }
+//        observeLiveDataChanged(viewModel.checkCountRecord){
+//            it.onResultReceived(
+//                onLoading = {},
+//                onSuccess = {
+//                    WTF("testAPiForm countRecord ${it.data}")
+//                    AppPreferences.setCountRecordLocalForm(it.data ?:0)
+//                    viewModel.getAllForm()
+//                },
+//                onError = {}
+//            )
+//        }
 
         observeLiveDataChanged(viewModel.allForm) {
             it.onResultReceived(
@@ -137,27 +152,9 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
                     it.data?.let { listForm ->
                         formAdapter.submitListForm(listForm)
                     }
-                    syncForm()
                 },
                 onError = {
                     hideProgressDialog()
-                    syncForm()
-                }
-            )
-        }
-
-        observeLiveDataChanged(viewModel.listFormRemote){
-            it.onResultReceived(
-                onLoading = {},
-                onSuccess = {
-                    WTF("testAPiForm countRecord ${it.data?.data}")
-                    if (it.data?.data?.isNotEmpty() == true){
-                        viewModel.upsertListForm(it.data?.data ?: arrayListOf())
-                    }
-                },
-                onError = {
-                    processSyncDialog.hide()
-                    showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
         }

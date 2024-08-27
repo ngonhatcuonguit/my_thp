@@ -11,12 +11,16 @@
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Mã số nhân viên"
             android:textColor="@color/gray_62"
             android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:gravity="start"
             android:layout_marginStart="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

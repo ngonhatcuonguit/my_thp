@@ -114,6 +114,15 @@ class RequestMasterDetailActivity :
                     viewModel.insertRequest(
                         RequestEntity(
                             requestID = Random.nextLong(1, 1000),
+                            createdBy = UserTHPEntity(
+                                personal_number = AppPreferences.getUserInfo()?.employee_sap_number,
+                                initial =  AppPreferences.getUserInfo()?.employee_number,
+                                first_name = AppPreferences.getUserInfo()?.first_name,
+                                last_name = AppPreferences.getUserInfo()?.last_name,
+                                email = AppPreferences.getUserInfo()?.email,
+                                position_name = AppPreferences.getUserInfo()?.position_name,
+                                organization_number = AppPreferences.getUserInfo()?.organization_id
+                            ),
                             formCode = formEntity?.form_code ?: "",
                             formID = formEntity?.formID.toString() ?: "",
                             requestCode = addRequestCode ?: "",
@@ -174,7 +183,7 @@ class RequestMasterDetailActivity :
                 viewModel.pushRequest(
                     listOf(
                         RequestBodyPush(
-                            device_code = AppPreferences.getDeviceInfo()?.device ?: "",
+                            device_code = AppPreferences.getDeviceInfo()?.id ?: "",
                             json_data = convertRequestEntityToString(viewModel.newRequestEntity),
                             request_code = viewModel.newRequestEntity?.requestCode,
                             process_id = viewModel.newRequestEntity?.requestID.toString(),
@@ -683,13 +692,14 @@ class RequestMasterDetailActivity :
             DialogModel(
                 title = field.label.toString() ?: "Sửa dổi thông tin",
                 subTitle = "subtitle",
-                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
+                content = field.placeholder ?: "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
                 edtValue = edtText,
                 edtHint = "Vui lòng nhập ${field.label.toString()}",
                 edtTitle = "Nhập ${field.label.toString()}",
                 leftButtonTitle = "Huỷ bỏ",
                 rightButtonTitle = "Lưu thông tin",
-                isSingle = false
+                isSingle = false,
+                typeInput = field.type
             )
         ).apply {
             onRightButtonClick {

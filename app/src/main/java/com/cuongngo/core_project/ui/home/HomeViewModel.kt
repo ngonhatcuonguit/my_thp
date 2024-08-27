@@ -15,7 +15,6 @@ import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.UserRepository
-import com.cuongngo.core_project.ui.request_detail.PushRequestModel
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
@@ -58,6 +57,12 @@ class HomeViewModel(
 
     private val _listRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
     val listRequest: LiveData<BaseResult<List<RequestEntity>>> = _listRequest
+
+    private val _upsertListFormToLocal = MutableLiveData<BaseResult<Unit>>()
+    val upsertListFormToLocal: LiveData<BaseResult<Unit>> = _upsertListFormToLocal
+
+    private val _checkCountFormRecord = MutableLiveData<BaseResult<Int>>()
+    val checkCountFormRecord: LiveData<BaseResult<Int>> = _checkCountFormRecord
 
     //--------------
 
@@ -146,16 +151,31 @@ class HomeViewModel(
         }
     }
 
-
-    fun getListForm() {
+    fun getListRemoteForm(isGetAll: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFormRemote.postValue(formRepository.getListForm(true))
+                _listFormRemote.postValue(formRepository.getListForm(isGetAll))
             }
         }
     }
 
+    fun upsertListForm(listForm: List<FormEntity>){
+        _upsertListFormToLocal.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _upsertListFormToLocal.postValue(formRepository.upsertListForm(listForm))
+            }
+        }
+    }
 
+    fun getCountFormRecord() {
+        _checkCountFormRecord.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _checkCountFormRecord.postValue(formRepository.getFormCountLocal())
+            }
+        }
+    }
 
     //Local
 
