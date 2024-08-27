@@ -30,7 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="Tạo yêu cầu mới"
+            android:text="Nhập thông tin"
             android:textAlignment="center"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@id/iv_back"
@@ -48,7 +48,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="60dp"
+                >
 
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_form_title"
@@ -57,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="10dp"
-                    android:text="@{request.requestName}"
+                    android:text="@{request.formName}"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
@@ -66,29 +68,17 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Nguyen Van ABCXYZ" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_list_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
-                    android:isScrollContainer="false"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_detail_info_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_form_title"
-                    app:layout_constraintVertical_bias="0.0" />
-
-
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_detail_info_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
                     android:text="Thông tin chi tiết"
                     android:textAllCaps="true"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rv_list_header" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_form_title" />
 
                 <include
                     android:id="@+id/header_list_field"
@@ -110,6 +100,24 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/header_list_field"
                     app:layout_constraintVertical_bias="0.0" />
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/btn_save_draft"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_list_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:textAlignment="center"
+                    android:text="Hoàn thành lần nhập"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:textAllCaps="false"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/shape_green_radius_12" />
 
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_empty_list_form"

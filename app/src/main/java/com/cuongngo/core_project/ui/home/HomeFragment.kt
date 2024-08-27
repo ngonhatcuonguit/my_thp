@@ -1,7 +1,5 @@
 package com.cuongngo.core_project.ui.home
 
-import android.app.Activity
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +10,6 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
@@ -34,10 +31,6 @@ import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
 import com.cuongngo.core_project.utils.toast.showMessageToast
 import io.reactivex.disposables.Disposable
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
@@ -223,7 +216,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                     listOf(
                         RequestBodyPush(
                             device_code = AppPreferences.getDeviceInfo()?.device ?: "",
-                            json_data = convertRequestEntityToString(viewModel.listUpload.first() ?: return@observe),
+                            json_data = convertRequestEntityToString(
+                                viewModel.listUpload.first() ?: return@observe
+                            ),
                             request_code = viewModel.listUpload.first().requestCode,
                             process_id = viewModel.listUpload.first().requestID.toString(),
                             version = viewModel.listUpload.first().version?.plus(1.0F).toString(),
@@ -237,7 +232,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             it.onResultReceived(
                 onLoading = {},
                 onSuccess = { result ->
-                    if (viewModel.listUpload.isNotEmpty() && result.data != null){
+                    if (viewModel.listUpload.isNotEmpty() && result.data != null) {
                         val item = viewModel.listUpload.find {
                             it.requestCode == result.data.data?.firstOrNull()?.request_code
                         }
@@ -247,7 +242,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                                 is_sync = true
                             )
                             requestHorizontalAdapter.refreshRemoveItem(requestMatch)
-                            viewModel.updateListUploadRequest(requestMatch,false)
+                            viewModel.updateListUploadRequest(requestMatch, false)
                         }
                         showMessageToast(
                             requireContext(),
@@ -340,9 +335,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             requireContext(),
             arrayListOf(),
             onItemClickListener = {
-                if (!viewModel.listUpload.contains(it)){
+                if (!viewModel.listUpload.contains(it)) {
                     viewModel.updateListUploadRequest(it, true)
-                }else return@RequestHorizontalAdapter
+                } else return@RequestHorizontalAdapter
 //                requestHorizontalAdapter.refreshItem(it)
             }
         )

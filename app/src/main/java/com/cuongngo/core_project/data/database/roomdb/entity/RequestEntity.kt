@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.cuongngo.core_project.response.BaseModel
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 @Entity(
     tableName = "request_value",
@@ -51,7 +52,8 @@ data class RequestEntity(
 //convert to json and string
 fun convertRequestEntityToString(requestEntity: RequestEntity?): String {
     // Convert RequestEntity to JSON String
-    return Gson().toJson(requestEntity)
+    val gson = GsonBuilder().serializeNulls().create()
+    return gson.toJson(requestEntity)
 }
 
 fun convertStringToRequestEntity(requestString: String?): RequestEntity {

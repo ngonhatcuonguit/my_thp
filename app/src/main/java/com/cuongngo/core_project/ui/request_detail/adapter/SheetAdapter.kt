@@ -47,7 +47,7 @@ class SheetAdapter(
                 countHeader++
             }
         }
-        if(countHaveValue == (sheet.list_field?.size ?: 0) - countHeader){
+        if(countHaveValue == ((sheet.list_field?.size ?: 0) - countHeader) || sheet.is_done == true){
             binding.tvStatus.setBackgroundResource(R.drawable.shape_primary_radius6)
         }else{
             binding.tvStatus.setBackgroundResource(R.drawable.shape_yellow_radius6)

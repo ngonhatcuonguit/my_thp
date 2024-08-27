@@ -75,16 +75,24 @@ data class Field(
     var updated: String?,
     var deleted: String?,
 ):  BaseModel() {
-    companion object {
-        const val STATUS_ACTIVE = 1
-        const val STATUS_INACTIVE = 0
+    fun copyWithEmptyFieldsAsNull(): Field {
+        return this.copy(
+            label = if (label.isNullOrBlank()) null else label,
+            value = if (value.isNullOrBlank()) "N/A" else value,
+            placeholder = if (placeholder.isNullOrBlank()) null else placeholder,
+            type = if (type.isNullOrBlank()) null else type,
+            options = if (options.isNullOrEmpty()) null else options,
+            created = if (created.isNullOrBlank()) null else created,
+            updated = if (updated.isNullOrBlank()) null else updated,
+            deleted = if (deleted.isNullOrBlank()) null else deleted
+        )
     }
 }
 
 data class Option(
     val id: Long?,
-    val value: String?,
-    val label: String?,
+    val value: String? = null,
+    val label: String? = null,
     val type: String? = null
 ): BaseModel()
 

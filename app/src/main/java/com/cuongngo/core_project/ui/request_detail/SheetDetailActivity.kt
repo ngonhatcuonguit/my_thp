@@ -70,6 +70,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
 
     private val body by lazy { intent.getSerializableExtra(SHEET_DATA_KEY) as Body }
     private val requestEntity by lazy { intent.getSerializableExtra(RequestMasterDetailActivity.REQUEST_DATA_KEY) as RequestEntity }
+    private var isDone = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        enableLightStatusBar()
@@ -83,6 +84,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         var index = viewModel.newRequestEntity?.listBody?.indexOf(currentData) ?: -1
         currentData?.list_field = lisFieldAfterChange
         viewModel.newRequestEntity?.listBody!!.toMutableList()[index]= currentData ?: body
+        if (isDone){
+            viewModel.newRequestEntity?.listBody!!.toMutableList()[index].is_done = isDone ?: false
+        }else{
+            viewModel.newRequestEntity?.listBody!!.toMutableList()[index].is_done = isListDone(viewModel.newRequestEntity?.listBody!!.toMutableList()[index].list_field!!) ?: false
+        }
         WTF("testSheetDetail --${viewModel.newRequestEntity?.listBody!!.toMutableList()[index]}")
 
         val resultIntent = Intent().apply {
@@ -92,13 +98,25 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         super.onBackPressed()
     }
 
+    fun isListDone(listField: List<Field>): Boolean {
+        val problematicFieldsCount = listField.count { field_data ->
+            field_data.value.isNullOrBlank()
+        } ?: 0
+        return problematicFieldsCount <= 1
+    }
+
     override fun setUp() {
         viewModel.newRequestEntity = requestEntity
+        binding.request = requestEntity
         binding.apply {
             ivBack.setOnClickListener {
                 onBackPressed()
             }
             tvFormTitle.text = body.form_name.toString()
+            btnSaveDraft.setOnClickListener {
+                isDone = true
+                onBackPressed()
+            }
         }
         setupRecycleViewListField()
         fieldAdapter.submitListField(body.list_field)
