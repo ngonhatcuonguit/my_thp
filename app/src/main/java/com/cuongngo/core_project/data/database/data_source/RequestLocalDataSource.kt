@@ -1,8 +1,8 @@
 package com.cuongngo.core_project.data.database.data_source
 
 import com.cuongngo.core_project.data.database.AppDatabase
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataSource() {
 
@@ -26,6 +26,18 @@ class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataS
                 currentTimestamp = currentTime
             )
         }
+    suspend fun updateSyncStatus(requestCode: String, is_sync: Boolean, currentTime: String) =
+        getResult {
+            database.requestDao().updateSyncStatus(
+                requestCode = requestCode,
+                is_sync = is_sync,
+                currentTimestamp = currentTime
+            )
+        }
+
+    suspend fun getRequestNeedUpload() = getResult {
+        database.requestDao().getRequestNeedUpload()
+    }
 
     suspend fun insertRequest(record: RequestEntity) = getResult {
         database.requestDao().insertRequest(record)

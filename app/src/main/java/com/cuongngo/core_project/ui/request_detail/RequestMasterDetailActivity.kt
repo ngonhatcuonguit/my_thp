@@ -22,6 +22,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.ProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.randomBoolean
 import com.cuongngo.core_project.data.database.roomdb.entity.randomDate
 import com.cuongngo.core_project.data.database.roomdb.entity.toDataClass
@@ -46,6 +47,7 @@ import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
 import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.toast.showMessageSaveData
+import com.cuongngo.core_project.utils.toast.showMessageToast
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -217,6 +219,12 @@ class RequestMasterDetailActivity :
                         delay(3900)
                         processUploadDialog.hide()
                         viewModel.currentRequestEntity = viewModel.newRequestEntity
+                        showMessageToast(
+                            this@RequestMasterDetailActivity,
+                            true,
+                            "Gửi yêu cầu thành công!",
+                            ""
+                        )
                     }
                 },
                 onError = {
@@ -495,7 +503,7 @@ class RequestMasterDetailActivity :
                 processSteps = listProcessStep,
                 listHeader = listHeader,
                 listBody = listBody,
-
+                isSync = false
                 )
             viewModel.newRequestEntity = currentRequest
             viewModel.newRequestEntity?.let {
@@ -519,7 +527,6 @@ class RequestMasterDetailActivity :
                 processSteps = listProcessStep,
                 listHeader = listHeader,
                 listBody = listBody,
-
                 )
             viewModel.newRequestEntity = currentRequest
         }
@@ -701,17 +708,6 @@ class RequestMasterDetailActivity :
         val fieldIndex = viewModel.newRequestEntity?.listHeader?.indexOf(fieldData) ?: return
         fieldData?.value = newValue
         fieldData?.let { formHeaderAdapter.onChangeValueField(it, fieldIndex) }
-    }
-
-    //convert to json and string
-    fun convertRequestEntityToString(requestEntity: RequestEntity?): String {
-        // Convert RequestEntity to JSON String
-        return Gson().toJson(requestEntity)
-    }
-
-    fun convertStringToRequestEntity(requestString: String?): RequestEntity {
-        // Convert JSON String back to FormEntity (if needed)
-        return Gson().fromJson(requestString, RequestEntity::class.java)
     }
 
 }

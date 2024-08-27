@@ -28,7 +28,7 @@ class RequestAdapter(
         }else{
             binding.tvRequestName.text = request.requestName
         }
-        binding.tvRequestCode.text = "Code: ${request.requestCode}"
+        binding.tvRequestCode.text = "Mã: ${request.requestCode}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(request) ?: return@setOnClickListener
         }

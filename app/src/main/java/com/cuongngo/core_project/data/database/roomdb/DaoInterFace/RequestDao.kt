@@ -27,8 +27,13 @@ interface RequestDao {
     @Query("SELECT * FROM request_value WHERE request_name = :requestName")
     fun getRequestByName(requestName: String): RequestEntity
 
+    @Query("SELECT * FROM request_value WHERE is_sync = 0")
+    fun getRequestNeedUpload(): List<RequestEntity>
+
     @Query("UPDATE request_value SET list_body = :listBody, updated_at = :currentTimestamp WHERE request_id = :requestId")
     fun updateListSheet(requestId: Long, listBody: List<Body>?, currentTimestamp: String)
+    @Query("UPDATE request_value SET is_sync = :is_sync, updated_at = :currentTimestamp WHERE request_code = :requestCode")
+        fun updateSyncStatus(requestCode: String, is_sync: Boolean?, currentTimestamp: String)
 
     @Delete
     fun deleteRequest(record: RequestEntity)

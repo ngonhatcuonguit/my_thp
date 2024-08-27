@@ -11,6 +11,7 @@ import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +40,9 @@ class RequestViewModel(
     private val _requestUpdateListSheet = MutableLiveData<BaseResult<Unit>>()
     val requestUpdateListSheet: LiveData<BaseResult<Unit>> = _requestUpdateListSheet
 
+    private val _requestSyncStatus = MutableLiveData<BaseResult<Unit>>()
+    val requestSyncStatus: LiveData<BaseResult<Unit>> = _requestSyncStatus
+
     //form
     private val _form = MutableLiveData<BaseResult<FormEntity>>()
     val form: LiveData<BaseResult<FormEntity>> = _form
@@ -50,8 +54,8 @@ class RequestViewModel(
     val formUnit: LiveData<BaseResult<Unit>> = _formUnit
 
     //---remote---
-    private val _pushRequest = MutableLiveData<BaseResult<PushRequestModel>>()
-    val pushRequest: LiveData<BaseResult<PushRequestModel>> = _pushRequest
+    private val _pushRequest = MutableLiveData<BaseResult<PushRequestResponse>>()
+    val pushRequest: LiveData<BaseResult<PushRequestResponse>> get() = _pushRequest
 
     //variable
     var formEntity: FormEntity? = null
@@ -106,11 +110,6 @@ class RequestViewModel(
         }
     }
 
-    private fun getCurrentTimestamp(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        return dateFormat.format(Date())
-    }
-
     fun updateListSheet(requestID: Long, listBody: List<Body>) {
         _requestUpdateListSheet.value = BaseResult.loading(null)
         viewModelScope.launch {
@@ -119,6 +118,20 @@ class RequestViewModel(
                     requestRepository.updateListSheet(
                         requestID = requestID,
                         listBody = listBody,
+                        currentTime = getCurrentTimestamp()
+                    )
+                )
+            }
+        }
+    }
+    fun updateSyncStatus(requestCode: String, is_sync: Boolean) {
+        _requestSyncStatus.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _requestSyncStatus.postValue(
+                    requestRepository.updateSyncStatus(
+                        requestCode = requestCode,
+                        is_sync = is_sync,
                         currentTime = getCurrentTimestamp()
                     )
                 )

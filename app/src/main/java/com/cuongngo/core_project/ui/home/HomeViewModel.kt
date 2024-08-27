@@ -15,6 +15,9 @@ import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.UserRepository
+import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
+import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -49,8 +52,6 @@ class HomeViewModel(
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
     val checkUserTable: LiveData<BaseResult<Int>>get() = _checkUserTable
 
-
-
     //-----form remote----
     private val _listFormRemote = MutableLiveData<BaseResult<FormResponse>>()
     val listFormRemote: LiveData<BaseResult<FormResponse>> = _listFormRemote
@@ -63,9 +64,24 @@ class HomeViewModel(
     private val _listUploadRequest = MutableLiveData<List<RequestEntity>>()
     val listUploadRequest: LiveData<List<RequestEntity>> = _listUploadRequest
 
-    fun updateListUploadRequest(requestEntity: RequestEntity) {
-        listUpload.add(requestEntity)
-        this._listUploadRequest.value = listUpload
+    private val _pushRequest = MutableLiveData<BaseResult<PushRequestResponse>>()
+    val pushRequest: LiveData<BaseResult<PushRequestResponse>> get() = _pushRequest
+
+    private val _requestSyncStatus = MutableLiveData<BaseResult<Unit>>()
+    val requestSyncStatus: LiveData<BaseResult<Unit>> = _requestSyncStatus
+
+    fun updateListUploadRequest(requestEntity: RequestEntity, isAdd: Boolean) {
+        if(!listUpload.contains(requestEntity) && isAdd){
+            listUpload.add(requestEntity)
+            this._listUploadRequest.value = listUpload
+        }else if(!isAdd){
+            listUpload.remove(requestEntity)
+            if (listUpload.isNotEmpty()){
+                this._listUploadRequest.value = listUpload
+            }
+        }else{
+
+        }
     }
 
     var news = News(
@@ -90,7 +106,6 @@ class HomeViewModel(
 //        getHotNew()
         getAllForm()
         getListSyncRequest()
-
     }
 
     fun insertForm(formEntity: FormEntity) {
@@ -180,10 +195,42 @@ class HomeViewModel(
     fun getListSyncRequest() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listRequest.postValue(formRepository.getAllRequest())
+                _listRequest.postValue(requestRepository.getRequestNeedUpload())
             }
         }
     }
+
+
+    fun pushRequest(
+        requestBodyPush : List<RequestBodyPush>
+    ) {
+        _pushRequest.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _pushRequest.postValue(
+                    requestRepository.pushRequest(
+                        requestBodyPush = requestBodyPush
+                    )
+                )
+            }
+        }
+    }
+
+    fun updateSyncStatus(requestCode: String, is_sync: Boolean) {
+        _requestSyncStatus.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _requestSyncStatus.postValue(
+                    requestRepository.updateSyncStatus(
+                        requestCode = requestCode,
+                        is_sync = is_sync,
+                        currentTime = getCurrentTimestamp()
+                    )
+                )
+            }
+        }
+    }
+
 
 
 }

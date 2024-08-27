@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import com.cuongngo.core_project.common.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel : ViewModel() {
@@ -26,5 +29,10 @@ abstract class BaseViewModel : ViewModel() {
 
     open fun showLoading() {
         _isLoading.postValue(true)
+    }
+
+    open fun getCurrentTimestamp(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return dateFormat.format(Date())
     }
 }

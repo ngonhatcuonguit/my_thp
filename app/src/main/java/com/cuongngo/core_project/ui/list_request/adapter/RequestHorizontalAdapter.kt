@@ -36,14 +36,15 @@ class RequestHorizontalAdapter(
             ivPushData.setOnClickListener {
                 flProgressBar.isVisible = true
                 binding.ivPushData.isVisible = false
+                onItemClickListener?.invoke(request)
             }
             flProgressBar.setOnClickListener {
-                flProgressBar.isVisible = false
-                ivPushData.isVisible = true
+//                flProgressBar.isVisible = false
+//                ivPushData.isVisible = true
             }
             request = request
             root.elevation = convertDpToPixel(8F, context)
-            tvRequestCode.text = "Mã Y/Cầu: ${request.requestCode}"
+            tvRequestCode.text = "Mã: ${request.requestCode}"
             if (request.requestName.isNullOrEmpty()){
                 binding.tvRequestName.text = request.formName
             }else{
@@ -75,6 +76,17 @@ class RequestHorizontalAdapter(
             notifyItemChanged(index)
         }
     }
+    fun refreshRemoveItem(requestEntity: RequestEntity?) {
+            if (requestEntity != null) {
+                val oldData = listRequest.find {
+                    requestEntity.requestCode == it.requestCode
+                }
+                val index = listRequest.indexOf(oldData)
+                listRequest[index] = requestEntity
+                listRequest.remove(requestEntity)
+                notifyItemRemoved(index)
+            }
+        }
 
     class RequestViewHolder(
         val itemRequest: ItemRequestHorizontalBinding

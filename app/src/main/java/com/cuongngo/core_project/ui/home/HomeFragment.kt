@@ -13,6 +13,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomSheet
@@ -24,13 +25,19 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.RequestHorizontalAdapter
+import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormHorizontalAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
+import com.cuongngo.core_project.utils.toast.showMessageToast
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
@@ -60,6 +67,9 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
             tvFavouriteTitle.setOnClickListener {
                 viewModel.getAllForm()
+            }
+            tvSyncRequestTitle.setOnClickListener {
+                viewModel.getListSyncRequest()
             }
         }
     }
@@ -98,6 +108,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun onResume() {
+        viewModel.getListSyncRequest()
         super.onResume()
     }
 
@@ -121,6 +132,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 },
                 onError = {
                     processSyncDialog.hide()
+                    setupShowDialogResult(false, it.errorCode)
                     showMessageOnSyncDataSuccess(requireContext(), false)
                 }
             )
@@ -197,6 +209,56 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 },
                 onError = {
                     hideProgressDialog()
+                }
+            )
+        }
+
+        viewModel.listUploadRequest.observe(viewLifecycleOwner) { requestList ->
+            // Handle the updated list here
+            if (requestList.isEmpty()) {
+                // Handle empty list scenario
+            } else {
+                // Handle non-empty list, call api, update UI, etc.
+                viewModel.pushRequest(
+                    listOf(
+                        RequestBodyPush(
+                            device_code = AppPreferences.getDeviceInfo()?.device ?: "",
+                            json_data = convertRequestEntityToString(viewModel.listUpload.first() ?: return@observe),
+                            request_code = viewModel.listUpload.first().requestCode,
+                            process_id = viewModel.listUpload.first().requestID.toString(),
+                            version = viewModel.listUpload.first().version?.plus(1.0F).toString(),
+                        )
+                    )
+                )
+            }
+        }
+
+        observeLiveDataChanged(viewModel.pushRequest) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = { result ->
+                    if (viewModel.listUpload.isNotEmpty() && result.data != null){
+                        val item = viewModel.listUpload.find {
+                            it.requestCode == result.data.data?.firstOrNull()?.request_code
+                        }
+                        item?.let { requestMatch ->
+                            viewModel.updateSyncStatus(
+                                requestMatch.requestCode,
+                                is_sync = true
+                            )
+                            requestHorizontalAdapter.refreshRemoveItem(requestMatch)
+                            viewModel.updateListUploadRequest(requestMatch,false)
+                        }
+                        showMessageToast(
+                            requireContext(),
+                            true,
+                            "Upload yêu cầu thành công!",
+                            ""
+                        )
+                    }
+                },
+                onError = {
+                    setupShowDialogResult(false, it.errorCode)
                 }
             )
         }
@@ -278,8 +340,10 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             requireContext(),
             arrayListOf(),
             onItemClickListener = {
-                viewModel.listUpload.add(it)
-                requestHorizontalAdapter.refreshItem(it)
+                if (!viewModel.listUpload.contains(it)){
+                    viewModel.updateListUploadRequest(it, true)
+                }else return@RequestHorizontalAdapter
+//                requestHorizontalAdapter.refreshItem(it)
             }
         )
 //        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {

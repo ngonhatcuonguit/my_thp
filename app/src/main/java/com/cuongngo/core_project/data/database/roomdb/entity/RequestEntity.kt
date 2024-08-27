@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.cuongngo.core_project.response.BaseModel
+import com.google.gson.Gson
 
 @Entity(
     tableName = "request_value",
@@ -46,6 +47,17 @@ data class RequestEntity(
     @ColumnInfo(name = "version") var version: Float? = 0F,
     @ColumnInfo(name = "is_sync") var isSync: Boolean? = false,
 ) : BaseModel()
+
+//convert to json and string
+fun convertRequestEntityToString(requestEntity: RequestEntity?): String {
+    // Convert RequestEntity to JSON String
+    return Gson().toJson(requestEntity)
+}
+
+fun convertStringToRequestEntity(requestString: String?): RequestEntity {
+    // Convert JSON String back to FormEntity (if needed)
+    return Gson().fromJson(requestString, RequestEntity::class.java)
+}
 
 
 data class RequestData(

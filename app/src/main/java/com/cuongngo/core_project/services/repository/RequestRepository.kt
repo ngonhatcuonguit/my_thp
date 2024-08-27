@@ -6,6 +6,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 
 class RequestRepository(
@@ -40,6 +41,14 @@ class RequestRepository(
             listBody = listBody,
             currentTime = currentTime
         )
+    suspend fun updateSyncStatus(requestCode: String, is_sync: Boolean, currentTime: String) =
+            requestLocalDataSource.updateSyncStatus(
+                requestCode = requestCode,
+                is_sync = is_sync,
+                currentTime = currentTime
+            )
+
+    suspend fun getRequestNeedUpload() = requestLocalDataSource.getRequestNeedUpload()
 
     suspend fun deleteRequest(record: RequestEntity): BaseResult<Unit> {
         return requestLocalDataSource.deleteRequest(record)
@@ -48,7 +57,7 @@ class RequestRepository(
     //---remote---
     suspend fun pushRequest(
         requestBodyPush : List<RequestBodyPush>
-    ): BaseResult<PushRequestModel>{
+    ): BaseResult<PushRequestResponse>{
         return requestRemoteDataSource.pushRequest(
             requestBodyPush = requestBodyPush
         )

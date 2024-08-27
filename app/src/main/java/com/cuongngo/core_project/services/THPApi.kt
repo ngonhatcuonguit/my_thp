@@ -9,6 +9,7 @@ import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import retrofit2.Response
 import retrofit2.http.Body
@@ -48,7 +49,7 @@ interface THPApi {
     @POST("api/request/push-request")
     suspend fun pushRequest(
         @Body requestBodyPush: List<RequestBodyPush>,
-    ): Response<PushRequestModel>
+    ): Response<PushRequestResponse>
 
     @GET("api/employee/list")
     suspend fun getListUser(
