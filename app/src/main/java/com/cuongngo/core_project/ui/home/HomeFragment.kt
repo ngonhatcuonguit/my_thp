@@ -10,6 +10,7 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomProcessStep
@@ -268,15 +269,26 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 // Handle non-empty list, call api, update UI, etc.
                 viewModel.pushRequest(
                     listOf(
-                        RequestBodyPush(
-                            device_code = AppPreferences.getDeviceInfo()?.device ?: "",
-                            json_data = convertRequestEntityToString(
-                                viewModel.listUpload.first() ?: return@observe
-                            ),
-                            request_code = viewModel.listUpload.first().requestCode,
-                            process_id = viewModel.listUpload.first().requestID.toString(),
-                            version = viewModel.listUpload.first().version?.plus(1.0F).toString(),
-                        )
+                        viewModel.listUpload.first().let {
+                            RequestBodyPush(
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
+                                json_data = convertRequestEntityToString(it.copy(
+                                    createdBy = UserTHPEntity(
+                                        personal_number = AppPreferences.getUserInfo()?.employee_sap_number,
+                                        initial =  AppPreferences.getUserInfo()?.employee_number,
+                                        first_name = AppPreferences.getUserInfo()?.first_name,
+                                        last_name = AppPreferences.getUserInfo()?.last_name,
+                                        email = AppPreferences.getUserInfo()?.email,
+                                        position_name = AppPreferences.getUserInfo()?.position_name,
+                                        organization_number = AppPreferences.getUserInfo()?.organization_id
+                                    ),
+                                ) ?: return@observe),
+                                request_code = it.requestCode,
+                                process_id = it.requestID.toString(),
+                                version = it.version?.plus(1.0F).toString(),
+                                status = 0,
+                            )
+                        }
                     )
                 )
             }
@@ -293,7 +305,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                         item?.let { requestMatch ->
                             viewModel.updateSyncStatus(
                                 requestMatch.requestCode,
-                                is_sync = true
+                                is_sync = true,
+                                status = requestMatch.status ?: 0
                             )
                             requestHorizontalAdapter.refreshRemoveItem(requestMatch)
                             viewModel.updateListUploadRequest(requestMatch, false)

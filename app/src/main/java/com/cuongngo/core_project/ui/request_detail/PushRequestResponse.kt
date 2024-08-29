@@ -26,5 +26,6 @@ data class RequestBodyPush(
     var json_data: String?,
     var process_id: String?,
     var version: String?,
-    var request_code: String?
+    var request_code: String?,
+    var status: Int?,
 ): BaseModel()

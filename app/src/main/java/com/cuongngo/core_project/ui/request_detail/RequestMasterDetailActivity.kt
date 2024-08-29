@@ -131,7 +131,8 @@ class RequestMasterDetailActivity :
                             listBody = formEntity?.list_body,
                             processSteps = formEntity?.process_steps,
                             requestStatus = Random.nextInt(1, 6),
-                            process_id = formEntity?.process_id.toString() ?: ""
+                            process_id = formEntity?.process_id.toString() ?: "",
+                            status = 0
                         )
                     )
                 }
@@ -175,22 +176,99 @@ class RequestMasterDetailActivity :
                     setupShowDialogConfirm(form)
                 }
             }
-            layoutSubmitButton.btnSecond.setOnClickListener {
-                updateRequest()
-            }
             layoutSubmitButton.btnPrimary.setOnClickListener {
-
-                viewModel.pushRequest(
-                    listOf(
-                        RequestBodyPush(
-                            device_code = AppPreferences.getDeviceInfo()?.id ?: "",
-                            json_data = convertRequestEntityToString(viewModel.newRequestEntity),
-                            request_code = viewModel.newRequestEntity?.requestCode,
-                            process_id = viewModel.newRequestEntity?.requestID.toString(),
-                            version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
+                if(validateSubmit(viewModel.newRequestEntity)){
+                    viewModel.sendRequest(
+                        listOf(
+                            RequestBodyPush(
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
+                                json_data = convertRequestEntityToString(
+                                    viewModel.newRequestEntity?.copy(
+                                        createdBy = UserTHPEntity(
+                                            personal_number = AppPreferences.getUserInfo()?.employee_sap_number,
+                                            initial =  AppPreferences.getUserInfo()?.employee_number,
+                                            first_name = AppPreferences.getUserInfo()?.first_name,
+                                            last_name = AppPreferences.getUserInfo()?.last_name,
+                                            email = AppPreferences.getUserInfo()?.email,
+                                            position_name = AppPreferences.getUserInfo()?.position_name,
+                                            organization_number = AppPreferences.getUserInfo()?.organization_id
+                                        ),
+                                        status = 1,
+                                        version = viewModel.newRequestEntity?.version?.plus(1.0F),
+                                    )
+                                ),
+                                request_code = viewModel.newRequestEntity?.requestCode,
+                                process_id = viewModel.newRequestEntity?.requestID.toString(),
+                                version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
+                                status = 1
+                            )
                         )
                     )
-                )
+                }else{
+                    var messageWarning = "Vui lòng nhập đầy đủ thông tin trước khi trình ký!"
+                    if (viewModel.newRequestEntity?.status == 0 || viewModel.newRequestEntity?.status == 3){
+
+                    }else{
+                        messageWarning = "Yêu cầu của bạn đã được gửi trình ký trước đó!"
+                    }
+                    val confirmDialog = ConfirmDialog(
+                        DialogModel(
+                            title = "Chú Ý",
+                            subTitle = "",
+                            content = messageWarning,
+                            leftButtonTitle = "Đồng ý",
+                            rightButtonTitle = "",
+                            isSingle = true
+                        ),
+                        margins = 90f
+                    ).apply {
+                        onRightButtonClick {
+                            dismiss()
+                        }
+                        onLeftButtonClick {
+                            dismiss()
+                        }
+                    }
+                    confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+                }
+            }
+            layoutSubmitButton.btnSecond.setOnClickListener {
+                cacheData()
+                if(viewModel.newRequestEntity?.status == 0){
+                    viewModel.uploadRequest(
+                        listOf(
+                            RequestBodyPush(
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
+                                json_data = convertRequestEntityToString(
+                                    viewModel.newRequestEntity?.copy(
+                                        createdBy = UserTHPEntity(
+                                            personal_number = AppPreferences.getUserInfo()?.employee_sap_number,
+                                            initial =  AppPreferences.getUserInfo()?.employee_number,
+                                            first_name = AppPreferences.getUserInfo()?.first_name,
+                                            last_name = AppPreferences.getUserInfo()?.last_name,
+                                            email = AppPreferences.getUserInfo()?.email,
+                                            position_name = AppPreferences.getUserInfo()?.position_name,
+                                            organization_number = AppPreferences.getUserInfo()?.organization_id
+                                        ),
+                                        status = 0,
+                                        version = viewModel.newRequestEntity?.version?.plus(1.0F)
+                                    )
+                                ),
+                                request_code = viewModel.newRequestEntity?.requestCode,
+                                process_id = viewModel.newRequestEntity?.requestID.toString(),
+                                version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
+                                status = 0
+                            )
+                        )
+                    )
+                }else{
+                    showMessageToast(
+                        this@RequestMasterDetailActivity,
+                        false,
+                        contentDone = "",
+                        contentFail = "Yêu cầu của bạn đã được gửi trình ký trước đó!"
+                    )
+                }
 
                 if (viewModel.currentRequestEntity?.toDataClass() != viewModel.newRequestEntity?.toDataClass()){
                     WTF("sosanh false")
@@ -200,6 +278,23 @@ class RequestMasterDetailActivity :
                 }
             }
         }
+    }
+
+    private fun validateSubmit(request: RequestEntity?): Boolean {
+        var processStepCheck = true
+        request?.processSteps?.forEach { processStep ->
+            if (processStep.owner.isNullOrEmpty()) {
+                processStepCheck = false
+                return@forEach
+            }
+        }
+        return !(request?.requestCode?.isEmpty() == true
+                || AppPreferences.getUserInfo() == null
+                || request?.requestName.isNullOrEmpty()
+                || !processStepCheck
+                || request?.status == 1
+                || request?.status == 2
+                )
     }
 
     override fun setUpObserver() {
@@ -218,7 +313,7 @@ class RequestMasterDetailActivity :
             )
         }
 
-        observeLiveDataChanged(viewModel.pushRequest) {
+        observeLiveDataChanged(viewModel.uploadRequest) {
             it.onResultReceived(
                 onLoading = {
                     processUploadDialog.show()
@@ -231,13 +326,39 @@ class RequestMasterDetailActivity :
                         showMessageToast(
                             this@RequestMasterDetailActivity,
                             true,
-                            "Gửi yêu cầu thành công!",
+                            "Lưu nháp dữ liệu thành công!",
                             ""
                         )
                     }
                 },
                 onError = {
                     processUploadDialog.hide()
+                    setupShowDialogResult(false, it.errorCode)
+                }
+            )
+        }
+
+        observeLiveDataChanged(viewModel.sendRequest) {
+            it.onResultReceived(
+                onLoading = {
+                    processSendFileDialog.show()
+                },
+                onSuccess = {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        delay(3900)
+                        processSendFileDialog.hide()
+                        viewModel.currentRequestEntity = viewModel.newRequestEntity
+                        showMessageToast(
+                            this@RequestMasterDetailActivity,
+                            true,
+                            "Gửi yêu cầu thành công!",
+                            ""
+                        )
+                    }
+                    updateRequest(status = 1)
+                },
+                onError = {
+                    processSendFileDialog.hide()
                     setupShowDialogResult(false, it.errorCode)
                 }
             )
@@ -257,7 +378,7 @@ class RequestMasterDetailActivity :
                 //
             }, onSuccess = {
                 it.data.let { request ->
-                    binding.tvRequestTitle.text = request?.requestName ?: "Tạo yêu cầu mới"
+                    binding.tvRequestTitle.text = request?.requestName ?: viewModel.formEntity?.name ?:"Tạo yêu cầu mới"
                     if (viewModel.newRequestEntity != null) {
                         viewModel.newRequestEntity = request
                         sheetAdapter.submitListSheet(request?.listBody)
@@ -295,9 +416,8 @@ class RequestMasterDetailActivity :
         }
 
         observeLiveDataChanged(viewModel.updateRequest) {
-            it.onResultReceived(onLoading = {
-                showProgressDialog()
-            }, onSuccess = {
+            it.onResultReceived(onLoading = {},
+                onSuccess = {
                 WTF("updateRQ ----Ok ${viewModel.newRequestEntity}")
                 hideProgressDialog()
                 if (isOnBack == true) {
@@ -497,22 +617,24 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun updateRequest() {
+    private fun updateRequest(status: Int? = viewModel.newRequestEntity?.status) {
         with(binding) {
-            var requestName = edtRequestName.edtValue.text.toString()
-            var requestDescription = edtRequestDescription.edtValue.text.toString()
-            var listInformer = informerAdapter.getListInformer() ?: null
-            var listProcessStep = requestProcessStepAdapter.getListProcessStep()
-            var listHeader = formHeaderAdapter.getListHeader()
-            var listBody = sheetAdapter.getListBody()
-            var currentRequest = viewModel.newRequestEntity?.copy(
+            val requestName = edtRequestName.edtValue.text.toString()
+            val requestDescription = edtRequestDescription.edtValue.text.toString()
+            val listInformer = informerAdapter.getListInformer() ?: null
+            val listProcessStep = requestProcessStepAdapter.getListProcessStep()
+            val listHeader = formHeaderAdapter.getListHeader()
+            val listBody = sheetAdapter.getListBody()
+            val currentRequest = viewModel.newRequestEntity?.copy(
                 requestName = requestName,
                 requestDescription = requestDescription,
                 informer = listInformer,
                 processSteps = listProcessStep,
                 listHeader = listHeader,
                 listBody = listBody,
-                isSync = false
+                isSync = false,
+                status = status,
+                version = viewModel.newRequestEntity?.version?.plus(1.0F)
                 )
             viewModel.newRequestEntity = currentRequest
             viewModel.newRequestEntity?.let {
@@ -521,22 +643,24 @@ class RequestMasterDetailActivity :
         }
     }
 
-    private fun cacheData() {
+    private fun cacheData(status: Int? = viewModel.currentRequestEntity?.status) {
         with(binding) {
-            var requestName = edtRequestName.edtValue.text.toString()
-            var requestDescription = edtRequestDescription.edtValue.text.toString()
-            var listInformer = informerAdapter.getListInformer() ?: null
-            var listProcessStep = requestProcessStepAdapter.getListProcessStep()
-            var listHeader = formHeaderAdapter.getListHeader()
-            var listBody = sheetAdapter.getListBody()
-            var currentRequest = viewModel.newRequestEntity?.copy(
+            val requestName = edtRequestName.edtValue.text.toString()
+            val requestDescription = edtRequestDescription.edtValue.text.toString()
+            val listInformer = informerAdapter.getListInformer() ?: null
+            val listProcessStep = requestProcessStepAdapter.getListProcessStep()
+            val listHeader = formHeaderAdapter.getListHeader()
+            val listBody = sheetAdapter.getListBody()
+            val currentRequest = viewModel.newRequestEntity?.copy(
                 requestName = requestName,
                 requestDescription = requestDescription,
                 informer = listInformer,
                 processSteps = listProcessStep,
                 listHeader = listHeader,
                 listBody = listBody,
-                )
+                status = status,
+                version = viewModel.newRequestEntity?.version?.plus(1.0F)
+            )
             viewModel.newRequestEntity = currentRequest
         }
     }

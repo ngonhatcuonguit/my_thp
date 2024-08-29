@@ -32,8 +32,8 @@ interface RequestDao {
 
     @Query("UPDATE request_value SET list_body = :listBody, updated_at = :currentTimestamp WHERE request_id = :requestId")
     fun updateListSheet(requestId: Long, listBody: List<Body>?, currentTimestamp: String)
-    @Query("UPDATE request_value SET is_sync = :is_sync, updated_at = :currentTimestamp WHERE request_code = :requestCode")
-        fun updateSyncStatus(requestCode: String, is_sync: Boolean?, currentTimestamp: String)
+    @Query("UPDATE request_value SET is_sync = :is_sync, status = :status, updated_at = :currentTimestamp WHERE request_code = :requestCode")
+        fun updateSyncStatus(requestCode: String, is_sync: Boolean?, status: Int?, currentTimestamp: String)
 
     @Delete
     fun deleteRequest(record: RequestEntity)

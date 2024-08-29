@@ -10,6 +10,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestHorizontalBinding
 import com.cuongngo.core_project.utils.convertDpToPixel
+import com.cuongngo.core_project.utils.status.RequestStatusItemBinding
 
 class RequestHorizontalAdapter(
     context: Context,
@@ -50,6 +51,7 @@ class RequestHorizontalAdapter(
             }else{
                 tvRequestName.text = request.requestName
             }
+            tvStatus.text = RequestStatusItemBinding(request.status)
         }
     }
 

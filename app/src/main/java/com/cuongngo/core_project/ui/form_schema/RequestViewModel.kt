@@ -10,15 +10,11 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
-import com.cuongngo.core_project.ui.request_detail.PushRequestModel
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class RequestViewModel(
     private val requestRepository: RequestRepository,
@@ -54,8 +50,11 @@ class RequestViewModel(
     val formUnit: LiveData<BaseResult<Unit>> = _formUnit
 
     //---remote---
-    private val _pushRequest = MutableLiveData<BaseResult<PushRequestResponse>>()
-    val pushRequest: LiveData<BaseResult<PushRequestResponse>> get() = _pushRequest
+    private val _uploadRequest = MutableLiveData<BaseResult<PushRequestResponse>>()
+    val uploadRequest: LiveData<BaseResult<PushRequestResponse>> get() = _uploadRequest
+
+    private val _sendRequest = MutableLiveData<BaseResult<PushRequestResponse>>()
+    val sendRequest: LiveData<BaseResult<PushRequestResponse>> get() = _sendRequest
 
     //variable
     var formEntity: FormEntity? = null
@@ -124,7 +123,7 @@ class RequestViewModel(
             }
         }
     }
-    fun updateSyncStatus(requestCode: String, is_sync: Boolean) {
+    fun updateSyncStatus(requestCode: String,status: Int, is_sync: Boolean) {
         _requestSyncStatus.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -132,7 +131,8 @@ class RequestViewModel(
                     requestRepository.updateSyncStatus(
                         requestCode = requestCode,
                         is_sync = is_sync,
-                        currentTime = getCurrentTimestamp()
+                        currentTime = getCurrentTimestamp(),
+                        status = status
                     )
                 )
             }
@@ -149,13 +149,13 @@ class RequestViewModel(
         }
     }
 
-    fun pushRequest(
+    fun uploadRequest(
         requestBodyPush : List<RequestBodyPush>
     ) {
-        _pushRequest.value = BaseResult.loading(null)
+        _uploadRequest.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _pushRequest.postValue(
+                _uploadRequest.postValue(
                     requestRepository.pushRequest(
                         requestBodyPush = requestBodyPush
                     )
@@ -163,6 +163,20 @@ class RequestViewModel(
             }
         }
     }
+    fun sendRequest(
+            requestBodyPush : List<RequestBodyPush>
+        ) {
+            _sendRequest.value = BaseResult.loading(null)
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    _sendRequest.postValue(
+                        requestRepository.pushRequest(
+                            requestBodyPush = requestBodyPush
+                        )
+                    )
+                }
+            }
+        }
 
 
 }

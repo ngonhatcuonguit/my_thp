@@ -47,6 +47,7 @@ data class RequestEntity(
     @ColumnInfo(name = "deleted_at") var deleted: String? = null,
     @ColumnInfo(name = "version") var version: Float? = 0F,
     @ColumnInfo(name = "is_sync") var isSync: Boolean? = false,
+    @ColumnInfo(name = "status") var status: Int? = 0,
 ) : BaseModel()
 
 //convert to json and string

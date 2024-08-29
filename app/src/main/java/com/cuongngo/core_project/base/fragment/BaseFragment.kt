@@ -81,7 +81,7 @@ abstract class BaseFragment<DB: ViewDataBinding>: Fragment(), KodeinAware, BaseV
                 }
 
                 else -> {
-                    title = "Lỗi $errorCode"
+                    title = "Có lỗi xảy ra ${errorCode ?: ""}"
                     content = "Đã có lỗi xảy ra, vui lòng kiểm tra lại!"
                     btnContent = "Đồng ý"
                 }
@@ -110,10 +110,12 @@ abstract class BaseFragment<DB: ViewDataBinding>: Fragment(), KodeinAware, BaseV
 
                         404 -> {
                             //
+                            dismiss()
                         }
 
                         else -> {
                             //
+                            dismiss()
                         }
                     }
                 }else{

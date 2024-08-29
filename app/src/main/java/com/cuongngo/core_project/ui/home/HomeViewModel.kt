@@ -236,7 +236,7 @@ class HomeViewModel(
         }
     }
 
-    fun updateSyncStatus(requestCode: String, is_sync: Boolean) {
+    fun updateSyncStatus(requestCode: String, status: Int, is_sync: Boolean) {
         _requestSyncStatus.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -244,7 +244,8 @@ class HomeViewModel(
                     requestRepository.updateSyncStatus(
                         requestCode = requestCode,
                         is_sync = is_sync,
-                        currentTime = getCurrentTimestamp()
+                        currentTime = getCurrentTimestamp(),
+                        status = status
                     )
                 )
             }

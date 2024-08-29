@@ -51,6 +51,12 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
             view = LayoutInflater.from(this).inflate(R.layout.dialog_process_upload_data, null)
         )
     }
+    val processSendFileDialog by lazy {
+        ProgressDialog(
+            this,
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_process_send_file, null)
+        )
+    }
 
     @LayoutRes
     abstract fun inflateLayout(): Int

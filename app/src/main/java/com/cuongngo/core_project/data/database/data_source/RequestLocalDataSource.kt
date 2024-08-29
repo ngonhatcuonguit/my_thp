@@ -26,11 +26,12 @@ class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataS
                 currentTimestamp = currentTime
             )
         }
-    suspend fun updateSyncStatus(requestCode: String, is_sync: Boolean, currentTime: String) =
+    suspend fun updateSyncStatus(requestCode: String, status: Int, is_sync: Boolean, currentTime: String) =
         getResult {
             database.requestDao().updateSyncStatus(
                 requestCode = requestCode,
                 is_sync = is_sync,
+                status = status,
                 currentTimestamp = currentTime
             )
         }

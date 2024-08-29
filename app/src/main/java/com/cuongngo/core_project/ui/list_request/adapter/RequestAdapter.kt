@@ -8,6 +8,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.utils.convertDpToPixel
+import com.cuongngo.core_project.utils.status.RequestStatusItemBinding
 
 class RequestAdapter(
     context: Context,
@@ -29,6 +30,7 @@ class RequestAdapter(
             binding.tvRequestName.text = request.requestName
         }
         binding.tvRequestCode.text = "Mã: ${request.requestCode}"
+        binding.tvStatus.text = RequestStatusItemBinding(request.status)
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(request) ?: return@setOnClickListener
         }

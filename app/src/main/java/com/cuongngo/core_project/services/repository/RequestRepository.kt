@@ -41,10 +41,11 @@ class RequestRepository(
             listBody = listBody,
             currentTime = currentTime
         )
-    suspend fun updateSyncStatus(requestCode: String, is_sync: Boolean, currentTime: String) =
+    suspend fun updateSyncStatus(requestCode: String,status: Int, is_sync: Boolean, currentTime: String) =
             requestLocalDataSource.updateSyncStatus(
                 requestCode = requestCode,
                 is_sync = is_sync,
+                status = status,
                 currentTime = currentTime
             )
 
