@@ -3,6 +3,7 @@ package com.cuongngo.core_project.data.database.data_source
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
+import com.cuongngo.core_project.services.network.BaseResult
 
 class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataSource() {
 
@@ -35,6 +36,13 @@ class RequestLocalDataSource(private val database: AppDatabase) : BaseLocalDataS
                 currentTimestamp = currentTime
             )
         }
+    suspend fun updateRequestStatuses(data: List<Pair<String, Int>>) = getResult {
+        data.forEach { (requestCode, status) ->
+            val requestEntity = database.requestDao().findRequestByCode(requestCode)
+            requestEntity?.let {
+                database.requestDao().updateRequestStatus(requestCode, status)
+            } }
+    }
 
     suspend fun getRequestNeedUpload() = getResult {
         database.requestDao().getRequestNeedUpload()

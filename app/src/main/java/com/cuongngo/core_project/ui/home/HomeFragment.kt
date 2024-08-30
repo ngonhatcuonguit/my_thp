@@ -10,6 +10,7 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
+import com.cuongngo.core_project.data.database.roomdb.entity.RequestData
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
@@ -23,7 +24,9 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.RequestHorizontalAdapter
+import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
+import com.cuongngo.core_project.ui.request_detail.RequestCodeResult
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormHorizontalAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
@@ -31,6 +34,8 @@ import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
 import com.cuongngo.core_project.utils.toast.showMessageToast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.reactivex.disposables.Disposable
 import kotlin.random.Random
 
@@ -53,6 +58,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     override fun setUp() {
         syncForm()
         syncUser()
+        viewModel.getAllRequest()
         setupTopViewPager(viewModel.listDefaultHotNews)
         setupRcvFavouriteForm()
         setupRcvSyncRequest()
@@ -234,13 +240,57 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 }
             )
         }
-        observeLiveDataChanged(viewModel.listRequest) {
+        observeLiveDataChanged(viewModel.listRequestUpLoad) {
             it.onResultReceived(
-                onLoading = {},
+                onLoading = {
+                            //show loading in section
+                },
                 onSuccess = {
                     it.data?.let { listRequest ->
                         requestHorizontalAdapter.submitListForm(listRequest)
                     }
+                },
+                onError = {
+                    //
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.allRequest) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    it.data?.let { allRequest ->
+                       val listRequestCode = allRequest.map { it.requestCode }
+                       viewModel.getRequestStatus(
+                           PushRequestCodeBody(
+                               requests = listRequestCode
+                           )
+                       )
+                    }
+                },
+                onError = {
+                    //
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.getRequestStatus) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    it.data?.data?.let { listUpdateStatus ->
+                       viewModel.updateRequestStatuses(convertToPairs(listUpdateStatus))
+                    }
+                },
+                onError = {
+                    //
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.updateRequestStatuses) {
+            it.onResultReceived(
+                onLoading = {},
+                onSuccess = {
+                    WTF("Update")
                 },
                 onError = {
                     //
@@ -325,6 +375,12 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             )
         }
 
+    }
+
+    fun convertToPairs(list: List<RequestCodeResult>): List<Pair<String, Int>> {
+        return list.map { result ->
+            Pair(result.id ?: "", result.status ?: 0)
+        }
     }
 
     private fun setupTopViewPager(listHotNew: List<News>?) {

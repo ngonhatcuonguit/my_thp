@@ -1,6 +1,5 @@
 package com.cuongngo.core_project.ui.request_detail
 
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.response.BaseModel
 
 data class PushRequestResponse(
@@ -29,3 +28,17 @@ data class RequestBodyPush(
     var request_code: String?,
     var status: Int?,
 ): BaseModel()
+
+
+data class GetRequestStatusResponse(
+    val status: String?,
+    var data: List<RequestCodeResult>?
+) : BaseModel()
+data class PushRequestCodeBody(
+    var requests: List<String>
+): BaseModel()
+
+data class RequestCodeResult(
+    var id: String?,
+    var status: Int?
+):BaseModel()

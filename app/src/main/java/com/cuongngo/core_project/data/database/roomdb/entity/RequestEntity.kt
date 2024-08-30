@@ -33,7 +33,6 @@ data class RequestEntity(
     @ColumnInfo(name = "form_id") var formID: String,
     @ColumnInfo(name = "process_id") var process_id: String?,
     @ColumnInfo(name = "form_name") var formName: String,
-    @ColumnInfo(name = "request_status") var requestStatus: Int? = null,
     @ColumnInfo(name = "process_steps") var processSteps: List<ProcessStep>? = null,
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "list_header") var listHeader: List<Field>? = null,
@@ -84,7 +83,8 @@ data class RequestData(
     var updated: String? = null,
     var deleted: String? = null,
     var version: Float? = 0F,
-    var isSync: Boolean? = false
+    var isSync: Boolean? = false,
+    var status: Int? = 0
 ) : BaseModel()
 
 fun RequestEntity.toDataClass(): RequestData {
@@ -99,7 +99,6 @@ fun RequestEntity.toDataClass(): RequestData {
         formID = this.formID,
         process_id = this.process_id,
         formName = this.formName,
-        requestStatus = requestStatus,
         processSteps = this.processSteps,
         listHeader = this.listHeader,
         listBody = this.listBody,
@@ -109,6 +108,7 @@ fun RequestEntity.toDataClass(): RequestData {
         updated = this.updated,
         deleted = this.deleted,
         version = this.version,
-        isSync = this.isSync
+        isSync = this.isSync,
+        status = this.status
     )
 }

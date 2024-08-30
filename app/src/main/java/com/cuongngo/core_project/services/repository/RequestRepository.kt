@@ -5,7 +5,8 @@ import com.cuongngo.core_project.data.database.data_source.RequestRemoteDataSour
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Body
 import com.cuongngo.core_project.services.network.BaseResult
-import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
+import com.cuongngo.core_project.ui.request_detail.GetRequestStatusResponse
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 
@@ -48,7 +49,7 @@ class RequestRepository(
                 status = status,
                 currentTime = currentTime
             )
-
+    suspend fun updateRequestStatuses(data: List<Pair<String, Int>>) : BaseResult<Unit> = requestLocalDataSource.updateRequestStatuses(data)
     suspend fun getRequestNeedUpload() = requestLocalDataSource.getRequestNeedUpload()
 
     suspend fun deleteRequest(record: RequestEntity): BaseResult<Unit> {
@@ -63,5 +64,12 @@ class RequestRepository(
             requestBodyPush = requestBodyPush
         )
     }
+    suspend fun getRequestStatus(
+            pushRequestCodeBody : PushRequestCodeBody
+        ): BaseResult<GetRequestStatusResponse>{
+            return requestRemoteDataSource.getRequestStatus(
+                pushRequestCodeBody
+            )
+        }
 
 }

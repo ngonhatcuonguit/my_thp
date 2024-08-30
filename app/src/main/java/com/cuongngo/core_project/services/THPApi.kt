@@ -8,7 +8,8 @@ import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
-import com.cuongngo.core_project.ui.request_detail.PushRequestModel
+import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
+import com.cuongngo.core_project.ui.request_detail.GetRequestStatusResponse
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import retrofit2.Response
@@ -65,6 +66,12 @@ interface THPApi {
         @Query("isGetAll") isGetAll: Boolean? = true,
         @Query("structureID") structureID: Int? = null
     ): Response<FormResponse>
+
+    @POST("api/request/get-request-update")
+    suspend fun getRequestStatus(
+        @Body requestCodeBody: PushRequestCodeBody,
+    ): Response<GetRequestStatusResponse>
+
 
     companion object {
         operator fun invoke(networkConnectionInterceptor: NetworkConnectionInterceptor? = null): THPApi {

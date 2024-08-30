@@ -130,7 +130,6 @@ class RequestMasterDetailActivity :
                             listHeader = formEntity?.list_header,
                             listBody = formEntity?.list_body,
                             processSteps = formEntity?.process_steps,
-                            requestStatus = Random.nextInt(1, 6),
                             process_id = formEntity?.process_id.toString() ?: "",
                             status = 0
                         )
@@ -354,8 +353,8 @@ class RequestMasterDetailActivity :
                             "Gửi yêu cầu thành công!",
                             ""
                         )
+                        updateRequest(status = 1)
                     }
-                    updateRequest(status = 1)
                 },
                 onError = {
                     processSendFileDialog.hide()

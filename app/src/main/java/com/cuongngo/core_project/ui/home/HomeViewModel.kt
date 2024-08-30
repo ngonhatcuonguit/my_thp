@@ -15,6 +15,8 @@ import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.UserRepository
+import com.cuongngo.core_project.ui.request_detail.GetRequestStatusResponse
+import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import kotlinx.coroutines.Dispatchers
@@ -55,8 +57,11 @@ class HomeViewModel(
     private val _listFormRemote = MutableLiveData<BaseResult<FormResponse>>()
     val listFormRemote: LiveData<BaseResult<FormResponse>> = _listFormRemote
 
-    private val _listRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
-    val listRequest: LiveData<BaseResult<List<RequestEntity>>> = _listRequest
+    private val _listRequestUpLoad = MutableLiveData<BaseResult<List<RequestEntity>>>()
+    val listRequestUpLoad: LiveData<BaseResult<List<RequestEntity>>> = _listRequestUpLoad
+
+    private val _allRequest = MutableLiveData<BaseResult<List<RequestEntity>>>()
+    val allRequest: LiveData<BaseResult<List<RequestEntity>>> = _allRequest
 
     private val _upsertListFormToLocal = MutableLiveData<BaseResult<Unit>>()
     val upsertListFormToLocal: LiveData<BaseResult<Unit>> = _upsertListFormToLocal
@@ -74,6 +79,12 @@ class HomeViewModel(
 
     private val _requestSyncStatus = MutableLiveData<BaseResult<Unit>>()
     val requestSyncStatus: LiveData<BaseResult<Unit>> = _requestSyncStatus
+
+    private val _getRequestStatus = MutableLiveData<BaseResult<GetRequestStatusResponse>>()
+    val getRequestStatus: LiveData<BaseResult<GetRequestStatusResponse>> = _getRequestStatus
+
+    private val _updateRequestStatuses = MutableLiveData<BaseResult<Unit>>()
+    val updateRequestStatuses: LiveData<BaseResult<Unit>> = _updateRequestStatuses
 
     fun updateListUploadRequest(requestEntity: RequestEntity, isAdd: Boolean) {
         if(!listUpload.contains(requestEntity) && isAdd){
@@ -214,8 +225,17 @@ class HomeViewModel(
 
     fun getListSyncRequest() {
         viewModelScope.launch {
+            _listRequestUpLoad.value = BaseResult.loading(null)
             withContext(Dispatchers.IO) {
-                _listRequest.postValue(requestRepository.getRequestNeedUpload())
+                _listRequestUpLoad.postValue(requestRepository.getRequestNeedUpload())
+            }
+        }
+    }
+    fun getAllRequest() {
+        _allRequest.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _allRequest.postValue(requestRepository.getAllRequest())
             }
         }
     }
@@ -234,6 +254,33 @@ class HomeViewModel(
                 )
             }
         }
+    }
+    fun getRequestStatus(
+            pushRequestCodeBody : PushRequestCodeBody
+        ) {
+            _getRequestStatus.value = BaseResult.loading(null)
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    _getRequestStatus.postValue(
+                        requestRepository.getRequestStatus(
+                            pushRequestCodeBody
+                        )
+                    )
+                }
+            }
+    }
+
+    fun updateRequestStatuses(
+            data: List<Pair<String, Int>>
+        ) {
+            _updateRequestStatuses.value = BaseResult.loading(null)
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    _updateRequestStatuses.postValue(
+                        requestRepository.updateRequestStatuses(data)
+                    )
+                }
+            }
     }
 
     fun updateSyncStatus(requestCode: String, status: Int, is_sync: Boolean) {
