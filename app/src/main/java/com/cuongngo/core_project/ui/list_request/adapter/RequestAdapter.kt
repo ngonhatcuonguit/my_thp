@@ -4,11 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestBinding
-import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.utils.convertDpToPixel
-import com.cuongngo.core_project.utils.status.RequestStatusItemBinding
+import com.cuongngo.core_project.utils.status.RequestStatusVNBinding
+import com.cuongngo.core_project.utils.status.SetBackgroundRequestStatus
 
 class RequestAdapter(
     context: Context,
@@ -29,8 +30,9 @@ class RequestAdapter(
         }else{
             binding.tvRequestName.text = request.requestName
         }
-        binding.tvRequestCode.text = "Mã: ${request.requestCode}"
-        binding.tvStatus.text = RequestStatusItemBinding(request.status)
+        binding.tvRequestCode.text = request.formName
+        binding.tvStatus.text = RequestStatusVNBinding(request.status)
+        SetBackgroundRequestStatus(binding.tvStatus,request.status)
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(request) ?: return@setOnClickListener
         }

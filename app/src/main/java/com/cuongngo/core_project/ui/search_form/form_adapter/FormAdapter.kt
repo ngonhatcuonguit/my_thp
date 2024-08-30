@@ -2,7 +2,9 @@ package com.cuongngo.core_project.ui.search_form.form_adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.core_project.R
@@ -38,6 +40,11 @@ class FormAdapter(
         binding.tvFormCode.text = "Mã form: ${form.form_code}"
         binding.root.setOnClickListener {
             onItemClickListener?.invoke(form) ?: return@setOnClickListener
+        }
+        if (form.category.isNullOrEmpty()){
+            binding.tvStatus.visibility = View.INVISIBLE
+        }else{
+            binding.tvStatus.visibility = View.VISIBLE
         }
     }
 

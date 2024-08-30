@@ -359,6 +359,7 @@ class RequestMasterDetailActivity :
                 },
                 onError = {
                     processSendFileDialog.hide()
+                    updateRequest()
                     setupShowDialogResult(false, it.errorCode)
                 }
             )

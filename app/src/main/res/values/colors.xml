@@ -46,4 +46,7 @@
     <color name="gray_ed">#EBECED</color>
     <color name="gray_d3">#C7CFD3</color>
 
+    <color name="orange_700">#FF8700</color>
+    <color name="blue_aa">#0151AA</color>
+
 </resources>

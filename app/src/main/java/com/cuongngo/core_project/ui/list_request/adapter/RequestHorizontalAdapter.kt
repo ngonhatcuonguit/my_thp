@@ -11,6 +11,8 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 import com.cuongngo.core_project.databinding.ItemRequestHorizontalBinding
 import com.cuongngo.core_project.utils.convertDpToPixel
 import com.cuongngo.core_project.utils.status.RequestStatusItemBinding
+import com.cuongngo.core_project.utils.status.RequestStatusVNBinding
+import com.cuongngo.core_project.utils.status.SetBackgroundRequestStatus
 
 class RequestHorizontalAdapter(
     context: Context,
@@ -51,7 +53,8 @@ class RequestHorizontalAdapter(
             }else{
                 tvRequestName.text = request.requestName
             }
-            tvStatus.text = RequestStatusItemBinding(request.status)
+            tvStatus.text = RequestStatusVNBinding(request.status)
+            SetBackgroundRequestStatus(tvStatus,request.status)
         }
     }
 
