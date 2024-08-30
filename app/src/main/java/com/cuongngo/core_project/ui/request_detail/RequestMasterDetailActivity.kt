@@ -176,6 +176,7 @@ class RequestMasterDetailActivity :
                 }
             }
             layoutSubmitButton.btnPrimary.setOnClickListener {
+                cacheData()
                 if(validateSubmit(viewModel.newRequestEntity)){
                     viewModel.sendRequest(
                         listOf(
