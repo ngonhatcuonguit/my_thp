@@ -181,7 +181,7 @@ class RequestMasterDetailActivity :
                     viewModel.sendRequest(
                         listOf(
                             RequestBodyPush(
-                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
+                                device_code = AppPreferences.getDeviceInfo()?.serial ?: "",
                                 json_data = convertRequestEntityToString(
                                     viewModel.newRequestEntity?.copy(
                                         createdBy = UserTHPEntity(
@@ -238,7 +238,7 @@ class RequestMasterDetailActivity :
                     viewModel.uploadRequest(
                         listOf(
                             RequestBodyPush(
-                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
+                                device_code = AppPreferences.getDeviceInfo()?.serial ?: "",
                                 json_data = convertRequestEntityToString(
                                     viewModel.newRequestEntity?.copy(
                                         createdBy = UserTHPEntity(

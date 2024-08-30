@@ -131,8 +131,12 @@ interface BaseView {
             id = Build.ID,
             user = Build.USER,
             host = Build.HOST,
-            display = Build.DISPLAY
+            display = Build.DISPLAY,
+            serial = getDeviceSerialNumber()
         )
+    }
+    fun getDeviceSerialNumber(): String {
+        return Build.SERIAL
     }
 
     open fun showDialogWarning(

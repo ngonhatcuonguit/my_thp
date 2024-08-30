@@ -47,7 +47,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                         viewModel.login(
                             user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
                             password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
-                            device_code = AppPreferences.getDeviceInfo()?.id ?: AppPreferences.getDeviceInfo()?.display ?: ""
+                            device_code = AppPreferences.getDeviceInfo()?.serial ?: ""
                         )
                     }else{
                         showMessageCheckInternet(this@LoginByMSNVActivity, false)
