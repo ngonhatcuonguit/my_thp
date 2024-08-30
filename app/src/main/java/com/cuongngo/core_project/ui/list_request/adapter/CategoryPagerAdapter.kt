@@ -5,23 +5,24 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.cuongngo.core_project.ui.list_request.ListRequestPagerFragment
 
-class CatrgoryPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class CategoryPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
-    private val categories = listOf(MY_REQUEST, WAIT_FOR_ME, COMPLETED)
+    private val categories = listOf(ALL_REQUEST, SENT_REQUEST, COMPLETED)
     override fun getItemCount() = categories.size
 
     override fun createFragment(position: Int): Fragment {
         val fragment = ListRequestPagerFragment()
         fragment.arguments = Bundle().apply {
-            putString("CATEGORY", categories[position])
+            putString(REQUEST_CATEGORY, categories[position])
         }
         return fragment
     }
 
     companion object {
-        const val MY_REQUEST = "my_request"
-        const val WAIT_FOR_ME = "wait_for_me"
+        const val ALL_REQUEST = "all_request"
+        const val SENT_REQUEST = "sent_request"
         const val COMPLETED = "completed"
+        const val REQUEST_CATEGORY = "REQUEST_CATEGORY"
     }
 
 

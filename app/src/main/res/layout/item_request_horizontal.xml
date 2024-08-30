@@ -107,10 +107,9 @@
                 android:background="@drawable/shape_label_item_status"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="5dp"
-                android:text="status 123"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="7sp"
+                android:textSize="9sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

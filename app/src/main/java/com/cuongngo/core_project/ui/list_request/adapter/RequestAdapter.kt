@@ -30,7 +30,7 @@ class RequestAdapter(
         }else{
             binding.tvRequestName.text = request.requestName
         }
-        binding.tvRequestCode.text = request.formName
+        binding.tvRequestCode.text = request.requestCode
         binding.tvStatus.text = RequestStatusVNBinding(request.status)
         SetBackgroundRequestStatus(binding.tvStatus,request.status)
         binding.root.setOnClickListener {

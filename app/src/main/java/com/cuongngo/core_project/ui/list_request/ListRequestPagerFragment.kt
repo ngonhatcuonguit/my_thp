@@ -13,7 +13,10 @@ import com.cuongngo.core_project.databinding.FragmentRequestPagerBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
-import com.cuongngo.core_project.ui.list_request.adapter.CatrgoryPagerAdapter.Companion.MY_REQUEST
+import com.cuongngo.core_project.ui.list_request.adapter.CategoryPagerAdapter.Companion.ALL_REQUEST
+import com.cuongngo.core_project.ui.list_request.adapter.CategoryPagerAdapter.Companion.COMPLETED
+import com.cuongngo.core_project.ui.list_request.adapter.CategoryPagerAdapter.Companion.REQUEST_CATEGORY
+import com.cuongngo.core_project.ui.list_request.adapter.CategoryPagerAdapter.Companion.SENT_REQUEST
 import com.cuongngo.core_project.ui.list_request.adapter.RequestAdapter
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity.Companion.RESULT_DATA
@@ -26,7 +29,7 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
 
     override fun inflateLayout() = R.layout.fragment_request_pager
 
-    private var category: String = MY_REQUEST
+    private val category by lazy { arguments?.getString(REQUEST_CATEGORY) ?: ALL_REQUEST }
     private var isCalledApi = false
     private lateinit var requestAdapter: RequestAdapter
 
@@ -45,7 +48,11 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
     }
 
     fun updateData(category: String) {
-        //
+        when(category){
+            ALL_REQUEST -> {}
+            SENT_REQUEST -> {}
+            COMPLETED -> {}
+        }
     }
 
     override fun setUpObserver() {
@@ -54,12 +61,27 @@ class ListRequestPagerFragment : BaseFragmentMVVM<FragmentRequestPagerBinding, F
                 onLoading = {
                     showProgressDialog()
                 },
-                onSuccess = {
+                onSuccess = {listAll ->
                     hideProgressDialog()
-                    it.data.let { listRequest ->
-                        requestAdapter.submitListRequest(listRequest)
-                        WTF("listRequest: ${listRequest}")
+                    val listSent: List<RequestEntity>? = listAll.data?.filter { it.status == 1 }
+                    val listCompleted: List<RequestEntity>? = listAll.data?.filter {
+                        it.status == 2 || it.status == 3
                     }
+                    when(category){
+                        ALL_REQUEST -> {
+                            requestAdapter.submitListRequest(listAll.data)
+                        }
+                        SENT_REQUEST -> {
+                            requestAdapter.submitListRequest(listSent)
+                        }
+                        COMPLETED -> {
+                            requestAdapter.submitListRequest(listCompleted)
+                        }
+                        else -> {
+                            requestAdapter.submitListRequest(listAll.data)
+                        }
+                    }
+                    WTF("listRequestPager2: ${listAll} --- $listSent ------$listCompleted")
                 },
                 onError = {
                     hideProgressDialog()
