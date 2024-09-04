@@ -25,7 +25,6 @@ import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.add_request.adapter.FieldAdapter
 import com.cuongngo.core_project.ui.bottom_sheet.MultiChoiceOptionBottomSheet
 import com.cuongngo.core_project.ui.bottom_sheet.SingleChoiceOptionBottomSheet
-import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.utils.date.getCurrentHourOfDay
 import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
@@ -64,7 +63,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     private var currentKeyword: String? = null
     private var totalPages: Int = 1
     private var isMore: Boolean = true
-    private var date : Calendar = Calendar.getInstance()
+    private var date: Calendar = Calendar.getInstance()
 
     private lateinit var fieldAdapter: FieldAdapter
 
@@ -83,11 +82,13 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         }
         var index = viewModel.newRequestEntity?.listBody?.indexOf(currentData) ?: -1
         currentData?.list_field = lisFieldAfterChange
-        viewModel.newRequestEntity?.listBody!!.toMutableList()[index]= currentData ?: body
-        if (isDone){
+        viewModel.newRequestEntity?.listBody!!.toMutableList()[index] = currentData ?: body
+        if (isDone) {
             viewModel.newRequestEntity?.listBody!!.toMutableList()[index].is_done = isDone ?: false
-        }else{
-            viewModel.newRequestEntity?.listBody!!.toMutableList()[index].is_done = isListDone(viewModel.newRequestEntity?.listBody!!.toMutableList()[index].list_field!!) ?: false
+        } else {
+            viewModel.newRequestEntity?.listBody!!.toMutableList()[index].is_done =
+                isListDone(viewModel.newRequestEntity?.listBody!!.toMutableList()[index].list_field!!)
+                    ?: false
         }
         WTF("testSheetDetail --${viewModel.newRequestEntity?.listBody!!.toMutableList()[index]}")
 
@@ -146,6 +147,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     private fun setupRecycleViewListField() {
         val gridLayoutManager = GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         fieldAdapter = FieldAdapter(
+            this,
             arrayListOf(),
             onItemClickListener = {
                 //
@@ -167,27 +169,27 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         showTimePickerDialog(fieldData)
                     }
 
-                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, -> {
-                        fieldData.options?.let { options ->
-                            onShowPopupOption(
-                                this,
-                                view = fieldAdapter.getItemRootView(fieldData),
-                                listOption = options,
-                                optionDefault = defaultValue,
-                                onSelectedListener = {
-                                    handleChangeValueField(
-                                        fieldData,
-                                        it.value
-                                    )
-                                })
-                        }
-                    }
+//                    FieldType.SELECT.fileType -> {
+//                        fieldData.options?.let { options ->
+//                            onShowPopupOption(
+//                                this,
+//                                view = fieldAdapter.getItemRootView(fieldData),
+//                                listOption = options,
+//                                optionDefault = defaultValue,
+//                                onSelectedListener = {
+//                                    handleChangeValueField(
+//                                        fieldData,
+//                                        it.value
+//                                    )
+//                                })
+//                        }
+//                    }
 
                     "checkbox-group" -> {
                         showMultiChoiceBottomSheet(fieldData)
                     }
 
-                    "radio-group" -> {
+                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType -> {
                         showSingleChoiceBottomSheet(fieldData)
                     }
 
@@ -212,23 +214,24 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         SingleChoiceOptionBottomSheet(
             field = field,
             optionDefault = defaultValue,
-            heightValue = (getScreenHeight() * 0.85).toInt()
+            heightValue = (getScreenHeight() * 0.9).toInt()
         ).setOnOptionSelected {
             handleChangeValueField(field, it?.value)
         }.show(supportFragmentManager, TAG)
     }
 
-    private fun showMultiChoiceBottomSheet(field: Field){
+    private fun showMultiChoiceBottomSheet(field: Field) {
         MultiChoiceOptionBottomSheet(
             listOption = field.options,
             listSelectedDefault = emptyList(),
-            (getScreenHeight() * 0.95).toInt()
-        ).onOptionSelected {listSelected ->
+            heightValue = (getScreenHeight() * 0.9).toInt(),
+            field = field
+        ).onOptionSelected { listSelected ->
             var displayText = ""
             listSelected?.forEach {
-                displayText = if(displayText.isEmpty()){
+                displayText = if (displayText.isEmpty()) {
                     "${it.value}"
-                }else{
+                } else {
                     "$displayText, ${it.value}"
                 }
             }
@@ -237,9 +240,9 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     private fun showDatePickerDialog(field: Field) {
-        val cal : Calendar = Calendar.getInstance()
+        val cal: Calendar = Calendar.getInstance()
         cal.add(Calendar.YEAR, 5)
-        val dateAdd : Calendar = Calendar.getInstance()
+        val dateAdd: Calendar = Calendar.getInstance()
         dateAdd.add(Calendar.MINUTE, 5)
         DatePickerDialog(
             calendar = dateAdd,
@@ -262,11 +265,11 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
     }
 
     private fun showTimePickerDialog(field: Field) {
-        val dateAdd : Calendar = Calendar.getInstance()
+        val dateAdd: Calendar = Calendar.getInstance()
         dateAdd.add(Calendar.MINUTE, 10)
         TimePickerDialog(
             this,
-            { _ , hour , minute ->
+            { _, hour, minute ->
                 date.set(Calendar.HOUR_OF_DAY, hour)
                 date.set(Calendar.MINUTE, minute)
                 handleChangeValueField(field, "${hour.toString()}:${minute.toString()}")
@@ -286,7 +289,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             DialogModel(
                 title = field.label.toString() ?: "Sửa dổi thông tin",
                 subTitle = "subtitle",
-                content = field.placeholder ?: "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
+                content = field.placeholder
+                    ?: "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu vào biểu mẫu của bạn!",
                 edtValue = edtText,
                 edtHint = "Vui lòng nhập ${field.label.toString()}",
                 edtTitle = "Nhập ${field.label.toString()}",

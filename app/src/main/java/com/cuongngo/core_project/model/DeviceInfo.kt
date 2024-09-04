@@ -14,6 +14,5 @@ data class DeviceInfo(
     var id: String?,
     var user: String?,
     var host: String?,
-    var display: String?,
-    var serial: String?,
+    var display: String?
 ): BaseModel()

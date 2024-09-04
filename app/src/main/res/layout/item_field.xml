@@ -49,6 +49,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_tool_tip"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="3dp"
+                app:srcCompat="@drawable/ic_tool_tip"
+                app:layout_constraintTop_toTopOf="@id/tv_label"
+                app:layout_constraintEnd_toEndOf="@id/tv_label" />
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_edit_value"
                 android:layout_width="26dp"
                 android:layout_height="0dp"

@@ -181,7 +181,7 @@ class RequestMasterDetailActivity :
                     viewModel.sendRequest(
                         listOf(
                             RequestBodyPush(
-                                device_code = AppPreferences.getDeviceInfo()?.serial ?: "",
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
                                 json_data = convertRequestEntityToString(
                                     viewModel.newRequestEntity?.copy(
                                         createdBy = UserTHPEntity(
@@ -238,7 +238,7 @@ class RequestMasterDetailActivity :
                     viewModel.uploadRequest(
                         listOf(
                             RequestBodyPush(
-                                device_code = AppPreferences.getDeviceInfo()?.serial ?: "",
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
                                 json_data = convertRequestEntityToString(
                                     viewModel.newRequestEntity?.copy(
                                         createdBy = UserTHPEntity(
@@ -753,7 +753,8 @@ class RequestMasterDetailActivity :
         MultiChoiceOptionBottomSheet(
             listOption = field.options,
             listSelectedDefault = emptyList(),
-            (getScreenHeight() * 0.95).toInt()
+            heightValue = (getScreenHeight() * 0.9).toInt(),
+            field = field
         ).onOptionSelected { listSelected ->
             var displayText = ""
             listSelected?.forEach {

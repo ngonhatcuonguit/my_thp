@@ -321,7 +321,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                     listOf(
                         viewModel.listUpload.first().let {
                             RequestBodyPush(
-                                device_code = AppPreferences.getDeviceInfo()?.serial ?: "",
+                                device_code = AppPreferences.getDeviceInfo()?.id ?: "",
                                 json_data = convertRequestEntityToString(it.copy(
                                     createdBy = UserTHPEntity(
                                         personal_number = AppPreferences.getUserInfo()?.employee_sap_number,

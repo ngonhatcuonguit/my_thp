@@ -128,11 +128,10 @@ interface BaseView {
             product = Build.PRODUCT,
             brand = Build.BRAND,
             hardware = Build.HARDWARE,
-            id = Build.ID,
+            id = getDeviceSerialNumber(),
             user = Build.USER,
             host = Build.HOST,
-            display = Build.DISPLAY,
-            serial = getDeviceSerialNumber()
+            display = Build.DISPLAY
         )
     }
     fun getDeviceSerialNumber(): String {

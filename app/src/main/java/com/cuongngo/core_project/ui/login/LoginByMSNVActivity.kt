@@ -47,7 +47,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                         viewModel.login(
                             user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
                             password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
-                            device_code = AppPreferences.getDeviceInfo()?.serial ?: ""
+                            device_code = AppPreferences.getDeviceInfo()?.id ?: ""
                         )
                     }else{
                         showMessageCheckInternet(this@LoginByMSNVActivity, false)
@@ -110,7 +110,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                                 contentDone = ""
                             )
                         }
-                    }, 3000L)
+                    }, 3200L)
                 },
                 onError = {
                     Handler(Looper.getMainLooper()).postDelayed({

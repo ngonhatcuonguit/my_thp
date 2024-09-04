@@ -9,6 +9,7 @@ import com.cuongngo.core_project.base.bottom_sheet.FullHeightBottomSheet
 import com.cuongngo.core_project.data.database.roomdb.entity.Field
 import com.cuongngo.core_project.data.database.roomdb.entity.Option
 import com.cuongngo.core_project.databinding.FragmentSelectFieldValueBinding
+import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ui.bottom_sheet.adapter.OptionSingleChooseAdapter
 import com.cuongngo.core_project.utils.TFunc
 import com.cuongngo.core_project.utils.getScreenHeight
@@ -20,7 +21,7 @@ class SingleChoiceOptionBottomSheet : FullHeightBottomSheet<FragmentSelectFieldV
         const val DEFAULT_OPTION = "DEFAULT_OPTION"
         const val FIELD_DATA = "FIELD_DATA"
         const val BOTTOM_SHEET_HEIGHT_VALUE = "BOTTOM_SHEET_HEIGHT_VALUE"
-        var DEFAULT_HEIGHT = (getScreenHeight() * 0.8).toInt()
+        var DEFAULT_HEIGHT = (getScreenHeight() * 0.95).toInt()
         operator fun invoke(field: Field, optionDefault: Option?, heightValue: Int? = DEFAULT_HEIGHT): SingleChoiceOptionBottomSheet {
             return SingleChoiceOptionBottomSheet().apply {
                 arguments = bundleOf(
@@ -58,7 +59,9 @@ class SingleChoiceOptionBottomSheet : FullHeightBottomSheet<FragmentSelectFieldV
         binding.btnClose.setOnClickListener {
             dismiss()
         }
-        binding.tvTitle.text = optionDefault?.label ?: "Chọn thông tin"
+        binding.tvTitle.text = fieldData?.label ?: "Chọn thông tin"
+        binding.tvPlaceholder.text = fieldData?.placeholder
+        WTF("testPlaceHolder ${fieldData?.placeholder}")
         binding.rcvOption.run {
             layoutManager = LinearLayoutManager(activity ?: return)
             adapter = fieldData?.options?.map {
