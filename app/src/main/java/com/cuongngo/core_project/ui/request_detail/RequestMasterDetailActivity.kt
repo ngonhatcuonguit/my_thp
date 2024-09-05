@@ -145,10 +145,7 @@ class RequestMasterDetailActivity :
                     newRequestEntity?.formCode?.let { viewModel.getFormByCode(it) }
                     currentRequestEntity = newRequestEntity
                     viewModel.newRequestEntity = newRequestEntity
-                    logEntityToFile()
                     binding.tvRequestTitle.text = newRequestEntity?.requestName ?: "Tạo yêu cầu mới"
-                    WTF("log_json_Entity: ${readLogFile()}")
-
                     setupShowDefaultInfo(viewModel.newRequestEntity)
                 }
             }
@@ -204,6 +201,7 @@ class RequestMasterDetailActivity :
                             )
                         )
                     )
+                    cacheData(status = 1)
                 }else{
                     var messageWarning = "Vui lòng nhập đầy đủ thông tin trước khi trình ký!"
                     if (viewModel.newRequestEntity?.status == 0 || viewModel.newRequestEntity?.status == 3){
@@ -293,8 +291,7 @@ class RequestMasterDetailActivity :
                 || request?.requestName.isNullOrEmpty()
                 || !processStepCheck
                 || request?.status == 1
-                || request?.status == 2
-                )
+                || request?.status == 2)
     }
 
     override fun setUpObserver() {
@@ -354,12 +351,13 @@ class RequestMasterDetailActivity :
                             "Gửi yêu cầu thành công!",
                             ""
                         )
+                        cacheData(status = 1)
                         updateRequest(status = 1)
                     }
                 },
                 onError = {
                     processSendFileDialog.hide()
-                    updateRequest()
+                    cacheData(status = 0)
                     setupShowDialogResult(false, it.errorCode)
                 }
             )
@@ -391,8 +389,6 @@ class RequestMasterDetailActivity :
                         formHeaderAdapter.submitListFormHeader(request?.listHeader)
                     }
                 }
-                logEntityToFile()
-                WTF("log_json_Entity: ${readLogFile()}")
                 hideProgressDialog()
             }, onError = {
                 hideProgressDialog()
@@ -459,27 +455,6 @@ class RequestMasterDetailActivity :
             binding.layoutInformer.tvHint.text = ""
         }
     }
-
-    private fun logEntityToFile() {
-        try {
-            val json = Gson().toJson(viewModel.newRequestEntity)
-            this.openFileOutput("log.txt", Context.MODE_PRIVATE).use { fos ->
-                fos.write(json.toByteArray())
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun readLogFile(): String? {
-        return try {
-            this.openFileInput("log.txt").bufferedReader().use { it.readText() }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            null
-        }
-    }
-
 
     private val requestDetailBodyResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
