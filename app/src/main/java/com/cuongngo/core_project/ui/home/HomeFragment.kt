@@ -334,9 +334,10 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                                     ),
                                 ) ?: return@observe),
                                 request_code = it.requestCode,
-                                process_id = it.requestID.toString(),
                                 version = it.version?.plus(1.0F).toString(),
                                 status = 0,
+                                process_id = it.process_id.toString(),
+                                form_structure_id = it.formID.toLong(),
                             )
                         }
                     )

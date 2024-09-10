@@ -195,7 +195,8 @@ class RequestMasterDetailActivity :
                                     )
                                 ),
                                 request_code = viewModel.newRequestEntity?.requestCode,
-                                process_id = viewModel.newRequestEntity?.requestID.toString(),
+                                process_id = viewModel.formEntity?.process_id.toString(),
+                                form_structure_id = viewModel.formEntity?.formID,
                                 version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
                                 status = 1
                             )
@@ -253,9 +254,10 @@ class RequestMasterDetailActivity :
                                     )
                                 ),
                                 request_code = viewModel.newRequestEntity?.requestCode,
-                                process_id = viewModel.newRequestEntity?.requestID.toString(),
                                 version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
-                                status = 0
+                                status = 0,
+                                process_id = viewModel.formEntity?.process_id.toString(),
+                                form_structure_id = viewModel.formEntity?.formID,
                             )
                         )
                     )
