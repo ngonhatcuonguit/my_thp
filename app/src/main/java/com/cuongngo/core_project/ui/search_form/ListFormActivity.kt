@@ -106,7 +106,7 @@ class ListFormActivity : AppBaseActivityMVVM<ActivityListFormBinding, FormViewMo
     fun addForm() {
         viewModel.upsertForm(
             FormEntity(
-                formID = Random.nextLong(1, 1000),
+                form_id = Random.nextLong(1, 1000),
                 name = listOf("HRM form test", "Factory form test", "Parameter form test", "Office form", "Other form").random(),
                 status = listOf(1,2,3,4,5).random().toString(),
                 form_code = randomString(10),

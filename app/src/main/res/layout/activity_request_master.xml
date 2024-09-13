@@ -60,6 +60,7 @@
                     android:layout_marginHorizontal="26dp"
                     android:textAlignment="center"
                     android:textColor="@color/black"
+                    android:maxLength="255"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

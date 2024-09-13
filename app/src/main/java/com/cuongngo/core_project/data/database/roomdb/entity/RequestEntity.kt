@@ -30,7 +30,7 @@ data class RequestEntity(
     @TypeConverters(Converters::class)
     @ColumnInfo(name = "informer") var informer: List<UserTHPEntity>? = null,
     @ColumnInfo(name = "form_code") var formCode: String,
-    @ColumnInfo(name = "form_id") var formID: String,
+    @ColumnInfo(name = "form_id") var formID: Long?,
     @ColumnInfo(name = "process_id") var process_id: String?,
     @ColumnInfo(name = "form_name") var formName: String,
     @ColumnInfo(name = "process_steps") var processSteps: List<ProcessStep>? = null,
@@ -70,7 +70,7 @@ data class RequestData(
     var createdBy: UserTHPEntity? = null,
     var informer: List<UserTHPEntity>? = null,
     var formCode: String,
-    var formID: String,
+    var formID: Long?,
     var process_id: String?,
     var formName: String,
     var requestStatus: Int? = null,

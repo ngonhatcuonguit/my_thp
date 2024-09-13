@@ -12,8 +12,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:paddingVertical="5dp">
+        android:layout_marginTop="3dp">
+
+        <View
+            android:id="@+id/view_space"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/gray_36"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tool:text="Nguyen Van ABCXYZ" />
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title"
@@ -21,6 +30,8 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:visibility="visible"
+            android:paddingVertical="9dp"
             android:textAlignment="textStart"
             android:text="@{field.label}"
             app:layout_constraintWidth_percent="0.42"
@@ -31,10 +42,29 @@
             />
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAlignment="textStart"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{field.label}"
+            android:visibility="gone"
+            android:paddingVertical="9dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="Nguyen Van ABCXYZ" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_content"
             android:layout_width="0dp"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:textStyle="normal"
+            android:paddingVertical="8dp"
             android:layout_height="wrap_content"
             android:textAlignment="textEnd"
             android:visibility="invisible"
@@ -42,7 +72,7 @@
             android:ellipsize="end"
             android:textColor="@color/black"
             android:drawableEnd="@drawable/ic_edit_value"
-            android:drawablePadding="8dp"
+            android:drawablePadding="9dp"
             android:paddingEnd="2dp"
             app:layout_constraintWidth_percent="0.55"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,15 +84,12 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_edit_value"
-            android:layout_width="24dp"
+            android:layout_width="20dp"
             android:layout_height="0dp"
             android:layout_marginEnd="20dp"
             app:srcCompat="@drawable/ic_edit_value"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_title" />
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

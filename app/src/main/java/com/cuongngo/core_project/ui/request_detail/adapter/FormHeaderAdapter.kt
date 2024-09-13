@@ -1,5 +1,7 @@
 package com.cuongngo.core_project.ui.request_detail.adapter
 
+import android.graphics.Typeface
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,60 +61,96 @@ class FormHeaderAdapter(
             onItemClickListener?.invoke(field) ?: return@setOnClickListener
         }
         with(binding){
-            if (field.value.isNullOrEmpty()) {
-                tvContent.text= field.value
-                ivEditValue.isVisible = true
-                tvContent.visibility = View.INVISIBLE
-                when (field.type) {
-                    "text", "textarea" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
-                    }
 
-                    "date" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_date)
+            if(field.type == "header" || field.type == "header2" || field.type == "header3"){
+                tvTitle.isVisible = false
+                tvContent.isVisible = false
+                ivEditValue.isVisible = false
+                tvHeader.isVisible = true
+                viewSpace.isVisible = false
+                when(field.type){
+                    "header" -> {
+                        tvHeader.setPaddingRelative(0, 16, 0, 0)
+                        tvHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+                        tvHeader.setTypeface(null, Typeface.BOLD)
                     }
+                    "header2" -> {
+                        tvHeader.setPaddingRelative(5, 8, 0, 0)
+                        tvHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                        tvHeader.setTypeface(null, Typeface.BOLD_ITALIC)
 
-                    "time" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_clock)
                     }
+                    "header3" -> {
+                        tvHeader.setPaddingRelative(8, 5, 0, 0)
+                        tvHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f)
+                        tvHeader.setTypeface(null, Typeface.NORMAL)
 
-                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
-                        ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
                     }
-
                     else -> {
-                        ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                        tvHeader.setPaddingRelative(0, 16, 0, 0)
+                        tvHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 1f)
+                        tvHeader.setTypeface(null, Typeface.BOLD)
                     }
                 }
+            }else{
+                viewSpace.isVisible = true
+                tvHeader.isVisible = false
+                tvTitle.isVisible = true
+                if (field.value.isNullOrEmpty()) {
+                    tvContent.text= field.value
+                    ivEditValue.isVisible = true
+                    tvContent.visibility = View.INVISIBLE
+                    when (field.type) {
+                        "text", "textarea" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                        }
 
-            } else {
-                tvContent.text= field.value
-                ivEditValue.isVisible = false
-                tvContent.visibility = View.VISIBLE
-                when (field.type) {
-                    "text", "textarea"  -> {
-                        tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            App.getDrawableResource(R.drawable.ic_edit_value), null)
+                        "date" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_date)
+                        }
+
+                        "time" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_clock)
+                        }
+
+                        FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
+                            ivEditValue.setImageResource(R.drawable.ic_arrow_down_gray)
+                        }
+
+                        else -> {
+                            ivEditValue.setImageResource(R.drawable.ic_edit_value)
+                        }
                     }
 
-                    "date" -> {
-                        tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            App.getDrawableResource(R.drawable.ic_date), null)
-                    }
+                } else {
+                    tvContent.text= field.value
+                    ivEditValue.isVisible = false
+                    tvContent.visibility = View.VISIBLE
+                    when (field.type) {
+                        "text", "textarea"  -> {
+                            tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                App.getDrawableResource(R.drawable.ic_edit_value), null)
+                        }
 
-                    "time" -> {
-                        tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            App.getDrawableResource(R.drawable.ic_clock), null)
-                    }
+                        "date" -> {
+                            tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                App.getDrawableResource(R.drawable.ic_date), null)
+                        }
 
-                    FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
-                        tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            App.getDrawableResource(R.drawable.ic_arrow_down_gray), null)
-                    }
+                        "time" -> {
+                            tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                App.getDrawableResource(R.drawable.ic_clock), null)
+                        }
 
-                    else -> {
-                        tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
-                            App.getDrawableResource(R.drawable.ic_edit_value), null)
+                        FieldType.SELECT.fileType, FieldType.RADIO_GROUP.fileType, "checkbox-group",  "radio-group" -> {
+                            tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                App.getDrawableResource(R.drawable.ic_arrow_down_gray), null)
+                        }
+
+                        else -> {
+                            tvContent.setCompoundDrawablesWithIntrinsicBounds(null, null,
+                                App.getDrawableResource(R.drawable.ic_edit_value), null)
+                        }
                     }
                 }
             }

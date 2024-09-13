@@ -48,12 +48,10 @@ import com.cuongngo.core_project.utils.date.getCurrentMinuteOfHour
 import com.cuongngo.core_project.utils.getScreenHeight
 import com.cuongngo.core_project.utils.toast.showMessageSaveData
 import com.cuongngo.core_project.utils.toast.showMessageToast
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.util.Calendar
 import java.util.UUID
 import kotlin.random.Random
@@ -87,6 +85,7 @@ class RequestMasterDetailActivity :
     private val category by lazy { intent.getStringExtra(CATEGORY_KEY) ?: "" }
     private var addRequestCode: String? = null
     private var isOnBack: Boolean? = false
+    private var isSent: Boolean? = false
 
     private lateinit var sheetAdapter: SheetAdapter
     private lateinit var requestProcessStepAdapter: RequestProcessStepAdapter
@@ -97,6 +96,11 @@ class RequestMasterDetailActivity :
     override fun onBackPressed() {
         updateRequest()
         isOnBack = true
+    }
+
+    override fun onDestroy() {
+
+        super.onDestroy()
     }
 
     private fun generateUUID(): String {
@@ -124,7 +128,7 @@ class RequestMasterDetailActivity :
                                 organization_number = AppPreferences.getUserInfo()?.organization_id
                             ),
                             formCode = formEntity?.form_code ?: "",
-                            formID = formEntity?.formID.toString() ?: "",
+                            formID = formEntity?.form_id,
                             requestCode = addRequestCode ?: "",
                             formName = formEntity?.name + "-" + getCurrentDateTime(),
                             listHeader = formEntity?.list_header,
@@ -196,7 +200,7 @@ class RequestMasterDetailActivity :
                                 ),
                                 request_code = viewModel.newRequestEntity?.requestCode,
                                 process_id = viewModel.formEntity?.process_id.toString(),
-                                form_structure_id = viewModel.formEntity?.formID,
+                                form_structure_id = viewModel.newRequestEntity?.formID,
                                 version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
                                 status = 1
                             )
@@ -257,7 +261,7 @@ class RequestMasterDetailActivity :
                                 version = viewModel.newRequestEntity?.version?.plus(1.0F).toString(),
                                 status = 0,
                                 process_id = viewModel.formEntity?.process_id.toString(),
-                                form_structure_id = viewModel.formEntity?.formID,
+                                form_structure_id = viewModel.newRequestEntity?.formID,
                             )
                         )
                     )
@@ -343,6 +347,7 @@ class RequestMasterDetailActivity :
                     processSendFileDialog.show()
                 },
                 onSuccess = {
+                    isSent = true
                     CoroutineScope(Dispatchers.Main).launch {
                         delay(3900)
                         processSendFileDialog.hide()
@@ -419,7 +424,7 @@ class RequestMasterDetailActivity :
                 onSuccess = {
                 WTF("updateRQ ----Ok ${viewModel.newRequestEntity}")
                 hideProgressDialog()
-                if (isOnBack == true) {
+                if (isOnBack == true || isSent == true) {
                     val resultIntent = Intent().apply {
                         putExtra(RESULT_DATA, viewModel.newRequestEntity)
                     }
@@ -553,6 +558,10 @@ class RequestMasterDetailActivity :
 
                     "radio-group" -> {
                         showSingleChoiceBottomSheet(field)
+                    }
+
+                    "header" -> {
+
                     }
 
                     else -> {
@@ -749,7 +758,12 @@ class RequestMasterDetailActivity :
         val cal: Calendar = Calendar.getInstance()
         cal.add(Calendar.YEAR, 5)
         val dateAdd: Calendar = Calendar.getInstance()
+
         dateAdd.add(Calendar.MINUTE, 5)
+        // Minimum date is 80 years ago from today
+        val minDateCal: Calendar = Calendar.getInstance()
+        minDateCal.add(Calendar.YEAR, -80)
+
         DatePickerDialog(
             calendar = dateAdd,
             context = this,
@@ -765,7 +779,7 @@ class RequestMasterDetailActivity :
                 }
             },
             maxDate = cal.timeInMillis,
-            minDate = dateAdd.timeInMillis,
+            minDate = minDateCal.timeInMillis,
             isCancelable = true
         ).show()
     }
@@ -806,10 +820,12 @@ class RequestMasterDetailActivity :
             )
         ).apply {
             onRightButtonClick {
+                hideKeyboard()
                 handleChangeValueHeader(field, it)
                 dismiss()
             }
             onLeftButtonClick {
+                hideKeyboard()
                 dismiss()
             }
         }

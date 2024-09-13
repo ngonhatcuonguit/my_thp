@@ -10,7 +10,6 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.common.collection.EndlessRecyclerViewScrollListener
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
-import com.cuongngo.core_project.data.database.roomdb.entity.RequestData
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.convertRequestEntityToString
 import com.cuongngo.core_project.data.database.roomdb.entity.generateRandomHeaderList
@@ -34,8 +33,6 @@ import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.toast.showMessageOnSyncDataSuccess
 import com.cuongngo.core_project.utils.toast.showMessageToast
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import io.reactivex.disposables.Disposable
 import kotlin.random.Random
 
@@ -80,7 +77,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     fun addForm() {
         viewModel.insertForm(
             FormEntity(
-                formID = Random.nextLong(1, 1000),
+                form_id = Random.nextLong(1, 1000),
                 name = listOf(
                     "HRM form test",
                     "Factory form test",
@@ -337,7 +334,7 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                                 version = it.version?.plus(1.0F).toString(),
                                 status = 0,
                                 process_id = it.process_id.toString(),
-                                form_structure_id = it.formID.toLong(),
+                                form_structure_id = it.formID,
                             )
                         }
                     )

@@ -9,7 +9,6 @@ import com.cuongngo.core_project.response.BaseModel
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.UUID
 import kotlin.random.Random
 
 @Entity(
@@ -18,7 +17,8 @@ import kotlin.random.Random
 )
 @TypeConverters(Converters::class)
 data class FormEntity(
-    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "form_id") val formID: Long? = null,
+    @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "id") val id: Long? = null,
+    @ColumnInfo(name = "form_id") var form_id: Long? = null,
     @ColumnInfo(name = "form_code") var form_code: String,
     @ColumnInfo(name = "name") var name: String? = null,
     @ColumnInfo(name = "category") var category: String? = null,

@@ -169,6 +169,10 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                         showTimePickerDialog(fieldData)
                     }
 
+                    "header" -> {
+                        //
+                    }
+
 //                    FieldType.SELECT.fileType -> {
 //                        fieldData.options?.let { options ->
 //                            onShowPopupOption(
@@ -244,6 +248,8 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
         cal.add(Calendar.YEAR, 5)
         val dateAdd: Calendar = Calendar.getInstance()
         dateAdd.add(Calendar.MINUTE, 5)
+        val minDateCal: Calendar = Calendar.getInstance()
+        minDateCal.add(Calendar.YEAR, -80)
         DatePickerDialog(
             calendar = dateAdd,
             context = this,
@@ -259,7 +265,7 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
                 }
             },
             maxDate = cal.timeInMillis,
-            minDate = dateAdd.timeInMillis,
+            minDate = minDateCal.timeInMillis,
             isCancelable = true
         ).show()
     }
@@ -301,10 +307,12 @@ class SheetDetailActivity : AppBaseActivityMVVM<ActivitySheetDetailBinding, Requ
             )
         ).apply {
             onRightButtonClick {
+                hideKeyboard()
                 handleChangeValueField(field, it)
                 dismiss()
             }
             onLeftButtonClick {
+                hideKeyboard()
                 dismiss()
             }
         }
