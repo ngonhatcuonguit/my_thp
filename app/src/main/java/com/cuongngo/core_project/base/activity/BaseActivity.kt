@@ -25,6 +25,7 @@ import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.view.BaseView
 import com.cuongngo.core_project.base.view.ProgressDialog
 import com.cuongngo.core_project.ui.event_thp.DanhSachGKActivity
+import com.cuongngo.core_project.ui.event_thp.TietMucDetailActivity
 import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import org.kodein.di.KodeinAware
@@ -253,7 +254,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
     }
 
     open fun gotoListGK() {
-        Intent(this, DanhSachGKActivity::class.java).apply {
+        Intent(this, TietMucDetailActivity::class.java).apply {
         }.also {
             finish()
             startActivity(it)

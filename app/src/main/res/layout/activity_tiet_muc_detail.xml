@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_exam_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="32dp"
+            android:text="Tiết mục số 69"
+            android:textAlignment="center"
+            android:textColor="@color/primary_color"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            app:srcCompat="@drawable/logo_thp_number1"
+            android:layout_marginStart="152dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lt_music_animation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-38dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.75"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation_music_stage" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_singer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="@dimen/_12dp"
+            android:text="Biểu diễn: Cường"
+            android:textAlignment="textStart"
+            android:textColor="@color/black_1c"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tv_composer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_composer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:text="Sáng tác: Cường"
+            android:textAlignment="textStart"
+            android:textColor="@color/black_1c"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/lt_music_animation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_department"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:text="Sáng tác: Cường"
+            android:textAlignment="textStart"
+            android:textColor="@color/black_1c"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_composer" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_space"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_ee"
+            app:layout_constraintBottom_toBottomOf="@id/tv_department"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_examiner_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:text="GK: Ngo Nhat Cuong"
+            android:textAlignment="center"
+            android:textColor="@color/orange_26"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_space" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_score_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_examiner_name">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title_sing_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lineSpacingExtra="8sp"
+                android:maxLines="1"
+                android:text="Điểm trình diễn"
+                android:textAlignment="textStart"
+                android:textColor="@color/blue_aa"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/cl_sing_score"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_sing_score"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_sing_score"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_D9"
+                app:carbon_cornerRadius="22dp"
+                app:layout_constraintStart_toEndOf="@id/tv_title_sing_score"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_sing_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_gray_54"
+                    android:textSize="86sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </carbon.widget.ConstraintLayout>
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_dot_sing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:gravity="bottom"
+                android:text="."
+                android:textColor="@color/orange_26"
+                android:textSize="96sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/cl_sing_score"
+                app:layout_constraintStart_toEndOf="@id/cl_sing_score" />
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_sing_score_extra"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="6dp"
+                android:background="@color/gray_D9"
+                app:carbon_cornerRadius="22dp"
+                app:layout_constraintStart_toEndOf="@id/tv_dot_sing"
+                app:layout_constraintTop_toTopOf="@+id/cl_sing_score">
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_sing_extra_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="75"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_gray_54"
+                    android:textSize="82sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </carbon.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_score_2nd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_score_first">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title_compose_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:lineSpacingExtra="8sp"
+                android:maxLines="1"
+                android:text="Điểm sáng tác"
+                android:textAlignment="textStart"
+                android:textColor="@color/blue_aa"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/cl_compose_score"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cl_compose_score"
+                app:layout_constraintWidth_percent="0.3" />
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_compose_score"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="28dp"
+                android:background="@color/gray_D9"
+                app:carbon_cornerRadius="22dp"
+                app:layout_constraintStart_toEndOf="@id/tv_title_compose_score"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_compose_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="10"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_gray_54"
+                    android:textSize="86sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </carbon.widget.ConstraintLayout>
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_dot_compose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:gravity="bottom"
+                android:text="."
+                android:textColor="@color/orange_26"
+                android:textSize="96sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/cl_compose_score"
+                app:layout_constraintStart_toEndOf="@id/cl_compose_score" />
+
+            <carbon.widget.ConstraintLayout
+                android:id="@+id/cl_compose_score_extra"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_marginStart="6dp"
+                android:background="@color/gray_D9"
+                app:carbon_cornerRadius="22dp"
+                app:layout_constraintStart_toEndOf="@id/tv_dot_compose"
+                app:layout_constraintTop_toTopOf="@+id/cl_compose_score">
+
+                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    android:id="@+id/tv_compose_extra_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="center"
+                    android:text="75"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_gray_54"
+                    android:textSize="82sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </carbon.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <carbon.widget.ConstraintLayout
+            android:id="@+id/cl_bottom_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="5dp"
+            android:paddingHorizontal="26dp"
+            android:paddingVertical="20dp"
+            app:carbon_cornerRadiusTopEnd="20dp"
+            app:carbon_cornerRadiusTopStart="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <carbon.widget.TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/primary_color"
+                android:gravity="center"
+                android:text="Chấm điểm"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:carbon_cornerRadius="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </carbon.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
