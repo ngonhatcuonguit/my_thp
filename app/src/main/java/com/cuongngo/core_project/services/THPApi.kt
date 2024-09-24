@@ -8,6 +8,9 @@ import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.invoker.ApiClientFactory
 import com.cuongngo.core_project.services.network.invoker.NetworkConnectionInterceptor
+import com.cuongngo.core_project.ui.event_thp.model.ExamResponse
+import com.cuongngo.core_project.ui.event_thp.model.ExaminersResponse
+import com.cuongngo.core_project.ui.event_thp.model.UpdateScoreResponse
 import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
 import com.cuongngo.core_project.ui.request_detail.GetRequestStatusResponse
 import com.cuongngo.core_project.ui.request_detail.PushRequestResponse
@@ -66,6 +69,18 @@ interface THPApi {
         @Query("isGetAll") isGetAll: Boolean? = true,
         @Query("structureID") structureID: Int? = null
     ): Response<FormResponse>
+    @GET("api/getexaminer")
+    suspend fun getListGK(): Response<AppBaseResponse<ExaminersResponse>>
+    @GET("api/getexam")
+    suspend fun getTietMuc(): Response<AppBaseResponse<ExamResponse>>
+
+    @GET("api/updatescore")
+    suspend fun updateScore(
+        @Query("ExaminerId") examinerId: Int?,
+        @Query("ExamId") examId: Int?,
+        @Query("Score") score: Float?,
+        @Query("ComposingScore") composingScore: Float?,
+    ): Response<AppBaseResponse<UpdateScoreResponse>>
 
     @POST("api/request/get-request-update")
     suspend fun getRequestStatus(

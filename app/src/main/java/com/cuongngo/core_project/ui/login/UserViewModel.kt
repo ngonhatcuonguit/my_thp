@@ -12,6 +12,10 @@ import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.repository.UserRepository
+import com.cuongngo.core_project.ui.event_thp.model.ExamResponse
+import com.cuongngo.core_project.ui.event_thp.model.Examiner
+import com.cuongngo.core_project.ui.event_thp.model.ExaminersResponse
+import com.cuongngo.core_project.ui.event_thp.model.UpdateScoreResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -42,6 +46,15 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
     val checkUserTable: LiveData<BaseResult<Int>> get() = _checkUserTable
 
+    private val _listExaminer = MutableLiveData<BaseResult<AppBaseResponse<ExaminersResponse>>>()
+    val listExaminer: LiveData<BaseResult<AppBaseResponse<ExaminersResponse>>> get() = _listExaminer
+
+    private val _exam = MutableLiveData<BaseResult<AppBaseResponse<ExamResponse>>>()
+    val exam: LiveData<BaseResult<AppBaseResponse<ExamResponse>>> get() = _exam
+
+    private val _updateScore = MutableLiveData<BaseResult<AppBaseResponse<UpdateScoreResponse>>>()
+    val updateScore: LiveData<BaseResult<AppBaseResponse<UpdateScoreResponse>>> get() = _updateScore
+
 
     var loginData : LoginResponse? = null
 
@@ -58,6 +71,43 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                         user_name = user_name,
                         password = password,
                         device_code = device_code
+                    )
+                )
+            }
+        }
+    }
+    fun getListGK() {
+        _listExaminer.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _listExaminer.postValue(
+                    userRepository.getListGk()
+                )
+            }
+        }
+    }
+    fun getTietMuc() {
+        _exam.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _exam.postValue(
+                    userRepository.getTietMuc()
+                )
+            }
+        }
+    }
+    fun updateScore(
+        examinerId: Int?,
+        examId: Int?,
+        score: Float?,
+        composingScore: Float?
+    ) {
+        _updateScore.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _updateScore.postValue(
+                    userRepository.updateSore(
+                        examinerId, examId, score, composingScore
                     )
                 )
             }

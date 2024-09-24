@@ -17,6 +17,24 @@ class UserRemoteDataSource(private val apiService: THPApi) : BaseRemoteDataSourc
             device_code = device_code
         )
     }
+
+    suspend fun getListGK() = getResult {
+        apiService.getListGK()
+    }
+    suspend fun getTietMuc() = getResult {
+        apiService.getTietMuc()
+    }
+     suspend fun updateScore(
+         examinerId: Int?,
+         examId: Int?,
+         score: Float?,
+         composingScore: Float?
+     ) = getResult {
+        apiService.updateScore(
+            examinerId, examId, score, composingScore
+        )
+    }
+
     suspend fun activeDevice(
         device_id: String,
         manufacturer: String?,

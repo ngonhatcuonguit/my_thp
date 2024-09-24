@@ -9,6 +9,9 @@ import com.cuongngo.core_project.response.login_response.LoginResponse
 import com.cuongngo.core_project.response.news.HotNewResponse
 import com.cuongngo.core_project.services.network.BaseResult
 import com.cuongngo.core_project.services.remote.UserRemoteDataSource
+import com.cuongngo.core_project.ui.event_thp.model.ExamResponse
+import com.cuongngo.core_project.ui.event_thp.model.ExaminersResponse
+import com.cuongngo.core_project.ui.event_thp.model.UpdateScoreResponse
 
 class UserRepository(
     private val userRemoteDataSource: UserRemoteDataSource,
@@ -25,6 +28,26 @@ class UserRepository(
             device_code = device_code
         )
     }
+
+    suspend fun getListGk(): BaseResult<AppBaseResponse<ExaminersResponse>> {
+        return userRemoteDataSource.getListGK()
+    }
+    suspend fun getTietMuc(): BaseResult<AppBaseResponse<ExamResponse>> {
+        return userRemoteDataSource.getTietMuc()
+    }
+    suspend fun updateSore(
+        examinerId: Int?,
+        examId: Int?,
+        score: Float?,
+        composingScore: Float?
+    ): BaseResult<AppBaseResponse<UpdateScoreResponse>> {
+        return userRemoteDataSource.updateScore(
+            examinerId, examId, score, composingScore
+        )
+    }
+
+
+
     suspend fun activeDevice(
         device_id: String,
         manufacturer: String?,
