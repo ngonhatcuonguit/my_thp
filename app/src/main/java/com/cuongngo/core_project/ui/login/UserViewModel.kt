@@ -46,14 +46,14 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     private val _checkUserTable = MutableLiveData<BaseResult<Int>>()
     val checkUserTable: LiveData<BaseResult<Int>> get() = _checkUserTable
 
-    private val _listExaminer = MutableLiveData<BaseResult<AppBaseResponse<ExaminersResponse>>>()
-    val listExaminer: LiveData<BaseResult<AppBaseResponse<ExaminersResponse>>> get() = _listExaminer
+    private val _listExaminer = MutableLiveData<BaseResult<ExaminersResponse>>()
+    val listExaminer: LiveData<BaseResult<ExaminersResponse>> get() = _listExaminer
 
-    private val _exam = MutableLiveData<BaseResult<AppBaseResponse<ExamResponse>>>()
-    val exam: LiveData<BaseResult<AppBaseResponse<ExamResponse>>> get() = _exam
+    private val _exam = MutableLiveData<BaseResult<ExamResponse>>()
+    val exam: LiveData<BaseResult<ExamResponse>> get() = _exam
 
-    private val _updateScore = MutableLiveData<BaseResult<AppBaseResponse<UpdateScoreResponse>>>()
-    val updateScore: LiveData<BaseResult<AppBaseResponse<UpdateScoreResponse>>> get() = _updateScore
+    private val _updateScore = MutableLiveData<BaseResult<UpdateScoreResponse>>()
+    val updateScore: LiveData<BaseResult<UpdateScoreResponse>> get() = _updateScore
 
 
     var loginData : LoginResponse? = null
@@ -72,6 +72,17 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                         password = password,
                         device_code = device_code
                     )
+                )
+            }
+        }
+    }
+
+    fun getListUser(isGetAll: Boolean) {
+        _getListUser.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _getListUser.postValue(
+                    userRepository.getListUser(isGetAll)
                 )
             }
         }
@@ -99,8 +110,8 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     fun updateScore(
         examinerId: Int?,
         examId: Int?,
-        score: Float?,
-        composingScore: Float?
+        score: Double?,
+        composingScore: Double?
     ) {
         _updateScore.value = BaseResult.loading(null)
         viewModelScope.launch {
@@ -146,17 +157,6 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                         display = display,
                         device = device
                     )
-                )
-            }
-        }
-    }
-
-    fun getListUser(isGetAll: Boolean) {
-        _getListUser.value = BaseResult.loading(null)
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _getListUser.postValue(
-                    userRepository.getListUser(isGetAll)
                 )
             }
         }

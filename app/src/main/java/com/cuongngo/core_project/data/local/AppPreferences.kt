@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.cuongngo.core_project.App
 import com.cuongngo.core_project.model.DeviceInfo
 import com.cuongngo.core_project.response.login_response.LoginResponse
+import com.cuongngo.core_project.ui.event_thp.model.Examiner
 import com.google.gson.GsonBuilder
 
 object AppPreferences {
@@ -17,11 +18,20 @@ object AppPreferences {
     const val KEY_COUNT_RECORD_LOCAL_USER = "KEY_COUNT_RECORD_LOCAL_USER"
     const val KEY_COUNT_RECORD_LOCAL_FORM = "KEY_COUNT_RECORD_LOCAL_FORM"
     const val KEY_USER_INFO = "KEY_USER_INFO"
+    const val KEY_GK_INFO = "KEY_GK_INFO"
     const val KEY_DEVICE_INFO = "KEY_DEVICE_INFO"
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
         editor = preferences.edit()
+    }
+
+    fun saveGKInfo(user: Examiner?){
+        editor.putObject(user, KEY_GK_INFO)
+    }
+
+    fun getGKInfo(): Examiner? {
+        return preferences.getObject(KEY_GK_INFO)
     }
 
     fun getUserAccessToken(): String {

@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="32dp"
-            android:text="Tiết mục số 69"
+            android:text="Chào mừng 30 năm thành lập THP"
             android:textAlignment="center"
             android:textColor="@color/primary_color"
             android:textSize="28sp"
@@ -51,22 +51,22 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="@dimen/_12dp"
-            android:text="Biểu diễn: Cường"
+            android:text="Biểu diễn: Singer"
             android:textAlignment="textStart"
             android:textColor="@color/black_1c"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/tv_composer"
+            app:layout_constraintBottom_toTopOf="@id/tv_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_composer"
+            android:id="@+id/tv_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
-            android:text="Sáng tác: Cường"
+            android:text="Thể loại: Tóp ca"
             android:textAlignment="textStart"
             android:textColor="@color/black_1c"
             android:textSize="24sp"
@@ -81,14 +81,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
-            android:text="Sáng tác: Cường"
+            android:text="Phòng ban: IT Division"
             android:textAlignment="textStart"
             android:textColor="@color/black_1c"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_composer" />
+            app:layout_constraintTop_toBottomOf="@id/tv_type" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_space"
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
-            android:text="GK: Ngo Nhat Cuong"
+            android:text="Giám khảo: THP Group"
             android:textAlignment="center"
             android:textColor="@color/orange_26"
             android:textSize="20sp"
@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
-                    android:text="75"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textColor="@color/blue_gray_54"
                     android:textSize="82sp"
@@ -295,7 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
-                    android:text="75"
+                    android:text="0"
                     android:textAlignment="center"
                     android:textColor="@color/blue_gray_54"
                     android:textSize="82sp"
@@ -323,6 +323,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <carbon.widget.TextView
+                android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/primary_color"

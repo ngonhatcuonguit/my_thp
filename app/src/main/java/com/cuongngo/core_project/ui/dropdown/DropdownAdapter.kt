@@ -45,14 +45,14 @@ open class DropdownAdapter(
         fun bind(data: SelectableDataModel<Option>) {
             tvOptionTitle.text = data.data.value
             if (data.isSelected){
-                tvOptionTitle.setTextColor(App.getResources().getColor(R.color.blue_accent))
+                tvOptionTitle.setTextColor(App.getResources().getColor(R.color.orange_26))
                 tvOptionTitle.setTypeface(tvOptionTitle.typeface, Typeface.BOLD)
             }else{
-                tvOptionTitle.setTypeface(tvOptionTitle.typeface, Typeface.NORMAL)
+                tvOptionTitle.setTypeface(tvOptionTitle.typeface, Typeface.BOLD)
 
             }
-            ivOptionChecked.visibility =
-                if (data.isSelected) View.VISIBLE else View.INVISIBLE
+//            ivOptionChecked.visibility =
+//                if (data.isSelected) View.VISIBLE else View.INVISIBLE
             itemView.setOnClickListener {
                 onOptionSelected.invoke(data.data)
             }

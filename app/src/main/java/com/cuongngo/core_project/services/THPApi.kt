@@ -70,17 +70,17 @@ interface THPApi {
         @Query("structureID") structureID: Int? = null
     ): Response<FormResponse>
     @GET("api/getexaminer")
-    suspend fun getListGK(): Response<AppBaseResponse<ExaminersResponse>>
+    suspend fun getListGK(): Response<ExaminersResponse>
     @GET("api/getexam")
-    suspend fun getTietMuc(): Response<AppBaseResponse<ExamResponse>>
+    suspend fun getTietMuc(): Response<ExamResponse>
 
     @GET("api/updatescore")
     suspend fun updateScore(
         @Query("ExaminerId") examinerId: Int?,
         @Query("ExamId") examId: Int?,
-        @Query("Score") score: Float?,
-        @Query("ComposingScore") composingScore: Float?,
-    ): Response<AppBaseResponse<UpdateScoreResponse>>
+        @Query("Score") score: Double?,
+        @Query("ComposingScore") composingScore: Double?,
+    ): Response<UpdateScoreResponse>
 
     @POST("api/request/get-request-update")
     suspend fun getRequestStatus(

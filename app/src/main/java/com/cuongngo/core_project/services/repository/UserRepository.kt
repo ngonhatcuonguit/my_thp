@@ -29,18 +29,18 @@ class UserRepository(
         )
     }
 
-    suspend fun getListGk(): BaseResult<AppBaseResponse<ExaminersResponse>> {
+    suspend fun getListGk(): BaseResult<ExaminersResponse> {
         return userRemoteDataSource.getListGK()
     }
-    suspend fun getTietMuc(): BaseResult<AppBaseResponse<ExamResponse>> {
+    suspend fun getTietMuc(): BaseResult<ExamResponse> {
         return userRemoteDataSource.getTietMuc()
     }
     suspend fun updateSore(
         examinerId: Int?,
         examId: Int?,
-        score: Float?,
-        composingScore: Float?
-    ): BaseResult<AppBaseResponse<UpdateScoreResponse>> {
+        score: Double?,
+        composingScore: Double?
+    ): BaseResult<UpdateScoreResponse> {
         return userRemoteDataSource.updateScore(
             examinerId, examId, score, composingScore
         )

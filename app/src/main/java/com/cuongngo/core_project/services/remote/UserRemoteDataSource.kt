@@ -27,8 +27,8 @@ class UserRemoteDataSource(private val apiService: THPApi) : BaseRemoteDataSourc
      suspend fun updateScore(
          examinerId: Int?,
          examId: Int?,
-         score: Float?,
-         composingScore: Float?
+         score: Double?,
+         composingScore: Double?
      ) = getResult {
         apiService.updateScore(
             examinerId, examId, score, composingScore

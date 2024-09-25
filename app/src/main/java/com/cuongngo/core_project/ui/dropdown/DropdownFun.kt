@@ -28,8 +28,12 @@ fun onShowPopupOption(
     val root = inflater.inflate(R.layout.layout_show_dropdown, null)
     val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_dropdown)
 
-    val popupWidth = context.resources.getDimensionPixelSize(R.dimen._300dp)
-    val popupHeight = context.resources.getDimensionPixelSize(R.dimen._360dp)
+    val popupWidth = context.resources.getDimensionPixelSize(R.dimen._110dp)
+    var popupHeight = context.resources.getDimensionPixelSize(R.dimen._500dp)
+    if(listOption.lastOrNull()?.id == 75L){
+        popupHeight = context.resources.getDimensionPixelSize(R.dimen._350dp)
+    }
+
     val optionPopupWindow = PopupWindow(
         root,
         popupWidth,
@@ -87,23 +91,40 @@ fun onShowPopupOption(
     view.getLocationOnScreen(values)
     val positionOfIcon = values[1]
     val height = getScreenHeight() * 2 / 3
-    if (positionOfIcon > height) {
-        // when parent view is at the bottom of the screen show popup up
-        val offsetY = -popupHeight
+
+    if(listOption.lastOrNull()?.id == 75L){
         optionPopupWindow.showAtLocation(
-            parentView,
-            Gravity.NO_GRAVITY,
-            popupOffsetX,
-            values[1] + offsetY
+            parentView,      // You can use the root view of your layout here
+            Gravity.CENTER,  // This will center the popup both horizontally and vertically
+            250,               // X offset, no need for any horizontal offset
+            positionOfIcon - popupHeight    // Y offset, no need for any vertical offset
         )
-    } else {
-        // when parent view is at the top of the screen show popup down
-        val offsetY = view.height
+    }else{
         optionPopupWindow.showAtLocation(
-            parentView,
-            Gravity.NO_GRAVITY,
-            popupOffsetX,
-            values[1] + offsetY
+            parentView,      // You can use the root view of your layout here
+            Gravity.CENTER,  // This will center the popup both horizontally and vertically
+            60,               // X offset, no need for any horizontal offset
+            positionOfIcon - popupHeight     // Y offset, no need for any vertical offset
         )
     }
+
+//    if (positionOfIcon > height) {
+//        // when parent view is at the bottom of the screen show popup up
+//        val offsetY = -popupHeight
+//        optionPopupWindow.showAtLocation(
+//            parentView,
+//            Gravity.NO_GRAVITY,
+//            popupOffsetX,
+//            values[1] + offsetY
+//        )
+//    } else {
+//        // when parent view is at the top of the screen show popup down
+//        val offsetY = view.height
+//        optionPopupWindow.showAtLocation(
+//            parentView,
+//            Gravity.NO_GRAVITY,
+//            popupOffsetX,
+//            values[1] + offsetY
+//        )
+//    }
 }

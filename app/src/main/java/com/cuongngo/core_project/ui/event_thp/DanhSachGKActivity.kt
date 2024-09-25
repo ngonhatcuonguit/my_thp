@@ -6,6 +6,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityListGkBinding
 import com.cuongngo.core_project.databinding.ActivityLoginByUserIdBinding
 import com.cuongngo.core_project.ext.WTF
@@ -50,7 +51,7 @@ class DanhSachGKActivity : AppBaseActivityMVVM<ActivityListGkBinding, UserViewMo
                 },
                 onSuccess = {
                     hideProgressDialog()
-                    it.data?.data?.listGK?.let { it1 -> setupRecycleView(it1) }
+                    it.data?.data?.let { it1 -> setupRecycleView(it1) }
                     WTF("listGK ${it.data?.data}")
                 },
                 onError = {
@@ -65,8 +66,8 @@ class DanhSachGKActivity : AppBaseActivityMVVM<ActivityListGkBinding, UserViewMo
             listData,
             null,
             onGKSelected = {
-//                onGKSelected?.invoke(it)
-                //Goto tiet muc activity
+                AppPreferences.saveGKInfo(it)
+                gotoTietMucDetail()
             }
         )
         binding.rcvOption.apply {

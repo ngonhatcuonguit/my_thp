@@ -254,6 +254,13 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
     }
 
     open fun gotoListGK() {
+        Intent(this, DanhSachGKActivity::class.java).apply {
+        }.also {
+            finish()
+            startActivity(it)
+        }
+    }
+    open fun gotoTietMucDetail() {
         Intent(this, TietMucDetailActivity::class.java).apply {
         }.also {
             finish()

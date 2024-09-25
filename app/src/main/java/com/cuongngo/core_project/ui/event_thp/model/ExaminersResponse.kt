@@ -3,22 +3,34 @@ package com.cuongngo.core_project.ui.event_thp.model
 import com.cuongngo.core_project.response.BaseModel
 
 data class ExaminersResponse(
-    var listGK: List<Examiner>?
+    var status: String?,
+    var data: List<Examiner>?
 ):BaseModel()
 
 data class Examiner(
     var Id: Int?,
     var Name: String?,
+    var Status: Int?,
     var JobTitle: String?,
     var ScorePercent: Float?,
-    var Type: Float?,
+    var Type: String?,
 ): BaseModel()
 
 data class UpdateScoreResponse(
-    var Result: Boolean?,
+    var status: String?,
+    var data: ResultUpdate?,
+): BaseModel()
+
+data class ResultUpdate(
+    var Result: Boolean?
 ): BaseModel()
 
 data class ExamResponse(
+    var status: String?,
+    var data: Exam?
+):BaseModel()
+
+data class Exam(
     var Id: Int?,
     var Name: String?,
     var Department: String?,
