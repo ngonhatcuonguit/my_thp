@@ -40,5 +40,6 @@ data class Exam(
     var Status: Int?,
     var RegisDate: String?,
     var TheLoai: String?,
-    var IsNew: Int?
+    var IsNew: Int?,
+    var IsLast: Boolean?,
 ):BaseModel()

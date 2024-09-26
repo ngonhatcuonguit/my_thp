@@ -7,7 +7,6 @@ import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
-import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.Option
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityTietMucDetailBinding
@@ -16,8 +15,6 @@ import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.dropdown.onShowPopupOption
 import com.cuongngo.core_project.ui.event_thp.model.Exam
 import com.cuongngo.core_project.ui.login.UserViewModel
-import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
-import com.cuongngo.core_project.utils.Constants
 
 class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, UserViewModel>() {
 
@@ -29,30 +26,13 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
 
     override fun inflateLayout(): Int = R.layout.activity_tiet_muc_detail
 
-    var singScore = 10.0;
-    var composeScore = 10.0;
+    var singScore = 10.0
+    var composeScore = 10.0
+    var currentExamStatus: Int? = null
+    var isLast: Boolean? = false
+    val handler = Handler(Looper.getMainLooper())
 
     var scoreOptions = arrayListOf(
-        Option(
-            0,
-            "0"
-        ),
-        Option(
-            1,
-            "1"
-        ),
-        Option(
-            2,
-            "2"
-        ),
-        Option(
-            3,
-            "3"
-        ),
-        Option(
-            4,
-            "4"
-        ),
         Option(
             5,
             "5"
@@ -97,9 +77,10 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
             "75"
         )
     )
+
     override fun setUp() {
         viewModel.getTietMuc()
-        with(binding){
+        with(binding) {
 
             clSingScore.setOnClickListener {
                 val defaultSingScore = scoreOptions.find {
@@ -112,7 +93,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                     optionDefault = defaultSingScore,
                     onSelectedListener = {
                         tvSingScore.text = it.value
-                        if (it.value == "10"){
+                        if (it.value == "10") {
                             tvSingExtraScore.text = "0"
                         }
                     })
@@ -122,7 +103,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                     tvSingExtraScore.text.toString() == it.value
                 } ?: scoreExtraOptions.firstOrNull()
 
-                if(tvSingScore.text.toString() != "10"){
+                if (tvSingScore.text.toString() != "10") {
                     onShowPopupOption(
                         this@TietMucDetailActivity,
                         view = it,
@@ -144,7 +125,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                     optionDefault = defaultComposeScore,
                     onSelectedListener = {
                         tvComposeScore.text = it.value
-                        if (it.value == "10"){
+                        if (it.value == "10") {
                             tvComposeExtraScore.text = "0"
                         }
                     })
@@ -153,7 +134,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                 val defaultComposeScoreExtra = scoreExtraOptions.find {
                     tvComposeExtraScore.text.toString() == it.value
                 } ?: scoreExtraOptions.lastOrNull()
-                if (tvComposeScore.text.toString() != "10"){
+                if (tvComposeScore.text.toString() != "10") {
                     onShowPopupOption(
                         this@TietMucDetailActivity,
                         view = it,
@@ -168,22 +149,25 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
     }
 
     override fun setUpObserver() {
-
-        observeLiveDataChanged(viewModel.updateScore){
+        observeLiveDataChanged(viewModel.updateScore) {
             it.onResultReceived(
                 onLoading = {
-                    processSendFileDialog.show()
+                    if (isLast == true){
+                        processDoneEventDialog.show()
+                    }else{
+                        processNextMusicDialog.show()
+                    }
                 },
                 onSuccess = {
-                    processSendFileDialog.hide()
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.postDelayed({
-                        viewModel.getTietMuc()
-                    }, 3000)
+                    if(isLast != true){
+                        handler.postDelayed({
+                            viewModel.getTietMuc()
+                        }, 3000)
+                    }
 
                 },
                 onError = {
-                    processSendFileDialog.hide()
+                    //
                 }
             )
         }
@@ -191,20 +175,32 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
         observeLiveDataChanged(viewModel.exam) {
             it.onResultReceived(
                 onLoading = {
-                    showProgressDialog()
+                    if (currentExamStatus == null) {
+                        showProgressDialog()
+                    }
                 },
                 onSuccess = { dataTietMuc ->
-                hideProgressDialog()
-                    with(binding){
+                    hideProgressDialog()
+                    currentExamStatus = dataTietMuc.data?.data?.Status
+                    isLast = dataTietMuc.data?.data?.IsLast
+                    with(binding) {
                         tvExamName.text = dataTietMuc.data?.data?.Name ?: "Tiết mục đang biểu diễn"
                         tvExaminerName.text = "Giám khảo: ${AppPreferences.getGKInfo()?.Name}"
                         tvSinger.text = "Biểu diễn: ${dataTietMuc.data?.data?.UserName}"
                         tvType.text = "Sáng tác: ${dataTietMuc.data?.data?.TheLoai}"
-                        tvDepartment.text = "Phòng ban: ${dataTietMuc.data?.data?.Department} - ${dataTietMuc.data?.data?.Division}"
+                        tvDepartment.text =
+                            "Phòng ban: ${dataTietMuc.data?.data?.Department} - ${dataTietMuc.data?.data?.Division}"
 
                         btnSubmit.setOnClickListener {
                             setupShowDialogConfirm(dataTietMuc.data?.data)
                         }
+                    }
+                    if (dataTietMuc.data?.data?.Status == 1) {
+                        processNextMusicDialog.hide()
+                    } else {
+                        handler.postDelayed({
+                            viewModel.getTietMuc()
+                        }, 3000)
                     }
                 },
                 onError = {
@@ -215,8 +211,10 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
     }
 
     private fun setupShowDialogConfirm(exam: Exam?) {
-        singScore = binding.tvSingScore.text.toString().toDouble() + ("0."+ binding.tvSingExtraScore.text.toString()).toDouble()
-        composeScore = binding.tvComposeScore.text.toString().toDouble() + ("0."+ binding.tvComposeExtraScore.text.toString()).toDouble()
+        singScore = binding.tvSingScore.text.toString()
+            .toDouble() + ("0." + binding.tvSingExtraScore.text.toString()).toDouble()
+        composeScore = binding.tvComposeScore.text.toString()
+            .toDouble() + ("0." + binding.tvComposeExtraScore.text.toString()).toDouble()
         val confirmDialog = ConfirmDialog(
             DialogModel(
                 title = "Xác nhận chấm điểm cho tiết mục",

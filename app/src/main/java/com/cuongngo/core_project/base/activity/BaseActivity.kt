@@ -60,6 +60,19 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
         )
     }
 
+    val processNextMusicDialog by lazy {
+        ProgressDialog(
+            this,
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_next_music, null)
+        )
+    }
+    val processDoneEventDialog by lazy {
+        ProgressDialog(
+            this,
+            view = LayoutInflater.from(this).inflate(R.layout.dialog_done_animation, null)
+        )
+    }
+
     @LayoutRes
     abstract fun inflateLayout(): Int
 
