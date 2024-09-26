@@ -1,5 +1,7 @@
 package com.cuongngo.core_project.ui.event_thp
 
+import android.os.Handler
+import android.os.Looper
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
@@ -174,7 +176,11 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                 },
                 onSuccess = {
                     processSendFileDialog.hide()
-                    viewModel.getTietMuc()
+                    val handler = Handler(Looper.getMainLooper())
+                    handler.postDelayed({
+                        viewModel.getTietMuc()
+                    }, 3000)
+
                 },
                 onError = {
                     processSendFileDialog.hide()
