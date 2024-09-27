@@ -12,7 +12,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="28dp"
             android:text="Chào mừng 30 năm thành lập THP"
             android:textAlignment="center"
             android:textColor="@color/primary_color"
@@ -20,6 +20,7 @@
             android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
+            android:lines="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_marginTop="-26dp"
+            android:layout_marginTop="-25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,10 +55,12 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="@dimen/_12dp"
             android:text="Biểu diễn: Singer"
-            android:textAlignment="textStart"
-            android:textColor="@color/black_1c"
+            android:textColor="#1B94A1"
             android:textSize="24sp"
-            android:textStyle="bold"
+            style="@style/TextViewEx.SemiBold"
+            android:drawableStart="@drawable/ic_artist"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toTopOf="@id/tv_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -69,10 +72,12 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
             android:text="Thể loại: Tóp ca"
-            android:textAlignment="textStart"
-            android:textColor="@color/black_1c"
+            android:gravity="center_vertical"
+            android:textColor="#008BD9"
             android:textSize="24sp"
-            android:textStyle="bold"
+            style="@style/TextViewEx.SemiBold"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_album_music"
             app:layout_constraintBottom_toBottomOf="@id/lt_music_animation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -84,10 +89,13 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
             android:text="Phòng ban: IT Division"
-            android:textAlignment="textStart"
-            android:textColor="@color/black_1c"
+            android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:textColor="#FD9F12"
             android:textSize="24sp"
-            android:textStyle="bold"
+            style="@style/TextViewEx.SemiBold"
+            android:paddingBottom="10dp"
+            android:drawableStart="@drawable/ic_deparment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_type" />
@@ -102,15 +110,17 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_examiner_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="10dp"
             android:text="Giám khảo: THP Group"
-            android:textAlignment="center"
             android:textColor="@color/orange_26"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="24sp"
+            style="@style/TextViewEx.SemiBold"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_examiner_red"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_space" />
@@ -122,7 +132,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_examiner_name">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_title_sing_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -135,11 +145,11 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/blue_aa"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                style="@style/TextViewEx.SemiBold"
                 app:layout_constraintBottom_toBottomOf="@id/cl_sing_score"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cl_sing_score"
-                app:layout_constraintWidth_percent="0.3" />
+                app:layout_constraintWidth_percent="0.32" />
 
             <carbon.widget.ConstraintLayout
                 android:id="@+id/cl_sing_score"
@@ -220,7 +230,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_score_first">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_title_compose_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -233,11 +243,11 @@
                 android:textAlignment="textStart"
                 android:textColor="@color/blue_aa"
                 android:textSize="25sp"
-                android:textStyle="bold"
+                style="@style/TextViewEx.SemiBold"
                 app:layout_constraintBottom_toBottomOf="@id/cl_compose_score"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cl_compose_score"
-                app:layout_constraintWidth_percent="0.3" />
+                app:layout_constraintWidth_percent="0.32" />
 
             <carbon.widget.ConstraintLayout
                 android:id="@+id/cl_compose_score"
@@ -318,7 +328,8 @@
             android:background="@color/white"
             android:elevation="5dp"
             android:paddingHorizontal="26dp"
-            android:paddingVertical="20dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="8dp"
             app:carbon_cornerRadiusTopEnd="20dp"
             app:carbon_cornerRadiusTopStart="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -327,13 +338,13 @@
             <carbon.widget.TextView
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:background="@color/primary_color"
                 android:gravity="center"
                 android:text="Chấm điểm"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="25sp"
                 android:textStyle="bold"
                 app:carbon_cornerRadius="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -29,6 +29,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
     var singScore = 10.0
     var composeScore = 10.0
     var currentExamStatus: Int? = null
+    var currentExamId: Int? = null
     var isLast: Boolean? = false
     val handler = Handler(Looper.getMainLooper())
 
@@ -182,6 +183,7 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                 onSuccess = { dataTietMuc ->
                     hideProgressDialog()
                     currentExamStatus = dataTietMuc.data?.data?.Status
+
                     isLast = dataTietMuc.data?.data?.IsLast
                     with(binding) {
                         tvExamName.text = dataTietMuc.data?.data?.Name ?: "Tiết mục đang biểu diễn"
@@ -195,8 +197,9 @@ class TietMucDetailActivity : AppBaseActivityMVVM<ActivityTietMucDetailBinding, 
                             setupShowDialogConfirm(dataTietMuc.data?.data)
                         }
                     }
-                    if (dataTietMuc.data?.data?.Status == 1) {
+                    if (dataTietMuc.data?.data?.Status == 1 && currentExamId != dataTietMuc.data.data?.Id) {
                         processNextMusicDialog.hide()
+                        currentExamId = dataTietMuc.data.data?.Id
                     } else {
                         handler.postDelayed({
                             viewModel.getTietMuc()

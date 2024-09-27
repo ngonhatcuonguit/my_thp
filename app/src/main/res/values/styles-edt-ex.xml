@@ -113,5 +113,10 @@
         <item name="android:textSize">10sp</item>
     </style>
 
+    <style name="EditTextEx.SemiBold" parent="EditTextEx">
+        <item name="fontType">normal</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
 
 </resources>

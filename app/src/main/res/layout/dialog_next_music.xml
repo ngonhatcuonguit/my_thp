@@ -3,34 +3,41 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:layout_height="match_parent">
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lt_loading_animation"
+    <carbon.widget.ConstraintLayout
+        android:padding="20dp"
+        app:carbon_cornerRadius="22dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/next_music_animation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
 
-    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/lt_loading_animation"
-        android:text="Đang chờ biểu diễn tiết mục tiếp theo..."
-        android:textAlignment="center"
-        android:textColor="@color/orange_700"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lt_loading_animation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/next_music_animation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/lt_loading_animation"
+            android:text="Đang chờ biểu diễn tiết mục tiếp theo"
+            android:textAlignment="center"
+            android:textColor="@color/orange_700"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+    </carbon.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

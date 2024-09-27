@@ -27,9 +27,9 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/done_animation"
+        android:layout_marginTop="260dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.cuongngo.core_project.common.view.view_ex.TextViewEx
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/lt_loading_animation"
         android:text="Kết thúc chương trình"
         android:textAlignment="center"
-        android:textColor="@color/yellow_B00"
+        android:textColor="#F44545"
         android:textSize="32sp"
         android:textStyle="bold"/>
 
@@ -57,7 +57,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         android:text="Chân thành cảm ơn quý giảm khảo!"
         android:textAlignment="center"
-        android:textColor="@color/primary_color"
+        android:textColor="@color/orange_700"
         android:textSize="28sp"
         android:textStyle="bold"/>
 
