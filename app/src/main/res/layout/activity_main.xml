@@ -4,32 +4,210 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
-        android:background="@color/white"
+        android:background="#f7f7f7"
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_bottom"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingVertical="6dp"
-            android:background="@drawable/shape_bottom_navigation"
-            app:itemIconTint="@color/bottom_nav_color_tint"
-            app:itemTextColor="@color/bottom_nav_text_color"
-            app:labelVisibilityMode="labeled"
-            app:itemTextAppearanceActive="@style/BottomNavigation.ActiveItemTextAppearance"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        
+        <carbon.widget.ConstraintLayout
+            android:id="@+id/cl_fab_chuyen_tien"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+            android:background="@color/white"
+            app:carbon_elevation="5dp"
+            app:carbon_cornerRadius="26dp"
+            android:layout_marginBottom="50dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_nav_menu"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_chuyen_tien"
+                android:layout_width="28dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_chuyen_tien"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+            
+        </carbon.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/nav_bottom_background"
+            android:layout_width="match_parent"
+            android:layout_height="76dp"
+            android:background="@drawable/nav_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingVertical="10dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_home"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/cl_qr">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_home"
+                        android:layout_width="28dp"
+                        android:layout_height="29dp"
+                        app:srcCompat="@drawable/ic_home_active"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trang chủ"
+                        android:textColor="@color/acb_gray_6e"
+                        android:textSize="13sp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_qr"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toEndOf="@id/cl_home"
+                    app:layout_constraintEnd_toStartOf="@id/cl_chuyen_tien"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_qr"
+                        android:layout_width="28dp"
+                        android:layout_height="29dp"
+                        app:srcCompat="@drawable/ic_qr"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_qr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="QR Code"
+                        android:textColor="@color/acb_gray_6e"
+                        android:textSize="13sp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_chuyen_tien"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toEndOf="@id/cl_qr"
+                    app:layout_constraintEnd_toStartOf="@id/cl_thanh_toan"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_chuyen_tien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chuyển tiền"
+                        android:textColor="@color/acb_gray_6e"
+                        android:textSize="13sp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_thanh_toan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toEndOf="@id/cl_chuyen_tien"
+                    app:layout_constraintEnd_toStartOf="@id/cl_them"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_thanh_toan"
+                        android:layout_width="28dp"
+                        android:layout_height="29dp"
+                        app:srcCompat="@drawable/ic_vi"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_thanh_toan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thanh toán"
+                        android:textColor="@color/acb_gray_6e"
+                        android:textSize="13sp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_them"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintStart_toEndOf="@id/cl_thanh_toan"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_them"
+                        android:layout_width="28dp"
+                        android:layout_height="29dp"
+                        app:srcCompat="@drawable/ic_them"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                        android:id="@+id/tv_them"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thêm"
+                        android:textColor="@color/acb_gray_6e"
+                        android:textSize="13sp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
             android:id="@+id/frame_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/nav_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="50dp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

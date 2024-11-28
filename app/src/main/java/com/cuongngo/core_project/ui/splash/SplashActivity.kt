@@ -28,7 +28,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         setupSystemWindowInset()
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
-            gotoListGK()
+//            gotoListGK()
 //            if (AppPreferences.isShownOnBoard()) {
 //                if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true && AppPreferences.getUserInfo()?.device_is_active == true) {
 //                    gotoMain()
@@ -36,6 +36,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 //                    gotoLoginMethod()
 //                }
 //            } else gotoOnBoard()
+            gotoMain()
             finish()
         }, 2000)
     }

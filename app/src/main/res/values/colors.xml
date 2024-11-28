@@ -51,4 +51,8 @@
     <color name="gray_e5">#E5E5E5</color>
     <color name="blue_gray_54">#416954</color>
 
+    //acb
+    <color name="acb_primary">#1f3e9b</color>
+    <color name="acb_gray_6e">#6e6e6e</color>
+
 </resources>
