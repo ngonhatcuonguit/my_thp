@@ -120,8 +120,8 @@ class HomeViewModel(
 
     init {
 //        getHotNew()
-        getAllForm()
-        getListSyncRequest()
+//        getAllForm()
+//        getListSyncRequest()
     }
 
     fun insertForm(formEntity: FormEntity) {

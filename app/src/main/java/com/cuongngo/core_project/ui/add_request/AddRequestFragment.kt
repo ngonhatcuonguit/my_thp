@@ -48,9 +48,9 @@ class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewM
     }
 
     override fun setUp() {
-        viewModel.getAllForm()
-        setupFeatureSearch()
-        setupRcvListForm()
+//        viewModel.getAllForm()
+//        setupFeatureSearch()
+//        setupRcvListForm()
     }
 
     override fun onResume() {

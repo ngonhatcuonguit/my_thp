@@ -9,7 +9,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="#f7f7f7"
+        android:fitsSystemWindows="true">
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title"

@@ -53,6 +53,9 @@
 
     //acb
     <color name="acb_primary">#1f3e9b</color>
+    <color name="acb_primary_2nd">#2f6cf8</color>
+    <color name="acb_primary_3th">#6695f4</color>
     <color name="acb_gray_6e">#6e6e6e</color>
+    <color name="acb_gray_fb">#ecf0fb</color>
 
 </resources>
