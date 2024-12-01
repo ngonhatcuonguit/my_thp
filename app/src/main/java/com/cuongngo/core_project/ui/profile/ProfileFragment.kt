@@ -1,7 +1,6 @@
 package com.cuongngo.core_project.ui.profile
 
 import android.content.Intent
-import com.cuongngo.core_project.App
 import com.cuongngo.core_project.BuildConfig
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
@@ -26,14 +25,14 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
             }
 
             tvSyncData.setOnClickListener {
-                gotoSyncData()
+//                gotoSyncData()
             }
             ivBgSyncData.setOnClickListener {
-                gotoSyncData()
+//                gotoSyncData()
             }
             btnLogOut.setOnClickListener {
-                clearUserData()
-                gotoLoginMethod()
+//                clearUserData()
+//                gotoLoginMethod()
             }
             tvMember.setOnClickListener {
                 setupTooltip(
