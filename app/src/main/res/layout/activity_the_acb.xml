@@ -5,58 +5,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/acb_gary_background">
+        android:background="@color/acb_gray_background">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
             android:id="@+id/cl_app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="96dp"
-            android:background="@color/white"
+            layout="@layout/layout_acb_app_bar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_back"
-                android:layout_width="10dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_back_acb" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_filter"
-                android:layout_width="24.3dp"
-                android:layout_height="17.6dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_acb_filter" />
-
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:text="Danh sách thẻ"
-                android:textAlignment="center"
-                android:textColor="@color/acb_primary_2nd"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:fontType="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.2dp"
-                android:background="@color/acb_gray_fb"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toTopOf="parent" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.2dp"
+            android:background="@color/acb_gray_fb"
+            app:layout_constraintBottom_toBottomOf="@id/cl_app_bar"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <carbon.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -189,7 +150,7 @@
                 app:layout_constraintBottom_toTopOf="@id/tv_dv_the"
                 app:layout_constraintEnd_toEndOf="@id/tv_dv_the"
                 app:layout_constraintStart_toStartOf="@id/tv_dv_the"
-                app:srcCompat="@drawable/ic_mo_the_acb" />
+                app:srcCompat="@drawable/ic_dich_vu_the" />
 
         </carbon.widget.ConstraintLayout>
 

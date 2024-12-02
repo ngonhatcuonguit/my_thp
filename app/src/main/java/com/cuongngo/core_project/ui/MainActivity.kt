@@ -48,19 +48,21 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
         }
         binding.clQr.setOnClickListener {
             handleNavBottom(2)
-            switchFragment(AddRequestFragment())
+//            switchFragment(AddRequestFragment())
         }
         binding.clChuyenTien.setOnClickListener {
             handleNavBottom(3)
-            switchFragment(ListRequestFragment())
+//            switchFragment(ListRequestFragment())
+            switchFragment(AddRequestFragment())
         }
         binding.clFabChuyenTien.setOnClickListener {
             handleNavBottom(3)
-            switchFragment(ListRequestFragment())
+//            switchFragment(ListRequestFragment())
+            switchFragment(AddRequestFragment())
         }
         binding.clThanhToan.setOnClickListener {
             handleNavBottom(4)
-            switchFragment(ProfileFragment())
+//            switchFragment(ListRequestFragment())
         }
         binding.clThem.setOnClickListener {
             handleNavBottom(5)

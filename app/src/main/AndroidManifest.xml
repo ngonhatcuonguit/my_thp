@@ -90,7 +90,11 @@
             tools:ignore="LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.the_acb.TheAcbActivity"
+            android:name=".ui.acb_app.TheAcbActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.acb_app.tai_khoan.TaiKhoanThanhToanActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 

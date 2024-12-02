@@ -59,6 +59,7 @@
     <color name="acb_gray_fb">#ecf0fb</color>
     <color name="acb_gray_text">#5c5c5c</color>
     <color name="acb_black_text">#2e3841</color>
-    <color name="acb_gary_background">#f7f7f7</color>
+    <color name="acb_gray_background">#f7f7f7</color>
+    <color name="acb_gray_ff">#f2f6ff</color>
 
 </resources>

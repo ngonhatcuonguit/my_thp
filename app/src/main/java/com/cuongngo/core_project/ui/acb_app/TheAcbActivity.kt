@@ -1,4 +1,4 @@
-package com.cuongngo.core_project.ui.the_acb
+package com.cuongngo.core_project.ui.acb_app
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
@@ -12,7 +12,7 @@ class TheAcbActivity :AppBaseActivityMVVM<ActivityTheAcbBinding, HomeViewModel>(
 
     override fun setUp() {
         with(binding){
-            ivBack.setOnClickListener {
+            clAppBar.ivBack.setOnClickListener {
                 finish()
             }
 
