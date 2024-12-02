@@ -1,5 +1,6 @@
 package com.cuongngo.core_project.ui.home
 
+import android.content.Intent
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,11 +24,13 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.response.news.News
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.list_request.adapter.RequestHorizontalAdapter
+import com.cuongngo.core_project.ui.onboard.OnBoardActivity
 import com.cuongngo.core_project.ui.request_detail.PushRequestCodeBody
 import com.cuongngo.core_project.ui.request_detail.RequestBodyPush
 import com.cuongngo.core_project.ui.request_detail.RequestCodeResult
 import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.form_adapter.FormHorizontalAdapter
+import com.cuongngo.core_project.ui.the_acb.TheAcbActivity
 import com.cuongngo.core_project.ui.view_pager.ViewPagerAdapter
 import com.cuongngo.core_project.ui.view_pager.ViewPagerHelper
 import com.cuongngo.core_project.utils.Constants
@@ -45,6 +48,12 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         binding.apply {
 //            tvName.text =
 //                "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
+
+            clThe.setOnClickListener {
+                Intent(context, TheAcbActivity::class.java).apply {
+                    startActivity(this)
+                }
+            }
 
         }
     }
