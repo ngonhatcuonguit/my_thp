@@ -20,10 +20,29 @@ object AppPreferences {
     const val KEY_USER_INFO = "KEY_USER_INFO"
     const val KEY_GK_INFO = "KEY_GK_INFO"
     const val KEY_DEVICE_INFO = "KEY_DEVICE_INFO"
+    const val KEY_NICK_NAME = "KEY_NICK_NAME"
+    const val KEY_NAME = "KEY_NAME"
+    const val KEY_HO_VA_TEN = "KEY_HO_VA_TEN"
+    const val KEY_SD_KHA_DUNG = "KEY_SO_DU_KHA_DUNG"
+    const val KEY_SD_THUC = "KEY_SD_THUC"
+    const val KEY_TONG_SD = "KEY_TONG_SD"
+    const val KEY_DIEM = "KEY_DIEM"
+    const val KEY_STK = "KEY_STK"
+    const val KEY_THE = "KEY_THE"
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
         editor = preferences.edit()
+    }
+
+    fun getACBInfo(key: String): String {
+        return preferences.getString(key, "") ?: ""
+    }
+    fun setACBInfo(key: String,value: String) {
+        editor.also {
+            it.putString(key, value)
+            it.commit()
+        }
     }
 
     fun saveGKInfo(user: Examiner?){

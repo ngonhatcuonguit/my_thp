@@ -1,12 +1,19 @@
 package com.cuongngo.core_project.ui.home
 
 import android.content.Intent
+import android.view.View
+import android.widget.TextView
 import com.cuongngo.core_project.R
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.fragment.BaseFragmentMVVM
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.Field
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ui.acb_app.TheAcbActivity
 import com.cuongngo.core_project.ui.acb_app.tai_khoan.TaiKhoanThanhToanActivity
+import java.util.Calendar
 
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
@@ -17,6 +24,42 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         binding.apply {
 //            tvName.text =
 //                "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
+
+            tvHello.text = getPartOfDay()
+            if (AppPreferences.getACBInfo(KEY_NICK_NAME).isNotEmpty()){
+                tvAvatar.text = AppPreferences.getACBInfo(KEY_NICK_NAME)
+            }
+
+            if (AppPreferences.getACBInfo(KEY_DIEM).isNotEmpty()){
+                tvDiem.text = AppPreferences.getACBInfo(KEY_DIEM)
+            }
+
+            if (AppPreferences.getACBInfo(KEY_TONG_SD).isNotEmpty()){
+                tvSoDu.text = AppPreferences.getACBInfo(KEY_TONG_SD)
+            }
+
+            if (AppPreferences.getACBInfo(KEY_NAME).isNotEmpty()){
+                tvUserName.text = AppPreferences.getACBInfo(KEY_NAME)
+            }
+
+            tvUserName.setOnLongClickListener {
+                setupShowDialogChangeValue("name", tvUserName)
+                true
+            }
+            tvAvatar.setOnLongClickListener {
+                setupShowDialogChangeValue("nick_name", tvAvatar)
+                true
+            }
+
+            clSoDu.setOnLongClickListener {
+                setupShowDialogChangeValue("so_du_kha_dung", tvTien)
+                true
+            }
+
+            clDiem.setOnLongClickListener {
+                setupShowDialogChangeValue("diem", tvDiem)
+                true
+            }
 
             clThe.setOnClickListener {
                 Intent(context, TheAcbActivity::class.java).apply {
@@ -31,12 +74,92 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
         }
     }
+    private fun getPartOfDay(): String {
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+
+        return when {
+            hour in 5..11 -> "Chào buổi sáng"
+            hour in 12..17 -> "Chào buổi chiều"
+            else -> "Chào buổi tối"
+        }
+    }
+
+    private fun setupShowDialogChangeValue(key: String?, view: TextView) {
+        var edtText = view.text.toString() ?: ""
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = "Sửa dổi thông tin",
+                subTitle = "subtitle",
+                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu!",
+                edtValue = edtText,
+                edtHint = "Vui lòng nhập thông tin",
+                edtTitle = "Nhập thông tin thay đổi",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Lưu thông tin",
+                isSingle = false,
+                typeInput = "textarea"
+            )
+        ).apply {
+            onRightButtonClick {
+                hideKeyboard()
+                //luu thong tin
+                when(key){
+                    "nick_name"->{
+                        AppPreferences.setACBInfo(KEY_NICK_NAME, it)
+                    }
+                    "name" -> {
+                        AppPreferences.setACBInfo(KEY_NAME, it)
+                    }
+                    "ho_va_ten" -> {
+                        AppPreferences.setACBInfo(KEY_HO_VA_TEN, it)
+                    }
+                    "tong_so_du" -> {
+                        AppPreferences.setACBInfo(KEY_TONG_SD, it)
+                    }
+                    "so_du_kha_dung" -> {
+                        AppPreferences.setACBInfo(KEY_SD_KHA_DUNG, it)
+                    }
+                    "so_du_thuc" -> {
+                        AppPreferences.setACBInfo(KEY_SD_THUC, it)
+                    }
+                    "diem" -> {
+                        AppPreferences.setACBInfo(KEY_DIEM, it)
+                    }
+                    "so_the" -> {
+                        AppPreferences.setACBInfo(KEY_THE, it)
+                    }
+                    "stk" -> {
+                        AppPreferences.setACBInfo(KEY_STK, it)
+                    }
+                    else -> {
+
+                    }
+                }
+                view.text = it.toString()
+                dismiss()
+            }
+            onLeftButtonClick {
+                hideKeyboard()
+                dismiss()
+            }
+        }
+        confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
+    }
     override fun setUpObserver() {
 
     }
 
     companion object {
         val TAG = HomeFragment::class.java.simpleName
+        const val KEY_NICK_NAME = "KEY_NICK_NAME"
+        const val KEY_NAME = "KEY_NAME"
+        const val KEY_HO_VA_TEN = "KEY_HO_VA_TEN"
+        const val KEY_SD_KHA_DUNG = "KEY_SO_DU_KHA_DUNG"
+        const val KEY_SD_THUC = "KEY_SD_THUC"
+        const val KEY_TONG_SD = "KEY_TONG_SD"
+        const val KEY_DIEM = "KEY_DIEM"
+        const val KEY_STK = "KEY_STK"
+        const val KEY_THE = "KEY_THE"
     }
 
 }

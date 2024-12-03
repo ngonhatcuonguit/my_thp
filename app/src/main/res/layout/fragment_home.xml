@@ -36,7 +36,7 @@
         </carbon.widget.ConstraintLayout>
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_hello"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="@id/img_avatar" />
 
         <com.cuongngo.core_project.common.view.view_ex.TextViewEx
-            android:id="@+id/tv_description_welcome"
+            android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
