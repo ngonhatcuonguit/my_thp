@@ -12,7 +12,7 @@
             android:id="@+id/img_avatar"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="20dp"
             android:background="#63bcc2"
             android:padding="6dp"
@@ -28,6 +28,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="22sp"
+                app:textAllCaps="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
             android:layout_marginStart="15dp"
             android:gravity="bottom"
             android:text="USER"
+            app:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold"
@@ -77,7 +79,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginEnd="18dp"
             android:background="@color/acb_gray_fb"
             android:padding="6dp"
             app:carbon_cornerRadius="26dp"
@@ -98,7 +100,7 @@
             android:id="@+id/cl_tien"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/_24dp"
+            android:paddingHorizontal="18dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_avatar">
 
@@ -113,7 +115,7 @@
                 app:carbon_cornerRadius="18dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.56">
+                app:layout_constraintWidth_percent="0.58">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_show_hide"
@@ -136,7 +138,7 @@
                     app:layout_constraintStart_toEndOf="@id/iv_show_hide"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_tien"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -177,7 +179,7 @@
                 app:carbon_cornerRadius="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/cl_so_du"
-                app:layout_constraintWidth_percent="0.39">
+                app:layout_constraintWidth_percent="0.4">
 
                 <com.cuongngo.core_project.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_so_diem"
@@ -193,7 +195,7 @@
                     app:layout_constraintStart_toEndOf="@id/iv_show_hide"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_diem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -227,7 +229,7 @@
             android:id="@+id/iv_banner"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginHorizontal="18dp"
             android:layout_marginTop="25dp"
             android:scaleType="fitXY"
             app:layout_constraintDimensionRatio="W,1:2.12"
@@ -240,7 +242,7 @@
             android:id="@+id/tv_dich_vu_bank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="25dp"
             android:text="Dịch vụ ngân hàng"
             android:textColor="@color/black_1c"
@@ -254,7 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="@dimen/_24dp"
+            android:layout_marginEnd="18dp"
             android:text="Tổng quan tài chính"
             android:textColor="@color/acb_primary_2nd"
             android:textSize="15sp"
@@ -266,7 +268,7 @@
             android:id="@+id/cl_dich_vu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_24dp"
+            android:layout_marginHorizontal="18dp"
             android:layout_marginTop="15dp"
             android:background="@color/white"
             android:paddingVertical="25dp"
@@ -415,7 +417,7 @@
             android:id="@+id/tv_dich_vu_khac"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_24dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="15dp"
             android:text="Dịch vụ khác"
             android:textColor="@color/black_1c"
@@ -443,7 +445,7 @@
                 <carbon.widget.ConstraintLayout
                     android:layout_width="102dp"
                     android:layout_height="150dp"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginStart="18dp"
                     android:background="@color/white"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="12dp"

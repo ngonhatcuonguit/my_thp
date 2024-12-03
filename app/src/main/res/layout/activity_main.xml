@@ -47,7 +47,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nav_bottom_background"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="72dp"
             android:background="@drawable/nav_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +72,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_home"
-                        android:layout_width="28dp"
-                        android:layout_height="29dp"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
                         app:srcCompat="@drawable/ic_home_active"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:text="Trang chủ"
                         android:textColor="@color/acb_gray_6e"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -103,8 +103,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_qr"
-                        android:layout_width="28dp"
-                        android:layout_height="29dp"
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
                         app:srcCompat="@drawable/ic_qr"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:text="QR Code"
                         android:textColor="@color/acb_gray_6e"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:text="Chuyển tiền"
                         android:textColor="@color/acb_gray_6e"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textAlignment="center"
@@ -158,8 +158,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_thanh_toan"
-                        android:layout_width="28dp"
-                        android:layout_height="29dp"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
                         app:srcCompat="@drawable/ic_vi"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -171,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:text="Thanh toán"
                         android:textColor="@color/acb_gray_6e"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:maxLines="1"
                         android:ellipsize="end"
                         android:textAlignment="center"
@@ -191,8 +191,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_them"
-                        android:layout_width="28dp"
-                        android:layout_height="29dp"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
                         app:srcCompat="@drawable/ic_them"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -204,7 +204,7 @@
                         android:layout_height="wrap_content"
                         android:text="Thêm"
                         android:textColor="@color/acb_gray_6e"
-                        android:textSize="13sp"
+                        android:textSize="12sp"
                         android:textAlignment="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -214,10 +214,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
