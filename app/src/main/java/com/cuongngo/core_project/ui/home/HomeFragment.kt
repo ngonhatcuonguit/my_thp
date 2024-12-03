@@ -34,8 +34,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 tvDiem.text = AppPreferences.getACBInfo(KEY_DIEM)
             }
 
-            if (AppPreferences.getACBInfo(KEY_TONG_SD).isNotEmpty()){
-                tvSoDu.text = AppPreferences.getACBInfo(KEY_TONG_SD)
+            if (AppPreferences.getACBInfo(KEY_SD_KHA_DUNG).isNotEmpty()){
+                tvSoDu.text = AppPreferences.getACBInfo(KEY_SD_KHA_DUNG)
             }
 
             if (AppPreferences.getACBInfo(KEY_NAME).isNotEmpty()){
@@ -43,21 +43,21 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             }
 
             tvUserName.setOnLongClickListener {
-                setupShowDialogChangeValue("name", tvUserName)
+                setupShowDialogChangeValue(KEY_NAME, tvUserName)
                 true
             }
             tvAvatar.setOnLongClickListener {
-                setupShowDialogChangeValue("nick_name", tvAvatar)
+                setupShowDialogChangeValue(KEY_NICK_NAME, tvAvatar)
                 true
             }
 
             clSoDu.setOnLongClickListener {
-                setupShowDialogChangeValue("so_du_kha_dung", tvTien)
+                setupShowDialogChangeValue(KEY_SD_KHA_DUNG, tvTien)
                 true
             }
 
             clDiem.setOnLongClickListener {
-                setupShowDialogChangeValue("diem", tvDiem)
+                setupShowDialogChangeValue(KEY_DIEM, tvDiem)
                 true
             }
 
@@ -104,31 +104,31 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 hideKeyboard()
                 //luu thong tin
                 when(key){
-                    "nick_name"->{
+                    KEY_NICK_NAME->{
                         AppPreferences.setACBInfo(KEY_NICK_NAME, it)
                     }
-                    "name" -> {
+                    KEY_NAME -> {
                         AppPreferences.setACBInfo(KEY_NAME, it)
                     }
-                    "ho_va_ten" -> {
+                    KEY_HO_VA_TEN -> {
                         AppPreferences.setACBInfo(KEY_HO_VA_TEN, it)
                     }
-                    "tong_so_du" -> {
+                    KEY_TONG_SD -> {
                         AppPreferences.setACBInfo(KEY_TONG_SD, it)
                     }
-                    "so_du_kha_dung" -> {
+                    KEY_SD_KHA_DUNG -> {
                         AppPreferences.setACBInfo(KEY_SD_KHA_DUNG, it)
                     }
-                    "so_du_thuc" -> {
+                    KEY_SD_THUC -> {
                         AppPreferences.setACBInfo(KEY_SD_THUC, it)
                     }
-                    "diem" -> {
+                    KEY_DIEM -> {
                         AppPreferences.setACBInfo(KEY_DIEM, it)
                     }
-                    "so_the" -> {
+                    KEY_THE -> {
                         AppPreferences.setACBInfo(KEY_THE, it)
                     }
-                    "stk" -> {
+                    KEY_STK -> {
                         AppPreferences.setACBInfo(KEY_STK, it)
                     }
                     else -> {
