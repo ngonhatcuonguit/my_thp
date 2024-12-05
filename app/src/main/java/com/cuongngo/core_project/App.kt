@@ -15,6 +15,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.cuongngo.core_project.di.appModule
 import com.cuongngo.core_project.data.database.AppDatabase
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.FormDao
+import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GdDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.core_project.data.database.roomdb.DaoInterFace.UserDao
@@ -77,6 +78,9 @@ class App : Application(), KodeinAware, LifecycleObserver {
         }
         fun getUserDB() : UserDao {
             return AppDatabase.getDatabase(getInstance()).userDao()
+        }
+        fun getGdDB() : GdDao {
+            return AppDatabase.getDatabase(getInstance()).gdDao()
         }
         /**
          *  Check internet available

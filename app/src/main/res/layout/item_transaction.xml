@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/tvTransactionCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mã giao dịch"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvTransactionAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số tiền giao dịch"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvTransactionContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nội dung giao dịch"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvTransactionTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời gian giao dịch"
+            android:textSize="12sp"
+            android:textColor="#888"/>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

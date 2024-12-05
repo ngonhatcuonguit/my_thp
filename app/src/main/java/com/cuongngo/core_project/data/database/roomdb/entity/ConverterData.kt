@@ -3,6 +3,7 @@ package com.cuongngo.core_project.data.database.roomdb.entity
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.Date
 
 class Converters {
     @TypeConverter
@@ -70,6 +71,18 @@ class Converters {
         val gson = Gson()
         val type = object : TypeToken<List<Body>>() {}.type
         return gson.fromJson(sheetListString, type)
+    }
+
+    // Chuyển đổi từ Date thành Long (lưu vào database)
+    @TypeConverter
+    fun fromDate(date: Date?): Long? {
+        return date?.time
+    }
+
+    // Chuyển đổi từ Long thành Date (khi đọc từ database)
+    @TypeConverter
+    fun toDate(timestamp: Long?): Date? {
+        return timestamp?.let { Date(it) }
     }
 
 }

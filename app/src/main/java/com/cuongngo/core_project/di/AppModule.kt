@@ -10,6 +10,8 @@ import com.cuongngo.core_project.services.remote.UserRemoteDataSource
 import com.cuongngo.core_project.services.repository.FormRepository
 import com.cuongngo.core_project.services.repository.RequestRepository
 import com.cuongngo.core_project.services.repository.UserRepository
+import com.cuongngo.core_project.ui.acb_app.GdRepository
+import com.cuongngo.core_project.ui.acb_app.GdViewModel
 import com.cuongngo.core_project.ui.form_schema.RequestViewModel
 import com.cuongngo.core_project.ui.home.HomeViewModel
 import com.cuongngo.core_project.ui.login.UserViewModel
@@ -47,6 +49,7 @@ val appModule = Kodein.Module(APP_MODULE, false) {
     bind() from singleton { UserRepository(instance(), instance()) }
     bind() from singleton { FormRepository(instance(), instance()) }
     bind() from singleton { RequestRepository(instance(), instance()) }
+    bind() from singleton { GdRepository(instance()) }
 
     /**
      * ViewModel binding
@@ -68,6 +71,9 @@ val appModule = Kodein.Module(APP_MODULE, false) {
     }
     bindViewModel<SyncDataViewModel>() with provider {
         SyncDataViewModel(instance(), instance())
+    }
+    bindViewModel<GdViewModel>() with provider {
+        GdViewModel(instance())
     }
 
 }
