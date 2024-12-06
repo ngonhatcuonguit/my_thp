@@ -5,7 +5,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.cuongngo.core_project.response.BaseModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 @Entity(
     tableName = "giao_dich"
@@ -28,12 +31,40 @@ data class GdEntity(
     @ColumnInfo(name = "transaction_content") // Tên cột cho "Nội dung giao dịch"
     val transactionContent: String,
 
-    @ColumnInfo(name = "transaction_date") // Tên cột cho "Ngày và Giờ giao dịch"
-    @TypeConverters(Converters::class) // Chuyển đổi đối tượng Date thành kiểu lưu trữ trong SQLite
-    val transactionDate: Date
+    @ColumnInfo(name = "transaction_date")
+    val transactionDate: Calendar
+
 ) : BaseModel()
 
 data class DayTransaction(
-    val date: Date,  // Ngày của các giao dịch
+    val date: Calendar,  // Ngày của các giao dịch
     val transactions: List<GdEntity>  // Các giao dịch trong ngày đó
 )
+
+fun groupTransactionsByDate(transactions: List<GdEntity>): ArrayList<DayTransaction> {
+    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+    val groupedMap = transactions.groupBy {
+        dateFormat.format(it.transactionDate.time) // Nhóm các giao dịch theo ngày
+    }
+
+    // Chuyển đổi kết quả từ List sang ArrayList
+    val result = ArrayList<DayTransaction>(
+        groupedMap.map { entry ->
+            val dayTransactions = entry.value.sortedByDescending { it.transactionDate.time } // Sắp xếp các giao dịch theo ngày giảm dần
+            // Chuyển chuỗi ngày vào Calendar
+            val calendar = Calendar.getInstance().apply {
+                time = dateFormat.parse(entry.key) ?: Date()
+            }
+            DayTransaction(calendar, dayTransactions)  // Sử dụng Calendar thay vì Date
+        }
+    )
+
+    // Sắp xếp các ngày theo thứ tự giảm dần (từ hiện tại đến quá khứ)
+    result.sortByDescending { it.date.timeInMillis }
+
+    return result
+}
+
+
+

@@ -17,11 +17,23 @@ class GdViewModel(private val gdRepository: GdRepository) : BaseViewModel() {
     private val _gd = MutableLiveData<BaseResult<GdEntity>>()
     val gd: LiveData<BaseResult<GdEntity>> = _gd
 
+    private val _gdId = MutableLiveData<BaseResult<Long>>()
+    val gdId: LiveData<BaseResult<Long>> = _gdId
+
     fun getAllGD() {
         _allGD.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO){
                 _allGD.postValue(gdRepository.getAllGD())
+            }
+        }
+    }
+
+    fun upsetGD(gd: GdEntity) {
+        _gdId.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO){
+                _gdId.postValue(gdRepository.upsertGD(gd))
             }
         }
     }
