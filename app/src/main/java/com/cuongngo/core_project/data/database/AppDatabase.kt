@@ -18,7 +18,7 @@ import com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity
 
 @Database(
     entities = [GenreEntity::class, FormEntity::class, RequestEntity::class, UserTHPEntity::class, GdEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 
