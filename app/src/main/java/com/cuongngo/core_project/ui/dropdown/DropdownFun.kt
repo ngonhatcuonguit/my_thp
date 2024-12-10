@@ -28,11 +28,8 @@ fun onShowPopupOption(
     val root = inflater.inflate(R.layout.layout_show_dropdown, null)
     val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_view_dropdown)
 
-    val popupWidth = context.resources.getDimensionPixelSize(R.dimen._110dp)
-    var popupHeight = context.resources.getDimensionPixelSize(R.dimen._500dp)
-    if(listOption.lastOrNull()?.id == 75L){
-        popupHeight = context.resources.getDimensionPixelSize(R.dimen._350dp)
-    }
+    val popupWidth = context.resources.getDimensionPixelSize(R.dimen._200dp)
+    var popupHeight = context.resources.getDimensionPixelSize(R.dimen._250dp)
 
     val optionPopupWindow = PopupWindow(
         root,

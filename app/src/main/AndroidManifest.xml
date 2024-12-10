@@ -103,6 +103,11 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
+        <activity
+            android:name=".ui.acb_app.lich_su_gd.AddGdActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+
     </application>
 
 </manifest>
