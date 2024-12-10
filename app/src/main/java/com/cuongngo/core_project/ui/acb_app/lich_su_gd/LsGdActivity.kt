@@ -2,6 +2,7 @@ package com.cuongngo.core_project.ui.acb_app.lich_su_gd
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cuongngo.core_project.App
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
@@ -24,20 +25,31 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
 
     private lateinit var gdAdapter: GdAdapter
     override fun setUp() {
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.YEAR, 2024)
-            set(Calendar.MONTH, Calendar.OCTOBER)  // Tháng 12 (sử dụng Calendar.DECEMBER)
-            set(Calendar.DAY_OF_MONTH, 11)           // Ngày 1
-            set(Calendar.HOUR_OF_DAY, 15)           // 15 giờ
-            set(Calendar.MINUTE, 30)                // 30 phút
-        }
         viewModel.getAllGD()
-        binding.btnAddGd.setOnClickListener {
-            Intent(applicationContext, AddGdActivity::class.java).apply {
-                startActivity(this)
+        with(binding){
+            loAppBar.tvTitle.text = "Lịch sử giao dịch"
+            loAppBar.tvTitle.setTextColor(App.getResources().getColor(R.color.black_1c))
+            loAppBar.clFilter.setBackgroundColor(App.getResources().getColor(R.color.white))
+            loAppBar.ivFilter.setImageResource(R.drawable.ic_filter_gd)
+
+            btnAddGd.setOnClickListener {
+                Intent(applicationContext, AddGdActivity::class.java).apply {
+                    startActivity(this)
+                }
             }
         }
+
         setupRecycleViewListGD()
+    }
+
+    override fun onResume() {
+        viewModel.getAllGD()
+        super.onResume()
+    }
+
+    override fun onRestart() {
+        viewModel.getAllGD()
+        super.onRestart()
     }
 
     private fun setupRecycleViewListGD() {

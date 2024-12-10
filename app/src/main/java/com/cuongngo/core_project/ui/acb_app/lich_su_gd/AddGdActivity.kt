@@ -1,6 +1,7 @@
 package com.cuongngo.core_project.ui.acb_app.lich_su_gd
 
 import android.text.InputType
+import com.cuongngo.core_project.App
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.view.date_time_picker.DateTimePickerDialog
@@ -39,11 +40,14 @@ class AddGdActivity : AppBaseActivityMVVM<ActivityAddGdBinding, GdViewModel>() {
     override fun setUp() {
         with(binding) {
             loAppBar.tvTitle.text = "Thêm lịch sử giao dịch"
+            loAppBar.clFilter.setBackgroundColor(App.getResources().getColor(R.color.white))
+            loAppBar.ivFilter.setImageResource(R.drawable.ic_filter_gd)
             edtSoTien.tvTitle.text = "Nhập số tiền giao dịch"
             edtSoTien.edtValue.hint = "Vui lòng nhập số tiền giao dịch"
             edtSoTien.edtValue.inputType = InputType.TYPE_CLASS_NUMBER
             edtNoiDung.tvTitle.text = "Nhập Nội dung giao dịch"
             edtNoiDung.edtValue.hint = "Vui lòng nhập nội dung"
+            edtNoiDung.edtValue.isAllCaps = true
             tvTypeGd.setOnClickListener {
                 val defaultType = typeOptions.find {
                     tvTypeGd.text.toString() == it.value
