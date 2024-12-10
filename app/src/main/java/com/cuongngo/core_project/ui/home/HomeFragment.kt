@@ -84,67 +84,6 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun setupShowDialogChangeValue(key: String?, view: TextView) {
-        var edtText = view.text.toString() ?: ""
-        val confirmDialog = ConfirmDialog(
-            DialogModel(
-                title = "Sửa dổi thông tin",
-                subTitle = "subtitle",
-                content = "Vui lòng nhập thông tin vào bên dưới và xác nhận để lưu!",
-                edtValue = edtText,
-                edtHint = "Vui lòng nhập thông tin",
-                edtTitle = "Nhập thông tin thay đổi",
-                leftButtonTitle = "Huỷ bỏ",
-                rightButtonTitle = "Lưu thông tin",
-                isSingle = false,
-                typeInput = "textarea"
-            )
-        ).apply {
-            onRightButtonClick {
-                hideKeyboard()
-                //luu thong tin
-                when(key){
-                    KEY_NICK_NAME->{
-                        AppPreferences.setACBInfo(KEY_NICK_NAME, it)
-                    }
-                    KEY_NAME -> {
-                        AppPreferences.setACBInfo(KEY_NAME, it)
-                    }
-                    KEY_HO_VA_TEN -> {
-                        AppPreferences.setACBInfo(KEY_HO_VA_TEN, it)
-                    }
-                    KEY_TONG_SD -> {
-                        AppPreferences.setACBInfo(KEY_TONG_SD, it)
-                    }
-                    KEY_SD_KHA_DUNG -> {
-                        AppPreferences.setACBInfo(KEY_SD_KHA_DUNG, it)
-                    }
-                    KEY_SD_THUC -> {
-                        AppPreferences.setACBInfo(KEY_SD_THUC, it)
-                    }
-                    KEY_DIEM -> {
-                        AppPreferences.setACBInfo(KEY_DIEM, it)
-                    }
-                    KEY_THE -> {
-                        AppPreferences.setACBInfo(KEY_THE, it)
-                    }
-                    KEY_STK -> {
-                        AppPreferences.setACBInfo(KEY_STK, it)
-                    }
-                    else -> {
-
-                    }
-                }
-                view.text = it.toString()
-                dismiss()
-            }
-            onLeftButtonClick {
-                hideKeyboard()
-                dismiss()
-            }
-        }
-        confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
-    }
     override fun setUpObserver() {
 
     }

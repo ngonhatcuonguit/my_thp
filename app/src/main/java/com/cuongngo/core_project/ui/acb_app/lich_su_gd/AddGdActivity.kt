@@ -42,9 +42,17 @@ class AddGdActivity : AppBaseActivityMVVM<ActivityAddGdBinding, GdViewModel>() {
             loAppBar.tvTitle.text = "Thêm lịch sử giao dịch"
             loAppBar.clFilter.setBackgroundColor(App.getResources().getColor(R.color.white))
             loAppBar.ivFilter.setImageResource(R.drawable.ic_filter_gd)
+            loAppBar.ivBack.setOnClickListener {
+                finish()
+            }
+
             edtSoTien.tvTitle.text = "Nhập số tiền giao dịch"
             edtSoTien.edtValue.hint = "Vui lòng nhập số tiền giao dịch"
             edtSoTien.edtValue.inputType = InputType.TYPE_CLASS_NUMBER
+
+            edtNguoiChuyen.tvTitle.text = "Nhập tên người chuyển/nhận tiền"
+            edtNguoiChuyen.edtValue.hint = "Vui lòng nhập tên người chuyển/nhận tiền"
+
             edtNoiDung.tvTitle.text = "Nhập Nội dung giao dịch"
             edtNoiDung.edtValue.hint = "Vui lòng nhập nội dung"
             edtNoiDung.edtValue.isAllCaps = true
@@ -105,6 +113,7 @@ class AddGdActivity : AppBaseActivityMVVM<ActivityAddGdBinding, GdViewModel>() {
                             transactionCode = randomString(10),
                             transactionType = type.toString(),
                             transactionAmount = edtSoTien.edtValue.text.toString(),
+                            transactionName = edtNguoiChuyen.edtValue.text.toString(),
                             transactionContent = edtNoiDung.edtValue.text.toString(),
                             transactionDate = dateTime
                         )

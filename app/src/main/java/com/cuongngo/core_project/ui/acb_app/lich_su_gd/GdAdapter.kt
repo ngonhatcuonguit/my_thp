@@ -3,8 +3,12 @@ package com.cuongngo.core_project.ui.acb_app.lich_su_gd
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import carbon.widget.ConstraintLayout
+import com.cuongngo.core_project.App
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.DayTransaction
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
@@ -67,8 +71,24 @@ class GdAdapter(
             is TransactionViewHolder -> {
                 // Kiểm tra phần tử là GdEntity (giao dịch)
                 val transaction = listDayTransaction[position] as GdEntity
-                holder.tvTransactionCode.text = transaction.transactionCode
-                holder.tvTransactionAmount.text = transaction.transactionAmount.toString()
+                if (transaction.transactionName.isNullOrEmpty()){
+                    holder.tvTransactionUserName.isVisible = false
+                }else{
+                    holder.tvTransactionUserName.isVisible = true
+                    holder.tvTransactionUserName.text = transaction.transactionName
+                }
+                if (transaction.transactionType == "Chuyen tien"){
+                    holder.clImage.setBackgroundColor(App.getResources().getColor(R.color.acb_gray_background))
+                    holder.tvTransactionAmount.setTextColor(App.getResources().getColor(R.color.black_1c))
+                    holder.ivIcon.setImageResource(R.drawable.ic_arrow_down)
+                    holder.tvTransactionAmount.text = "-${transaction.transactionAmount} VND"
+                }else{
+                    holder.clImage.setBackgroundColor(App.getResources().getColor(R.color.acb_green_nhat))
+                    holder.ivIcon.setImageResource(R.drawable.ic_arrow_up)
+                    holder.tvTransactionAmount.setTextColor(App.getResources().getColor(R.color.primary_color))
+                    holder.tvTransactionAmount.text = "+${transaction.transactionAmount} VND"
+                }
+
                 holder.tvTransactionContent.text = transaction.transactionContent
                 val formattedTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(transaction.transactionDate.time)
                 holder.tvTransactionTime.text = formattedTime
@@ -104,10 +124,12 @@ class GdAdapter(
     }
 
     inner class TransactionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTransactionCode: TextView = itemView.findViewById(R.id.tvTransactionCode)
-        val tvTransactionAmount: TextView = itemView.findViewById(R.id.tvTransactionAmount)
-        val tvTransactionContent: TextView = itemView.findViewById(R.id.tvTransactionContent)
+        val tvTransactionUserName: TextView = itemView.findViewById(R.id.tvNameUser)
+        val tvTransactionAmount: TextView = itemView.findViewById(R.id.tvAmount)
+        val tvTransactionContent: TextView = itemView.findViewById(R.id.tvContent)
         val tvTransactionTime: TextView = itemView.findViewById(R.id.tvTransactionTime)
+        val ivIcon: ImageView = itemView.findViewById(R.id.iv_gd)
+        val clImage: ConstraintLayout = itemView.findViewById(R.id.cl_image)
     }
 }
 

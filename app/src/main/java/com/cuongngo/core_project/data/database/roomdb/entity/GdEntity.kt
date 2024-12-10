@@ -25,6 +25,9 @@ data class GdEntity(
     @ColumnInfo(name = "transaction_type") // Tên cột cho "Loại giao dịch"
     val transactionType: String,
 
+    @ColumnInfo(name = "transaction_name") // Tên cột cho "Số tiền giao dịch"
+    val transactionName: String? = null,
+
     @ColumnInfo(name = "transaction_amount") // Tên cột cho "Số tiền giao dịch"
     val transactionAmount: String,
 

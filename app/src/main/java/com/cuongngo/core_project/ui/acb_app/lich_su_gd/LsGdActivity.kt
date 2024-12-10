@@ -1,19 +1,25 @@
 package com.cuongngo.core_project.ui.acb_app.lich_su_gd
 
 import android.content.Intent
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cuongngo.core_project.App
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
+import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
+import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.database.roomdb.entity.GdEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.groupTransactionsByDate
+import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.ActivityLsGdBinding
 import com.cuongngo.core_project.ext.WTF
 import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.acb_app.GdViewModel
+import com.cuongngo.core_project.ui.home.HomeFragment
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
+import com.cuongngo.core_project.utils.number.formatNumberWithDots
 import java.util.Calendar
 import kotlin.random.Random
 
@@ -27,6 +33,9 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
     override fun setUp() {
         viewModel.getAllGD()
         with(binding){
+            loAppBar.ivBack.setOnClickListener {
+                finish()
+            }
             loAppBar.tvTitle.text = "Lịch sử giao dịch"
             loAppBar.tvTitle.setTextColor(App.getResources().getColor(R.color.black_1c))
             loAppBar.clFilter.setBackgroundColor(App.getResources().getColor(R.color.white))
@@ -37,6 +46,16 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
                     startActivity(this)
                 }
             }
+
+            if (AppPreferences.getACBInfo(HomeFragment.KEY_STK).isNotEmpty()){
+                btnAddGd.text = AppPreferences.getACBInfo(HomeFragment.KEY_STK)
+            }
+
+            btnAddGd.setOnLongClickListener {
+                setupShowDialogChangeValue(AppPreferences.KEY_STK, btnAddGd)
+                true
+            }
+
         }
 
         setupRecycleViewListGD()
@@ -94,6 +113,5 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
             )
         }
     }
-
 
 }
