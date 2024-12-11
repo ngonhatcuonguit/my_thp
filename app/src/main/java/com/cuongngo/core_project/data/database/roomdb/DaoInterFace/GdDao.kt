@@ -25,5 +25,12 @@ interface GdDao {
     @Query("DELETE FROM giao_dich")
     suspend fun formatFormTable()
 
+    // Lấy giao dịch theo khoảng thời gian
+    @Query("SELECT * FROM giao_dich WHERE transaction_date BETWEEN :startDate AND :endDate")
+    fun getTransactionsByDateRange(startDate: Long, endDate: Long): List<GdEntity>
+
+    // Lấy giao dịch trong n ngày gần nhất
+    @Query("SELECT * FROM giao_dich WHERE transaction_date >= :daysAgo")
+    fun getLastNDaysTransactions(daysAgo: Long): List<GdEntity>
 
 }

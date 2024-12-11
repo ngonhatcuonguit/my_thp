@@ -46,6 +46,9 @@ class TaiKhoanThanhToanActivity :
             if (AppPreferences.getACBInfo(KEY_STK).isNotEmpty()) {
                 tvStk.text = AppPreferences.getACBInfo(KEY_STK)
             }
+            if (AppPreferences.getACBInfo(KEY_SD_THUC).isNotEmpty()) {
+                tvTienThuc.text = formatNumberWithDots(AppPreferences.getACBInfo(KEY_SD_THUC))
+            }
 
             tvSoDu.setOnLongClickListener {
                 setupShowDialogChangeValue(KEY_TONG_SD, tvSoDu)

@@ -14,5 +14,16 @@ class GdRemoteDataSource(private val database: AppDatabase) : BaseLocalDataSourc
         database.gdDao().upsertGd(record)
     }
 
+    suspend fun deleteGD(record: GdEntity) = getResult {
+        database.gdDao().deleteGd(record)
+    }
+
+    suspend fun getTransactionsByDateRange(startDate: Long, endDate: Long) = getResult {
+        database.gdDao().getTransactionsByDateRange(startDate = startDate, endDate = endDate)
+    }
+    suspend fun getLastNDaysTransactions(dateAgo: Long) = getResult {
+        database.gdDao().getLastNDaysTransactions(dateAgo)
+    }
+
 
 }

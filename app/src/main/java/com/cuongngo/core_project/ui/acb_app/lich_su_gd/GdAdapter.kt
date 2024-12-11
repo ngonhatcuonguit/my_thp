@@ -13,6 +13,7 @@ import com.cuongngo.core_project.R
 import com.cuongngo.core_project.data.database.roomdb.entity.DayTransaction
 import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.GdEntity
+import com.cuongngo.core_project.utils.number.formatNumberWithDots
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -20,7 +21,8 @@ import java.util.Locale
 
 class GdAdapter(
     private val dayTransactions: ArrayList<DayTransaction>,
-    private val onItemClickListener: ((GdEntity) -> Unit)? = null
+    private val onItemClickListener: ((GdEntity) -> Unit)? = null,
+    private val onItemLongClickListener: ((GdEntity) -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -71,6 +73,7 @@ class GdAdapter(
             is TransactionViewHolder -> {
                 // Kiểm tra phần tử là GdEntity (giao dịch)
                 val transaction = listDayTransaction[position] as GdEntity
+                var amout = formatNumberWithDots(transaction.transactionAmount)
                 if (transaction.transactionName.isNullOrEmpty()){
                     holder.tvTransactionUserName.isVisible = false
                 }else{
@@ -81,12 +84,12 @@ class GdAdapter(
                     holder.clImage.setBackgroundColor(App.getResources().getColor(R.color.acb_gray_background))
                     holder.tvTransactionAmount.setTextColor(App.getResources().getColor(R.color.black_1c))
                     holder.ivIcon.setImageResource(R.drawable.ic_arrow_down)
-                    holder.tvTransactionAmount.text = "-${transaction.transactionAmount} VND"
+                    holder.tvTransactionAmount.text = "-$amout VND"
                 }else{
                     holder.clImage.setBackgroundColor(App.getResources().getColor(R.color.acb_green_nhat))
                     holder.ivIcon.setImageResource(R.drawable.ic_arrow_up)
                     holder.tvTransactionAmount.setTextColor(App.getResources().getColor(R.color.primary_color))
-                    holder.tvTransactionAmount.text = "+${transaction.transactionAmount} VND"
+                    holder.tvTransactionAmount.text = "+$amout VND"
                 }
 
                 holder.tvTransactionContent.text = transaction.transactionContent
@@ -94,6 +97,10 @@ class GdAdapter(
                 holder.tvTransactionTime.text = formattedTime
                 holder.itemView.setOnClickListener {
                     onItemClickListener?.invoke(transaction)
+                }
+                holder.itemView.setOnLongClickListener {
+                    onItemLongClickListener?.invoke(transaction)
+                    true
                 }
             }
         }
@@ -115,6 +122,15 @@ class GdAdapter(
                 this.listDayTransaction.addAll(dayTransaction.transactions)  // Thêm giao dịch
             }
             notifyDataSetChanged()
+        }
+    }
+
+    fun removeItem(transaction: GdEntity) {
+        val position = listDayTransaction.indexOf(transaction)
+        if (position != -1) {
+            listDayTransaction.removeAt(position)
+            notifyItemRemoved(position)
+//            notifyDataSetChanged()
         }
     }
 

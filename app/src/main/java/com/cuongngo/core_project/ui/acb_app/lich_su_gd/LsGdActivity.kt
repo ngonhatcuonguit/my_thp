@@ -9,6 +9,7 @@ import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.database.roomdb.entity.FormEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.GdEntity
 import com.cuongngo.core_project.data.database.roomdb.entity.groupTransactionsByDate
 import com.cuongngo.core_project.data.local.AppPreferences
@@ -18,8 +19,11 @@ import com.cuongngo.core_project.ext.observeLiveDataChanged
 import com.cuongngo.core_project.services.network.onResultReceived
 import com.cuongngo.core_project.ui.acb_app.GdViewModel
 import com.cuongngo.core_project.ui.home.HomeFragment
+import com.cuongngo.core_project.ui.request_detail.RequestMasterDetailActivity
 import com.cuongngo.core_project.ui.search_form.ListFormActivity
+import com.cuongngo.core_project.utils.Constants
 import com.cuongngo.core_project.utils.number.formatNumberWithDots
+import com.cuongngo.core_project.utils.toast.showMessageToast
 import java.util.Calendar
 import kotlin.random.Random
 
@@ -77,6 +81,9 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
             arrayListOf(),
             onItemClickListener = {
                 //show detail
+            },
+            onItemLongClickListener = {
+                dialogConfirmDeleteGD(it)
             }
         )
 //        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {
@@ -92,6 +99,30 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
 
     }
 
+    private fun dialogConfirmDeleteGD(gdEntity: GdEntity) {
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = "Xoá giao dịch khỏi danh sách",
+                subTitle = "",
+                content = "Bạn muốn xoá gd ${gdEntity.transactionContent}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Xoá gd",
+                isSingle = false
+            )
+        ).apply {
+            onRightButtonClick {
+                //xoá
+                gdAdapter.removeItem(gdEntity)
+                viewModel.deleteGD(gdEntity)
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(supportFragmentManager, ConfirmDialog.TAG)
+    }
+
     override fun setUpObserver() {
         observeLiveDataChanged(viewModel.allGD) {
             it.onResultReceived(
@@ -104,11 +135,35 @@ class LsGdActivity : AppBaseActivityMVVM<ActivityLsGdBinding, GdViewModel>() {
                         // Sắp xếp giao dịch theo ngày và giờ
                         val groupedTransactions = groupTransactionsByDate(transactions)
                         gdAdapter.submitListDayTransaction(groupedTransactions)
-                        WTF(ListFormActivity.TAG, "dataForm: ${groupedTransactions}")
                     }
                 },
                 onError = {
                     hideProgressDialog()
+                }
+            )
+        }
+        observeLiveDataChanged(viewModel.deleteGD) {
+            it.onResultReceived(
+                onLoading = {
+                    //
+                },
+                onSuccess = {
+                    hideProgressDialog()
+                    showMessageToast(
+                        this,
+                        true,
+                        contentFail = "",
+                        contentDone = "Xoá gd thành công!"
+                    )
+                },
+                onError = {
+                    hideProgressDialog()
+                    showMessageToast(
+                        this,
+                        false,
+                        contentFail = "Đã có lỗi xảy ra!",
+                        contentDone = ""
+                    )
                 }
             )
         }

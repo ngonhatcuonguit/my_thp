@@ -13,6 +13,7 @@ import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.databinding.FragmentHomeBinding
 import com.cuongngo.core_project.ui.acb_app.TheAcbActivity
 import com.cuongngo.core_project.ui.acb_app.tai_khoan.TaiKhoanThanhToanActivity
+import com.cuongngo.core_project.utils.number.formatNumberWithDots
 import java.util.Calendar
 
 class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
@@ -31,11 +32,11 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
             }
 
             if (AppPreferences.getACBInfo(KEY_DIEM).isNotEmpty()){
-                tvDiem.text = AppPreferences.getACBInfo(KEY_DIEM)
+                tvDiem.text = formatNumberWithDots(AppPreferences.getACBInfo(KEY_DIEM))
             }
 
             if (AppPreferences.getACBInfo(KEY_SD_KHA_DUNG).isNotEmpty()){
-                tvSoDu.text = AppPreferences.getACBInfo(KEY_SD_KHA_DUNG)
+                tvTien.text = formatNumberWithDots(AppPreferences.getACBInfo(KEY_SD_KHA_DUNG))
             }
 
             if (AppPreferences.getACBInfo(KEY_NAME).isNotEmpty()){
