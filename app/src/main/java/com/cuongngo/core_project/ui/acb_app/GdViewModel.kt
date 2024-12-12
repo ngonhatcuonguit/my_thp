@@ -55,10 +55,10 @@ class GdViewModel(private val gdRepository: GdRepository) : BaseViewModel() {
         }
     }
     fun getTransactionsByDateRange(startDate: Calendar, endDate: Calendar) {
-        _listFilter.value = BaseResult.loading(null)
+        _allGD.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFilter.postValue(
+                _allGD.postValue(
                     gdRepository.getTransactionsByDateRange(
                         startDate.timeInMillis,
                         endDate.timeInMillis
@@ -68,10 +68,10 @@ class GdViewModel(private val gdRepository: GdRepository) : BaseViewModel() {
         }
     }
     fun getLastNDaysTransactions(dayAgo: Calendar) {
-        _listFilter.value = BaseResult.loading(null)
+        _allGD.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                _listFilter.postValue(
+                _allGD.postValue(
                     gdRepository.getLastNDaysTransactions(
                         dayAgo.timeInMillis
                     )

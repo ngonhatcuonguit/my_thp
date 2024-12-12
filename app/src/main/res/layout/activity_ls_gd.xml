@@ -97,7 +97,7 @@
             android:id="@+id/tv_title_filter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="30 ngày gần nhất"
+            android:text="Tất cả"
             android:textAlignment="center"
             android:textColor="@color/black_1c"
             android:textSize="14sp"

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/lo_app_bar"
+            layout="@layout/layout_acb_app_bar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:text="Lọc tài khoản theo"
+            android:textColor="@color/acb_like_black_text"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lo_app_bar" />
+
+        <carbon.widget.ConstraintLayout
+            android:id="@+id/cl_type_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="5dp"
+            app:carbon_cornerRadius="6dp"
+            app:carbon_stroke="@color/acb_gray_background"
+            app:carbon_strokeWidth="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_type_title">
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_tat_ca"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/acb_primary"
+                android:paddingVertical="12dp"
+                android:text="Tất cả"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_cho_xu_ly"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_cho_xu_ly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="Tiền vào"
+                android:textAlignment="center"
+                android:textColor="@color/acb_gray_text"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_tat_ca"
+                app:layout_constraintEnd_toStartOf="@id/tv_dat_lic"
+                app:layout_constraintStart_toEndOf="@+id/tv_tat_ca"
+                app:layout_constraintTop_toTopOf="@id/tv_tat_ca" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_dat_lic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="12dp"
+                android:text="Tiền ra"
+                android:textAlignment="center"
+                android:textColor="@color/acb_gray_text"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_da_thu_hien"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_cho_xu_ly"
+                app:layout_constraintTop_toTopOf="@id/tv_da_thu_hien" />
+
+        </carbon.widget.ConstraintLayout>
+
+        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            android:id="@+id/tv_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="12dp"
+            android:text="Thời gian"
+            android:textColor="@color/acb_like_black_text"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_type_filter" />
+
+        <carbon.widget.ConstraintLayout
+            android:id="@+id/cl_time_filter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="5dp"
+            app:carbon_cornerRadius="6dp"
+            app:carbon_stroke="@color/acb_gray_background"
+            app:carbon_strokeWidth="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_time_title">
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_30_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/acb_primary"
+                android:padding="12dp"
+                android:text="30 ngày
+                gần nhất"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_7day"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_7day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="7 ngày
+                gần nhất"
+                android:textAlignment="center"
+                android:textColor="@color/acb_gray_text"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_30_day"
+                app:layout_constraintEnd_toStartOf="@id/tv_tuy_chon"
+                app:layout_constraintStart_toEndOf="@+id/tv_30_day"
+                app:layout_constraintTop_toTopOf="@id/tv_30_day" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_tuy_chon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:text="Tuỳ chọn
+                thời gian"
+                android:textAlignment="center"
+                android:textColor="@color/acb_gray_text"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/tv_da_thu_hien"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_7day"
+                app:layout_constraintTop_toTopOf="@id/tv_7day" />
+
+        </carbon.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_start"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/cl_end"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_time_filter">
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_start_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="Từ ngày"
+                android:textColor="@color/acb_gray_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableEnd="@drawable/ic_date"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/acb_primary_2nd"
+                android:text="Chọn ngày"
+                android:textColor="@color/acb_primary_2nd"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/tv_start_time_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_start_time_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_end"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cl_start"
+            app:layout_constraintTop_toTopOf="@id/cl_start">
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_end_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:text="Từ ngày"
+                android:textColor="@color/acb_gray_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                android:id="@+id/tv_end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:drawableEnd="@drawable/ic_date"
+                android:drawablePadding="20dp"
+                android:drawableTint="@color/acb_primary_2nd"
+                android:text="Chọn ngày"
+                android:textColor="@color/acb_primary_2nd"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@id/tv_end_time_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_end_time_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <carbon.widget.TextView
+            android:id="@+id/tv_update_filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@color/acb_primary"
+            android:paddingVertical="16dp"
+            android:text="Cập nhật"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:carbon_cornerRadius="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_start"
+            app:layout_constraintWidth_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

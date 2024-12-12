@@ -69,5 +69,11 @@ fun groupTransactionsByDate(transactions: List<GdEntity>): ArrayList<DayTransact
     return result
 }
 
+data class gdFilter(
+    var soNgay: Int? = null,
+    var startDate: Calendar? = null,
+    var endDate: Calendar? = null,
+): BaseModel()
+
 
 
