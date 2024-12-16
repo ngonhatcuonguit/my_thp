@@ -40,6 +40,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#f7f7f7"
                 android:paddingBottom="100dp">
 
                 <carbon.widget.ConstraintLayout
@@ -49,7 +50,7 @@
                     app:carbon_cornerRadius="16dp"
                     android:background="@color/white"
                     android:padding="18dp"
-                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -105,10 +106,10 @@
                 </carbon.widget.ConstraintLayout>
 
                 <carbon.widget.ConstraintLayout
-                    android:id="@+id/cl_account_infor"
+                    android:id="@+id/cl_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="18dp"
                     app:carbon_cornerRadius="16dp"
                     android:background="@color/white"
                     android:padding="18dp"
@@ -117,525 +118,376 @@
                     app:layout_constraintTop_toBottomOf="@id/cl_user_infor">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_member"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_setting"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:srcCompat="@drawable/ic_acb_caidat"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_account_title"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_member"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_profile_blue"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_member"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_member"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_member"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_member"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_member"
+                        android:id="@+id/tv_setting"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Member"
+                        android:gravity="start"
+                        android:text="Cài đặt"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
                         android:drawableEnd="@drawable/ic_arrow_right_2"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_member"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_member"
+                        app:layout_constraintStart_toEndOf="@id/iv_setting"
+                        app:layout_constraintTop_toTopOf="@id/iv_setting"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_member"/>
-
-                    <View
-                        android:id="@+id/view_space_account"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/white"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_member"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="@id/iv_setting"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_change_password"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_qr"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_my_qr"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_account"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_change_password"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_padlock"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_change_password"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_change_password"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_change_password"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_change_password"/>
+                        app:layout_constraintTop_toBottomOf="@+id/iv_setting"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_change_password"
+                        android:id="@+id/tv_qr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Change Password"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
                         android:drawableEnd="@drawable/ic_arrow_right_2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_change_password"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_change_password"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_change_password"/>
+                        app:layout_constraintStart_toEndOf="@id/iv_qr"
+                        app:layout_constraintTop_toTopOf="@id/iv_qr"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_qr"/>
 
                 </carbon.widget.ConstraintLayout>
 
                 <carbon.widget.ConstraintLayout
-                    android:id="@+id/cl_general_infor"
+                    android:id="@+id/cl_hst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="20dp"
                     app:carbon_cornerRadius="16dp"
                     android:background="@color/white"
-                    app:carbon_strokeWidth="1dp"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/_24dp"
+                    android:padding="18dp"
                     android:layout_marginHorizontal="@dimen/_24dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cl_account_infor">
+                    app:layout_constraintTop_toBottomOf="@id/cl_setting">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_sync_data"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_hst"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:srcCompat="@drawable/ic_hst_so"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_notify_title"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_sync_data"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_sync_data"
-                        android:padding="6dp"
-                        android:tint="#92929D"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_sync_data"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_sync_data"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_sync_data"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_sync_data"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_sync_data"
+                        android:id="@+id/tv_hst"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Sync Data"
+                        android:gravity="start"
+                        android:text="Hệ sinh thái số"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
                         android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintStart_toEndOf="@id/iv_hst"
+                        app:layout_constraintTop_toTopOf="@id/iv_hst"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_sync_data"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_sync_data"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_sync_data"/>
+                        app:layout_constraintBottom_toBottomOf="@id/iv_hst"/>
+                </carbon.widget.ConstraintLayout>
 
-                    <View
-                        android:id="@+id/view_space_sync_data"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_F5"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_sync_data"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_notify"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_sync_data"/>
+                <carbon.widget.ConstraintLayout
+                    android:id="@+id/cl_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:carbon_cornerRadius="16dp"
+                    android:background="@color/white"
+                    android:padding="18dp"
+                    android:layout_marginHorizontal="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_hst">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_notify"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_notification"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_notify"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_notify"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_notify"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_notify"/>
+                        android:id="@+id/iv_khuon_mat"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:srcCompat="@drawable/ic_khuon_mat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_notify"
+                        android:id="@+id/tv_khuon_mat"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Notification"
+                        android:gravity="start"
+                        android:text="Cài đặt"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
-
                         android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintStart_toEndOf="@id/iv_khuon_mat"
+                        app:layout_constraintTop_toTopOf="@id/iv_khuon_mat"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_notify"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_notify"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_notify"/>
-
-                    <View
-                        android:id="@+id/view_space_notify"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/white"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_notify"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="@id/iv_khuon_mat"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_language"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_key"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_notify"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_language"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_language"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_language"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_language"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_language"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_language"/>
+                        app:layout_constraintTop_toBottomOf="@+id/iv_khuon_mat"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_language"
+                        android:id="@+id/tv_key"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Language"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
                         android:drawableEnd="@drawable/ic_arrow_right_2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_language"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_language"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_language"/>
-
-                    <View
-                        android:id="@+id/view_space_language"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_F5"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_language"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintStart_toEndOf="@id/iv_key"
+                        app:layout_constraintTop_toTopOf="@id/iv_key"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_key"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_country"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_otp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_language"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_country"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_country"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_country"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_country"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_country"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_country"/>
+                        app:layout_constraintTop_toBottomOf="@+id/iv_key"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_country"
+                        android:id="@+id/tv_otp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Country"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
                         android:drawableEnd="@drawable/ic_arrow_right_2"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_country"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_country"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_country"/>
-
-                    <View
-                        android:id="@+id/view_space_clear_cache"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/white"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_country"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_clear_cache"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_clear_cache"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_clear_cache"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_trash"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_clear_cache"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_clear_cache"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_clear_cache"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_clear_cache"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_clear_cache"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Clear Cache"
-                        android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
-                        android:drawableTint="@color/acb_gray_text"
-                        android:drawableEnd="@drawable/ic_arrow_right_2"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_clear_cache"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_clear_cache"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_clear_cache"/>
+                        app:layout_constraintStart_toEndOf="@id/iv_otp"
+                        app:layout_constraintTop_toTopOf="@id/iv_otp"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_otp"/>
 
                 </carbon.widget.ConstraintLayout>
 
                 <carbon.widget.ConstraintLayout
-                    android:id="@+id/cl_more_infor"
+                    android:id="@+id/cl_4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_24dp"
+                    android:layout_marginTop="20dp"
                     app:carbon_cornerRadius="16dp"
                     android:background="@color/white"
-                    app:carbon_stroke="@color/gray_F5"
-                    app:carbon_strokeWidth="1dp"
-                    android:paddingHorizontal="18dp"
-                    android:paddingVertical="@dimen/_24dp"
-                    android:layout_marginHorizontal="@dimen/_24dp"
+                    android:padding="18dp"
+                    android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cl_general_infor">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_more_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="More"
-                        android:textSize="18sp"
-                        android:textColor="@color/black"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/iv_bg_legal"/>
+                    app:layout_constraintTop_toBottomOf="@id/cl_3">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_legal"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="@dimen/_24dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_tin_tuc"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:srcCompat="@drawable/ic_khuon_mat"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_more_title"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_legal"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_scurity"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_legal"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_legal"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_legal"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_legal"/>
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_legal"
+                        android:id="@+id/tv_tin_tuc"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Legal and Policies"
+                        android:gravity="start"
+                        android:text="Cài đặt"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
-                        android:drawableEnd="@drawable/ic_arrow_right_2"                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_legal"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_legal"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_legal"/>
-
-                    <View
-                        android:id="@+id/view_space_legal"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_F5"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_legal"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintStart_toEndOf="@id/iv_tin_tuc"
+                        app:layout_constraintTop_toTopOf="@id/iv_tin_tuc"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_tin_tuc"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_help"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_ty_gia"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_legal"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_help"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_help"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_help"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_help"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_help"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_help"/>
+                        app:layout_constraintTop_toBottomOf="@+id/iv_tin_tuc"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_help"
+                        android:id="@+id/tv_ty_gia"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="Help and Feedback"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
-                        android:drawableEnd="@drawable/ic_arrow_right_2"                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_help"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_help"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_help"/>
-
-                    <View
-                        android:id="@+id/view_space_help"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/gray_F5"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_bg_help"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_ty_gia"
+                        app:layout_constraintTop_toTopOf="@id/iv_ty_gia"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_ty_gia"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_bg_about"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginTop="16dp"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_bg_circle_gray_f5"
+                        android:id="@+id/iv_dia_diem"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/view_space_help"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_about"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_about"
-                        android:padding="6dp"
-                        app:layout_constraintStart_toStartOf="@+id/iv_bg_about"
-                        app:layout_constraintTop_toTopOf="@+id/iv_bg_about"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_bg_about"
-                        app:layout_constraintEnd_toEndOf="@id/iv_bg_about"/>
+                        app:layout_constraintTop_toBottomOf="@+id/iv_ty_gia"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_about"
+                        android:id="@+id/tv_dia_diem"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:gravity="top"
-                        android:text="About Us"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
                         android:textColor="@color/gray_36"
-                        android:textSize="14sp"
-                        android:paddingVertical="8dp"
+                        android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
-                        android:drawableEnd="@drawable/ic_arrow_right_2"                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/iv_bg_about"
-                        app:layout_constraintTop_toTopOf="@id/iv_bg_about"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_bg_about"/>
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_dia_diem"
+                        app:layout_constraintTop_toTopOf="@id/iv_dia_diem"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_dia_diem"/>
 
                 </carbon.widget.ConstraintLayout>
+
+                <carbon.widget.ConstraintLayout
+                    android:id="@+id/cl_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:carbon_cornerRadius="16dp"
+                    android:background="@color/white"
+                    android:padding="18dp"
+                    android:layout_marginHorizontal="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cl_4">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_dk_dv"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        app:srcCompat="@drawable/ic_khuon_mat"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_dk_dv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="start"
+                        android:text="Cài đặt"
+                        android:textColor="@color/gray_36"
+                        android:textSize="15sp"
+                        android:drawableTint="@color/acb_gray_text"
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintStart_toEndOf="@id/iv_dk_dv"
+                        app:layout_constraintTop_toTopOf="@id/iv_dk_dv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_dk_dv"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_cau_hoi"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_dk_dv"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_cau_hoi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
+                        android:textColor="@color/gray_36"
+                        android:textSize="15sp"
+                        android:drawableTint="@color/acb_gray_text"
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_cau_hoi"
+                        app:layout_constraintTop_toTopOf="@id/iv_cau_hoi"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_cau_hoi"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_lien_he"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="20dp"
+                        app:srcCompat="@drawable/ic_safekey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_cau_hoi"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_lien_he"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:gravity="start"
+                        android:text="Mã QR của tôi"
+                        android:textColor="@color/gray_36"
+                        android:textSize="15sp"
+                        android:drawableTint="@color/acb_gray_text"
+                        android:drawableEnd="@drawable/ic_arrow_right_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/iv_lien_he"
+                        app:layout_constraintTop_toTopOf="@id/iv_lien_he"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_lien_he"/>
+
+                </carbon.widget.ConstraintLayout>
+
 
                 <carbon.widget.TextView
                     android:id="@+id/btn_log_out"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:text="Log Out"
-                    android:background="@color/gray_FF"
-                    android:textColor="@color/blue_accent"
+                    android:text="Đăng xuất"
+                    android:background="@color/white"
+                    android:textColor="@color/acb_red_66"
                     android:textSize="16sp"
                     app:carbon_cornerRadius="12dp"
+                    android:drawableStart="@drawable/ic_logout"
+                    android:drawablePadding="16dp"
                     android:textStyle="bold"
-                    app:carbon_strokeWidth="1dp"
-                    app:carbon_stroke="@color/blue_accent"
                     android:gravity="center"
                     android:layout_marginTop="40dp"
                     android:layout_marginHorizontal="@dimen/_24dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cl_more_infor" />
+                    app:layout_constraintTop_toBottomOf="@+id/cl_5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
