@@ -95,7 +95,7 @@
 
     <style name="TextViewEx.BodySmall" parent="TextViewEx">
         <item name="fontType">normal</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="TextViewEx.BodyVerySmall" parent="TextViewEx">
         <item name="fontFamily">@font/bep_medium</item>

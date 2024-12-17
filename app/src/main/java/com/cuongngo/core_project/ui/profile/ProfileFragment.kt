@@ -7,6 +7,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_NAME
 import com.cuongngo.core_project.databinding.FragmentProfileBinding
+import com.cuongngo.core_project.ui.acb_app.UserProfileActivity
 import com.cuongngo.core_project.ui.login.LoginMethodActivity
 import com.cuongngo.core_project.ui.sync_data.ActivitySyncData
 
@@ -17,9 +18,15 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
     override fun inflateLayout(): Int = R.layout.fragment_profile
 
     override fun setUp() {
-        with(binding){
+        with(binding) {
             AppPreferences.getACBInfo(KEY_NAME).let {
                 tvName.text = it
+            }
+
+            clUserInfor.setOnClickListener {
+                Intent(context, UserProfileActivity::class.java).apply {
+                    startActivity(this)
+                }
             }
 
 //            tvSyncData.setOnClickListener {
@@ -104,6 +111,7 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
             startActivity(this)
         }
     }
+
     private fun gotoSyncData() {
         Intent(requireContext(), ActivitySyncData::class.java).apply {
             startActivity(this)

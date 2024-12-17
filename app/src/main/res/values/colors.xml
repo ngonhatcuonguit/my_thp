@@ -65,5 +65,8 @@
     <color name="acb_like_black_text">#34383e</color>
     <color name="acb_green_nhat">#3301AA4F</color>
     <color name="acb_red_66">#F76A66</color>
+    <color name="acb_text_very_gray">#353c44</color>
+    <color name="acb_text_gray">#383b40</color>
+
 
 </resources>
