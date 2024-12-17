@@ -6,6 +6,7 @@ import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
 import com.cuongngo.core_project.data.local.AppPreferences
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_CCCD
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_DIA_CHI
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_EMAIL
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_FB
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_GIOI_TINH
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_HET_HAN_CCCD
@@ -78,6 +79,13 @@ class UserProfileActivity : AppBaseActivityMVVM<ActivityUserProfileBinding, GdVi
             }
             tvSdt.setOnLongClickListener {
                 setupShowDialogChangeValue(KEY_SDT, tvSdt)
+                true
+            }
+            if (AppPreferences.getACBInfo(KEY_EMAIL).isNotEmpty()) {
+                tvEmail.text = AppPreferences.getACBInfo(KEY_EMAIL)
+            }
+            tvEmail.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_EMAIL, tvEmail)
                 true
             }
             if (AppPreferences.getACBInfo(KEY_DIA_CHI).isNotEmpty()) {
