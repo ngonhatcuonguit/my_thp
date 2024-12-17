@@ -7,6 +7,12 @@ import com.cuongngo.core_project.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.core_project.base.model.DialogModel
 import com.cuongngo.core_project.base.viewmodel.BaseViewModel
 import com.cuongngo.core_project.data.local.AppPreferences
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_HO_VA_TEN
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NAME
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NICK_NAME
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_SD_KHA_DUNG
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_SD_THUC
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_TONG_SD
 import com.cuongngo.core_project.ui.home.HomeFragment
 import com.cuongngo.core_project.utils.number.formatNumberWithDots
 
@@ -37,7 +43,7 @@ abstract class AppBaseActivityMVVM<DB: ViewDataBinding, VM: BaseViewModel>: Base
 
     }
 
-    fun setupShowDialogChangeValue(key: String?, view: TextView) {
+    fun setupShowDialogChangeValue(key: String, view: TextView) {
         var edtText = view.text.toString() ?: ""
         val confirmDialog = ConfirmDialog(
             DialogModel(
@@ -57,32 +63,32 @@ abstract class AppBaseActivityMVVM<DB: ViewDataBinding, VM: BaseViewModel>: Base
                 hideKeyboard()
                 //luu thong tin
                 when (key) {
-                    HomeFragment.KEY_NICK_NAME -> {
+                    KEY_NICK_NAME -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_NICK_NAME, it)
                         view.text = it.toString()
                     }
 
-                    HomeFragment.KEY_NAME -> {
+                    KEY_NAME -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_NAME, it)
                         view.text = it.toString()
                     }
 
-                    HomeFragment.KEY_HO_VA_TEN -> {
+                    KEY_HO_VA_TEN -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_HO_VA_TEN, it)
                         view.text = it.toString()
                     }
 
-                    HomeFragment.KEY_TONG_SD -> {
+                    KEY_TONG_SD -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_TONG_SD, it)
                         view.text = formatNumberWithDots(it.toString())
                     }
 
-                    HomeFragment.KEY_SD_KHA_DUNG -> {
+                    KEY_SD_KHA_DUNG -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_SD_KHA_DUNG, it)
                         view.text = formatNumberWithDots(it.toString())
                     }
 
-                    HomeFragment.KEY_SD_THUC -> {
+                    KEY_SD_THUC -> {
                         AppPreferences.setACBInfo(HomeFragment.KEY_SD_THUC, it)
                         view.text = formatNumberWithDots(it.toString())
                     }
@@ -103,7 +109,8 @@ abstract class AppBaseActivityMVVM<DB: ViewDataBinding, VM: BaseViewModel>: Base
                     }
 
                     else -> {
-
+                        AppPreferences.setACBInfo(key, it)
+                        view.text = it.toString()
                     }
                 }
                 dismiss()

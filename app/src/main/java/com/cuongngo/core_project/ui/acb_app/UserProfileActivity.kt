@@ -3,6 +3,17 @@ package com.cuongngo.core_project.ui.acb_app
 import com.cuongngo.core_project.R
 import com.cuongngo.core_project.base.activity.AppBaseActivityMVVM
 import com.cuongngo.core_project.base.viewmodel.kodeinViewModel
+import com.cuongngo.core_project.data.local.AppPreferences
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_CCCD
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_DIA_CHI
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_FB
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_GIOI_TINH
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_HET_HAN_CCCD
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NAME
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NGAY_CCCD
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NOI_CCCD
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_SDT
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_THU_NHAP
 import com.cuongngo.core_project.databinding.ActivityUserProfileBinding
 
 class UserProfileActivity : AppBaseActivityMVVM<ActivityUserProfileBinding, GdViewModel>() {
@@ -12,7 +23,84 @@ class UserProfileActivity : AppBaseActivityMVVM<ActivityUserProfileBinding, GdVi
     override fun inflateLayout(): Int = R.layout.activity_user_profile
 
     override fun setUp() {
-        with(binding){
+        with(binding) {
+
+            if (AppPreferences.getACBInfo(KEY_NAME).isNotEmpty()) {
+                tvName.text = AppPreferences.getACBInfo(KEY_NAME)
+            }
+            tvName.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_NAME, tvName)
+                true
+            }
+
+            if (AppPreferences.getACBInfo(KEY_CCCD).isNotEmpty()) {
+                tvCccd.text = AppPreferences.getACBInfo(KEY_CCCD)
+            }
+
+            tvCccd.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_CCCD, tvCccd)
+                true
+            }
+
+            if (AppPreferences.getACBInfo(KEY_NGAY_CCCD).isNotEmpty()) {
+                tvNgayCap.text = AppPreferences.getACBInfo(KEY_NGAY_CCCD)
+            }
+            tvNgayCap.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_NGAY_CCCD, tvNgayCap)
+                true
+            }
+
+            if (AppPreferences.getACBInfo(KEY_NOI_CCCD).isNotEmpty()) {
+                tvNoiCap.text = AppPreferences.getACBInfo(KEY_NOI_CCCD)
+            }
+            tvNoiCap.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_NOI_CCCD, tvNoiCap)
+                true
+            }
+
+            if (AppPreferences.getACBInfo(KEY_HET_HAN_CCCD).isNotEmpty()) {
+                tvNgayHetHan.text = AppPreferences.getACBInfo(KEY_HET_HAN_CCCD)
+            }
+            tvNgayHetHan.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_HET_HAN_CCCD, tvNgayHetHan)
+                true
+            }
+
+            if (AppPreferences.getACBInfo(KEY_GIOI_TINH).isNotEmpty()) {
+                tvGioiTinh.text = AppPreferences.getACBInfo(KEY_GIOI_TINH)
+            }
+            tvGioiTinh.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_GIOI_TINH, tvGioiTinh)
+                true
+            }
+            if (AppPreferences.getACBInfo(KEY_SDT).isNotEmpty()) {
+                tvSdt.text = AppPreferences.getACBInfo(KEY_SDT)
+            }
+            tvSdt.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_SDT, tvSdt)
+                true
+            }
+            if (AppPreferences.getACBInfo(KEY_DIA_CHI).isNotEmpty()) {
+                tvDc.text = AppPreferences.getACBInfo(KEY_DIA_CHI)
+            }
+            tvDc.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_DIA_CHI, tvDc)
+                true
+            }
+            if (AppPreferences.getACBInfo(KEY_THU_NHAP).isNotEmpty()) {
+                tvThuNhap.text = AppPreferences.getACBInfo(KEY_THU_NHAP)
+            }
+            tvThuNhap.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_THU_NHAP, tvThuNhap)
+                true
+            }
+            if (AppPreferences.getACBInfo(KEY_FB).isNotEmpty()) {
+                tvFb.text = AppPreferences.getACBInfo(KEY_FB)
+            }
+            tvFb.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_FB, tvFb)
+                true
+            }
 
         }
     }

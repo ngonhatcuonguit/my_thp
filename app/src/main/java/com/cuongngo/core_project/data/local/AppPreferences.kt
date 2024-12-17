@@ -30,6 +30,19 @@ object AppPreferences {
     const val KEY_STK = "KEY_STK"
     const val KEY_THE = "KEY_THE"
 
+    const val KEY_CCCD = "KEY_CCCD"
+    const val KEY_NGAY_CCCD = "KEY_NGAY_CCCD"
+    const val KEY_NOI_CCCD = "KEY_NOI_CCCD"
+    const val KEY_HET_HAN_CCCD = "KEY_HET_HAN_CCCD"
+    const val KEY_GIOI_TINH = "KEY_GIOI_TINH"
+    const val KEY_SDT = "KEY_SDT"
+    const val KEY_EMAIL = "KEY_EMAIL"
+    const val KEY_DIA_CHI = "KEY_DIA_CHI"
+    const val KEY_THU_NHAP = "KEY_THU_NHAP"
+    const val KEY_NGUON_THU_NHAP = "KEY_NGUON_THU_NHAP"
+    const val KEY_FB = "KEY_FB"
+
+
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
         editor = preferences.edit()
