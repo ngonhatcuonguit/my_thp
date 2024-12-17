@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_24dp"
+            android:paddingBottom="20dp"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,25 +42,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#f7f7f7"
-                android:paddingBottom="100dp">
+                android:layout_marginTop="20dp"
+                android:paddingBottom="80dp">
 
                 <carbon.widget.ConstraintLayout
                     android:id="@+id/cl_user_infor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
+                    app:carbon_elevation="3dp"
                     android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_avatar"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/default_avatar"
-                        android:padding="5dp"
                         app:civ_border_color="@color/gray_36"
                         app:civ_border_width="1dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -71,9 +73,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
-                        android:gravity="top"
+                        android:gravity="start"
                         android:text="NGUYEN VAN A"
                         android:textAllCaps="true"
+                        android:layout_marginTop="2dp"
                         android:textColor="@color/acb_primary_2nd"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -87,6 +90,7 @@
                         android:layout_marginStart="16dp"
                         android:gravity="bottom"
                         android:text="Thay đổi thông tin cá nhân"
+                        android:layout_marginBottom="2dp"
                         android:textColor="@color/acb_gray_text"
                         android:textSize="15sp"
                         app:layout_constraintBottom_toBottomOf="@id/img_avatar"
@@ -100,7 +104,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/img_avatar"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/img_avatar"
-                        app:srcCompat="@drawable/ic_edit" />
+                        app:srcCompat="@drawable/ic_arrow_right_2" />
 
 
                 </carbon.widget.ConstraintLayout>
@@ -110,17 +114,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
-                    android:layout_marginHorizontal="@dimen/_24dp"
+                    app:carbon_elevation="3dp"
+                    android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_user_infor">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_setting"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         app:srcCompat="@drawable/ic_acb_caidat"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -143,8 +148,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_qr"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
                         app:srcCompat="@drawable/ic_my_qr"
                         app:layout_constraintStart_toStartOf="parent"
@@ -173,17 +178,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
-                    android:layout_marginHorizontal="@dimen/_24dp"
+                    app:carbon_elevation="3dp"
+                    android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_setting">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_hst"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         app:srcCompat="@drawable/ic_hst_so"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -210,17 +216,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
+                    app:carbon_elevation="3dp"
                     android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_hst">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_khuon_mat"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         app:srcCompat="@drawable/ic_khuon_mat"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
@@ -231,7 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Cài đặt"
+                        android:text="Xác thực khuôn mặt"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -243,8 +250,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_key"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
                         app:srcCompat="@drawable/ic_safekey"
                         app:layout_constraintStart_toStartOf="parent"
@@ -256,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="ACB Safekey"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -268,10 +275,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_otp"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_safekey"
+                        app:srcCompat="@drawable/ic_lay_otp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_key"/>
 
@@ -281,7 +288,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="Lấy OTP"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -298,18 +305,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
+                    app:carbon_elevation="3dp"
                     android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_3">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_tin_tuc"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:srcCompat="@drawable/ic_khuon_mat"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:srcCompat="@drawable/ic_tin_tuc"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -319,7 +327,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Cài đặt"
+                        android:text="Tin tức"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -331,10 +339,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_ty_gia"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_safekey"
+                        app:srcCompat="@drawable/ic_ty_gia"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_tin_tuc"/>
 
@@ -344,7 +352,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="Tỷ giá"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -356,10 +364,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_dia_diem"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_safekey"
+                        app:srcCompat="@drawable/ic_dia_diem"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_ty_gia"/>
 
@@ -369,7 +377,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="Địa điểm"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -386,18 +394,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    app:carbon_cornerRadius="16dp"
+                    app:carbon_cornerRadius="13dp"
                     android:background="@color/white"
                     android:padding="18dp"
+                    app:carbon_elevation="3dp"
                     android:layout_marginHorizontal="18dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_4">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_dk_dv"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:srcCompat="@drawable/ic_khuon_mat"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:srcCompat="@drawable/ic_dk_dv"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -407,7 +416,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Cài đặt"
+                        android:text="Điều khoản và điều kiện sử dụng"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -419,10 +428,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_cau_hoi"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_safekey"
+                        app:srcCompat="@drawable/ic_cau_hoi"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_dk_dv"/>
 
@@ -432,7 +441,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="Câu hỏi thường gặp"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -444,10 +453,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_lien_he"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_marginTop="20dp"
-                        app:srcCompat="@drawable/ic_safekey"
+                        app:srcCompat="@drawable/ic_lien_he"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_cau_hoi"/>
 
@@ -457,7 +466,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Mã QR của tôi"
+                        android:text="Liên hệ"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -469,25 +478,42 @@
 
                 </carbon.widget.ConstraintLayout>
 
-
-                <carbon.widget.TextView
-                    android:id="@+id/btn_log_out"
-                    android:layout_width="match_parent"
+                <carbon.widget.ConstraintLayout
+                    android:id="@+id/btn_logout"
+                    android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:text="Đăng xuất"
+                    android:layout_marginTop="25dp"
                     android:background="@color/white"
-                    android:textColor="@color/acb_red_66"
-                    android:textSize="16sp"
-                    app:carbon_cornerRadius="12dp"
-                    android:drawableStart="@drawable/ic_logout"
-                    android:drawablePadding="16dp"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginTop="40dp"
+                    app:carbon_cornerRadius="13dp"
+                    app:carbon_elevation="3dp"
                     android:layout_marginHorizontal="@dimen/_24dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cl_5" />
+                    app:layout_constraintTop_toBottomOf="@+id/cl_5">
+
+                    <carbon.widget.TextView
+                        android:id="@+id/tv_log_out"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đăng xuất"
+                        android:textColor="@color/acb_red_66"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_logout"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toStartOf="@id/tv_log_out"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+                </carbon.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
