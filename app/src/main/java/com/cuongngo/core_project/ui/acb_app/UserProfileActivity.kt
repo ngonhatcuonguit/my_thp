@@ -12,6 +12,7 @@ import com.cuongngo.core_project.data.local.AppPreferences.KEY_GIOI_TINH
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_HET_HAN_CCCD
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_NAME
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_NGAY_CCCD
+import com.cuongngo.core_project.data.local.AppPreferences.KEY_NGUON_THU_NHAP
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_NOI_CCCD
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_SDT
 import com.cuongngo.core_project.data.local.AppPreferences.KEY_THU_NHAP
@@ -102,6 +103,14 @@ class UserProfileActivity : AppBaseActivityMVVM<ActivityUserProfileBinding, GdVi
                 setupShowDialogChangeValue(KEY_THU_NHAP, tvThuNhap)
                 true
             }
+            if (AppPreferences.getACBInfo(KEY_NGUON_THU_NHAP).isNotEmpty()) {
+                tvNguonThuNhap.text = AppPreferences.getACBInfo(KEY_NGUON_THU_NHAP)
+            }
+            tvNguonThuNhap.setOnLongClickListener {
+                setupShowDialogChangeValue(KEY_NGUON_THU_NHAP, tvNguonThuNhap)
+                true
+            }
+
             if (AppPreferences.getACBInfo(KEY_FB).isNotEmpty()) {
                 tvFb.text = AppPreferences.getACBInfo(KEY_FB)
             }
