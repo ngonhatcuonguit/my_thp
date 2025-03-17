@@ -1,20 +1,31 @@
 package com.cuongngo.my_thp.ui
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
 import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
 import com.cuongngo.my_thp.databinding.ActivityMainBinding
+import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.ui.add_request.AddRequestFragment
 import com.cuongngo.my_thp.ui.home.HomeFragment
 import com.cuongngo.my_thp.ui.home.HomeViewModel
 import com.cuongngo.my_thp.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
     private lateinit var homeFragment: HomeFragment
@@ -40,6 +51,42 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
     }
 
     override fun setUp() {
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
+                return@addOnCompleteListener
+            }
+
+            // Lấy token thành công
+            val token = task.result
+            Log.d("FCM", "FCM Token: $token")
+        }
+
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                WTF("Fetching FCM registration token failed -- ${task.exception}")
+//                return@addOnCompleteListener
+//            }
+//
+//            // Lấy FCM token
+//            val token = task.result
+//            WTF("FCM Token: $token")
+//        }
+//
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val name = "Default Channel"
+//            val descriptionText = "Channel for notifications"
+//            val importance = NotificationManager.IMPORTANCE_DEFAULT
+//            val channel = NotificationChannel("default_channel", name, importance).apply {
+//                description = descriptionText
+//            }
+//            val notificationManager: NotificationManager =
+//                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.createNotificationChannel(channel)
+//        }
+
         binding.clHome.setOnClickListener {
             handleNavBottom(1)
             switchFragment(HomeFragment())
@@ -67,6 +114,38 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
             switchFragment(ProfileFragment())
         }
 
+        askNotificationPermission()
+
+    }
+
+    // Declare the launcher at the top of your Activity/Fragment:
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // FCM SDK (and your app) can post notifications.
+        } else {
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     // Hàm chuyển Fragment

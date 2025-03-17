@@ -1,5 +1,7 @@
 package com.cuongngo.my_thp
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
@@ -18,6 +20,8 @@ import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.UserDao
 import com.cuongngo.my_thp.di.localModule
+import com.cuongngo.my_thp.ext.WTF
+import com.google.firebase.messaging.FirebaseMessaging
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule

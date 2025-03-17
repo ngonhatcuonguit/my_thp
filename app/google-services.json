@@ -1,35 +1,85 @@
 {
   "project_info": {
-    "project_number": "586377420476",
-    "firebase_url": "https://tablayoutviewpager-9394c.firebaseio.com",
-    "project_id": "tablayoutviewpager-9394c",
-    "storage_bucket": "tablayoutviewpager-9394c.appspot.com"
+    "project_number": "1070932304712",
+    "project_id": "b2bnumberoneflutter",
+    "storage_bucket": "b2bnumberoneflutter.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:586377420476:android:b8dabe885f9e5ada94fab9",
+        "mobilesdk_app_id": "1:1070932304712:android:2a3361775f21e2c399097d",
         "android_client_info": {
-          "package_name": "com.cuongngo.core_project"
+          "package_name": "com.cuongngo.my_thp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "586377420476-v44itoop9lcd41o69ujt3crtp56caiic.apps.googleusercontent.com",
+          "client_id": "1070932304712-erle25p5thoree2p6ddlml0jgr35nu06.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAKJVQydsArbMXPARhLboSUetXqbUkOr4c"
+          "current_key": "AIzaSyCOJkOpGFPxxMzPz35RzA1Yx_R9I8EgAi8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "586377420476-v44itoop9lcd41o69ujt3crtp56caiic.apps.googleusercontent.com",
+              "client_id": "1070932304712-erle25p5thoree2p6ddlml0jgr35nu06.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1070932304712-27ht8ajii71l99vqd73iu3462qtg62mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thp.numberone"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070932304712:android:710033a5706abf7c99097d",
+        "android_client_info": {
+          "package_name": "com.digital.thp.numberoneb2b"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070932304712-nmvvqsa0om2pgkv0vpqtc8drtd5e85v2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.digital.thp.numberoneb2b",
+            "certificate_hash": "debe04c51d28e231efba5e16d20f7e9b551fc144"
+          }
+        },
+        {
+          "client_id": "1070932304712-erle25p5thoree2p6ddlml0jgr35nu06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOJkOpGFPxxMzPz35RzA1Yx_R9I8EgAi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070932304712-erle25p5thoree2p6ddlml0jgr35nu06.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1070932304712-27ht8ajii71l99vqd73iu3462qtg62mf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thp.numberone"
+              }
             }
           ]
         }
