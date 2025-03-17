@@ -24,11 +24,11 @@ class ViewPagerHelper(
     init {
         viewPager2.addOnAttachStateChangeListener(
             object : View.OnAttachStateChangeListener {
-                override fun onViewAttachedToWindow(p0: View?) {
+                override fun onViewAttachedToWindow(p0: View) {
                     isViewPagerAttached = true
                 }
 
-                override fun onViewDetachedFromWindow(v: View?) {
+                override fun onViewDetachedFromWindow(v: View) {
                     isViewPagerAttached = false
                 }
             }

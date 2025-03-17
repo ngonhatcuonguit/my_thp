@@ -85,7 +85,7 @@ open class TextViewEx: androidx.appcompat.widget.AppCompatTextView {
         typeface =  ResourcesCompat.getFont(context, fontSrc)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         if (cornerRadius > 0f && canvas != null) {
             val rect = RectF(0f, 0f, this.width.toFloat(), this.height.toFloat())
             clipPath.reset()

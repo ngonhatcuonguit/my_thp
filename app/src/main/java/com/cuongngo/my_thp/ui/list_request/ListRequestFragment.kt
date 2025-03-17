@@ -46,11 +46,11 @@ class ListRequestFragment : BaseFragmentMVVM<FragmentListRequestBinding, FormVie
         binding.viewpagerRequest.addOnAttachStateChangeListener(
             object : View.OnAttachStateChangeListener {
 
-                override fun onViewAttachedToWindow(p0: View?) {
+                override fun onViewAttachedToWindow(p0: View) {
                     //
                 }
 
-                override fun onViewDetachedFromWindow(p0: View?) {
+                override fun onViewDetachedFromWindow(p0: View) {
                     //
                 }
 
