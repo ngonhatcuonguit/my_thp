@@ -23,39 +23,39 @@
                 android:padding="16dp"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="100dp"
                     android:layout_height="20dp"
                     android:background="@drawable/shape_gray_db_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginTop="@dimen/_10dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/shape_gray_db_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginTop="@dimen/_10dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/shape_gray_db_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="100dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="32dp"
                     android:background="@drawable/shape_gray_db_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginTop="@dimen/_10dp"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/shape_gray_db_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginTop="@dimen/_10dp"

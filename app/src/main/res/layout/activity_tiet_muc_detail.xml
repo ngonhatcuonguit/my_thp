@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_exam_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_examiner_name">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_title_sing_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_title_sing_score"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_sing_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
 
             </carbon.widget.ConstraintLayout>
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_dot_sing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -203,7 +203,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_dot_sing"
                 app:layout_constraintTop_toTopOf="@+id/cl_sing_score">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_sing_extra_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -230,7 +230,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_score_first">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_title_compose_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -260,7 +260,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_title_compose_score"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_compose_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -278,7 +278,7 @@
 
             </carbon.widget.ConstraintLayout>
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_dot_compose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -301,7 +301,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_dot_compose"
                 app:layout_constraintTop_toTopOf="@+id/cl_compose_score">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_compose_extra_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

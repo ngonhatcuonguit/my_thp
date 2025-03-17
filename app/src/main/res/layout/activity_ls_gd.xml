@@ -40,7 +40,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lo_app_bar" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_da_thu_hien"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="@id/tv_da_thu_hien"
             />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_cho_xu_ly"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             app:layout_constraintStart_toEndOf="@+id/tv_da_thu_hien"
             app:layout_constraintTop_toTopOf="@id/tv_da_thu_hien" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_dat_lic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
             app:layout_constraintStart_toEndOf="@+id/tv_cho_xu_ly"
             app:layout_constraintTop_toTopOf="@id/tv_da_thu_hien" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title_filter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_title_filter"
             app:layout_constraintVertical_bias="0.0" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_empty_list_gd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

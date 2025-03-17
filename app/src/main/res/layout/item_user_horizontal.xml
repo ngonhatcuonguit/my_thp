@@ -6,7 +6,7 @@
     <data>
         <variable
             name="user"
-            type="com.cuongngo.core_project.data.database.roomdb.entity.UserTHPEntity" />
+            type="com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPEntity" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
@@ -27,7 +27,7 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="5dp">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

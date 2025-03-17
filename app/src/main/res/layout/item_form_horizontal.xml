@@ -7,7 +7,7 @@
 
         <variable
             name="form"
-            type="com.cuongngo.core_project.data.database.roomdb.entity.FormEntity" />
+            type="com.cuongngo.my_thp.data.database.roomdb.entity.FormEntity" />
     </data>
 
     <com.thelumiereguy.neumorphicview.views.NeumorphicCardView
@@ -54,7 +54,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logo_thp_n1" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_form_code"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_form_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                 app:layout_constraintTop_toBottomOf="@id/view_space"
                 tools:text="Giấy ra cổng - IT - Ngô Nhật Cường - 43950 - Ngày 24/06/2024" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
 
         <variable
             name="hotNew"
-            type="com.cuongngo.core_project.response.news.News" />
+            type="com.cuongngo.my_thp.response.news.News" />
 
     </data>
 

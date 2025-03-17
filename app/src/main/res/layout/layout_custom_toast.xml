@@ -18,7 +18,7 @@
             android:layout_height="26dp"
             android:src="@drawable/ic_tick_white_background_circle" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             style="@style/TextViewEx.BodyLarge"
             android:id="@+id/toast_text"
             android:layout_width="wrap_content"

@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_result_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view_separator" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -15,7 +15,7 @@
             android:layout_height="73dp"
             app:srcCompat="@drawable/ic_defender" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             style="@style/TextViewEx.Heading_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:layout_height="28dp"
                 app:srcCompat="@drawable/ic_security_safe" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 style="@style/TextViewEx.BodySmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:layout_height="28dp"
                 app:srcCompat="@drawable/ic_security_safe" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 style="@style/TextViewEx.BodySmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 android:layout_height="28dp"
                 app:srcCompat="@drawable/ic_security_safe" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 style="@style/TextViewEx.BodySmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/cl_bottom_button">
 
-            <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+            <com.cuongngo.my_thp.common.view.view_ex.ButtonEx
                 android:id="@+id/btn_left"
                 style="@style/TextViewEx.BodyMedium"
                 android:layout_width="0dp"
@@ -120,7 +120,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+            <com.cuongngo.my_thp.common.view.view_ex.ButtonEx
                 android:id="@+id/btn_right"
                 style="@style/TextViewEx.BodyMedium"
                 android:layout_width="0dp"

@@ -1,0 +1,154 @@
+package com.cuongngo.my_thp.ui.acb_app.lich_su_gd
+
+import android.text.InputType
+import com.cuongngo.my_thp.App
+import com.cuongngo.my_thp.R
+import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
+import com.cuongngo.my_thp.base.view.date_time_picker.DateTimePickerDialog
+import com.cuongngo.my_thp.base.view.date_time_picker.ListenerDateTime
+import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
+import com.cuongngo.my_thp.data.database.roomdb.entity.GdEntity
+import com.cuongngo.my_thp.data.database.roomdb.entity.Option
+import com.cuongngo.my_thp.data.database.roomdb.entity.randomString
+import com.cuongngo.my_thp.databinding.ActivityAddGdBinding
+import com.cuongngo.my_thp.ext.observeLiveDataChanged
+import com.cuongngo.my_thp.services.network.onResultReceived
+import com.cuongngo.my_thp.ui.acb_app.GdViewModel
+import com.cuongngo.my_thp.ui.dropdown.onShowPopupOption
+import com.cuongngo.my_thp.utils.toast.showMessageToast
+import java.util.Calendar
+import kotlin.random.Random
+
+class AddGdActivity : AppBaseActivityMVVM<ActivityAddGdBinding, GdViewModel>() {
+    override val viewModel: GdViewModel by kodeinViewModel()
+
+    override fun inflateLayout(): Int = R.layout.activity_add_gd
+    var dateTime: Calendar = Calendar.getInstance()
+    var type: String? = null
+
+    var typeOptions = arrayListOf(
+        Option(
+            0,
+            "Chuyen tien"
+        ),
+        Option(
+            1,
+            "Nhan tien"
+        )
+    )
+
+    override fun setUp() {
+        with(binding) {
+            loAppBar.tvTitle.text = "Thêm lịch sử giao dịch"
+            loAppBar.clFilter.setBackgroundColor(App.getResources().getColor(R.color.white))
+            loAppBar.ivFilter.setImageResource(R.drawable.ic_filter_gd)
+            loAppBar.ivBack.setOnClickListener {
+                finish()
+            }
+
+            edtSoTien.tvTitle.text = "Nhập số tiền giao dịch"
+            edtSoTien.edtValue.hint = "Vui lòng nhập số tiền giao dịch"
+            edtSoTien.edtValue.inputType = InputType.TYPE_CLASS_NUMBER
+
+            edtNguoiChuyen.tvTitle.text = "Nhập tên người chuyển/nhận tiền"
+            edtNguoiChuyen.edtValue.hint = "Vui lòng nhập tên người chuyển/nhận tiền"
+
+            edtNoiDung.tvTitle.text = "Nhập Nội dung giao dịch"
+            edtNoiDung.edtValue.hint = "Vui lòng nhập nội dung"
+            edtNoiDung.edtValue.isAllCaps = true
+            tvTypeGd.setOnClickListener {
+                val defaultType = typeOptions.find {
+                    tvTypeGd.text.toString() == it.value
+                } ?: typeOptions.lastOrNull()
+                onShowPopupOption(
+                    this@AddGdActivity,
+                    view = it,
+                    listOption = typeOptions,
+                    optionDefault = defaultType,
+                    onSelectedListener = {
+                        type = it.value
+                        tvTypeGd.text = it.value
+                    })
+            }
+            tvTime.setOnClickListener {
+                val dateAdd: Calendar = Calendar.getInstance()
+                dateAdd.add(Calendar.MINUTE, 5)
+                // Minimum date is 80 years ago from today
+                val minDateCal: Calendar = Calendar.getInstance()
+                minDateCal.add(Calendar.YEAR, -8)
+                DateTimePickerDialog(
+                    this@AddGdActivity,
+                    listener = object : ListenerDateTime {
+                        override fun onDateTimeSelected(calendar: Calendar) {
+                            dateTime = calendar
+                            val dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH)
+                            val monthOfYear = calendar.get(Calendar.MONTH) + 1
+                            val year = calendar.get(Calendar.YEAR)
+                            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                            val minute = calendar.get(Calendar.MINUTE)
+
+                            val dayStr = if (dayOfMonth < 10) "0${dayOfMonth}" else "$dayOfMonth"
+                            val monthStr =
+                                if (monthOfYear < 10) "0${monthOfYear}" else "$monthOfYear"
+                            tvTime.text = "$hour:$minute $dayStr/$monthStr/$year"
+                        }
+                    },
+                    maxDate = dateAdd.timeInMillis,
+                    minDate = minDateCal.timeInMillis,
+                    isCancelable = true
+                ).show()
+            }
+            btnAddGd.setOnClickListener {
+                if (type.isNullOrEmpty() || edtSoTien.edtValue.text.isNullOrEmpty() || edtNoiDung.edtValue.text.isNullOrEmpty()) {
+                    showMessageToast(
+                        this@AddGdActivity,
+                        false,
+                        "",
+                        "Chưa chọn/điền đủ thông tin giao dịch"
+                    )
+                } else {
+                    viewModel.upsetGD(
+                        GdEntity(
+                            id = Random.nextLong(1, 99999),
+                            transactionCode = randomString(10),
+                            transactionType = type.toString(),
+                            transactionAmount = edtSoTien.edtValue.text.toString(),
+                            transactionName = edtNguoiChuyen.edtValue.text.toString(),
+                            transactionContent = edtNoiDung.edtValue.text.toString(),
+                            transactionDate = dateTime
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    override fun setUpObserver() {
+        observeLiveDataChanged(viewModel.gdId) {
+            it.onResultReceived(
+                onLoading = {
+                    showProgressDialog()
+                },
+                onSuccess = {
+                    hideProgressDialog()
+                    showMessageToast(
+                        this@AddGdActivity,
+                        true,
+                        "Thêm thành công",
+                        ""
+                    )
+                },
+                onError = {
+                    hideProgressDialog()
+                    showMessageToast(
+                        this@AddGdActivity,
+                        false,
+                        "",
+                        "Lỗi"
+                    )
+                }
+            )
+        }
+    }
+
+}

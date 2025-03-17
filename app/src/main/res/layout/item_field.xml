@@ -7,7 +7,7 @@
 
         <variable
             name="field"
-            type="com.cuongngo.core_project.data.database.roomdb.entity.Field" />
+            type="com.cuongngo.my_thp.data.database.roomdb.entity.Field" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_label"
                 style="@style/TextViewEx.BodyMedium"
                 android:layout_width="0dp"
@@ -68,7 +68,7 @@
                 app:layout_constraintStart_toEndOf="@id/tv_label"
                 app:layout_constraintTop_toTopOf="@id/tv_label" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_value"
                 style="@style/TextViewEx.BodyMedium"
                 android:layout_width="0dp"
@@ -92,7 +92,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_header_group"
             style="@style/TextViewEx.BodyLarge"
             android:layout_width="0dp"

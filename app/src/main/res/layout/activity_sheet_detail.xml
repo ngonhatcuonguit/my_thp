@@ -7,7 +7,7 @@
 
         <variable
             name="request"
-            type="com.cuongngo.core_project.data.database.roomdb.entity.RequestEntity" />
+            type="com.cuongngo.my_thp.data.database.roomdb.entity.RequestEntity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back_gray" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title"
             style="@style/TextViewEx.Heading_5"
             android:layout_width="0dp"
@@ -53,7 +53,7 @@
                 android:paddingBottom="60dp"
                 >
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_form_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
@@ -69,7 +69,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Nguyen Van ABCXYZ" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_detail_info_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                     app:layout_constraintTop_toBottomOf="@id/header_list_field"
                     app:layout_constraintVertical_bias="0.0" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/btn_save_draft"
                     android:layout_marginTop="30dp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +120,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:background="@drawable/shape_green_radius_12" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_empty_list_form"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

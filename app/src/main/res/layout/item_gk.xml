@@ -6,7 +6,7 @@
     <data>
         <variable
             name="value"
-            type="com.cuongngo.core_project.ui.event_thp.model.Examiner" />
+            type="com.cuongngo.my_thp.ui.event_thp.model.Examiner" />
     </data>
 
     <carbon.widget.ConstraintLayout

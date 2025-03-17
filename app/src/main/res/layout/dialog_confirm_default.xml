@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.cuongngo.core_project.base.model.DialogModel" />
+            type="com.cuongngo.my_thp.base.model.DialogModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:paddingHorizontal="26dp"
         android:paddingBottom="@dimen/_24dp">
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title_dialog"
             style="@style/TextViewEx.Heading_5"
             android:layout_width="0dp"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tool:text="Dialog title 123" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_content"
             style="@style/TextViewEx.BodyMedium"
             android:layout_width="0dp"
@@ -54,7 +54,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_content" />
 
-        <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+        <com.cuongngo.my_thp.common.view.view_ex.ButtonEx
             android:id="@+id/btn_left"
             style="@style/TextViewEx.BodyMedium"
             android:layout_width="0dp"
@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@id/edt_sheet_name"
             tool:text="Close" />
 
-        <com.cuongngo.core_project.common.view.view_ex.ButtonEx
+        <com.cuongngo.my_thp.common.view.view_ex.ButtonEx
             android:id="@+id/btn_right"
             style="@style/TextViewEx.BodyMedium"
             android:layout_width="0dp"

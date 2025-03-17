@@ -79,7 +79,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_qr"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_chuyen_tien"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_thanh_toan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -198,7 +198,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_them"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

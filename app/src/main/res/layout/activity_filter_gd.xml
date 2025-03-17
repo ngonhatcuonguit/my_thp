@@ -13,7 +13,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_type_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_type_title">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_tat_ca"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tv_cho_xu_ly"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_cho_xu_ly"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_tat_ca"
                 app:layout_constraintTop_toTopOf="@id/tv_tat_ca" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_dat_lic"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
 
         </carbon.widget.ConstraintLayout>
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_time_title">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_30_day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                 app:layout_constraintEnd_toStartOf="@id/tv_7day"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_7day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_30_day"
                 app:layout_constraintTop_toTopOf="@id/tv_30_day" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_tuy_chon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_time_filter">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_start_time_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_start_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
             app:layout_constraintStart_toEndOf="@id/cl_start"
             app:layout_constraintTop_toTopOf="@id/cl_start">
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_end_time_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+            <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                 android:id="@+id/tv_end_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

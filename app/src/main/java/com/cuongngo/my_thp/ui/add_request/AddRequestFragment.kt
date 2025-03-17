@@ -1,0 +1,239 @@
+package com.cuongngo.my_thp.ui.add_request
+
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.GridLayoutManager
+import com.cuongngo.my_thp.R
+import com.cuongngo.my_thp.base.dialog_fragment.ConfirmDialog
+import com.cuongngo.my_thp.base.fragment.BaseFragmentMVVM
+import com.cuongngo.my_thp.base.model.DialogModel
+import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
+import com.cuongngo.my_thp.common.collection.EndlessRecyclerViewScrollListener
+import com.cuongngo.my_thp.data.database.roomdb.entity.FormEntity
+import com.cuongngo.my_thp.data.local.AppPreferences
+import com.cuongngo.my_thp.databinding.FragmentAddRequestBinding
+import com.cuongngo.my_thp.ext.WTF
+import com.cuongngo.my_thp.ext.observeLiveDataChanged
+import com.cuongngo.my_thp.services.network.onResultReceived
+import com.cuongngo.my_thp.ui.request_detail.RequestMasterDetailActivity
+import com.cuongngo.my_thp.ui.search_form.FormViewModel
+import com.cuongngo.my_thp.ui.search_form.form_adapter.FormAdapter
+import com.cuongngo.my_thp.utils.Constants.CategoryRequestDetail.Companion.ADD
+import com.jakewharton.rxbinding3.widget.textChangeEvents
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
+
+class AddRequestFragment : BaseFragmentMVVM<FragmentAddRequestBinding, FormViewModel>() {
+
+    override val viewModel: FormViewModel by kodeinViewModel()
+
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private var compositeDisposable: Disposable? = null
+
+    private var currentKeyword: String? = null
+    private var totalPages: Int = 1
+    private var isMore: Boolean = true
+
+    private var keyword: String? = null
+
+    private lateinit var formAdapter: FormAdapter
+    override fun inflateLayout(): Int = R.layout.fragment_add_request
+
+    companion object {
+        val TAG = AddRequestFragment::class.java.simpleName
+    }
+
+    override fun setUp() {
+//        viewModel.getAllForm()
+//        setupFeatureSearch()
+//        setupRcvListForm()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun setupFeatureSearch() {
+        compositeDisposable =
+            binding.edtSearch.textChangeEvents()
+                .skip(1)
+                .debounce(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    hideKeyboard()
+                    if (keyword != it.text.trim().toString()){
+                        keyword = it.text.trim().toString()
+                        if (it.text.trim().toString().isNotEmpty()){
+                            viewModel.searchForms(keyword ?: return@subscribe)
+                        }else{
+                            viewModel.getAllForm()
+                        }
+                    }
+                    hideKeyboard()
+                }
+        binding.edtSearch.doOnTextChanged { text, _, _, _ ->
+            text?.let { keySearch ->
+                binding.ivClearSearch.isVisible = keySearch.isNotEmpty()
+            }
+        }
+        binding.ivClearSearch.setOnClickListener {
+            keyword = ""
+            binding.edtSearch.text?.clear()
+            viewModel.getAllForm()
+        }
+    }
+
+    override fun setUpObserver() {
+//        observeLiveDataChanged(viewModel.listFormRemote){
+//            it.onResultReceived(
+//                onLoading = {},
+//                onSuccess = {
+//                    WTF("testAPiForm countRecord ${it.data?.data}")
+//                    if (it.data?.data?.isNotEmpty() == true){
+//                        viewModel.upsertListForm(it.data?.data ?: arrayListOf())
+//                    }
+//                },
+//                onError = {
+//                    processSyncDialog.hide()
+//                    showMessageOnSyncDataSuccess(requireContext(), false)
+//                }
+//            )
+//        }
+
+//        observeLiveDataChanged(viewModel.upsertListFormToLocal){
+//            it.onResultReceived(
+//                onLoading = {
+//                    processSyncDialog.show()
+//                },
+//                onSuccess = {
+//                    processSyncDialog.hide()
+//                    WTF("testAPiForm upsert-OK")
+//                    showMessageOnSyncDataSuccess(requireContext(), true)
+//                    viewModel.getCountRecord()
+//                },
+//                onError = {
+//                    processSyncDialog.hide()
+//                    showMessageOnSyncDataSuccess(requireContext(), false)
+//                }
+//            )
+//        }
+//        observeLiveDataChanged(viewModel.checkCountRecord){
+//            it.onResultReceived(
+//                onLoading = {},
+//                onSuccess = {
+//                    WTF("testAPiForm countRecord ${it.data}")
+//                    AppPreferences.setCountRecordLocalForm(it.data ?:0)
+//                    viewModel.getAllForm()
+//                },
+//                onError = {}
+//            )
+//        }
+
+        observeLiveDataChanged(viewModel.allForm) {
+            it.onResultReceived(
+                onLoading = {
+                    showProgressDialog()
+                },
+                onSuccess = {
+                    hideProgressDialog()
+                    if (it.data.isNullOrEmpty()){
+                        WTF("testSearchForm ${it.data}")
+                        binding.rvListForm.isVisible = false
+                        binding.layoutEmptyList.isVisible = true
+                    }else{
+                        binding.rvListForm.isVisible = true
+                        binding.layoutEmptyList.isVisible = false
+                    }
+                    it.data?.let { listForm ->
+                        formAdapter.submitListForm(listForm)
+                    }
+                },
+                onError = {
+                    hideProgressDialog()
+                }
+            )
+        }
+
+        observeLiveDataChanged(viewModel.searchForms){
+            it.onResultReceived(
+                onLoading = {
+                    binding.rvListForm.isVisible = false
+                    binding.progressBar.isVisible = true
+                },
+                onSuccess = {
+                    binding.rvListForm.isVisible = true
+                    binding.progressBar.isVisible = false
+                    WTF("testSearchForm ${it.data}")
+                    if (it.data.isNullOrEmpty()){
+                        WTF("testSearchForm ${it.data}")
+                        binding.rvListForm.isVisible = false
+                        binding.layoutEmptyList.isVisible = true
+                    }else{
+                        binding.rvListForm.isVisible = true
+                        binding.layoutEmptyList.isVisible = false
+                        formAdapter.submitListForm(it.data)
+                    }
+                },
+                onError = {
+                    binding.rvListForm.isVisible = true
+                    binding.progressBar.isVisible = false
+                }
+            )
+        }
+
+    }
+    private fun syncForm() = if(AppPreferences.getCountRecordLocalForm() == 0){
+        viewModel.getListForm(true)
+    }else{
+        viewModel.getListForm(false)
+    }
+
+    private fun setupRcvListForm() {
+        val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+        formAdapter = FormAdapter(
+            requireContext(),
+            arrayListOf(),
+            onItemClickListener = {
+                setupShowDialogConfirm(it)
+            }
+        )
+        binding.rvListForm.apply {
+            adapter = formAdapter
+            layoutManager = gridLayoutManager
+//            addOnScrollListener(scrollListener)
+        }
+    }
+
+    private fun setupShowDialogConfirm(form: FormEntity) {
+        val confirmDialog = ConfirmDialog(
+            DialogModel(
+                title = "Tạo yêu cầu mới",
+                subTitle = form.title,
+                content = "Bạn muốn tạo một yêu cầu mới với mẫu form: \n${form.form_code} - ${form.name}",
+                leftButtonTitle = "Huỷ bỏ",
+                rightButtonTitle = "Tạo yêu cầu",
+                isSingle = false
+            )
+        ).apply {
+            onRightButtonClick {
+                startActivity(
+                    RequestMasterDetailActivity.newIntent(
+                        requireContext(),
+                        category = ADD,
+                        request = null,
+                        form = form
+                    )
+                )
+                dismiss()
+            }
+            onLeftButtonClick {
+                dismiss()
+            }
+        }
+        confirmDialog.show(childFragmentManager, ConfirmDialog.TAG)
+    }
+
+}

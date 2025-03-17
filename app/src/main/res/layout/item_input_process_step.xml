@@ -10,7 +10,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_title_step"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tv_duration_step"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_duration_step"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             app:layout_constraintBottom_toBottomOf="@id/tv_title_step"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_hint_step"
             style="@style/TextViewEx.BodyMedium"
             android:layout_width="0dp"
@@ -78,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/tv_hint_step" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back_gray" />
 
-        <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+        <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
             android:id="@+id/tv_activity_title"
             style="@style/TextViewEx.Heading_5"
             android:layout_width="0dp"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white">
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_request_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
@@ -105,7 +105,7 @@
                     app:layout_constraintTop_toBottomOf="@id/layout_informer"
                     app:srcCompat="@drawable/ic_globe_black" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_process_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
@@ -143,7 +143,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_process_step" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_header_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
@@ -180,7 +180,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_header" />
 
-                <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_list_sheet_title"
                     style="@style/TextViewEx.Heading_5"
                     android:layout_width="0dp"
@@ -243,7 +243,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.3" />
 
-                    <com.cuongngo.core_project.common.view.view_ex.TextViewEx
+                    <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                         android:id="@+id/tv_empty"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
