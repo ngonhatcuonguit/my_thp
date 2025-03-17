@@ -52,41 +52,6 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
 
     override fun setUp() {
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("FCM", "Fetching FCM registration token failed", task.exception)
-                return@addOnCompleteListener
-            }
-
-            // Lấy token thành công
-            val token = task.result
-            Log.d("FCM", "FCM Token: $token")
-        }
-
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                WTF("Fetching FCM registration token failed -- ${task.exception}")
-//                return@addOnCompleteListener
-//            }
-//
-//            // Lấy FCM token
-//            val token = task.result
-//            WTF("FCM Token: $token")
-//        }
-//
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            val name = "Default Channel"
-//            val descriptionText = "Channel for notifications"
-//            val importance = NotificationManager.IMPORTANCE_DEFAULT
-//            val channel = NotificationChannel("default_channel", name, importance).apply {
-//                description = descriptionText
-//            }
-//            val notificationManager: NotificationManager =
-//                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//            notificationManager.createNotificationChannel(channel)
-//        }
-
         binding.clHome.setOnClickListener {
             handleNavBottom(1)
             switchFragment(HomeFragment())

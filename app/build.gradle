@@ -9,7 +9,7 @@ android {
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.cuongngo.core_project"
+        applicationId "com.cuongngo.my_thp"
         minSdk 22
         targetSdk 31
         versionCode 1
@@ -54,6 +54,8 @@ dependencies {
 
     // Firebase Messaging
     implementation 'com.google.firebase:firebase-messaging-ktx:24.1.0'
+
+    implementation("com.google.firebase:firebase-analytics")
 
     /**==================================   Jet pack  ============================================*/
     //view_model livedata
