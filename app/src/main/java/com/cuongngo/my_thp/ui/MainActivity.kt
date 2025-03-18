@@ -14,6 +14,7 @@ import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
 import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
@@ -22,6 +23,7 @@ import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.ui.add_request.AddRequestFragment
 import com.cuongngo.my_thp.ui.home.HomeFragment
 import com.cuongngo.my_thp.ui.home.HomeViewModel
+import com.cuongngo.my_thp.ui.list_request.ListRequestFragment
 import com.cuongngo.my_thp.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
@@ -52,31 +54,113 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
 
     override fun setUp() {
 
-        binding.clHome.setOnClickListener {
-            handleNavBottom(1)
-            switchFragment(HomeFragment())
-        }
-        binding.clQr.setOnClickListener {
-            handleNavBottom(2)
-//            switchFragment(AddRequestFragment())
-        }
-        binding.clChuyenTien.setOnClickListener {
-            handleNavBottom(3)
-//            switchFragment(ListRequestFragment())
-            switchFragment(AddRequestFragment())
-        }
-        binding.clFabChuyenTien.setOnClickListener {
-            handleNavBottom(3)
-//            switchFragment(ListRequestFragment())
-            switchFragment(AddRequestFragment())
-        }
-        binding.clThanhToan.setOnClickListener {
-            handleNavBottom(4)
-//            switchFragment(ListRequestFragment())
-        }
-        binding.clThem.setOnClickListener {
-            handleNavBottom(5)
-            switchFragment(ProfileFragment())
+        navView = findViewById(R.id.nav_bottom)
+        val fragmentManager: FragmentManager = supportFragmentManager
+        homeFragment = HomeFragment()
+        fragmentManager.beginTransaction()
+            .replace(R.id.frame_container, homeFragment, HomeFragment.TAG).commit()
+
+        navView.setOnNavigationItemSelectedListener {
+            if (navView.selectedItemId == it.itemId) {
+                if (it.itemId == R.id.navigation_home) {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.commit()
+                }
+                return@setOnNavigationItemSelectedListener false
+            }
+            when (it.itemId) {
+                R.id.navigation_home -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.show(homeFragment)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val addRequestFragment =
+                        fragmentManager.findFragmentByTag(HomeFragment.TAG)
+                    val listRequestFragment =
+                        fragmentManager.findFragmentByTag(HomeFragment.TAG)
+                    if (profileFragment != null) transaction.remove(profileFragment)
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+                    transaction.commit()
+                    currentFragment = HomeFragment.TAG
+                }
+
+                R.id.navigation_list_form -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.hide(homeFragment)
+                    val addRequestFragment =
+                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val listRequestFragment =
+                        fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
+
+                    if (profileFragment != null) transaction.remove(profileFragment)
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+
+                    if (listRequestFragment == null) {
+                        transaction.add(
+                            R.id.container,
+                            ListRequestFragment(),
+                            ListRequestFragment.TAG
+                        )
+                        transaction.commit()
+                        currentFragment = ListRequestFragment.TAG
+                    } else {
+
+                    }
+
+                }
+
+                R.id.navigation_add_form -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.hide(homeFragment)
+                    val addRequestFragment =
+                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val listRequestFragment =
+                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+
+                    if (profileFragment != null) transaction.remove(profileFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+
+                    if (addRequestFragment == null) {
+                        transaction.add(
+                            R.id.container,
+                            AddRequestFragment(),
+                            AddRequestFragment.TAG
+                        )
+                        transaction.commit()
+                        currentFragment = AddRequestFragment.TAG
+                    } else {
+
+                    }
+
+                }
+
+                R.id.navigation_profile -> {
+                    val transaction = fragmentManager.beginTransaction()
+                    transaction.hide(homeFragment)
+                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val addRequestFragment =
+                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+                    val listRequestFragment =
+                        fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+
+                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+                    if (profileFragment == null) {
+                        transaction.add(
+                            R.id.container,
+                            ProfileFragment(),
+                            ProfileFragment.TAG
+                        )
+                        transaction.commit()
+                        currentFragment = ProfileFragment.TAG
+                    } else {
+
+                    }
+                }
+            }
+            return@setOnNavigationItemSelectedListener true
         }
 
         askNotificationPermission()
@@ -119,193 +203,6 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
             .replace(R.id.frame_container, fragment)
             .commit()
     }
-    private fun handleNavBottom(index: Int) {
-        with(binding) {
-            when (index) {
-                1 -> {
-                    setSateNavItem(true, 1)
-                    //
-                    setSateNavItem(false, 2)
-                    setSateNavItem(false, 3)
-                    setSateNavItem(false, 4)
-                    setSateNavItem(false, 5)
-                }
-
-                2 -> {
-                    setSateNavItem(true, 2)
-                    //
-                    setSateNavItem(false, 1)
-                    setSateNavItem(false, 3)
-                    setSateNavItem(false, 4)
-                    setSateNavItem(false, 5)
-                }
-
-                3 -> {
-                    setSateNavItem(true, 3)
-                    //
-                    setSateNavItem(false, 2)
-                    setSateNavItem(false, 1)
-                    setSateNavItem(false, 4)
-                    setSateNavItem(false, 5)
-                }
-
-                4 -> {
-                    setSateNavItem(true, 4)
-                    //
-                    setSateNavItem(false, 2)
-                    setSateNavItem(false, 3)
-                    setSateNavItem(false, 1)
-                    setSateNavItem(false, 5)
-                }
-
-                5 -> {
-                    setSateNavItem(true, 5)
-                    //
-                    setSateNavItem(false, 2)
-                    setSateNavItem(false, 3)
-                    setSateNavItem(false, 4)
-                    setSateNavItem(false, 1)
-                }
-
-                else -> {
-                    setSateNavItem(true, 1)
-                    //
-                    setSateNavItem(false, 2)
-                    setSateNavItem(false, 3)
-                    setSateNavItem(false, 4)
-                    setSateNavItem(false, 5)
-                }
-            }
-        }
-    }
-
-    private fun setSateNavItem(isActive: Boolean, index: Int) {
-        with(binding) {
-            when (index) {
-                1 -> {
-                    if (isActive) {
-                        ivHome.setImageResource(R.drawable.ic_home_active)
-                        tvHome.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivHome.setImageResource(R.drawable.ic_home_inactive)
-                        tvHome.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-                2 -> {
-                    if (isActive) {
-                        ivQr.setImageResource(R.drawable.ic_qr)
-                        tvQr.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivQr.setImageResource(R.drawable.ic_qr)
-                        tvQr.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-                3 -> {
-                    if (isActive) {
-                        ivChuyenTien.setImageResource(R.drawable.ic_chuyen_tien_active)
-                        tvChuyenTien.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivChuyenTien.setImageResource(R.drawable.ic_chuyen_tien)
-                        tvChuyenTien.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-                4 -> {
-                    if (isActive) {
-                        ivThanhToan.setImageResource(R.drawable.ic_vi_active)
-                        tvThanhToan.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivThanhToan.setImageResource(R.drawable.ic_vi)
-                        tvThanhToan.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-                5 -> {
-                    if (isActive) {
-                        ivThem.setImageResource(R.drawable.ic_them_active)
-                        tvThem.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivThem.setImageResource(R.drawable.ic_them)
-                        tvThem.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-                else -> {
-                    if (isActive) {
-                        ivHome.setImageResource(R.drawable.ic_home_active)
-                        tvHome.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_primary_2nd
-                            )
-                        )
-                    } else {
-                        ivHome.setImageResource(R.drawable.ic_home_inactive)
-                        tvHome.setTextColor(
-                            ContextCompat.getColor(
-                                this@MainActivity,
-                                R.color.acb_gray_6e
-                            )
-                        )
-                    }
-                }
-
-            }
-        }
-    }
-
     override fun onBackPressed() {
         //do nothing
     }

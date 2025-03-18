@@ -38,6 +38,7 @@ class App : Application(), KodeinAware, LifecycleObserver {
     }
     override fun onCreate() {
         super.onCreate()
+
         Firebase.messaging.isAutoInitEnabled = true
         //
         FirebaseApp.initializeApp(this)
