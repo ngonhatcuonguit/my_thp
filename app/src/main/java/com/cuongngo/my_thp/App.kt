@@ -1,7 +1,5 @@
 package com.cuongngo.my_thp
 import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
@@ -21,10 +19,10 @@ import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.UserDao
 import com.cuongngo.my_thp.di.localModule
 import com.cuongngo.my_thp.ext.WTF
-import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.messaging
+import com.google.firebase.messaging.ktx.messaging
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -39,20 +37,23 @@ class App : Application(), KodeinAware, LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
 
-//        Firebase.messaging.isAutoInitEnabled = true
-//        //
-//        FirebaseApp.initializeApp(this)
-//
-//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-//            if (!task.isSuccessful) {
-//                WTF("Fetching FCM registration token failed -- ${task.exception}")
-//                return@addOnCompleteListener
-//            }
-//
-//            // Get FCM token
-//            val token = task.result
-//            WTF("FCM Token: $token")
-//        }
+        Firebase.messaging.isAutoInitEnabled = true
+
+        // Khởi tạo Firebase nếu chưa khởi tạo
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this)  // Khởi tạo Firebase
+        }
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                WTF("Fetching FCM registration token failed -- ${task.exception}")
+                return@addOnCompleteListener
+            }
+
+            // Get FCM token
+            val token = task.result
+            WTF("FCM Token: $token")
+        }
 
         instance = this
     }
