@@ -18,55 +18,8 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
 
     override fun setUp() {
         binding.apply {
-//            tvName.text =
-//                "Hello, ${AppPreferences.getUserInfo()?.first_name ?: ""} ${AppPreferences.getUserInfo()?.last_name ?: ""}"
 
-            tvHello.text = getPartOfDay()
-            if (AppPreferences.getACBInfo(KEY_NICK_NAME).isNotEmpty()){
-                tvAvatar.text = AppPreferences.getACBInfo(KEY_NICK_NAME)
-            }
 
-            if (AppPreferences.getACBInfo(KEY_DIEM).isNotEmpty()){
-                tvDiem.text = formatNumberWithDots(AppPreferences.getACBInfo(KEY_DIEM))
-            }
-
-            if (AppPreferences.getACBInfo(KEY_SD_KHA_DUNG).isNotEmpty()){
-                tvTien.text = formatNumberWithDots(AppPreferences.getACBInfo(KEY_SD_KHA_DUNG))
-            }
-
-            if (AppPreferences.getACBInfo(KEY_NAME).isNotEmpty()){
-                tvUserName.text = AppPreferences.getACBInfo(KEY_NAME)
-            }
-
-            tvUserName.setOnLongClickListener {
-                setupShowDialogChangeValue(KEY_NAME, tvUserName)
-                true
-            }
-            tvAvatar.setOnLongClickListener {
-                setupShowDialogChangeValue(KEY_NICK_NAME, tvAvatar)
-                true
-            }
-
-            clSoDu.setOnLongClickListener {
-                setupShowDialogChangeValue(KEY_SD_KHA_DUNG, tvTien)
-                true
-            }
-
-            clDiem.setOnLongClickListener {
-                setupShowDialogChangeValue(KEY_DIEM, tvDiem)
-                true
-            }
-
-            clThe.setOnClickListener {
-                Intent(context, TheAcbActivity::class.java).apply {
-                    startActivity(this)
-                }
-            }
-            clTaiKhoan.setOnClickListener {
-                Intent(context, TaiKhoanThanhToanActivity::class.java).apply {
-                    startActivity(this)
-                }
-            }
 
         }
     }

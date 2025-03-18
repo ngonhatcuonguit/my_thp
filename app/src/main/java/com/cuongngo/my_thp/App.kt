@@ -39,20 +39,20 @@ class App : Application(), KodeinAware, LifecycleObserver {
     override fun onCreate() {
         super.onCreate()
 
-        Firebase.messaging.isAutoInitEnabled = true
-        //
-        FirebaseApp.initializeApp(this)
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                WTF("Fetching FCM registration token failed -- ${task.exception}")
-                return@addOnCompleteListener
-            }
-
-            // Get FCM token
-            val token = task.result
-            WTF("FCM Token: $token")
-        }
+//        Firebase.messaging.isAutoInitEnabled = true
+//        //
+//        FirebaseApp.initializeApp(this)
+//
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+//            if (!task.isSuccessful) {
+//                WTF("Fetching FCM registration token failed -- ${task.exception}")
+//                return@addOnCompleteListener
+//            }
+//
+//            // Get FCM token
+//            val token = task.result
+//            WTF("FCM Token: $token")
+//        }
 
         instance = this
     }

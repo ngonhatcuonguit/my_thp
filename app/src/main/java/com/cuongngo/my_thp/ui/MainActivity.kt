@@ -72,7 +72,7 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
                 R.id.navigation_home -> {
                     val transaction = fragmentManager.beginTransaction()
                     transaction.show(homeFragment)
-                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+                    val profileFragment = fragmentManager.findFragmentByTag(HomeFragment.TAG)
                     val addRequestFragment =
                         fragmentManager.findFragmentByTag(HomeFragment.TAG)
                     val listRequestFragment =
@@ -84,81 +84,81 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
                     currentFragment = HomeFragment.TAG
                 }
 
-                R.id.navigation_list_form -> {
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.hide(homeFragment)
-                    val addRequestFragment =
-                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
-                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    val listRequestFragment =
-                        fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
-
-                    if (profileFragment != null) transaction.remove(profileFragment)
-                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
-
-                    if (listRequestFragment == null) {
-                        transaction.add(
-                            R.id.container,
-                            ListRequestFragment(),
-                            ListRequestFragment.TAG
-                        )
-                        transaction.commit()
-                        currentFragment = ListRequestFragment.TAG
-                    } else {
-
-                    }
-
-                }
-
-                R.id.navigation_add_form -> {
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.hide(homeFragment)
-                    val addRequestFragment =
-                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
-                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    val listRequestFragment =
-                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
-
-                    if (profileFragment != null) transaction.remove(profileFragment)
-                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
-
-                    if (addRequestFragment == null) {
-                        transaction.add(
-                            R.id.container,
-                            AddRequestFragment(),
-                            AddRequestFragment.TAG
-                        )
-                        transaction.commit()
-                        currentFragment = AddRequestFragment.TAG
-                    } else {
-
-                    }
-
-                }
-
-                R.id.navigation_profile -> {
-                    val transaction = fragmentManager.beginTransaction()
-                    transaction.hide(homeFragment)
-                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-                    val addRequestFragment =
-                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
-                    val listRequestFragment =
-                        fragmentManager.findFragmentByTag(ProfileFragment.TAG)
-
-                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
-                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
-                    if (profileFragment == null) {
-                        transaction.add(
-                            R.id.container,
-                            ProfileFragment(),
-                            ProfileFragment.TAG
-                        )
-                        transaction.commit()
-                        currentFragment = ProfileFragment.TAG
-                    } else {
-
-                    }
-                }
+//                R.id.navigation_list_form -> {
+//                    val transaction = fragmentManager.beginTransaction()
+//                    transaction.hide(homeFragment)
+//                    val addRequestFragment =
+//                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+//                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+//                    val listRequestFragment =
+//                        fragmentManager.findFragmentByTag(ListRequestFragment.TAG)
+//
+//                    if (profileFragment != null) transaction.remove(profileFragment)
+//                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+//
+//                    if (listRequestFragment == null) {
+//                        transaction.add(
+//                            R.id.container,
+//                            ListRequestFragment(),
+//                            ListRequestFragment.TAG
+//                        )
+//                        transaction.commit()
+//                        currentFragment = ListRequestFragment.TAG
+//                    } else {
+//
+//                    }
+//
+//                }
+//
+//                R.id.navigation_add_form -> {
+//                    val transaction = fragmentManager.beginTransaction()
+//                    transaction.hide(homeFragment)
+//                    val addRequestFragment =
+//                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+//                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+//                    val listRequestFragment =
+//                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+//
+//                    if (profileFragment != null) transaction.remove(profileFragment)
+//                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+//
+//                    if (addRequestFragment == null) {
+//                        transaction.add(
+//                            R.id.container,
+//                            AddRequestFragment(),
+//                            AddRequestFragment.TAG
+//                        )
+//                        transaction.commit()
+//                        currentFragment = AddRequestFragment.TAG
+//                    } else {
+//
+//                    }
+//
+//                }
+//
+//                R.id.navigation_profile -> {
+//                    val transaction = fragmentManager.beginTransaction()
+//                    transaction.hide(homeFragment)
+//                    val profileFragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+//                    val addRequestFragment =
+//                        fragmentManager.findFragmentByTag(AddRequestFragment.TAG)
+//                    val listRequestFragment =
+//                        fragmentManager.findFragmentByTag(ProfileFragment.TAG)
+//
+//                    if (addRequestFragment != null) transaction.remove(addRequestFragment)
+//                    if (listRequestFragment != null) transaction.remove(listRequestFragment)
+//                    if (profileFragment == null) {
+//                        transaction.add(
+//                            R.id.container,
+//                            ProfileFragment(),
+//                            ProfileFragment.TAG
+//                        )
+//                        transaction.commit()
+//                        currentFragment = ProfileFragment.TAG
+//                    } else {
+//
+//                    }
+//                }
             }
             return@setOnNavigationItemSelectedListener true
         }
