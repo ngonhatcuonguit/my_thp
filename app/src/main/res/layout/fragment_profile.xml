@@ -8,12 +8,16 @@
         android:background="#f7f7f7"
         android:fitsSystemWindows="true">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <TextView
             android:id="@+id/iv_logo_one"
-            android:layout_width="176dp"
-            android:layout_height="32dp"
-            app:srcCompat="@drawable/ic_acb_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:text="MY THP"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:textColor="@color/acb_primary_2nd"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +35,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_24dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +266,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="ACB Safekey"
+                        android:text="THP Safekey"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"
@@ -351,7 +355,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:gravity="start"
-                        android:text="Tỷ giá"
+                        android:text="Thị trường"
                         android:textColor="@color/gray_36"
                         android:textSize="15sp"
                         android:drawableTint="@color/acb_gray_text"

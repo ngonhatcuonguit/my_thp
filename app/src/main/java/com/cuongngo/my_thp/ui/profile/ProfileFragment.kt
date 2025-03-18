@@ -19,88 +19,14 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
 
     override fun setUp() {
         with(binding) {
-            AppPreferences.getACBInfo(KEY_NAME).let {
-                tvName.text = it
-            }
-
-            clUserInfor.setOnClickListener {
-                Intent(context, UserProfileActivity::class.java).apply {
-                    startActivity(this)
-                }
-            }
-
-//            tvSyncData.setOnClickListener {
-////                gotoSyncData()
+//            AppPreferences.getACBInfo(KEY_NAME).let {
+//                tvName.text = it
 //            }
-//            ivBgSyncData.setOnClickListener {
-////                gotoSyncData()
-//            }
-//            btnLogOut.setOnClickListener {
-////                clearUserData()
-////                gotoLoginMethod()
-//            }
-//            tvMember.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivMember
-//                )
-//            }
-//            tvChangePassword.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivChangePassword
-//                )
-//            }
-//            tvNotify.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivNotify
-//                )
-//            }
-//            tvLanguage.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivLanguage
-//                )
-//            }
-//            tvCountry.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivCountry
-//                )
-//            }
-//            tvClearCache.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivClearCache
-//                )
-//            }
-//            tvLegal.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivLegal
-//                )
-//            }
-//            tvHelp.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Feature Coming Soon",
-//                    ivHelp
-//                )
-//            }
-//            tvAbout.setOnClickListener {
-//                setupTooltip(
-//                    requireContext(),
-//                    "Version ${BuildConfig.VERSION_NAME}\nContact: CuongNgo IT Digital Technical Specialist",
-//                    ivAbout
-//                )
+//
+//            clUserInfor.setOnClickListener {
+//                Intent(context, UserProfileActivity::class.java).apply {
+//                    startActivity(this)
+//                }
 //            }
 
         }
