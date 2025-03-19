@@ -38,17 +38,18 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
     override fun setUp() {
         with(binding){
             btnLogin.setOnClickListener {
-                if (validate()){
-                    if (isNetworkAvailable(this@LoginByMSNVActivity)) {
-                        viewModel.login(
-                            user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
-                            password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
-                            device_code = AppPreferences.getDeviceInfo()?.id ?: ""
-                        )
-                    }else{
-                        showMessageCheckInternet(this@LoginByMSNVActivity, false)
-                    }
-                }
+                gotoMain()
+//                if (validate()){
+//                    if (isNetworkAvailable(this@LoginByMSNVActivity)) {
+//                        viewModel.login(
+//                            user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
+//                            password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
+//                            device_code = AppPreferences.getDeviceInfo()?.id ?: ""
+//                        )
+//                    }else{
+//                        showMessageCheckInternet(this@LoginByMSNVActivity, false)
+//                    }
+//                }
             }
         }
     }
@@ -63,17 +64,14 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     hideProgressDialog()
                     viewModel.loginData = it.data?.data
                     saveUserData(viewModel.loginData)
-
-                    if (viewModel.loginData?.device_is_active != true) {
-                        activeDevice()
-                    } else {
+                    if(it.data?.status == "success"){
                         if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
                             gotoMain()
                         } else {
                             showMessageToast(
                                 this,
                                 false,
-                                contentFail = "Đã có lỗi xảy ra: Empty Token",
+                                contentFail = "Đã có lỗi xảy ra: ${it.data.message}",
                                 contentDone = ""
                             )
                         }
