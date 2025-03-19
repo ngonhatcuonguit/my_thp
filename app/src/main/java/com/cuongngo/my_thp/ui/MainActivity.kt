@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,28 +19,33 @@ import androidx.fragment.app.FragmentManager
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
 import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
+import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.databinding.ActivityMainBinding
 import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.ui.add_request.AddRequestFragment
 import com.cuongngo.my_thp.ui.home.HomeFragment
 import com.cuongngo.my_thp.ui.home.HomeViewModel
 import com.cuongngo.my_thp.ui.list_request.ListRequestFragment
+import com.cuongngo.my_thp.ui.login.UserViewModel
 import com.cuongngo.my_thp.ui.profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 
-class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
+class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
     private lateinit var homeFragment: HomeFragment
     private lateinit var navView: BottomNavigationView
 
-    override val viewModel: HomeViewModel by kodeinViewModel()
+    override val viewModel: UserViewModel by kodeinViewModel()
     override fun inflateLayout(): Int = R.layout.activity_main
 
     private var currentFragment = HomeFragment::class.java.simpleName
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (AppPreferences.getUserAccessToken().isNotEmpty() && AppPreferences.getFcmToken().isNotEmpty()) {
+            viewModel.pushFcmToken(AppPreferences.getFcmToken())
+        }
         super.onCreate(savedInstanceState)
 //        enableLightStatusBar()
         // Set the status bar color
@@ -50,6 +56,16 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
                 .replace(R.id.frame_container, HomeFragment()) // Thay thế với Fragment ban đầu
                 .commit()
         }
+
+        // Check if the permission is already granted
+        if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            // If permission is already granted, handle your logic here
+            Toast.makeText(this, "Notification permission already granted", Toast.LENGTH_SHORT).show()
+        } else {
+            // Otherwise, request the permission
+            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+
     }
 
     override fun setUp() {
@@ -163,8 +179,6 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
             return@setOnNavigationItemSelectedListener true
         }
 
-        askNotificationPermission()
-
     }
 
     // Declare the launcher at the top of your Activity/Fragment:
@@ -173,27 +187,21 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, HomeViewModel>() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             // FCM SDK (and your app) can post notifications.
-        } else {
-            // TODO: Inform user that that your app will not show notifications.
-        }
-    }
+            Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
 
-    private fun askNotificationPermission() {
-        // This is only necessary for API level >= 33 (TIRAMISU)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                // FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: display an educational UI explaining to the user the features that will be enabled
-                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
-                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
-                //       If the user selects "No thanks," allow the user to continue without notifications.
-            } else {
-                // Directly ask for the permission
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            // Optionally, you can request the FCM token here
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    // You can send the token to your server here
+                    Toast.makeText(this, "FCM Token: $token", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Failed to get FCM token", Toast.LENGTH_SHORT).show()
+                }
             }
+        } else {
+            // Show a message explaining why the app needs the permission
+            Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
         }
     }
 

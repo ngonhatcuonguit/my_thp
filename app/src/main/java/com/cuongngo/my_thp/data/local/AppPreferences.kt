@@ -42,6 +42,8 @@ object AppPreferences {
     const val KEY_NGUON_THU_NHAP = "KEY_NGUON_THU_NHAP"
     const val KEY_FB = "KEY_FB"
 
+    const val KEY_FCM = "KEY_FCM"
+
 
     init{
         preferences = App.getInstance().getSharedPreferences(REFERENCES_NAME, Context.MODE_PRIVATE)
@@ -73,6 +75,16 @@ object AppPreferences {
     fun setUserAccessToken(token: String) {
         editor.also {
             it.putString(KEY_USER_ACCESS_TOKEN, token)
+            it.commit()
+        }
+    }
+    fun getFcmToken(): String {
+        return preferences.getString(KEY_FCM, "") ?: ""
+    }
+
+    fun setFcmToken(token: String) {
+        editor.also {
+            it.putString(KEY_FCM, token)
             it.commit()
         }
     }

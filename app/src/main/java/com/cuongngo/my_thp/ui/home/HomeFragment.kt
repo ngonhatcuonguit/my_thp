@@ -8,6 +8,7 @@ import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.databinding.FragmentHomeBinding
 import com.cuongngo.my_thp.ui.acb_app.TheAcbActivity
 import com.cuongngo.my_thp.ui.acb_app.tai_khoan.TaiKhoanThanhToanActivity
+import com.cuongngo.my_thp.ui.notification.NotificationActivity
 import com.cuongngo.my_thp.utils.number.formatNumberWithDots
 import java.util.Calendar
 
@@ -17,9 +18,18 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
     override fun inflateLayout() = R.layout.fragment_home
 
     override fun setUp() {
+
         binding.apply {
 
+            tvHello.text = getPartOfDay()
 
+            clNoti.setOnClickListener{
+                startActivity(Intent(requireContext(), NotificationActivity::class.java))
+            }
+
+            clSoDu.setOnClickListener {
+                startActivity(Intent(requireContext(), NotificationActivity::class.java))
+            }
 
         }
     }

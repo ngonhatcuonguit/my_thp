@@ -15,6 +15,23 @@ class UserRemoteDataSource(private val apiService: THPApi) : BaseRemoteDataSourc
         )
     }
 
+    suspend fun pushFcmToken(
+        token: String
+    ) = getResult {
+        apiService.pushFcmToken(
+            token = token
+        )
+    }
+
+    suspend fun getNotify(
+        page: Int?,
+        size: Int?
+    ) = getResult {
+        apiService.getNotify(
+            page, size
+        )
+    }
+
     suspend fun getListGK() = getResult {
         apiService.getListGK()
     }

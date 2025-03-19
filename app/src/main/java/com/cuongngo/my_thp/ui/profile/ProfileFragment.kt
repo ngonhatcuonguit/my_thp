@@ -8,6 +8,7 @@ import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.data.local.AppPreferences.KEY_NAME
 import com.cuongngo.my_thp.databinding.FragmentProfileBinding
 import com.cuongngo.my_thp.ui.acb_app.UserProfileActivity
+import com.cuongngo.my_thp.ui.login.LoginByMSNVActivity
 import com.cuongngo.my_thp.ui.login.LoginMethodActivity
 import com.cuongngo.my_thp.ui.sync_data.ActivitySyncData
 
@@ -29,11 +30,16 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
 //                }
 //            }
 
+            btnLogout.setOnClickListener {
+                AppPreferences.setUserAccessToken("")
+                gotoLoginMethod()
+            }
+
         }
     }
 
     private fun gotoLoginMethod() {
-        Intent(requireContext(), LoginMethodActivity::class.java).apply {
+        Intent(requireContext(), LoginByMSNVActivity::class.java).apply {
             startActivity(this)
         }
     }
@@ -53,9 +59,9 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
     }
 
     override fun onResume() {
-        AppPreferences.getACBInfo(KEY_NAME).let {
-            binding.tvName.text = it
-        }
+//        AppPreferences.getACBInfo(KEY_NAME).let {
+//            binding.tvName.text = it
+//        }
         super.onResume()
     }
 

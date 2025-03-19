@@ -2,6 +2,7 @@ package com.cuongngo.my_thp.services
 
 import com.cuongngo.my_thp.data.database.roomdb.entity.FormResponse
 import com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.my_thp.response.base.ApiBaseResponse
 import com.cuongngo.my_thp.response.base.AppBaseResponse
 import com.cuongngo.my_thp.response.login_response.ApiResponse
 import com.cuongngo.my_thp.response.login_response.LoginResponse
@@ -11,6 +12,7 @@ import com.cuongngo.my_thp.services.network.invoker.NetworkConnectionInterceptor
 import com.cuongngo.my_thp.ui.event_thp.model.ExamResponse
 import com.cuongngo.my_thp.ui.event_thp.model.ExaminersResponse
 import com.cuongngo.my_thp.ui.event_thp.model.UpdateScoreResponse
+import com.cuongngo.my_thp.ui.notification.data.NotificationResponse
 import com.cuongngo.my_thp.ui.request_detail.PushRequestCodeBody
 import com.cuongngo.my_thp.ui.request_detail.GetRequestStatusResponse
 import com.cuongngo.my_thp.ui.request_detail.PushRequestResponse
@@ -85,6 +87,19 @@ interface THPApi {
     suspend fun getRequestStatus(
         @Body requestCodeBody: PushRequestCodeBody,
     ): Response<GetRequestStatusResponse>
+
+    @GET("api/notify/all")
+    suspend fun getNotify(
+        @Query("page") page: Int?,
+        @Query("size") size: Int?
+    ): Response<AppBaseResponse<List<NotificationResponse>>>
+
+    @FormUrlEncoded
+    @POST("api/firebaseapp/register-device")
+    suspend fun pushFcmToken(
+        @Field("DeviceType") deviceType: String? = "android",
+        @Field("DeviceRegistrationID") token: String
+    ): Response<ApiBaseResponse>
 
 
     companion object {

@@ -6,10 +6,23 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.cuongngo.my_thp.App
+import com.cuongngo.my_thp.data.local.AppPreferences
+import com.cuongngo.my_thp.services.repository.UserRepository
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.direct
+import org.kodein.di.generic.instance
 
-class MyFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService(), KodeinAware {
+
+    override val kodein: Kodein by lazy { (applicationContext as KodeinAware).kodein }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         // Xử lý thông báo khi nhận được
@@ -48,7 +61,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Xử lý khi FCM Token được cập nhật
         Log.d("FCM", "Refreshed token: $token")
         // Gửi token này lên server của bạn nếu cần
+//        updateFcmToken(token)
     }
+
+    private fun updateFcmToken(token: String?) {
+        App.getInstance().fcmToken
+
+        val userRepository: UserRepository = kodein.direct.instance()
+        if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true && token != null) {
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    userRepository.pushFcmToken(token)
+                }
+            }
+        }
+    }
+
 }
 
 

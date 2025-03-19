@@ -15,3 +15,7 @@ data class MessageResponse(
     val type: String?,
     val message: String?
 ): BaseModel()
+
+data class ApiBaseResponse (
+    val response_status: ResponseStatus?,
+): BaseModel()

@@ -1,9 +1,6 @@
 package com.cuongngo.my_thp.ui.login
 
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
-import android.text.InputType
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.cuongngo.my_thp.R
@@ -16,9 +13,16 @@ import com.cuongngo.my_thp.databinding.ActivityLoginByUserIdBinding
 import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.ext.observeLiveDataChanged
 import com.cuongngo.my_thp.services.network.onResultReceived
+import com.cuongngo.my_thp.services.repository.UserRepository
 import com.cuongngo.my_thp.ui.MainActivity
 import com.cuongngo.my_thp.utils.toast.showMessageCheckInternet
 import com.cuongngo.my_thp.utils.toast.showMessageToast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.kodein.di.direct
+import org.kodein.di.generic.instance
 
 class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, UserViewModel>() {
 
@@ -65,6 +69,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     saveUserData(viewModel.loginData)
                     if(it.data?.response_status?.status == "success"){
                         if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
+//                            viewModel.pushFcmToken(AppPreferences.getFcmToken())
                             gotoMain()
                             WTF("token: ${viewModel.loginData?.token}")
                         } else {

@@ -17,6 +17,7 @@ import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.GdDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.RequestDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.GenreDao
 import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.UserDao
+import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.di.localModule
 import com.cuongngo.my_thp.ext.WTF
 import com.google.firebase.FirebaseApp
@@ -34,6 +35,7 @@ class App : Application(), KodeinAware, LifecycleObserver {
         import(appModule)
         import(localModule)
     }
+    var fcmToken: String? = null
     override fun onCreate() {
         super.onCreate()
 
@@ -53,6 +55,7 @@ class App : Application(), KodeinAware, LifecycleObserver {
             // Get FCM token
             val token = task.result
             WTF("FCM Token: $token")
+            AppPreferences.setFcmToken(token)
         }
 
         instance = this

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.cuongngo.my_thp.base.viewmodel.BaseViewModel
 import com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.my_thp.response.base.ApiBaseResponse
 import com.cuongngo.my_thp.response.base.AppBaseResponse
 import com.cuongngo.my_thp.response.login_response.ApiResponse
 import com.cuongngo.my_thp.response.login_response.LoginResponse
@@ -15,6 +16,7 @@ import com.cuongngo.my_thp.services.repository.UserRepository
 import com.cuongngo.my_thp.ui.event_thp.model.ExamResponse
 import com.cuongngo.my_thp.ui.event_thp.model.ExaminersResponse
 import com.cuongngo.my_thp.ui.event_thp.model.UpdateScoreResponse
+import com.cuongngo.my_thp.ui.notification.data.NotificationResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -68,6 +70,44 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                     userRepository.login(
                         user_name = user_name,
                         password = password
+                    )
+                )
+            }
+        }
+    }
+
+    private val _notify = MutableLiveData<BaseResult<AppBaseResponse<List<NotificationResponse>>>>()
+    val notify: LiveData<BaseResult<AppBaseResponse<List<NotificationResponse>>>> get() = _notify
+
+
+    fun getNotify(
+        page: Int?,
+        size: Int?
+    ) {
+        _notify.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _notify.postValue(
+                    userRepository.getNotify(
+                        page, size
+                    )
+                )
+            }
+        }
+    }
+
+    private val _pushFcmToken = MutableLiveData<BaseResult<ApiBaseResponse>>()
+    val pushFcmToken: LiveData<BaseResult<ApiBaseResponse>> get() = _pushFcmToken
+
+    fun pushFcmToken(
+        fcm_token: String
+    ) {
+        _pushFcmToken.value = BaseResult.loading(null)
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                _pushFcmToken.postValue(
+                    userRepository.pushFcmToken(
+                        fcm_token
                     )
                 )
             }

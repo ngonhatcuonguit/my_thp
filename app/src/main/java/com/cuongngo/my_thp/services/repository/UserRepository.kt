@@ -3,6 +3,7 @@ package com.cuongngo.my_thp.services.repository
 import com.cuongngo.my_thp.data.database.data_source.UserLocalDataSource
 import com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPEntity
 import com.cuongngo.my_thp.data.database.roomdb.entity.UserTHPResponse
+import com.cuongngo.my_thp.response.base.ApiBaseResponse
 import com.cuongngo.my_thp.response.base.AppBaseResponse
 import com.cuongngo.my_thp.response.login_response.ApiResponse
 import com.cuongngo.my_thp.response.login_response.LoginResponse
@@ -12,6 +13,7 @@ import com.cuongngo.my_thp.services.remote.UserRemoteDataSource
 import com.cuongngo.my_thp.ui.event_thp.model.ExamResponse
 import com.cuongngo.my_thp.ui.event_thp.model.ExaminersResponse
 import com.cuongngo.my_thp.ui.event_thp.model.UpdateScoreResponse
+import com.cuongngo.my_thp.ui.notification.data.NotificationResponse
 
 class UserRepository(
     private val userRemoteDataSource: UserRemoteDataSource,
@@ -24,6 +26,23 @@ class UserRepository(
         return userRemoteDataSource.login(
             user_name = user_name,
             password = password
+        )
+    }
+
+    suspend fun pushFcmToken(
+        token: String
+    ): BaseResult<ApiBaseResponse> {
+        return userRemoteDataSource.pushFcmToken(
+            token = token
+        )
+    }
+
+    suspend fun getNotify(
+        page: Int?,
+        size: Int?
+    ): BaseResult<AppBaseResponse<List<NotificationResponse>>> {
+        return userRemoteDataSource.getNotify(
+            page, size
         )
     }
 

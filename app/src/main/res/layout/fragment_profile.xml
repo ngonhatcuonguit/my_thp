@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="18dp"
                         android:gravity="start"
-                        android:text="NGUYEN VAN A"
+                        android:text="HELLO USER"
                         android:textAllCaps="true"
                         android:layout_marginTop="2dp"
                         android:textColor="@color/acb_primary_2nd"
