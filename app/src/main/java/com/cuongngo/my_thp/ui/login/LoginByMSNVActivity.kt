@@ -13,6 +13,7 @@ import com.cuongngo.my_thp.base.view.ProgressDialog
 import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
 import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.databinding.ActivityLoginByUserIdBinding
+import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.ext.observeLiveDataChanged
 import com.cuongngo.my_thp.services.network.onResultReceived
 import com.cuongngo.my_thp.ui.MainActivity
@@ -38,18 +39,16 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
     override fun setUp() {
         with(binding){
             btnLogin.setOnClickListener {
-                gotoMain()
-//                if (validate()){
-//                    if (isNetworkAvailable(this@LoginByMSNVActivity)) {
-//                        viewModel.login(
-//                            user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
-//                            password = binding.viewInputPassword.edtPassword.text.toString() ?: "",
-//                            device_code = AppPreferences.getDeviceInfo()?.id ?: ""
-//                        )
-//                    }else{
-//                        showMessageCheckInternet(this@LoginByMSNVActivity, false)
-//                    }
-//                }
+                if (validate()){
+                    if (isNetworkAvailable(this@LoginByMSNVActivity)) {
+                        viewModel.login(
+                            user_name = binding.viewInputUserId.edtUserId.text.toString() ?: "",
+                            password = binding.viewInputPassword.edtPassword.text.toString() ?: ""
+                        )
+                    }else{
+                        showMessageCheckInternet(this@LoginByMSNVActivity, false)
+                    }
+                }
             }
         }
     }
@@ -64,56 +63,33 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     hideProgressDialog()
                     viewModel.loginData = it.data?.data
                     saveUserData(viewModel.loginData)
-                    if(it.data?.status == "success"){
+                    if(it.data?.response_status?.status == "success"){
                         if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
                             gotoMain()
+                            WTF("token: ${viewModel.loginData?.token}")
                         } else {
                             showMessageToast(
                                 this,
                                 false,
-                                contentFail = "Đã có lỗi xảy ra: ${it.data.message}",
+                                contentFail = "Đã có lỗi xảy ra: ${it.data.response_status.messages?.firstOrNull()?.message}",
                                 contentDone = ""
                             )
                         }
+                    }else{
+                        showMessageToast(
+                            this,
+                            false,
+                            contentFail = "${it.data?.response_status?.messages?.firstOrNull()?.message}",
+                            contentDone = ""
+                        )
                     }
                 },
                 onError = {
                     hideProgressDialog()
-                }
-            )
-        }
-        observeLiveDataChanged(viewModel.activeDevice){
-            it.onResultReceived(
-                onLoading = {
-                    processActiveDevice.show()
-                },
-                onSuccess = {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        processActiveDevice.hide()
-                        if(it.data?.status == "success"){
-                            viewModel.loginData = viewModel.loginData?.copy(
-                                device_is_active = true
-                            )
-                            saveUserData(viewModel.loginData)
-                            gotoMain()
-                        }else{
-                            showMessageToast(
-                                this,
-                                false,
-                                contentFail = "Đã có lỗi xảy ra",
-                                contentDone = ""
-                            )
-                        }
-                    }, 3200L)
-                },
-                onError = {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        processActiveDevice.hide()
-                    }, 3000L)
                     showMessageToast(
                         this,
                         false,
-                        contentFail = "Đã có lỗi xảy ra",
+                        contentFail = "Đã có lỗi xảy ra: ${it.data?.response_status?.messages?.firstOrNull()?.message}",
                         contentDone = ""
                     )
                 }

@@ -19,13 +19,11 @@ class UserRepository(
 ) {
     suspend fun login(
         user_name: String,
-        password: String,
-        device_code: String
+        password: String
     ): BaseResult<AppBaseResponse<LoginResponse>> {
         return userRemoteDataSource.login(
             user_name = user_name,
-            password = password,
-            device_code = device_code
+            password = password
         )
     }
 

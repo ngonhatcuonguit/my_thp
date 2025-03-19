@@ -59,8 +59,7 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
 
     fun login(
         user_name: String,
-        password: String,
-        device_code: String
+        password: String
     ) {
         _login.value = BaseResult.loading(null)
         viewModelScope.launch {
@@ -68,8 +67,7 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
                 _login.postValue(
                     userRepository.login(
                         user_name = user_name,
-                        password = password,
-                        device_code = device_code
+                        password = password
                     )
                 )
             }

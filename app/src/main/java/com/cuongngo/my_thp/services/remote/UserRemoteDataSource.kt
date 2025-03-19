@@ -7,13 +7,11 @@ class UserRemoteDataSource(private val apiService: THPApi) : BaseRemoteDataSourc
 
     suspend fun login(
         user_name: String,
-        password: String,
-        device_code: String
+        password: String
     ) = getResult {
         apiService.loginWithAccount(
             username = user_name,
-            password = password,
-            device_code = device_code
+            password = password
         )
     }
 

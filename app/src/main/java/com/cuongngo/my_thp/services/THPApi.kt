@@ -25,11 +25,10 @@ import retrofit2.http.Query
 
 interface THPApi {
     @FormUrlEncoded
-    @POST("api/account/gettoken")
+    @POST("api/authentication/tokens")
     suspend fun loginWithAccount(
-        @Field("UserName") username: String,
-        @Field("Password") password: String,
-        @Field("device_code") device_code: String,
+        @Field("Email") username: String,
+        @Field("Password") password: String
     ): Response<AppBaseResponse<LoginResponse>>
 
     @FormUrlEncoded
