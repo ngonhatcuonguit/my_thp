@@ -26,6 +26,7 @@ import com.cuongngo.my_thp.base.view.BaseView
 import com.cuongngo.my_thp.base.view.ProgressDialog
 import com.cuongngo.my_thp.ui.event_thp.DanhSachGKActivity
 import com.cuongngo.my_thp.ui.event_thp.TietMucDetailActivity
+import com.cuongngo.my_thp.ui.login.LoginByMSNVActivity
 import com.cuongngo.my_thp.ui.login.LoginMethodActivity
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import org.kodein.di.KodeinAware
@@ -260,6 +261,14 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
 
     open fun gotoLoginMethod() {
         Intent(this, LoginMethodActivity::class.java).apply {
+        }.also {
+            finish()
+            startActivity(it)
+        }
+    }
+
+    open fun gotoLogin() {
+        Intent(this, LoginByMSNVActivity::class.java).apply {
         }.also {
             finish()
             startActivity(it)

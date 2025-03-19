@@ -12,6 +12,7 @@ import com.cuongngo.my_thp.databinding.ActivitySplashBinding
 import com.cuongngo.my_thp.ext.WTF
 import com.cuongngo.my_thp.services.THPApi
 import com.cuongngo.my_thp.ui.MainActivity
+import com.cuongngo.my_thp.ui.login.LoginMethodActivity
 import com.cuongngo.my_thp.ui.onboard.OnBoardActivity
 import com.cuongngo.my_thp.utils.toast.showMessageCheckInternet
 
@@ -28,14 +29,13 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
         val handler = Handler(Looper.getMainLooper())
         handler.postDelayed({
 //            gotoListGK()
-//            if (AppPreferences.isShownOnBoard()) {
-//                if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true && AppPreferences.getUserInfo()?.device_is_active == true) {
-//                    gotoMain()
-//                } else {
-//                    gotoLoginMethod()
-//                }
-//            } else gotoOnBoard()
-            gotoMain()
+            if (AppPreferences.isShownOnBoard()) {
+                if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true) {
+                    gotoMain()
+                } else {
+                    gotoLogin()
+                }
+            } else gotoOnBoard()
             finish()
         }, 2000)
     }
@@ -51,13 +51,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
             startActivity(this)
         }
     }
-//    private fun gotoLoginMethod() {
-//        Intent(this, LoginMethodActivity::class.java).apply {
-//        }.also {
-//            finish()
-//            startActivity(it)
-//        }
-//    }
 
     private fun setupSystemWindowInset() {
         window.setFlags(

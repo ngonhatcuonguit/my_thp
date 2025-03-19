@@ -3,6 +3,7 @@ package com.cuongngo.my_thp.ui.login
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import android.text.InputType
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
 import com.cuongngo.my_thp.R
@@ -36,6 +37,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
 
     override fun setUp() {
         with(binding){
+            viewInputUserId.edtUserId.inputType = InputType.TYPE_TEXT_VARIATION_NORMAL
             btnLogin.setOnClickListener {
                 if (validate()){
                     if (isNetworkAvailable(this@LoginByMSNVActivity)) {

@@ -11,11 +11,11 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="Đăng nhập MSNV"
+            android:layout_marginBottom="25dp"
+            android:text="Đăng nhập"
             android:textAlignment="center"
             android:textColor="@color/primary_color"
-            android:textSize="39sp"
+            android:textSize="35sp"
             app:fontType="extra_bold"
             app:layout_constraintBottom_toTopOf="@id/tv_title_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,8 +25,8 @@
             android:id="@+id/tv_title_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
-            android:text="Vui lòng nhập MSNV và\nmật khẩu của bạn!"
+            android:layout_marginBottom="50dp"
+            android:text="Vui lòng nhập Email và\nmật khẩu của bạn!"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.65">
+            app:layout_constraintWidth_percent="0.8">
 
             <include
                 android:id="@+id/view_input_user_id"
@@ -70,13 +70,13 @@
                 android:text="Quên mật khẩu?"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/primary_color"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 app:fontType="bold" />
 
             <com.cuongngo.my_thp.common.view.view_ex.ButtonEx
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="58dp"
                 android:layout_marginTop="@dimen/_24dp"
                 android:background="@drawable/shape_green_radius_12"
                 android:outlineSpotShadowColor="@color/gray_62"
@@ -86,7 +86,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:fontType="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -98,7 +98,7 @@
             android:layout_marginBottom="16dp"
             android:text="Liên hệ hỗ trợ"
             android:textColor="#01AA4F"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             app:fontType="semi_bold"
             app:layout_constraintBottom_toTopOf="@id/cl_option_contact"

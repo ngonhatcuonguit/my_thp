@@ -26,7 +26,8 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
         binding.flSkip.setOnClickListener {
             setShowOnBoard(true)
 //            gotoMain()
-            gotoLoginMethod()
+//            gotoLoginMethod()
+            gotoLogin()
         }
 
         binding.btnNext.setOnClickListener {
@@ -50,7 +51,8 @@ class OnBoardActivity : BaseActivity<ActivityOnboardBinding>() {
             } else {
                 setShowOnBoard(true)
 //                gotoMain()
-                gotoLoginMethod()
+//                gotoLoginMethod()
+                gotoLogin()
             }
         }
 
