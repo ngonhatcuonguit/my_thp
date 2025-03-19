@@ -37,7 +37,6 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
 
     override fun setUp() {
         with(binding){
-            viewInputUserId.edtUserId.inputType = InputType.TYPE_TEXT_VARIATION_NORMAL
             btnLogin.setOnClickListener {
                 if (validate()){
                     if (isNetworkAvailable(this@LoginByMSNVActivity)) {
@@ -127,13 +126,15 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
     private fun validate(): Boolean{
         if (binding.viewInputUserId.edtUserId.text.isNullOrEmpty()){
             binding.viewInputUserId.tvValidate.isVisible = true
-            binding.viewInputUserId.tvValidate.text = "Vui lòng nhập mã số nhân viên"
+            binding.viewInputUserId.tvValidate.text = "Vui lòng nhập email"
             return false
         }else if (binding.viewInputPassword.edtPassword.text.isNullOrEmpty()){
-            binding.viewInputUserId.tvValidate.isVisible = true
-            binding.viewInputUserId.tvValidate.text = "Vui lòng nhập mật khẩu"
+            binding.viewInputPassword.tvValidate.isVisible = true
+            binding.viewInputPassword.tvValidate.text = "Vui lòng nhập mật khẩu"
+            binding.viewInputUserId.tvValidate.isVisible = false
             return false
         }else{
+            binding.viewInputPassword.tvValidate.isVisible = false
             binding.viewInputUserId.tvValidate.isVisible = false
             return true
         }
