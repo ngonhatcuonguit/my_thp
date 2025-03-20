@@ -13,7 +13,7 @@
 
     <item android:id="@+id/navigation_list_form"
         android:icon="@drawable/ic_file_dock"
-        android:title="Danh Sách"/>
+        android:title="Duyệt Hồ sơ"/>
 
     <item
         android:id="@+id/navigation_profile"

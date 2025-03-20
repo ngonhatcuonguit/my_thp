@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="3dp"
-                    android:text="10"
+                    android:text="..."
                     android:textColor="@color/acb_primary_2nd"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -292,17 +292,18 @@
                     android:layout_width="30dp"
                     android:layout_height="31dp"
                     android:layout_marginBottom="10dp"
+
                     app:layout_constraintBottom_toTopOf="@id/tv_tai_khoan"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_bank_house" />
+                    app:srcCompat="@drawable/ic_notification" />
 
                 <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_tai_khoan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sản xuất"
+                    android:text="Thông Báo"
                     android:textColor="@color/black_1c"
                     android:textSize="14sp"
                     android:textStyle="normal"
@@ -336,7 +337,7 @@
                     android:id="@+id/tv_tiet_kiem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AI Support"
+                    android:text="THP AI"
                     android:textColor="@color/black_1c"
                     android:textSize="14sp"
                     android:textStyle="normal"
@@ -360,17 +361,18 @@
                     android:layout_width="30dp"
                     android:layout_height="31dp"
                     android:layout_marginBottom="10dp"
+                    android:tint="@color/acb_primary_2nd"
                     app:layout_constraintBottom_toTopOf="@id/tv_vay"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_vay" />
+                    app:srcCompat="@drawable/ic_file_dock" />
 
                 <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_vay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tài chính"
+                    android:text="Duyệt Hồ Sơ"
                     android:textColor="@color/black_1c"
                     android:textSize="14sp"
                     android:textStyle="normal"
@@ -398,13 +400,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_bds" />
+                    app:srcCompat="@drawable/ic_tin_tuc" />
 
                 <com.cuongngo.my_thp.common.view.view_ex.TextViewEx
                     android:id="@+id/tv_the"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BĐS"
+                    android:text="Tin Tức "
                     android:textColor="@color/black_1c"
                     android:textSize="14sp"
                     android:textStyle="normal"

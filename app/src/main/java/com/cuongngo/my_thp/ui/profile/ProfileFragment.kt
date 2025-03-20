@@ -32,6 +32,7 @@ class ProfileFragment : BaseFragmentMVVM<FragmentProfileBinding, ProfileViewMode
 
             btnLogout.setOnClickListener {
                 AppPreferences.setUserAccessToken("")
+                AppPreferences.setIsFcmToken(false)
                 gotoLoginMethod()
             }
 

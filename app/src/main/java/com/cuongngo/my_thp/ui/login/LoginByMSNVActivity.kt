@@ -1,8 +1,11 @@
 package com.cuongngo.my_thp.ui.login
 
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import androidx.core.view.isVisible
+import com.cuongngo.my_thp.App
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
 import com.cuongngo.my_thp.base.dialog_fragment.ActiveDeviceDialog
@@ -19,6 +22,7 @@ import com.cuongngo.my_thp.utils.toast.showMessageCheckInternet
 import com.cuongngo.my_thp.utils.toast.showMessageToast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.kodein.di.direct
@@ -69,7 +73,8 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     saveUserData(viewModel.loginData)
                     if(it.data?.response_status?.status == "success"){
                         if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
-                            viewModel.pushFcmToken(AppPreferences.getFcmToken())
+//                            viewModel.pushFcmToken(AppPreferences.getFcmToken())
+                            updateFcmToken(AppPreferences.getFcmToken())
                             gotoMain()
                             WTF("token: ${viewModel.loginData?.token}")
                         } else {
@@ -99,6 +104,37 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     )
                 }
             )
+        }
+
+        observeLiveDataChanged(viewModel.pushFcmToken){
+            it.onResultReceived(
+                onLoading = {
+                },
+                onSuccess = {
+                    if(it.data?.response_status?.status == "success"){
+                        AppPreferences.setIsFcmToken(true)
+                    }
+                },
+                onError = {
+
+                }
+            )
+        }
+
+    }
+
+    private fun updateFcmToken(token: String?) {
+        App.getInstance().fcmToken
+
+        val userRepository: UserRepository = kodein.direct.instance()
+        if (AppPreferences.getUserAccessToken().isNotEmpty() && token != null) {
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    userRepository.pushFcmToken(token)
+                }
+            }
+        }else{
+            AppPreferences.setIsFcmToken(false)
         }
     }
 

@@ -28,7 +28,7 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
         window.statusBarColor = ContextCompat.getColor(this, R.color.acb_primary_2nd)
         viewModel.getNotify(
             0,
-            50
+            80
         )
         binding.apply {
             ivBack.setOnClickListener {
@@ -46,6 +46,9 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
                 },
                 onSuccess = {
                     hideProgressDialog()
+                    if (it.data?.data.isNullOrEmpty()) {
+                        return@onResultReceived
+                    }
                     notiAdapter.submitListNoti(it.data?.data)
                 },
                 onError = {

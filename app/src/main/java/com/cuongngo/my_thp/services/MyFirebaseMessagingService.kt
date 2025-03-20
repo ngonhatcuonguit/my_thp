@@ -62,19 +62,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService(), KodeinAware {
         // Xử lý khi FCM Token được cập nhật
         Log.d("FCM", "Refreshed token: $token")
         // Gửi token này lên server của bạn nếu cần
-//        updateFcmToken(token)
+        updateFcmToken(token)
+//        AppPreferences.setIsFcmToken(false)
     }
 
     private fun updateFcmToken(token: String?) {
         App.getInstance().fcmToken
 
         val userRepository: UserRepository = kodein.direct.instance()
-        if (AppPreferences.getUserInfo()?.token?.isNotEmpty() == true && token != null) {
+        if (AppPreferences.getUserAccessToken().isNotEmpty() && token != null) {
             GlobalScope.launch {
                 withContext(Dispatchers.IO) {
                     userRepository.pushFcmToken(token)
                 }
             }
+        }else{
+            AppPreferences.setIsFcmToken(false)
         }
     }
 

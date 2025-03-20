@@ -43,6 +43,7 @@ object AppPreferences {
     const val KEY_FB = "KEY_FB"
 
     const val KEY_FCM = "KEY_FCM"
+    const val IS_FCM = "IS_FCM"
 
 
     init{
@@ -85,6 +86,17 @@ object AppPreferences {
     fun setFcmToken(token: String) {
         editor.also {
             it.putString(KEY_FCM, token)
+            it.commit()
+        }
+    }
+
+    fun getIsFcmToken(): Boolean {
+        return preferences.getBoolean(IS_FCM, false) ?: false
+    }
+
+    fun setIsFcmToken(isFcm: Boolean) {
+        editor.also {
+            it.putBoolean(IS_FCM, isFcm)
             it.commit()
         }
     }

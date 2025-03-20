@@ -44,7 +44,7 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        if (AppPreferences.getUserAccessToken().isNotEmpty() && AppPreferences.getFcmToken().isNotEmpty()) {
+//        if (AppPreferences.getUserAccessToken().isNotEmpty() && AppPreferences.getFcmToken().isNotEmpty() && !AppPreferences.getIsFcmToken()) {
 //            viewModel.pushFcmToken(AppPreferences.getFcmToken())
 //        }
         super.onCreate(savedInstanceState)

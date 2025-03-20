@@ -27,7 +27,11 @@ class HomeFragment : BaseFragmentMVVM<FragmentHomeBinding, HomeViewModel>() {
                 startActivity(Intent(requireContext(), NotificationActivity::class.java))
             }
 
-            clSoDu.setOnClickListener {
+//            clSoDu.setOnClickListener {
+//                startActivity(Intent(requireContext(), NotificationActivity::class.java))
+//            }
+
+            clTaiKhoan.setOnClickListener {
                 startActivity(Intent(requireContext(), NotificationActivity::class.java))
             }
 

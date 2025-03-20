@@ -20,13 +20,20 @@ import com.cuongngo.my_thp.data.database.roomdb.DaoInterFace.UserDao
 import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.di.localModule
 import com.cuongngo.my_thp.ext.WTF
+import com.cuongngo.my_thp.services.repository.UserRepository
 import com.google.firebase.FirebaseApp
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.ktx.messaging
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
+import org.kodein.di.direct
+import org.kodein.di.generic.instance
 
 class App : Application(), KodeinAware, LifecycleObserver {
 
@@ -59,6 +66,19 @@ class App : Application(), KodeinAware, LifecycleObserver {
         }
 
         instance = this
+    }
+
+    private fun updateFcmToken(token: String?) {
+        App.getInstance().fcmToken
+
+        val userRepository: UserRepository = kodein.direct.instance()
+        if (token != null) {
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    userRepository.pushFcmToken(token)
+                }
+            }
+        }
     }
 
     companion object {
