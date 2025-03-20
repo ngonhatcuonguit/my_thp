@@ -44,9 +44,9 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (AppPreferences.getUserAccessToken().isNotEmpty() && AppPreferences.getFcmToken().isNotEmpty()) {
-            viewModel.pushFcmToken(AppPreferences.getFcmToken())
-        }
+//        if (AppPreferences.getUserAccessToken().isNotEmpty() && AppPreferences.getFcmToken().isNotEmpty()) {
+//            viewModel.pushFcmToken(AppPreferences.getFcmToken())
+//        }
         super.onCreate(savedInstanceState)
 //        enableLightStatusBar()
         // Set the status bar color
@@ -181,7 +181,7 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
         if (isGranted) {
             // FCM SDK (and your app) can post notifications.
         } else {
-            // TODO: Inform user that that your app will not show notifications.
+            //
         }
     }
 

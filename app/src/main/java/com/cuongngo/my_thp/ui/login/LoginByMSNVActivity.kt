@@ -69,7 +69,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                     saveUserData(viewModel.loginData)
                     if(it.data?.response_status?.status == "success"){
                         if ((viewModel.loginData?.token ?: "").isNotEmpty()) {
-//                            viewModel.pushFcmToken(AppPreferences.getFcmToken())
+                            viewModel.pushFcmToken(AppPreferences.getFcmToken())
                             gotoMain()
                             WTF("token: ${viewModel.loginData?.token}")
                         } else {
