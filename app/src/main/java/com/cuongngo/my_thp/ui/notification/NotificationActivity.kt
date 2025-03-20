@@ -1,6 +1,7 @@
 package com.cuongngo.my_thp.ui.notification
 
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
@@ -26,10 +27,7 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
     private var compositeDisposable: Disposable? = null
     override fun setUp() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.acb_primary_2nd)
-        viewModel.getNotify(
-            0,
-            80
-        )
+        viewModel.getNotify()
         binding.apply {
             ivBack.setOnClickListener {
                 finish()
@@ -47,9 +45,13 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
                 onSuccess = {
                     hideProgressDialog()
                     if (it.data?.data.isNullOrEmpty()) {
-                        return@onResultReceived
+                        if (viewModel.page == 0){
+                            binding.rvListNoti.isVisible = false
+                            binding.layoutEmptyList.isVisible = true
+                        }
+                    }else{
+                        notiAdapter.submitListNoti(it.data?.data)
                     }
-                    notiAdapter.submitListNoti(it.data?.data)
                 },
                 onError = {
                     hideProgressDialog()

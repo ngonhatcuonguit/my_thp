@@ -59,6 +59,9 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
 
     var loginData : LoginResponse? = null
 
+    var page = 0
+    var size = 80
+
     fun login(
         user_name: String,
         password: String
@@ -80,10 +83,7 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     val notify: LiveData<BaseResult<AppBaseResponse<List<NotificationResponse>>>> get() = _notify
 
 
-    fun getNotify(
-        page: Int?,
-        size: Int?
-    ) {
+    fun getNotify() {
         _notify.value = BaseResult.loading(null)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
