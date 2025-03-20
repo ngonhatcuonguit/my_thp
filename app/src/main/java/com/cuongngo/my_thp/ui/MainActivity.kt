@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -57,19 +58,9 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
                 .commit()
         }
 
-        // Check if the permission is already granted
-        if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
-            // If permission is already granted, handle your logic here
-            Toast.makeText(this, "Notification permission already granted", Toast.LENGTH_SHORT).show()
-        } else {
-            // Otherwise, request the permission
-            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-        }
-
     }
 
     override fun setUp() {
-
         navView = findViewById(R.id.nav_bottom)
         val fragmentManager: FragmentManager = supportFragmentManager
         homeFragment = HomeFragment()
@@ -179,6 +170,8 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
             return@setOnNavigationItemSelectedListener true
         }
 
+        askNotificationPermission()
+
     }
 
     // Declare the launcher at the top of your Activity/Fragment:
@@ -187,21 +180,24 @@ class MainActivity : AppBaseActivityMVVM<ActivityMainBinding, UserViewModel>() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             // FCM SDK (and your app) can post notifications.
-            Toast.makeText(this, "Notification permission granted", Toast.LENGTH_SHORT).show()
-
-            // Optionally, you can request the FCM token here
-            FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val token = task.result
-                    // You can send the token to your server here
-                    Toast.makeText(this, "FCM Token: $token", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, "Failed to get FCM token", Toast.LENGTH_SHORT).show()
-                }
-            }
         } else {
-            // Show a message explaining why the app needs the permission
-            Toast.makeText(this, "Notification permission denied", Toast.LENGTH_SHORT).show()
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
+
+    private fun askNotificationPermission() {
+        if (SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // Do your task on permission granted
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+        else{
+            // Below Android 13 You don't need to ask for notification permission.
         }
     }
 

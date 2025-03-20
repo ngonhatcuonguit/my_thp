@@ -35,8 +35,6 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
                 finish()
             }
         }
-
-
         setupRecycleView()
     }
 

@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.cuongngo.my_thp.App
+import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.data.local.AppPreferences
 import com.cuongngo.my_thp.services.repository.UserRepository
 import com.google.firebase.messaging.FirebaseMessagingService

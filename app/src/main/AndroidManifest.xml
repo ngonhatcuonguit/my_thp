@@ -13,8 +13,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-feature android:name="android.hardware.camera.any" />
 
 
@@ -45,10 +44,10 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@android:drawable/ic_menu_manage" />
+            android:resource="@drawable/ic_logo_thp" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/yellow_700" />
+            android:resource="@color/white" />
 
         <!--        <meta-data-->
         <!--            android:name="com.google.firebase.messaging.default_notification_channel_id"-->
