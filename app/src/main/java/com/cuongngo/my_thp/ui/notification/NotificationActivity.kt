@@ -69,7 +69,9 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
             this,
             arrayListOf(),
             onItemClickListener = {
-                //                startActivity(
+                NotificationDetailActivity.newIntent(this, it).apply {
+                    startActivity(this)
+                }
             }
         )
 
