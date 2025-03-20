@@ -3,6 +3,7 @@ package com.cuongngo.my_thp.ui.notification
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cuongngo.my_thp.R
 import com.cuongngo.my_thp.base.activity.AppBaseActivityMVVM
 import com.cuongngo.my_thp.base.viewmodel.kodeinViewModel
@@ -40,21 +41,33 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
         viewModel.notify.observe(this) {
             it.onResultReceived(
                 onLoading = {
-                    showProgressDialog()
+                    if (viewModel.page == 0){
+                        showProgressDialog()
+                    }else{
+                        binding.flProgressBarLoadMore.isVisible = true
+                    }
                 },
                 onSuccess = {
-                    hideProgressDialog()
+                    if (viewModel.page == 0){
+                        hideProgressDialog()
+                    }else{
+                        binding.flProgressBarLoadMore.isVisible = false
+                    }
                     if (it.data?.data.isNullOrEmpty()) {
                         if (viewModel.page == 0){
                             binding.rvListNoti.isVisible = false
                             binding.layoutEmptyList.isVisible = true
                         }
                     }else{
-                        notiAdapter.submitListNoti(it.data?.data)
+                        notiAdapter.submitListNoti(viewModel.page, it.data?.data)
                     }
                 },
                 onError = {
-                    hideProgressDialog()
+                    if (viewModel.page == 0){
+                        hideProgressDialog()
+                    }else{
+                        binding.flProgressBarLoadMore.isVisible = false
+                    }
                 }
             )
         }
@@ -64,11 +77,12 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
 
         val gridLayoutManager = GridLayoutManager(this, 1)
 
-//        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {
-//            override fun onLoadMore(page: Int, totalItemsCount: Int) {
-//                viewModel.getListNoti(page)
-//            }
-//        }
+        scrollListener = object : EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                viewModel.page++
+                viewModel.getNotify()
+            }
+        }
 
         notiAdapter = NotiAdapter(
             this,
@@ -83,7 +97,7 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
         binding.rvListNoti.apply {
             adapter = notiAdapter
             layoutManager = gridLayoutManager
-//            addOnScrollListener(scrollListener)
+            addOnScrollListener(scrollListener)
         }
 
     }

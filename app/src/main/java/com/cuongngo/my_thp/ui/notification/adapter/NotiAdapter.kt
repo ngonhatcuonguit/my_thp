@@ -43,10 +43,14 @@ class NotiAdapter(
 
     }
 
-    fun submitListNoti(notis: List<NotificationResponse>?) {
+    fun submitListNoti(page: Int?, notis: List<NotificationResponse>?) {
         if (notis != null) {
-            this.listNoti.clear()
-            this.listNoti.addAll(notis)
+            if(page == 0){
+                this.listNoti.clear()
+                this.listNoti.addAll(notis)
+            }else{
+                this.listNoti.addAll(notis)
+            }
             notifyDataSetChanged()
         }
     }

@@ -60,7 +60,7 @@ class UserViewModel(private val userRepository: UserRepository) : BaseViewModel(
     var loginData : LoginResponse? = null
 
     var page = 0
-    var size = 80
+    var size = 20
 
     fun login(
         user_name: String,
