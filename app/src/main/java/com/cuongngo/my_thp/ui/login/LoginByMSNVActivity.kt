@@ -96,12 +96,7 @@ class LoginByMSNVActivity : AppBaseActivityMVVM<ActivityLoginByUserIdBinding, Us
                 },
                 onError = {
                     hideProgressDialog()
-                    showMessageToast(
-                        this,
-                        false,
-                        contentFail = "Đã có lỗi xảy ra: ${it.data?.response_status?.messages?.firstOrNull()?.message}",
-                        contentDone = ""
-                    )
+                    setupShowDialogResult(false, it.errorCode)
                 }
             )
         }

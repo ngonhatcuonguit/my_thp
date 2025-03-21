@@ -15,6 +15,7 @@ import com.cuongngo.my_thp.base.dialog_fragment.ConfirmDialog
 import com.cuongngo.my_thp.base.model.DialogModel
 import com.cuongngo.my_thp.base.view.BaseView
 import com.cuongngo.my_thp.base.view.ProgressDialog
+import com.cuongngo.my_thp.ui.login.LoginByMSNVActivity
 import com.cuongngo.my_thp.ui.login.LoginMethodActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -123,7 +124,7 @@ abstract class BaseFragment<DB: ViewDataBinding>: Fragment(), KodeinAware, BaseV
     }
 
     private fun gotoLoginMethod() {
-        Intent(requireContext(), LoginMethodActivity::class.java).apply {
+        Intent(requireContext(), LoginByMSNVActivity::class.java).apply {
         }.also {
             startActivity(it)
         }

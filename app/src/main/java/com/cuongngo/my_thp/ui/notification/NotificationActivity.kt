@@ -68,6 +68,7 @@ class NotificationActivity : AppBaseActivityMVVM<ActivityNotificationBinding, Us
                     }else{
                         binding.flProgressBarLoadMore.isVisible = false
                     }
+                    setupShowDialogResult(false, it.errorCode)
                 }
             )
         }

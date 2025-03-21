@@ -260,7 +260,7 @@ abstract class BaseActivity<DB : ViewDataBinding> : AppCompatActivity(), KodeinA
     }
 
     open fun gotoLoginMethod() {
-        Intent(this, LoginMethodActivity::class.java).apply {
+        Intent(this, LoginByMSNVActivity::class.java).apply {
         }.also {
             finish()
             startActivity(it)
